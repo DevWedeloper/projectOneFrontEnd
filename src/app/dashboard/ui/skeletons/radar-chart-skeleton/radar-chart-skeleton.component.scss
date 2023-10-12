@@ -1,0 +1,47 @@
+@import url(../../../../shared/ui/components/skeleton/skeleton.scss);
+
+.skeleton-loader {
+  display: flex;
+  height: 80vh;
+  gap: .5rem;
+}
+
+.right-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  gap: 10px;
+  width: 100%;
+}
+
+.left-column {
+  display: flex;
+  position: relative;
+  width: min-content;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.loading-item {
+  height: 60px;
+}
+
+.circle {
+  aspect-ratio: 1 / 1;
+  width: 100%;
+  height: auto;
+  border-radius: 50%;
+}
+
+@media (max-width: 768px) {
+  .skeleton-loader {
+    flex-direction: column;
+  }
+
+  .circle {
+    width: auto;
+    height: 100%;
+  }
+}

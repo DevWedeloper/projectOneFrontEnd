@@ -1,0 +1,33 @@
+<div class="content-container">
+  <app-character-create
+    *ngIf="authService.isCurrentUserAdmin$ | async"
+    (createCharacter)="cas.characterCreate$.next($event)"
+  ></app-character-create>
+
+  <app-character-table
+    [characterData]="cs.characterData$ | async"
+    [isCurrentUserAdmin]="authService.isCurrentUserAdmin$ | async"
+    [currentPage]="cs.currentPage$ | async"
+    [pageSize]="cs.pageSize$ | async"
+    (searchQueryChange)="tableSearchQuery$.next($event)"
+    (pageSizeChange)="cs.pageSize$.next($event)"
+    (sortParamsChange)="cs.sortParams$.next($event)"
+    (changePage)="cs.currentPage$.next($event)"
+    (editCharacter)="
+      cas.characterToUpdate$.next($event); ms.open(modalTemplate)
+    "
+    (deleteCharacter)="cas.characterDelete$.next($event)"
+  ></app-character-table>
+</div>
+
+<ng-template #modalTemplate>
+  <app-character-edit
+    [character]="cas.characterToUpdate$ | async"
+    [searchResults$]="searchResults$"
+    (searchQueryChange)="guildSearchQuery$.next($event)"
+    (joinGuild)="cas.characterJoinGuild$.next($event)"
+    (leaveGuild)="cas.characterLeaveGuild$.next($event)"
+    (updateCharacter)="cas.characterUpdate$.next($event)"
+    (closeModal)="ms.close()"
+  ></app-character-edit>
+</ng-template>

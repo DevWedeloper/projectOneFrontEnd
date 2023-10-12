@@ -1,0 +1,14 @@
+<div class="input-container">
+  <input
+    #search
+    type="{{ type }}"
+    id="{{ id }}"
+    [value]="value"
+    (input)="updateValue(search.value)"
+    [step]="step"
+    (blur)="onTouch()"
+    autocomplete="off"
+    required
+  />
+  <label for="{{ id }}">{{ label }}</label>
+</div>

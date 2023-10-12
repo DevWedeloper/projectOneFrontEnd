@@ -1,0 +1,64 @@
+
+<app-table [data]="guildData?.guilds" [loading]="ls.loading$ | async">
+  <ng-template #searchTemplate>
+    <div>
+      <input
+        #searchInput
+        class="table-search"
+        type="text"
+        id="search"
+        placeholder="Search..."
+        (keyup)="searchQueryChange.emit(searchInput.value)"
+      />
+  </div>
+  
+  </ng-template>
+
+  <ng-template #pageSizeTemplate>
+    <div class="page-size-container">
+      <label for="pageSize">Show</label>
+      <select #perPage id="pageSize" (change)="pageSizeChange.emit(+perPage.value)">
+        <option value="10">10</option>
+        <option value="15">15</option>
+        <option value="25">25</option>
+      </select>
+    </div>
+  </ng-template>
+
+  <ng-template #headersTemplate>
+    <th (click)="toggleSort('name')">
+      <span>Name</span>
+      <span [innerHTML]="getSortArrow('name')"></span>
+    </th>
+    <th (click)="toggleSort('leader')">
+      <span>Leader</span>
+      <span [innerHTML]="getSortArrow('leader')"></span>
+    </th>
+    <th (click)="toggleSort('totalMembers')">
+      <span>Total Member</span>
+      <span [innerHTML]="getSortArrow('totalMembers')"></span>
+    </th>
+    <th *ngIf="isCurrentUserAdmin">Actions</th>
+  </ng-template>
+
+  <ng-template #rowsTemplate let-guild>
+    <td>{{ guild.name | truncate : 15 }}</td>
+    <td>{{ guild.leader.name | truncate : 15 }}</td>
+    <td>{{ guild.totalMembers }}</td>
+    <td class="btn-container" *ngIf="isCurrentUserAdmin">
+      <button class="edit-btn" (click)="editGuild.emit(guild)">Edit</button>
+      <button class="delete-btn" (click)="deleteGuild.emit(guild._id)">Delete</button>
+    </td>
+  </ng-template>
+
+  <ng-template #paginationTemplate>
+
+    <app-pagination
+      [currentPage]="currentPage"
+      [pageSize]="pageSize"
+      [total]="guildData?.totalGuilds"
+      (changePage)="changePage.emit($event)"
+    ></app-pagination>
+    
+  </ng-template>
+</app-table>

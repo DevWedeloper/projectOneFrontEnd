@@ -1,0 +1,37 @@
+<div class="content-container">
+  <app-guild-create
+    *ngIf="authService.isCurrentUserAdmin$ | async"
+    (createGuild)="gas.guildCreate$.next($event)"
+  ></app-guild-create>
+
+  <app-guild-table
+    [guildData]="gs.guildData$ | async"
+    [isCurrentUserAdmin]="authService.isCurrentUserAdmin$ | async"
+    [currentPage]="gs.currentPage$ | async"
+    [pageSize]="gs.pageSize$ | async"
+    (searchQueryChange)="tableSearchQuery$.next($event)"
+    (pageSizeChange)="gs.pageSize$.next($event)"
+    (sortParamsChange)="gs.sortParams$.next($event)"
+    (changePage)="gs.currentPage$.next($event)"
+    (editGuild)="gas.guildToUpdate$.next($event); ms.open(modalTemplate)"
+    (deleteGuild)="gas.guildDelete$.next($event)"
+  ></app-guild-table>
+</div>
+
+<ng-template #modalTemplate>
+  <app-guild-edit
+    [guild]="gas.guildToUpdate$ | async"
+    [searchNewLeaderResults$]="searchNewLeaderResults$"
+    [searchNewMemberResults$]="searchNewMemberResults$"
+    (searchNewLeaderResultsQueryChange)="
+      searchNewLeaderResultsQuery$.next($event)
+    "
+    (searchNewMemberResultsQueryChange)="
+      searchNewMemberResultsQuery$.next($event)
+    "
+    (updateGuildName)="gas.guildUpdateName$.next($event)"
+    (updateGuildLeader)="gas.guildUpdateLeader$.next($event)"
+    (addMember)="gas.guildAddMember$.next($event)"
+    (removeMember)="gas.guildRemoveMember$.next($event)"
+  ></app-guild-edit>
+</ng-template>

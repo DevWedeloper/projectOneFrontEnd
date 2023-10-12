@@ -1,0 +1,28 @@
+<div class="form-container">
+  <form
+    class="form-box"
+    [formGroup]="loginForm"
+    (ngSubmit)="authService.login$.next(loginForm.value)"
+  >
+    <h2 class="form-title">Login</h2>
+    <div class="form-group">
+      <input
+        type="text"
+        formControlName="username"
+        class="form-input"
+        placeholder=""
+      />
+      <label for="username" class="form-label">Username</label>
+    </div>
+    <div class="form-group">
+      <input
+        type="password"
+        formControlName="password"
+        class="form-input"
+        placeholder=""
+      />
+      <label for="password" class="form-label">Password</label>
+    </div>
+    <button appFocusVisible type="submit" class="btn">Login</button>
+  </form>
+</div>

@@ -1,0 +1,106 @@
+<app-table [data]="characterData?.characters" [loading]="ls.loading$ | async">
+  <ng-template #searchTemplate>
+    <div>
+      <input
+        #searchInput
+        class="table-search"
+        type="text"
+        id="search"
+        placeholder="Search..."
+        (keyup)="searchQueryChange.emit(searchInput.value)"
+      />
+    </div>
+  </ng-template>
+
+  <ng-template #pageSizeTemplate>
+    <div class="page-size-container">
+      <label for="pageSize">Show</label>
+      <select
+        #perPage
+        (change)="pageSizeChange.emit(+perPage.value)"
+      >
+        <option value="10">10</option>
+        <option value="15">15</option>
+        <option value="25">25</option>
+      </select>
+    </div>
+  </ng-template>
+
+  <ng-template #headersTemplate>
+    <th (click)="toggleSort('name')">
+      <span>Name</span>
+      <span [innerHTML]="getSortArrow('name')"></span>
+    </th>
+    <th (click)="toggleSort('guild')">
+      <span>Guild</span>
+      <span [innerHTML]="getSortArrow('guild')"></span>
+    </th>
+    <th (click)="toggleSort('characterType')">
+      <span>Class</span>
+      <span [innerHTML]="getSortArrow('characterType')"></span>
+    </th>
+    <th (click)="toggleSort('health')">
+      <span>Health</span>
+      <span [innerHTML]="getSortArrow('health')"></span>
+    </th>
+    <th (click)="toggleSort('strength')">
+      <span>Strength</span>
+      <span [innerHTML]="getSortArrow('strength')"></span>
+    </th>
+    <th (click)="toggleSort('agility')">
+      <span>Agility</span>
+      <span [innerHTML]="getSortArrow('agility')"></span>
+    </th>
+    <th (click)="toggleSort('intelligence')">
+      <span>Intelligence</span>
+      <span [innerHTML]="getSortArrow('intelligence')"></span>
+    </th>
+    <th (click)="toggleSort('armor')">
+      <span>Armor</span>
+      <span [innerHTML]="getSortArrow('armor')"></span>
+    </th>
+    <th (click)="toggleSort('critChance')">
+      <span>Crit Chance</span>
+      <span [innerHTML]="getSortArrow('critChance')"></span>
+    </th>
+    <th *ngIf="isCurrentUserAdmin">Actions</th>
+  </ng-template>
+
+  <ng-template #rowsTemplate let-character>
+    <td>{{ character.name | truncate : 15 }}</td>
+    <td>
+      <ng-container *ngIf="character.guild">
+        {{ character.guild.name | truncate : 15 }}
+      </ng-container>
+    </td>
+    <td>{{ character.characterType }}</td>
+    <td>{{ character.health }}</td>
+    <td>{{ character.strength }}</td>
+    <td>{{ character.agility }}</td>
+    <td>{{ character.intelligence }}</td>
+    <td>{{ character.armor }}</td>
+    <td>{{ (character.critChance * 100).toFixed(0) }}%</td>
+    <td *ngIf="isCurrentUserAdmin">
+      <div class="btn-container">
+        <button class="edit-btn" (click)="editCharacter.emit(character)">
+          Edit
+        </button>
+        <button
+          class="delete-btn"
+          (click)="deleteCharacter.emit(character)"
+        >
+          Delete
+        </button>
+      </div>
+    </td>
+  </ng-template>
+
+  <ng-template #paginationTemplate>
+    <app-pagination
+      [currentPage]="currentPage"
+      [pageSize]="pageSize"
+      [total]="characterData?.totalCharacters"
+      (changePage)="changePage.emit($event)"
+    ></app-pagination>
+  </ng-template>
+</app-table>

@@ -1,0 +1,39 @@
+@import url(../skeleton.scss);
+
+.skeleton-loader {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 10px;
+  height: 25rem;
+}
+
+.loading-item {
+  height: 20px;
+}
+
+.sort-container {
+  display: flex;
+  justify-content: space-between;
+  height: 20px;
+}
+
+.sort-container .loading-item:first-child {
+  width: 15%;
+}
+
+.sort-container .loading-item:last-child {
+  width: 25%;
+}
+
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  height: 30px;
+}
+
+.pagination-container .loading-item {
+  height: 30px;
+  width: 30px;
+}

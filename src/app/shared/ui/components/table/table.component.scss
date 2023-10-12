@@ -1,0 +1,115 @@
+.options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+::ng-deep .page-size-container {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+::ng-deep .page-size-container select {
+  background-color: var(--primary-color);
+  color: var(--text-color);
+  padding: 0.25rem;
+  border-radius: 0.5rem;
+  border: 1px solid gray;
+}
+
+::ng-deep .page-size-container select:focus-visible {
+  box-shadow: 0 0 0 3px var(--primary-color), 0 0 0 4px var(--text-color);
+}
+
+::ng-deep .page-size-container option {
+  background-color: var(--primary-color);
+  color: var(--text-color);
+}
+
+::ng-deep .table-search {
+  background-color: var(--secondary-color);
+  color: var(--text-color);
+  padding: 0.25rem;
+  border-radius: 0.5rem;
+}
+
+::ng-deep .table-search::placeholder {
+  color: var(--text-color);
+}
+
+::ng-deep .table-search:focus {
+  border: 1px solid var(--text-color);
+}
+
+.table-container {  
+  overflow-y: auto;
+}
+
+.table {
+  width: 100%;
+  border: 1px solid gray;
+  border-spacing: 0;
+  border-radius: 0.5rem;
+}
+
+.table tbody {
+  text-align: center;
+}
+
+.table tbody tr:nth-child(odd) {
+  background-color: var(--secondary-color);
+}
+
+.table tbody tr:nth-child(even) {
+  background-color: var(--primary-color);
+}
+
+::ng-deep .table thead tr th {
+  padding: 0.25rem;
+  cursor: pointer;
+}
+
+::ng-deep .table tbody tr td {
+  padding: 0.25rem;
+}
+
+::ng-deep .table tbody tr:last-child td:first-child {
+  border-bottom-left-radius: 0.5rem;
+}
+
+::ng-deep .table tbody tr:last-child td:last-child {
+  border-bottom-right-radius: 0.5rem;
+}
+
+::ng-deep .btn-container {
+  display: flex;
+  justify-content: center;
+  gap: 0.25rem;
+}
+
+::ng-deep .edit-btn,
+::ng-deep .delete-btn {
+  border-radius: 0.25rem;
+  padding: 0.25rem;
+  color: white;
+}
+
+::ng-deep .edit-btn {
+  background-color: #5cb85c;
+}
+
+::ng-deep .delete-btn {
+  background-color: red;
+}
+
+::ng-deep .edit-btn:focus-visible,
+::ng-deep .delete-btn:focus-visible {
+  box-shadow: 0 0 0 3px var(--primary-color), 0 0 0 4px var(--text-color);
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+}

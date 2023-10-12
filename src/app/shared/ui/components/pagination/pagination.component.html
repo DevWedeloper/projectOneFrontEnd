@@ -1,0 +1,15 @@
+<ul class="pagination">
+  <li
+    appFocusVisible
+    *ngFor="let item of pages; let index = index"
+    [ngClass]="{
+      'page-item': true,
+      active: item !== '...' && currentPage === item
+    }"
+    (click)="handlePageClick(item, index)"
+    (keyup.enter)="handlePageClick(item, index)"
+    tabindex="0"
+  >
+    <span class="page-link">{{ item !== "..." ? item : "..." }}</span>
+  </li>
+</ul>

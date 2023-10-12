@@ -1,0 +1,129 @@
+<nav class="navbar">
+  <div class="navbar-mobile">
+    <a
+      class="menu-icon"
+      (click)="toggleSidebar()"
+      (keyup.enter)="toggleSidebar()"
+      tabindex="0"
+      [ngStyle]="{
+        filter:
+          (ts.isDarkMode$ | async)
+            ? 'invert(100%) grayscale(100%)'
+            : 'grayscale(100%)'
+      }"
+    >
+      <span class="icon-container">
+        <img src="assets/images/icons/menu.svg" alt="Menu Logo"
+      /></span>
+    </a>
+    <h1>Project One</h1>
+  </div>
+  <div
+    (mouseenter)="hs.isSettingsDropdownOpen$.next(true)"
+    (mouseleave)="hs.isSettingsDropdownOpen$.next(false)"
+  >
+    <a
+      class="navbar-link"
+      tabindex="1"
+      [ngStyle]="{
+        filter:
+          (ts.isDarkMode$ | async)
+            ? 'invert(100%) grayscale(100%)'
+            : 'grayscale(100%)'
+      }"
+      ><img src="assets/images/icons/settings.svg" alt="Settings Logo"
+    /></a>
+    <app-settings-dropdown
+      *ngIf="hs.isSettingsDropdownOpen$ | async"
+    ></app-settings-dropdown>
+  </div>
+</nav>
+<nav class="sidebar" [ngClass]="{ open: isSidebarOpen }">
+  <ul class="sidebar-content">
+    <li class="sidebar-item">
+      <a
+        routerLink="/dashboard"
+        class="sidebar-link"
+        (click)="mobileQuery.matches ? closeMenu() : null"
+      >
+        <span
+          class="icon-container"
+          [ngStyle]="{
+            filter:
+              (ts.isDarkMode$ | async)
+                ? 'invert(100%) grayscale(100%)'
+                : 'grayscale(100%)'
+          }"
+        >
+          <img src="assets/images/icons/dashboard.svg" alt="Dashboard Logo"
+        /></span>
+        <span class="link-text">Dashboard</span>
+      </a>
+    </li>
+    <li class="sidebar-item">
+      <a
+        routerLink="/characters"
+        class="sidebar-link"
+        (click)="mobileQuery.matches ? closeMenu() : null"
+      >
+        <span
+          class="icon-container"
+          [ngStyle]="{
+            filter:
+              (ts.isDarkMode$ | async)
+                ? 'invert(100%) grayscale(100%)'
+                : 'grayscale(100%)'
+          }"
+        >
+          <img src="assets/images/icons/characters.svg" alt="Characters Logo"
+        /></span>
+        <span class="link-text">Characters</span>
+      </a>
+    </li>
+    <li class="sidebar-item">
+      <a
+        routerLink="/guilds"
+        class="sidebar-link"
+        (click)="mobileQuery.matches ? closeMenu() : null"
+      >
+        <span
+          class="icon-container"
+          [ngStyle]="{
+            filter:
+              (ts.isDarkMode$ | async)
+                ? 'invert(100%) grayscale(100%)'
+                : 'grayscale(100%)'
+          }"
+        >
+          <img src="assets/images/icons/guilds.svg" alt="Guilds Logo"
+        /></span>
+        <span class="link-text">Guilds</span>
+      </a>
+    </li>
+    <li class="sidebar-item sidebar-menu-icon">
+      <a
+        class="sidebar-link"
+        (click)="toggleSidebar()"
+        (keyup.enter)="toggleSidebar()"
+        tabindex="4"
+      >
+        <span
+          class="icon-container"
+          [ngStyle]="{
+            filter:
+              (ts.isDarkMode$ | async)
+                ? 'invert(100%) grayscale(100%)'
+                : 'grayscale(100%)'
+          }"
+        >
+          <img src="assets/images/icons/menu.svg" alt="Menu Logo"
+        /></span>
+      </a>
+    </li>
+  </ul>
+</nav>
+<section class="right-container">
+  <div class="main-content">
+    <router-outlet></router-outlet>
+  </div>
+</section>

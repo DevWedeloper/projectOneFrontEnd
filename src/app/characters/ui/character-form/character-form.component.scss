@@ -1,0 +1,26 @@
+.form {
+  display: grid;
+  grid-template-columns: 1fr 1fr; 
+  gap: 1.25rem;
+}
+
+.character-type-container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.character-type-container select {
+  background-color: var(--primary-color);
+  color: var(--text-color);
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid gray;
+  width: 100%;
+}
+
+.character-type-container option {
+  background-color: var(--primary-color);
+  color: var(--text-color);
+}

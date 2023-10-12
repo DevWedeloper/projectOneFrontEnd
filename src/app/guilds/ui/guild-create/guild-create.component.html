@@ -1,0 +1,72 @@
+<ng-container *ngIf="guildForm.statusChanges | async"></ng-container>
+<app-divider-dropdown
+  [label]="'Create Guild'"
+  [loading]="ls.loading$ | async"
+  (dividerToggled)="guildForm.reset()"
+>
+  <form
+    [formGroup]="guildForm"
+    class="form"
+    (ngSubmit)="
+      createGuild.emit({
+        guildForm: guildForm,
+        leaderId: selectedLeaderId$.value
+      })
+    "
+  >
+    <div class="form-group">
+      <app-custom-input
+        [type]="'text'"
+        [id]="'name'"
+        [label]="'Guild Name'"
+        formControlName="name"
+      ></app-custom-input>
+      <div
+        *ngIf="
+          guildForm.get('name')?.hasError('required') &&
+          guildForm.get('name')?.touched
+        "
+      >
+        <p appErrorText>Guild name is required.</p>
+      </div>
+      <div *ngIf="guildForm.get('name')?.hasError('uniqueName')">
+        <p appErrorText>
+          This guild name is already taken. Please choose another one.
+        </p>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div style="position: relative">
+        <app-custom-input
+          #search
+          [type]="'text'"
+          [id]="'leader'"
+          [label]="'Leader'"
+          formControlName="leader"
+          (input)="searchQuery$.next(search.value)"
+        ></app-custom-input>
+        <app-search-items
+          [searchResults$]="searchResults$"
+          (selectedItemId)="selectedLeaderId$.next($event)"
+          (selectedItemName)="guildForm.get('leader')?.setValue($event)"
+        ></app-search-items>
+      </div>
+      <div
+        *ngIf="
+          guildForm.get('leader')?.hasError('required') &&
+          guildForm.get('leader')?.touched
+        "
+      >
+        <p appErrorText>Leader name is required.</p>
+      </div>
+      <div *ngIf="guildForm.get('leader')?.hasError('notFound')">
+        <p appErrorText>Leader not found. Please choose a valid leader.</p>
+      </div>
+    </div>
+
+    <div class="btn-container">
+      <button type="submit" [disabled]="guildForm.invalid">Create Guild</button>
+    </div>
+  </form>
+</app-divider-dropdown>

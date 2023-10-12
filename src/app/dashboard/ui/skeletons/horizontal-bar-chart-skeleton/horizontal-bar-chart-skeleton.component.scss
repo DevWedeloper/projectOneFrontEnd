@@ -1,0 +1,18 @@
+@import url(../../../../shared/ui/components/skeleton/skeleton.scss);
+
+.skeleton-loader {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 10px;
+  height: 11.5rem;
+}
+
+.loading-item {
+  height: 20px;
+}
+
+.loading-item:last-child {
+  margin-left: auto;
+  width: 50%;
+}

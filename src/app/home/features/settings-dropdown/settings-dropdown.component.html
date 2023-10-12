@@ -1,0 +1,56 @@
+<div class="settings-dropdown">
+  <ul [@fadeInOut] class="dropdown-content">
+    <li
+      class="dropdown-item"
+      (click)="themeOnClick()"
+      (keyup.enter)="themeOnClick()"
+      tabindex="2"
+      [ngStyle]="{
+        filter: (ts.isDarkMode$ | async) ? 'brightness(1.2)' : 'brightness(0.8)'
+      }"
+    >
+      <a>
+        <span class="icon-container">
+          <img
+            [src]="
+              (ts.isDarkMode$ | async)
+                ? 'assets/images/icons/sun.svg'
+                : 'assets/images/icons/moon.svg'
+            "
+            alt="{{ (ts.isDarkMode$ | async) ? 'Sun Logo' : 'Moon Logo' }}"
+            [ngStyle]="{
+              filter:
+                (ts.isDarkMode$ | async)
+                  ? 'invert(100%) grayscale(100%)'
+                  : 'grayscale(100%)'
+            }"
+          />
+        </span>
+        <span>{{ (ts.isDarkMode$ | async) ? "Light Mode" : "Dark Mode" }}</span>
+      </a>
+    </li>
+    <li
+      class="dropdown-item"
+      (click)="logout()"
+      (keyup.enter)="logout()"
+      tabindex="3"
+      [ngStyle]="{
+        filter: (ts.isDarkMode$ | async) ? 'brightness(1.2)' : 'brightness(0.8)'
+      }"
+    >
+      <a
+        ><span class="icon-container"
+          ><img
+            [ngStyle]="{
+              filter:
+                (ts.isDarkMode$ | async)
+                  ? 'invert(100%) grayscale(100%)'
+                  : 'grayscale(100%)'
+            }"
+            src="assets/images/icons/logout.svg"
+            alt="Logout Logo" /></span
+        ><span>Logout</span></a
+      >
+    </li>
+  </ul>
+</div>

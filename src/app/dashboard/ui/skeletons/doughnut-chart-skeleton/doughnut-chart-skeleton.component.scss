@@ -1,0 +1,12 @@
+@import url(../../../../shared/ui/components/skeleton/skeleton.scss);
+
+.skeleton-loader {
+  display: flex;
+  justify-content: center;
+}
+
+.circle {
+  aspect-ratio: 1 / 1;
+  height: 80vh;
+  border-radius: 50%;
+}

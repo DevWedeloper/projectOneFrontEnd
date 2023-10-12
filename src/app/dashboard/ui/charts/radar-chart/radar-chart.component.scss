@@ -1,0 +1,57 @@
+.radar-chart {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.radar-chart-text-container {
+  display: flex;
+  justify-content: center;
+}
+
+.radar-chart-text {
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: column;
+  padding: 0.5rem;
+  width: 75%;
+}
+
+.radar-chart-buttons {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 0.5rem;
+  border-radius: 0.5rem;
+  background-color: var(--secondary-color);
+  color: var(--text-color);
+  padding: 0.5rem;
+}
+
+.radar-chart-buttons.active {
+  background-color: var(--primary-color);
+}
+
+.radar-chart-buttons > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+}
+
+.chart-container {
+  height: 80vh;
+}
+
+@media (max-width: 768px) {
+  .radar-chart {
+    grid-template-columns: 1fr;
+  }
+
+  .radar-chart-text {
+    width: 100%;
+  }
+
+  .chart-container {
+    height: 65vh;
+  }
+}

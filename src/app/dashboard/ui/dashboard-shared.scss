@@ -1,0 +1,32 @@
+.chart-group-container {
+  margin-bottom: 0.5rem;
+  overflow: hidden;
+}
+
+.chart-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(calc(50% - 4px), 1fr));
+  gap: 0.5rem;
+}
+
+.chart-container-item {
+  width: 100%;
+  background-color: var(--secondary-color);
+  border-radius: 0.5rem;
+}
+
+.chart-container-heading {
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.chart-item-heading {
+  padding-top: 0.25rem;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .chart-container {
+    grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
+  }
+}

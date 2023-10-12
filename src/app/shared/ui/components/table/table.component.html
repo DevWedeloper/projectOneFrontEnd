@@ -1,0 +1,40 @@
+<div *ngIf="!loading">
+  <div class="options">
+    <ng-container *ngTemplateOutlet="pageSize!"></ng-container>
+    <ng-container *ngTemplateOutlet="search!"></ng-container>
+  </div>
+  <div class="table-container">
+    <table class="table">
+      <thead>
+        <tr>
+          <ng-container
+            *ngTemplateOutlet="headers || defaultHeaderTemplate"
+          ></ng-container>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let row of data; trackBy: trackBy">
+          <ng-container
+            *ngTemplateOutlet="
+              rows || defaultRowTemplate;
+              context: { $implicit: row }
+            "
+          ></ng-container>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="pagination">
+    <ng-container *ngTemplateOutlet="pagination!"></ng-container>
+  </div>
+</div>
+
+<ng-template #defaultHeaderTemplate let-data>
+  <th *ngFor="let header of data[0] | keyvalue">{{ header.key }}</th>
+</ng-template>
+
+<ng-template #defaultRowTemplate let-row>
+  <td *ngFor="let row of row | keyvalue">{{ row.value }}</td>
+</ng-template>
+
+<app-table-skeleton *ngIf="loading"></app-table-skeleton>

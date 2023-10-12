@@ -1,0 +1,11 @@
+<div *ngIf="!loading" [@smoothTransition] class="chart-container">
+  <canvas
+    baseChart
+    [datasets]="polarAreaChartDatasets"
+    [labels]="polarAreaChartLabels"
+    [options]="polarAreaOptions"
+    [type]="'polarArea'"
+  >
+  </canvas>
+</div>
+<app-doughnut-chart-skeleton *ngIf="loading"></app-doughnut-chart-skeleton>

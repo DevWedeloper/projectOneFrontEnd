@@ -1,0 +1,17 @@
+<div
+  #searchResultsContainer
+  class="search-results"
+  *ngIf="(searchResults$ | async)!.length > 0"
+>
+  <ul>
+    <li
+      #searchItems
+      *ngFor="let result of searchResults$ | async; trackBy: trackBy"
+      (click)="selectItem(result)"
+      (keydown.enter)="selectItem(result)"
+      [tabindex]="-1"
+    >
+      {{ result.name }}
+    </li>
+  </ul>
+</div>

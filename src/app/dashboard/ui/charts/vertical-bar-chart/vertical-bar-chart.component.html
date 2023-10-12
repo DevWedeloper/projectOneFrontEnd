@@ -1,0 +1,18 @@
+<div *ngIf="!loading" [@smoothTransition]>
+  <div class="chart-item-heading">
+    <h2>{{ label }}</h2>
+  </div>
+  <div>
+    <canvas
+      baseChart
+      [datasets]="barChartDataset"
+      [options]="barChartOptions"
+      [labels]="barChartLabels"
+      [type]="'bar'"
+    >
+    </canvas>
+  </div>
+</div>
+<app-vertical-bar-chart-skeleton
+  *ngIf="loading"
+></app-vertical-bar-chart-skeleton>

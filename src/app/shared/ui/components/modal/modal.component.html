@@ -1,0 +1,18 @@
+<div
+  #modalElement
+  class="modal-backdrop"
+  tabindex="0"
+  [ngStyle]="{
+    'background-color':
+      (ts.isDarkMode$ | async)
+        ? 'rgba(255, 255, 255, 0.2)'
+        : 'rgba(0, 0, 0, 0.4)'
+  }"
+  (click)="ms.close()"
+  (keyup.Escape)="ms.close()"
+></div>
+<div [@fadeInOut] *ngIf="ms.isOpen$.value" class="modal-container">
+  <div class="modal-content">
+    <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
+  </div>
+</div>

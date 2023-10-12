@@ -1,7 +1,13 @@
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { ApplicationRef } from '@angular/core';
+import {
+  bootstrapApplication,
+  enableDebugTools,
+} from '@angular/platform-browser';
+import { AppComponent } from './app/app.component';
+import { appConfig } from './app/app.config';
 
-import { AppModule } from './app/app.module';
-
-
-platformBrowserDynamic().bootstrapModule(AppModule)
-  .catch(err => console.error(err));
+bootstrapApplication(AppComponent, appConfig)
+  .then((module) =>
+    enableDebugTools(module.injector.get(ApplicationRef).components[0])
+  )
+  .catch((err) => console.log(err));

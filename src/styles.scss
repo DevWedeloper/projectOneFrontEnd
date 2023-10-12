@@ -1,1 +1,103 @@
 /* You can add global styles to this file, and also import other style files */
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap");
+
+html {
+  scroll-behavior: smooth;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  border: none;
+  outline: none;
+  font-family: "Roboto", sans-serif;
+  box-sizing: border-box;
+}
+
+:root {
+  --main-color: red;
+  --primary-color: #fff;
+  --secondary-color: #f2f2f2;
+  --text-color: #000000;
+  --text-color-reverse: #ffffff;
+
+  --font-size-big-desktop: 3.2rem;
+  --font-size-regular-desktop: 1.6rem;
+  --font-size-tooltip-desktop: 1rem;
+  --icon-size-adjust-desktop: 2rem;
+
+  --font-size-big-tablet: 2.7rem;
+  --font-size-regular-tablet: 1.4rem;
+  --font-size-tooltip-tablet: 0.9rem;
+  --icon-size-adjust-tablet: 1.8rem;
+
+  --font-size-big-mobile: 2.2rem;
+  --font-size-regular-mobile: 1.2rem;
+  --font-size-tooltip-mobile: 0.8rem;
+  --icon-size-adjust-mobile: 1.6rem;
+
+  --font-size-big-small-mobile: 2rem;
+  --font-size-regular-small-mobile: 1rem;
+  --font-size-tooltip-small-mobile: 0.7rem;
+  --icon-size-adjust-small-mobile: 1.4rem;
+}
+
+.dark-theme {
+  --primary-color: #202124;
+  --secondary-color: #171717;
+  --text-color: #ffffff;
+  --text-color-reverse: #000000;
+}
+
+.resize-animation-stopper * {
+  animation: none !important;
+  transition: none !important;
+}
+
+.no-scroll {
+  overflow: hidden;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--secondary-color);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 100vh;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+body {
+  background-color: var(--primary-color);
+}
+
+.custom-focus-visible:focus-visible {
+  box-shadow: 0 0 0 3px var(--primary-color), 0 0 0 4px var(--text-color);
+}
+
+button[type="submit"] {
+  background-color: #007bff;
+  color: #ffffff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+button[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+button[type="submit"]:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}

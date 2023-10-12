@@ -1,0 +1,155 @@
+<div class="chart-group-container">
+  <div class="chart-container-heading">
+    <app-heading
+      [label]="'Top Guilds By Attribute'"
+      [loading]="ls.loading$ | async"
+    ></app-heading>
+  </div>
+  <div class="chart-container">
+    <div class="chart-container-item">
+      <app-vertical-bar-chart
+        [label]="'Health'"
+        [barChartLabels]="(gss.topGuildsByHealth$ | async)?.names"
+        [barChartDataset]="(gss.topGuildsByHealth$ | async)?.dataset"
+        [loading]="ls.loading$ | async"
+      ></app-vertical-bar-chart>
+    </div>
+
+    <div class="chart-container-item">
+      <app-vertical-bar-chart
+        [label]="'Strength'"
+        [barChartLabels]="(gss.topGuildsByStrength$ | async)?.names"
+        [barChartDataset]="(gss.topGuildsByStrength$ | async)?.dataset"
+        [loading]="ls.loading$ | async"
+      ></app-vertical-bar-chart>
+    </div>
+
+    <div class="chart-container-item">
+      <app-vertical-bar-chart
+        [label]="'Agility'"
+        [barChartLabels]="(gss.topGuildsByAgility$ | async)?.names"
+        [barChartDataset]="(gss.topGuildsByAgility$ | async)?.dataset"
+        [loading]="ls.loading$ | async"
+      ></app-vertical-bar-chart>
+    </div>
+
+    <div class="chart-container-item">
+      <app-vertical-bar-chart
+        [label]="'Intelligence'"
+        [barChartLabels]="(gss.topGuildsByIntelligence$ | async)?.names"
+        [barChartDataset]="(gss.topGuildsByIntelligence$ | async)?.dataset"
+        [loading]="ls.loading$ | async"
+      ></app-vertical-bar-chart>
+    </div>
+
+    <div class="chart-container-item">
+      <app-vertical-bar-chart
+        [label]="'Armor'"
+        [barChartLabels]="(gss.topGuildsByArmor$ | async)?.names"
+        [barChartDataset]="(gss.topGuildsByArmor$ | async)?.dataset"
+        [loading]="ls.loading$ | async"
+      ></app-vertical-bar-chart>
+    </div>
+
+    <div class="chart-container-item">
+      <app-vertical-bar-chart
+        [label]="'Crit Chance'"
+        [barChartLabels]="(gss.topGuildsByCritChance$ | async)?.names"
+        [barChartDataset]="(gss.topGuildsByCritChance$ | async)?.dataset"
+        [loading]="ls.loading$ | async"
+      ></app-vertical-bar-chart>
+    </div>
+  </div>
+</div>
+
+<div class="chart-group-container">
+  <div class="chart-container-heading">
+    <app-heading
+      [label]="'Top Guilds By Members Average Attribute'"
+      [loading]="ls.loading$ | async"
+    ></app-heading>
+  </div>
+  <div class="chart-container">
+    <div class="chart-container-item">
+      <app-vertical-bar-chart
+        [label]="'Health'"
+        [barChartLabels]="(gss.topGuildsByAverageHealthData$ | async)?.names"
+        [barChartDataset]="(gss.topGuildsByAverageHealthData$ | async)?.dataset"
+        [loading]="ls.loading$ | async"
+      ></app-vertical-bar-chart>
+    </div>
+
+    <div class="chart-container-item">
+      <app-vertical-bar-chart
+        [label]="'Strength'"
+        [barChartLabels]="(gss.topGuildsByAverageStrengthData$ | async)?.names"
+        [barChartDataset]="
+          (gss.topGuildsByAverageStrengthData$ | async)?.dataset
+        "
+        [loading]="ls.loading$ | async"
+      ></app-vertical-bar-chart>
+    </div>
+
+    <div class="chart-container-item">
+      <app-vertical-bar-chart
+        [label]="'Agility'"
+        [barChartLabels]="(gss.topGuildsByAverageAgilityData$ | async)?.names"
+        [barChartDataset]="
+          (gss.topGuildsByAverageAgilityData$ | async)?.dataset
+        "
+        [loading]="ls.loading$ | async"
+      ></app-vertical-bar-chart>
+    </div>
+
+    <div class="chart-container-item">
+      <app-vertical-bar-chart
+        [label]="'Intelligence'"
+        [barChartLabels]="
+          (gss.topGuildsByAverageIntelligenceData$ | async)?.names
+        "
+        [barChartDataset]="
+          (gss.topGuildsByAverageIntelligenceData$ | async)?.dataset
+        "
+        [loading]="ls.loading$ | async"
+      ></app-vertical-bar-chart>
+    </div>
+
+    <div class="chart-container-item">
+      <app-vertical-bar-chart
+        [label]="'Armor'"
+        [barChartLabels]="(gss.topGuildsByAverageArmorData$ | async)?.names"
+        [barChartDataset]="(gss.topGuildsByAverageArmorData$ | async)?.dataset"
+        [loading]="ls.loading$ | async"
+      ></app-vertical-bar-chart>
+    </div>
+
+    <div class="chart-container-item">
+      <app-vertical-bar-chart
+        [label]="'Crit Chance'"
+        [barChartLabels]="
+          (gss.topGuildsByAverageCritChanceData$ | async)?.names
+        "
+        [barChartDataset]="
+          (gss.topGuildsByAverageCritChanceData$ | async)?.dataset
+        "
+        [loading]="ls.loading$ | async"
+      ></app-vertical-bar-chart>
+    </div>
+  </div>
+</div>
+
+<div class="chart-group-container">
+  <div class="chart-container-heading">
+    <app-heading
+      [label]="'Top Overall Guilds'"
+      [loading]="ls.loading$ | async"
+    ></app-heading>
+  </div>
+  <div class="chart-container-item">
+    <app-horizontal-bar-chart
+      [barChartLabels]="(gss.topWellRoundedGuilds$ | async)?.names"
+      [barChartDataset]="(gss.topWellRoundedGuilds$ | async)?.dataset"
+      [loading]="ls.loading$ | async"
+    ></app-horizontal-bar-chart>
+  </div>
+</div>

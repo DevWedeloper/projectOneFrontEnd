@@ -1,0 +1,10 @@
+@import url(../../../../shared/ui/components/skeleton/skeleton.scss);
+
+.skeleton-loader {
+  display: flex;
+  flex-direction: column;
+}
+
+.loading-item {
+  height: 35px;
+}

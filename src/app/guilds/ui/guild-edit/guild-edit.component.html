@@ -1,0 +1,140 @@
+<ng-container *ngIf="updateGuildNameForm.statusChanges | async"></ng-container>
+<ng-container
+  *ngIf="updateGuildLeaderForm.statusChanges | async"
+></ng-container>
+
+<div class="edit-container">
+  <h2>Edit Guild</h2>
+  <div class="edit-actions-container">
+    <div class="content-container">
+      <div class="input-container" [formGroup]="updateGuildNameForm">
+        <app-custom-input
+          [type]="'text'"
+          [id]="'name'"
+          [label]="'Guild Name'"
+          formControlName="name"
+        ></app-custom-input>
+        <div *ngIf="updateGuildNameForm.get('name')?.hasError('uniqueName')">
+          <p appErrorText>
+            This guild name is already taken. Please choose another one.
+          </p>
+        </div>
+      </div>
+      <div class="btn-container">
+        <button
+          appFocusVisible
+          appGreenButton
+          *ngIf="
+            updateGuildNameForm.get('name')?.value !== '' &&
+            updateGuildNameForm.get('name')?.value !== guild?.name
+          "
+          (click)="
+            updateGuildName.emit({
+              guildId: guild!._id,
+              newGuildNameForm: updateGuildNameForm
+            })
+          "
+        >
+          Change
+        </button>
+      </div>
+    </div>
+
+    <div class="content-container">
+      <div class="input-container" [formGroup]="updateGuildLeaderForm">
+        <div style="position: relative">
+          <app-custom-input
+            #selectMember
+            [type]="'text'"
+            [id]="'leader'"
+            [label]="'Leader'"
+            formControlName="leader"
+            (input)="searchNewLeaderResultsQueryChange.emit(selectMember.value)"
+          ></app-custom-input>
+          <app-search-items
+            [searchResults$]="searchNewLeaderResults$"
+            (selectedItemId)="selectedLeaderId$.next($event)"
+            (selectedItemName)="
+              updateGuildLeaderForm.get('leader')?.setValue($event)
+            "
+          ></app-search-items>
+        </div>
+        <div *ngIf="updateGuildLeaderForm.get('leader')?.hasError('notFound')">
+          <p appErrorText>Leader not found.</p>
+        </div>
+      </div>
+      <div class="btn-container">
+        <button
+          appFocusVisible
+          appGreenButton
+          *ngIf="
+            updateGuildLeaderForm.get('leader')?.value !== '' &&
+            updateGuildLeaderForm.get('leader')?.value !== guild?.leader?.name
+          "
+          (click)="
+            updateGuildLeader.emit({
+              guildId: guild!._id,
+              newLeaderIdForm: updateGuildLeaderForm,
+              newLeaderId: selectedLeaderId$.value
+            })
+          "
+        >
+          Change
+        </button>
+      </div>
+    </div>
+
+    <div class="content-container">
+      <div class="input-container" [formGroup]="addMemberForm">
+        <div style="position: relative">
+          <app-custom-input
+            #selectAddMember
+            [type]="'text'"
+            [id]="'addMember'"
+            [label]="'Add Member'"
+            [value]="selectedNewMemberName$.value"
+            (input)="
+              searchNewMemberResultsQueryChange.emit(selectAddMember.value)
+            "
+          ></app-custom-input>
+          <app-search-items
+            [searchResults$]="searchNewMemberResults$"
+            (selectedItemName)="selectedNewMemberName$.next($event)"
+            (selectedItemData)="addMemberForm.get('member')?.setValue($event)"
+          ></app-search-items>
+        </div>
+      </div>
+    </div>
+    <div class="btn-container">
+      <button
+        appFocusVisible
+        appGreenButton
+        *ngIf="
+          addMemberForm.get('member')?.value !== '' &&
+          selectAddMember.value !== ''
+        "
+        (click)="
+          addMember.emit({
+            guildId: guild!._id,
+            newMemberForm: addMemberForm
+          })
+        "
+      >
+        Confirm
+      </button>
+    </div>
+  </div>
+
+  <div class="members-container">
+    <div *ngFor="let member of guild?.members; trackBy: trackBy">
+      <p>{{ member.name }}</p>
+      <button
+        appFocusVisible
+        appRedButton
+        (click)="removeMember.emit({ guildId: guild!._id, oldMember: member })"
+      >
+        Kick
+      </button>
+    </div>
+  </div>
+</div>

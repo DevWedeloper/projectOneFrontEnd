@@ -1,0 +1,194 @@
+<ng-container *ngIf="characterForm.statusChanges | async"></ng-container>
+
+<form [formGroup]="characterForm" class="form">
+  <div class="form-group">
+    <app-custom-input
+      [type]="'text'"
+      [id]="'name'"
+      [label]="'Name'"
+      formControlName="name"
+    ></app-custom-input>
+    <div
+      *ngIf="
+        characterForm.get('name')?.hasError('required') &&
+        characterForm.get('name')?.touched
+      "
+    >
+      <p appErrorText>Name is required.</p>
+    </div>
+    <div *ngIf="characterForm.get('name')?.hasError('uniqueName')">
+      <p appErrorText>This name is already taken. Please choose another one.</p>
+    </div>
+  </div>
+
+  <div class="form-group character-type-container">
+    <select appFocusVisible id="characterType" formControlName="characterType">
+      <option value="" disabled selected>Class</option>
+      <option
+        *ngFor="let type of cts.getCharacterTypes() | async"
+        [value]="type.typeName"
+      >
+        {{ type.typeName }}
+      </option>
+    </select>
+    <div
+      *ngIf="
+        characterForm.get('characterType')?.hasError('required') &&
+        characterForm.get('characterType')?.touched
+      "
+    >
+      <p appErrorText>Character Type is required.</p>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <app-custom-input
+      [type]="'number'"
+      [id]="'health'"
+      [label]="'Health'"
+      formControlName="health"
+    ></app-custom-input>
+    <div
+      *ngIf="
+        characterForm.get('health')?.hasError('required') &&
+        characterForm.get('health')?.touched
+      "
+    >
+      <p appErrorText>Health is required.</p>
+    </div>
+    <div
+      *ngIf="
+        characterForm.get('health')?.hasError('min') ||
+        characterForm.get('health')?.hasError('max')
+      "
+    >
+      <p appErrorText>Health must be between 1000 and 10000.</p>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <app-custom-input
+      [type]="'number'"
+      [id]="'strength'"
+      [label]="'Strength'"
+      formControlName="strength"
+    ></app-custom-input>
+    <div
+      *ngIf="
+        characterForm.get('strength')?.hasError('required') &&
+        characterForm.get('strength')?.touched
+      "
+    >
+      <p appErrorText>Strength is required.</p>
+    </div>
+    <div
+      *ngIf="
+        characterForm.get('strength')?.hasError('min') ||
+        characterForm.get('strength')?.hasError('max')
+      "
+    >
+      <p appErrorText>Strength must be between 1 and 100.</p>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <app-custom-input
+      [type]="'number'"
+      [id]="'agility'"
+      [label]="'Agility'"
+      formControlName="agility"
+    ></app-custom-input>
+    <div
+      *ngIf="
+        characterForm.get('agility')?.hasError('required') &&
+        characterForm.get('agility')?.touched
+      "
+    >
+      <p appErrorText>Agility is required.</p>
+    </div>
+    <div
+      *ngIf="
+        characterForm.get('agility')?.hasError('min') ||
+        characterForm.get('agility')?.hasError('max')
+      "
+    >
+      <p appErrorText>Agility must be between 1 and 100.</p>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <app-custom-input
+      [type]="'number'"
+      [id]="'intelligence'"
+      [label]="'Intelligence'"
+      formControlName="intelligence"
+    ></app-custom-input>
+    <div
+      *ngIf="
+        characterForm.get('intelligence')?.hasError('required') &&
+        characterForm.get('intelligence')?.touched
+      "
+    >
+      <p appErrorText>Intelligence is required.</p>
+    </div>
+    <div
+      *ngIf="
+        characterForm.get('intelligence')?.hasError('min') ||
+        characterForm.get('intelligence')?.hasError('max')
+      "
+    >
+      <p appErrorText>Intelligence must be between 1 and 100.</p>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <app-custom-input
+      [type]="'number'"
+      [id]="'armor'"
+      [label]="'Armor'"
+      formControlName="armor"
+    ></app-custom-input>
+    <div
+      *ngIf="
+        characterForm.get('armor')?.hasError('required') &&
+        characterForm.get('armor')?.touched
+      "
+    >
+      <p appErrorText>Armor is required.</p>
+    </div>
+    <div
+      *ngIf="
+        characterForm.get('armor')?.hasError('min') ||
+        characterForm.get('armor')?.hasError('max')
+      "
+    >
+      <p appErrorText>Armor must be between 1 and 100.</p>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <app-custom-input
+      [type]="'number'"
+      [id]="'critChance'"
+      [label]="'Crit Chance'"
+      formControlName="critChance"
+      [step]="0.01"
+    ></app-custom-input>
+    <div
+      *ngIf="
+        characterForm.get('critChance')?.hasError('required') &&
+        characterForm.get('critChance')?.touched
+      "
+    >
+      <p appErrorText>Crit Chance is required.</p>
+    </div>
+    <div
+      *ngIf="
+        characterForm.get('critChance')?.hasError('min') ||
+        characterForm.get('critChance')?.hasError('max')
+      "
+    >
+      <p appErrorText>Crit Chance must be between 0.01 and 1.</p>
+    </div>
+  </div>
+</form>

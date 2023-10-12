@@ -1,0 +1,75 @@
+<ng-container *ngIf="joinGuildForm.statusChanges | async"></ng-container>
+
+<div class="edit-container">
+  <h2>Edit Character</h2>
+  <app-character-form [characterForm]="characterForm"></app-character-form>
+  <div class="content-container">
+    <div class="input-container" [formGroup]="joinGuildForm">
+      <app-custom-input
+        #search
+        [type]="'text'"
+        [id]="'guild'"
+        [label]="'Guild'"
+        formControlName="guild"
+        (input)="searchQueryChange.emit(search.value)"
+      >
+      </app-custom-input>
+      <app-search-items
+        [searchResults$]="searchResults$"
+        (selectedItemId)="selectedGuildId$.next($event)"
+        (selectedItemName)="joinGuildForm.get('guild')?.setValue($event)"
+      ></app-search-items>
+      <div
+        *ngIf="joinGuildForm.get('guild')?.hasError('alreadyMember')"
+        appErrorText
+      >
+        Already a member of this guild
+      </div>
+      <div
+        *ngIf="joinGuildForm.get('guild')?.hasError('notFound')"
+        appErrorText
+      >
+        Guild not found
+      </div>
+    </div>
+    <div class="btn-container">
+      <button
+        appFocusVisible
+        appGreenButton
+        (click)="
+          joinGuild.emit({
+            characterId: character!._id,
+            joinGuildForm,
+            selectedGuildId: selectedGuildId$.value
+          })
+        "
+      >
+        Join
+      </button>
+      <button
+        appFocusVisible
+        appRedButton
+        (click)="
+          leaveGuild.emit({ character: character!, joinGuildForm })
+        "
+        *ngIf="character?.guild"
+      >
+        Leave
+      </button>
+    </div>
+  </div>
+  <div class="edit-btn-container">
+    <button
+      class="edit-btn"
+      [disabled]="characterForm.invalid"
+      (click)="
+        updateCharacter.emit({
+          characterForm: characterForm,
+          previousCharacterData: character!
+        })
+      "
+    >
+      Save
+    </button>
+  </div>
+</div>

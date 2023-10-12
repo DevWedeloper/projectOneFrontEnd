@@ -1,0 +1,16 @@
+<div *ngIf="!loading" class="divider-content-container">
+  <div
+    appFocusVisible
+    class="divider"
+    (click)="toggleDivider()"
+    (keydown.Enter)="toggleDivider()"
+    tabindex="0"
+  >
+    <span>{{ label }}</span>
+  </div>
+  <div *ngIf="showContent.value" [@slide]>
+    <ng-content></ng-content>
+  </div>
+</div>
+
+<app-divider-dropdown-skeleton *ngIf="loading"></app-divider-dropdown-skeleton>

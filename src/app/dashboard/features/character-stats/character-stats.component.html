@@ -1,0 +1,102 @@
+<div class="chart-group-container">
+  <div class="chart-container-heading">
+    <app-heading
+      [label]="'Top Characters By Attribute'"
+      [loading]="ls.loading$ | async"
+    ></app-heading>
+  </div>
+  <div class="chart-container">
+    <div class="chart-container-item">
+      <app-horizontal-bar-chart
+        [label]="'Health'"
+        [barChartLabels]="(css.topCharactersByHealth$ | async)?.names"
+        [barChartDataset]="(css.topCharactersByHealth$ | async)?.dataset"
+        [loading]="ls.loading$ | async"
+      ></app-horizontal-bar-chart>
+    </div>
+
+    <div class="chart-container-item">
+      <app-horizontal-bar-chart
+        [label]="'Strength'"
+        [barChartLabels]="(css.topCharactersByStrength$ | async)?.names"
+        [barChartDataset]="(css.topCharactersByStrength$ | async)?.dataset"
+        [loading]="ls.loading$ | async"
+      ></app-horizontal-bar-chart>
+    </div>
+
+    <div class="chart-container-item">
+      <app-horizontal-bar-chart
+        [label]="'Agility'"
+        [barChartLabels]="(css.topCharactersByAgility$ | async)?.names"
+        [barChartDataset]="(css.topCharactersByAgility$ | async)?.dataset"
+        [loading]="ls.loading$ | async"
+      ></app-horizontal-bar-chart>
+    </div>
+
+    <div class="chart-container-item">
+      <app-horizontal-bar-chart
+        [label]="'Intelligence'"
+        [barChartLabels]="(css.topCharactersByIntelligence$ | async)?.names"
+        [barChartDataset]="(css.topCharactersByIntelligence$ | async)?.dataset"
+        [loading]="ls.loading$ | async"
+      ></app-horizontal-bar-chart>
+    </div>
+
+    <div class="chart-container-item">
+      <app-horizontal-bar-chart
+        [label]="'Armor'"
+        [barChartLabels]="(css.topCharactersByArmor$ | async)?.names"
+        [barChartDataset]="(css.topCharactersByArmor$ | async)?.dataset"
+        [loading]="ls.loading$ | async"
+      ></app-horizontal-bar-chart>
+    </div>
+
+    <div class="chart-container-item">
+      <app-horizontal-bar-chart
+        [label]="'Crit Chance'"
+        [barChartLabels]="(css.topCharactersByCritChance$ | async)?.names"
+        [barChartDataset]="(css.topCharactersByCritChance$ | async)?.dataset"
+        [loading]="ls.loading$ | async"
+      ></app-horizontal-bar-chart>
+    </div>
+  </div>
+</div>
+
+<div class="chart-group-container">
+  <div class="chart-container-heading">
+    <app-heading
+      [label]="'Top Overall Characters'"
+      [loading]="ls.loading$ | async"
+    ></app-heading>
+  </div>
+  <div class="chart-group-container">
+    <div class="chart-container-item">
+      <app-radar-chart
+        [selectedCharacter]="css.radarChartCharacter$ | async"
+        [topWellRoundedCharacters]="css.topWellRoundedCharacters$ | async"
+        [radarChartLabels]="(css.radarChartDataset$ | async)?.labels"
+        [radarChartDatasets]="(css.radarChartDataset$ | async)?.dataset"
+        [loading]="ls.loading$ | async"
+        (selectedCharacterChange)="css.radarChartCharacter$.next($event)"
+      ></app-radar-chart>
+    </div>
+  </div>
+</div>
+
+<div class="chart-group-container">
+  <div class="chart-container-heading">
+    <app-heading
+      [label]="'Class Distribution'"
+      [loading]="ls.loading$ | async"
+    ></app-heading>
+  </div>
+  <div class="chart-container-item">
+    <app-doughnut-chart
+      [polarAreaChartLabels]="(css.characterDistributionByType$ | async)?.ids"
+      [polarAreaChartDatasets]="
+        (css.characterDistributionByType$ | async)?.dataset
+      "
+      [loading]="ls.loading$ | async"
+    ></app-doughnut-chart>
+  </div>
+</div>

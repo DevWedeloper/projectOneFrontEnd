@@ -1,0 +1,40 @@
+.edit-container {
+  padding: 1.5rem;
+  position: relative;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.content-container {
+  position: relative; 
+  margin-top: 1.25rem;
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.input-container {
+  position: relative;
+  width: 100%;
+}
+
+.btn-container {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.edit-btn-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.edit-btn {
+  padding: 0.5rem;
+  color: white;
+  background-color: #007bff;
+}

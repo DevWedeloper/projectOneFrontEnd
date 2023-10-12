@@ -1,0 +1,45 @@
+.edit-container {
+  padding: 1.5rem;
+  position: relative;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.content-container {
+  position: relative; 
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.input-container {
+  position: relative;
+  width: 100%;
+}
+
+.btn-container {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.edit-actions-container {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.members-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.members-container > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
