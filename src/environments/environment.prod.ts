@@ -1,4 +1,4 @@
 export const environment = {
   production: false,
-  baseUrl: 'http://localhost:3000/', //Rename this in actual production
+  baseUrl: 'https://project-one-back-end.vercel.app/',
 };
