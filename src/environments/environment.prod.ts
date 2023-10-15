@@ -1,4 +1,4 @@
 export const environment = {
   production: false,
-  baseUrl: 'https://project-one-back-end.vercel.app/',
+  baseUrl: 'https://us-central1-tactile-runway-402007.cloudfunctions.net/api/',
 };
