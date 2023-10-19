@@ -20,8 +20,10 @@ import { Character } from 'src/app/shared/interfaces/character.interface';
 import { CustomInputComponent } from 'src/app/shared/ui/components/custom-input/custom-input.component';
 import { DividerDropdownComponent } from 'src/app/shared/ui/components/divider-dropdown/divider-dropdown.component';
 import { SearchItemsComponent } from 'src/app/shared/ui/components/search-items/search-items.component';
+import { SpinnerComponent } from 'src/app/shared/ui/components/spinner/spinner.component';
 import { CreateButtonDirective } from 'src/app/shared/ui/directives/button/create-button.directive';
 import { ErrorTextDirective } from 'src/app/shared/ui/directives/error-text.directive';
+import { GuildActionsService } from '../../data-access/guild-actions.service';
 import { GuildFormService } from '../../data-access/guild-form.service';
 import { GuildLoadingService } from '../../data-access/guild-loading.service';
 
@@ -36,7 +38,8 @@ import { GuildLoadingService } from '../../data-access/guild-loading.service';
     ErrorTextDirective,
     DividerDropdownComponent,
     CustomInputComponent,
-    CreateButtonDirective
+    CreateButtonDirective,
+    SpinnerComponent
   ],
   templateUrl: './guild-create.component.html',
   styleUrls: ['./guild-create.component.scss'],
@@ -45,6 +48,7 @@ import { GuildLoadingService } from '../../data-access/guild-loading.service';
 export class GuildCreateComponent {
   gfs = inject(GuildFormService);
   ls = inject(GuildLoadingService);
+  gas = inject(GuildActionsService);
   @Output() createGuild = new EventEmitter<{guildForm: FormGroup, leaderId: string}>();
   searchResults$ = new BehaviorSubject<Character[]>([]);
   searchQuery$ = new BehaviorSubject<string>('');

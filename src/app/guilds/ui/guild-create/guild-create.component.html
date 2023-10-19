@@ -67,6 +67,10 @@
 
     <div class="btn-container">
       <button appCreateButton type="submit" [disabled]="guildForm.invalid">
+        <app-spinner
+          [size]="25"
+          *ngIf="gas.createLoading$ | async"
+        ></app-spinner>
         Create Guild
       </button>
     </div>

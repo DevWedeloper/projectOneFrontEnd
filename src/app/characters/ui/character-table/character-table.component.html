@@ -15,10 +15,7 @@
   <ng-template #pageSizeTemplate>
     <div class="page-size-container">
       <label for="pageSize">Show</label>
-      <select
-        #perPage
-        (change)="pageSizeChange.emit(+perPage.value)"
-      >
+      <select #perPage (change)="pageSizeChange.emit(+perPage.value)">
         <option value="10">10</option>
         <option value="15">15</option>
         <option value="25">25</option>
@@ -85,10 +82,14 @@
         <button class="edit-btn" (click)="editCharacter.emit(character)">
           Edit
         </button>
-        <button
-          class="delete-btn"
-          (click)="deleteCharacter.emit(character)"
-        >
+        <button class="delete-btn" (click)="deleteCharacter.emit(character)">
+          <app-spinner
+            [size]="20"
+            *ngIf="
+              (cas.deleteLoading$ | async) &&
+              cas.characterToUpdate$.value?._id === character._id
+            "
+          ></app-spinner>
           Delete
         </button>
       </div>

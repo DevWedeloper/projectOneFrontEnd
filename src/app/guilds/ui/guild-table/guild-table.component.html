@@ -1,4 +1,3 @@
-
 <app-table [data]="guildData?.guilds" [loading]="ls.loading$ | async">
   <ng-template #searchTemplate>
     <div>
@@ -10,14 +9,17 @@
         placeholder="Search..."
         (keyup)="searchQueryChange.emit(searchInput.value)"
       />
-  </div>
-  
+    </div>
   </ng-template>
 
   <ng-template #pageSizeTemplate>
     <div class="page-size-container">
       <label for="pageSize">Show</label>
-      <select #perPage id="pageSize" (change)="pageSizeChange.emit(+perPage.value)">
+      <select
+        #perPage
+        id="pageSize"
+        (change)="pageSizeChange.emit(+perPage.value)"
+      >
         <option value="10">10</option>
         <option value="15">15</option>
         <option value="25">25</option>
@@ -47,18 +49,25 @@
     <td>{{ guild.totalMembers }}</td>
     <td class="btn-container" *ngIf="isCurrentUserAdmin">
       <button class="edit-btn" (click)="editGuild.emit(guild)">Edit</button>
-      <button class="delete-btn" (click)="deleteGuild.emit(guild._id)">Delete</button>
+      <button class="delete-btn" (click)="deleteGuild.emit(guild)">
+        <app-spinner
+          [size]="20"
+          *ngIf="
+            (gas.deleteLoading$ | async) &&
+            gas.guildToUpdate$.value?._id === guild._id
+          "
+        ></app-spinner
+        >Delete
+      </button>
     </td>
   </ng-template>
 
   <ng-template #paginationTemplate>
-
     <app-pagination
       [currentPage]="currentPage"
       [pageSize]="pageSize"
       [total]="guildData?.totalGuilds"
       (changePage)="changePage.emit($event)"
     ></app-pagination>
-    
   </ng-template>
 </app-table>

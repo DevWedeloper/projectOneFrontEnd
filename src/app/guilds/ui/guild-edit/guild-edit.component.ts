@@ -22,6 +22,7 @@ import { Guild } from 'src/app/shared/interfaces/guild.interface';
 import { CustomInputComponent } from 'src/app/shared/ui/components/custom-input/custom-input.component';
 import { ModalComponent } from 'src/app/shared/ui/components/modal/modal.component';
 import { SearchItemsComponent } from 'src/app/shared/ui/components/search-items/search-items.component';
+import { SpinnerComponent } from 'src/app/shared/ui/components/spinner/spinner.component';
 import { GreenButtonDirective } from 'src/app/shared/ui/directives/button/green-button.directive';
 import { RedButtonDirective } from 'src/app/shared/ui/directives/button/red-button.directive';
 import { ErrorTextDirective } from 'src/app/shared/ui/directives/error-text.directive';
@@ -43,6 +44,7 @@ import { GuildActionsService } from '../../data-access/guild-actions.service';
     CustomInputComponent,
     GreenButtonDirective,
     RedButtonDirective,
+    SpinnerComponent
   ],
 })
 export class GuildEditComponent implements OnInit {

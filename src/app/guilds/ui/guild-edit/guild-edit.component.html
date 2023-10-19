@@ -34,6 +34,10 @@
             })
           "
         >
+          <app-spinner
+            [size]="20"
+            *ngIf="gas.updateNameLoading$ | async"
+          ></app-spinner>
           Change
         </button>
       </div>
@@ -77,6 +81,10 @@
             })
           "
         >
+          <app-spinner
+            [size]="20"
+            *ngIf="gas.updateLeaderLoading$ | async"
+          ></app-spinner>
           Change
         </button>
       </div>
@@ -117,6 +125,10 @@
           })
         "
       >
+        <app-spinner
+          [size]="20"
+          *ngIf="gas.addMemberLoading$ | async"
+        ></app-spinner>
         Confirm
       </button>
     </div>
@@ -129,6 +141,13 @@
         appRedButton
         (click)="removeMember.emit({ guildId: guild!._id, oldMember: member })"
       >
+        <app-spinner
+          [size]="20"
+          *ngIf="
+            (gas.removeMemberLoading$ | async) &&
+            gas.memberToRemove$.value?._id === member._id
+          "
+        ></app-spinner>
         Kick
       </button>
     </div>
