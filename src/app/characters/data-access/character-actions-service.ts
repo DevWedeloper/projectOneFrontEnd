@@ -13,7 +13,11 @@ import {
 import { CharacterApiService } from 'src/app/shared/data-access/character-api.service';
 import { ErrorService } from 'src/app/shared/data-access/error.service';
 import { Character } from 'src/app/shared/interfaces/character.interface';
-import { isLeaderOfAGuild, isMemberOfAGuild, isNotMemberOfAGuild } from 'src/app/shared/utils/guild-membership-status.utils';
+import {
+  isLeaderOfAGuild,
+  isMemberOfAGuild,
+  isNotMemberOfAGuild,
+} from 'src/app/shared/utils/guild-membership-status.utils';
 import { CharacterService } from './character.service';
 
 @Injectable({
@@ -29,7 +33,7 @@ export class CharacterActionsService {
     previousCharacterData: Character;
   }>();
   characterJoinGuild$ = new Subject<{
-    characterId: string;
+    character: Character;
     joinGuildForm: FormGroup;
     selectedGuildId: string;
   }>();
@@ -39,10 +43,16 @@ export class CharacterActionsService {
   }>();
   characterDelete$ = new Subject<Character>();
   characterToUpdate$ = new BehaviorSubject<Character | null>(null);
+  createLoading$ = new BehaviorSubject<boolean>(false);
+  updateLoading$ = new BehaviorSubject<boolean>(false);
+  joinLoading$ = new BehaviorSubject<boolean>(false);
+  leaveLoading$ = new BehaviorSubject<boolean>(false);
+  deleteLoading$ = new BehaviorSubject<boolean>(false);
 
   constructor() {
     this.characterCreate$
       .pipe(
+        tap(() => this.createLoading$.next(true)),
         switchMap((characterForm) => {
           return this.characterApiService
             .createCharacter(characterForm.value)
@@ -55,16 +65,21 @@ export class CharacterActionsService {
                 if (this.es.handleDuplicateKeyError(error)) {
                   characterForm.get('name')?.setErrors({ uniqueName: true });
                 }
+                this.createLoading$.next(false);
                 return EMPTY;
               })
             );
         }),
         takeUntilDestroyed()
       )
-      .subscribe(() => this.cs.refetchPage$.next());
+      .subscribe(() => {
+        this.cs.refetchPage$.next();
+        this.createLoading$.next(false);
+      });
 
     this.characterUpdate$
       .pipe(
+        tap(() => this.updateLoading$.next(true)),
         switchMap(({ characterForm, previousCharacterData }) => {
           if (!characterForm.valid) {
             return EMPTY;
@@ -103,11 +118,16 @@ export class CharacterActionsService {
                         .get('name')
                         ?.setErrors({ uniqueName: true });
                     }
+                    this.updateLoading$.next(false);
                     return EMPTY;
                   })
                 );
             }
           );
+
+          if (observables.length === 0) {
+            this.updateLoading$.next(false);
+          }
 
           return forkJoin(observables);
         }),
@@ -116,13 +136,37 @@ export class CharacterActionsService {
         }),
         takeUntilDestroyed()
       )
-      .subscribe(() => this.cs.refetchPage$.next());
+      .subscribe(() => {
+        this.cs.refetchPage$.next();
+        this.updateLoading$.next(false);
+      });
 
     this.characterJoinGuild$
       .pipe(
-        switchMap(({ characterId, joinGuildForm, selectedGuildId }) => {
+        tap(() => this.joinLoading$.next(true)),
+        switchMap(({ character, joinGuildForm, selectedGuildId }) => {
+          if (isMemberOfAGuild(character)) {
+            if (
+              !confirm(
+                'This character has a guild, proceeding would remove it from the guild, are you sure?'
+              )
+            ) {
+              this.joinLoading$.next(false);
+              return EMPTY;
+            }
+          }
+          if (isLeaderOfAGuild(character)) {
+            if (
+              !confirm(
+                'This character is a leader of a guild, proceeding would delete its previous guild, are you sure?'
+              )
+            ) {
+              this.joinLoading$.next(false);
+              return EMPTY;
+            }
+          }
           return this.characterApiService
-            .joinGuildById(characterId, { guild: selectedGuildId })
+            .joinGuildById(character._id, { guild: selectedGuildId })
             .pipe(
               catchError((error) => {
                 if (this.es.handleAlreadyMemberError(error)) {
@@ -132,6 +176,7 @@ export class CharacterActionsService {
                 } else {
                   joinGuildForm.get('guild')?.setErrors({ notFound: true });
                 }
+                this.joinLoading$.next(false);
                 return EMPTY;
               })
             );
@@ -141,10 +186,14 @@ export class CharacterActionsService {
         }),
         takeUntilDestroyed()
       )
-      .subscribe(() => this.cs.refetchPage$.next());
+      .subscribe(() => {
+        this.cs.refetchPage$.next();
+        this.joinLoading$.next(false);
+      });
 
     this.characterLeaveGuild$
       .pipe(
+        tap(() => this.leaveLoading$.next(true)),
         switchMap(({ character, joinGuildForm }) => {
           if (isLeaderOfAGuild(character)) {
             if (
@@ -152,6 +201,7 @@ export class CharacterActionsService {
                 'This character is the leader of this guild, proceeding would delete its previous guild, are you sure?'
               )
             ) {
+              this.leaveLoading$.next(false);
               return EMPTY;
             }
           }
@@ -164,13 +214,21 @@ export class CharacterActionsService {
         }),
         takeUntilDestroyed()
       )
-      .subscribe(() => this.cs.refetchPage$.next());
+      .subscribe(() => {
+        this.cs.refetchPage$.next();
+        this.leaveLoading$.next(false);
+      });
 
     this.characterDelete$
       .pipe(
+        tap((character) => {
+          this.deleteLoading$.next(true);
+          this.characterToUpdate$.next(character);
+        }),
         switchMap((character) => {
           if (isNotMemberOfAGuild(character)) {
             if (!confirm('Are you sure you want to delete this character?')) {
+              this.deleteLoading$.next(false);
               return EMPTY;
             }
           }
@@ -180,6 +238,7 @@ export class CharacterActionsService {
                 'This character has a guild, proceeding would remove it from the guild, are you sure?'
               )
             ) {
+              this.deleteLoading$.next(false);
               return EMPTY;
             }
           }
@@ -189,6 +248,7 @@ export class CharacterActionsService {
                 'This character is a leader of a guild, proceeding would delete its previous guild, are you sure?'
               )
             ) {
+              this.deleteLoading$.next(false);
               return EMPTY;
             }
           }
@@ -196,6 +256,9 @@ export class CharacterActionsService {
         }),
         takeUntilDestroyed()
       )
-      .subscribe(() => this.cs.refetchPage$.next());
+      .subscribe(() => {
+        this.cs.refetchPage$.next();
+        this.deleteLoading$.next(false);
+      });
   }
 }

@@ -11,7 +11,7 @@
       [disabled]="characterForm.invalid"
       (click)="this.createCharacter.emit(this.characterForm)"
     >
-      <app-spinner></app-spinner>
+      <app-spinner [size]="25" *ngIf="cas.createLoading$ | async"></app-spinner>
       Create
     </button>
   </div>

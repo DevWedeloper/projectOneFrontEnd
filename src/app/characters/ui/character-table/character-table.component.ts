@@ -17,9 +17,11 @@ import { FormsModule } from '@angular/forms';
 import { take } from 'rxjs';
 import { Character } from 'src/app/shared/interfaces/character.interface';
 import { PaginationComponent } from 'src/app/shared/ui/components/pagination/pagination.component';
+import { SpinnerComponent } from 'src/app/shared/ui/components/spinner/spinner.component';
 import { TableComponent } from 'src/app/shared/ui/components/table/table.component';
 import { TruncatePipe } from 'src/app/shared/ui/pipes/truncate.pipe';
 import { setSelectOption } from 'src/app/shared/utils/set-select-option.utils';
+import { CharacterActionsService } from '../../data-access/character-actions-service';
 import { CharacterLoadingService } from '../../data-access/character-loading.service';
 import { CharacterService } from '../../data-access/character.service';
 import { CharacterPagination } from '../../interfaces/character-pagination.interface';
@@ -36,6 +38,7 @@ import { CharacterPagination } from '../../interfaces/character-pagination.inter
     PaginationComponent,
     TruncatePipe,
     TableComponent,
+    SpinnerComponent
   ],
 })
 export class CharacterTableComponent implements AfterViewInit {
@@ -43,6 +46,7 @@ export class CharacterTableComponent implements AfterViewInit {
   destroyRef = inject(DestroyRef);
   cs = inject(CharacterService);
   ls = inject(CharacterLoadingService);
+  cas = inject(CharacterActionsService);
   @Input({ required: true }) characterData!: CharacterPagination | null;
   @Input({ required: true }) isCurrentUserAdmin!: boolean | null;
   @Input({ required: true }) currentPage!: number | null;

@@ -17,13 +17,15 @@ import { FormsModule } from '@angular/forms';
 import { take } from 'rxjs';
 import { Guild } from 'src/app/shared/interfaces/guild.interface';
 import { PaginationComponent } from 'src/app/shared/ui/components/pagination/pagination.component';
+import { SpinnerComponent } from 'src/app/shared/ui/components/spinner/spinner.component';
 import { TableComponent } from 'src/app/shared/ui/components/table/table.component';
 import { TruncatePipe } from 'src/app/shared/ui/pipes/truncate.pipe';
 import { setSelectOption } from 'src/app/shared/utils/set-select-option.utils';
+import { GuildActionsService } from '../../data-access/guild-actions.service';
+import { GuildLoadingService } from '../../data-access/guild-loading.service';
 import { GuildService } from '../../data-access/guild.service';
 import { GuildPagination } from '../../interfaces/guild-pagination.interface';
 import { GuildEditComponent } from '../guild-edit/guild-edit.component';
-import { GuildLoadingService } from '../../data-access/guild-loading.service';
 
 @Component({
   selector: 'app-guild-table',
@@ -38,6 +40,7 @@ import { GuildLoadingService } from '../../data-access/guild-loading.service';
     TruncatePipe,
     PaginationComponent,
     TableComponent,
+    SpinnerComponent
   ],
 })
 export class GuildTableComponent implements AfterViewInit {
@@ -45,6 +48,7 @@ export class GuildTableComponent implements AfterViewInit {
   destroyRef = inject(DestroyRef);
   gs = inject(GuildService);
   ls = inject(GuildLoadingService);
+  gas = inject(GuildActionsService);
   @Input() guildData!: GuildPagination | null;
   @Input() isCurrentUserAdmin!: boolean | null;
   @Input() currentPage!: number | null;
@@ -57,7 +61,7 @@ export class GuildTableComponent implements AfterViewInit {
   }>();
   @Output() changePage = new EventEmitter<number>();
   @Output() editGuild = new EventEmitter<Guild>();
-  @Output() deleteGuild = new EventEmitter<string>();
+  @Output() deleteGuild = new EventEmitter<Guild>();
   @ViewChild('perPage', { static: false }) pageSizeElement?: ElementRef;
   @ViewChild('sortBy', { static: false }) sortByElement?: ElementRef;
   @ViewChild('sortOrder', { static: false }) sortOrderElement?: ElementRef;

@@ -37,21 +37,27 @@
         appGreenButton
         (click)="
           joinGuild.emit({
-            characterId: character!._id,
+            character: character!,
             joinGuildForm,
             selectedGuildId: selectedGuildId$.value
           })
         "
       >
+        <app-spinner
+          [size]="20"
+          *ngIf="cas.joinLoading$ | async"
+        ></app-spinner>
         Join
       </button>
       <button
         appRedButton
-        (click)="
-          leaveGuild.emit({ character: character!, joinGuildForm })
-        "
+        (click)="leaveGuild.emit({ character: character!, joinGuildForm })"
         *ngIf="character?.guild"
       >
+        <app-spinner
+          [size]="20"
+          *ngIf="cas.leaveLoading$ | async"
+        ></app-spinner>
         Leave
       </button>
     </div>
@@ -67,6 +73,7 @@
         })
       "
     >
+      <app-spinner [size]="20" *ngIf="cas.updateLoading$ | async"></app-spinner>
       Save
     </button>
   </div>
