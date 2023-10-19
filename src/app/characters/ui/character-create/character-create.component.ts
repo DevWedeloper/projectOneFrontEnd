@@ -9,6 +9,7 @@ import {
 import { FormGroup } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 import { DividerDropdownComponent } from 'src/app/shared/ui/components/divider-dropdown/divider-dropdown.component';
+import { SpinnerComponent } from 'src/app/shared/ui/components/spinner/spinner.component';
 import { CreateButtonDirective } from 'src/app/shared/ui/directives/button/create-button.directive';
 import { CharacterFormService } from '../../data-access/character-form.service';
 import { CharacterLoadingService } from '../../data-access/character-loading.service';
@@ -21,7 +22,8 @@ import { CharacterFormComponent } from '../character-form/character-form.compone
     CommonModule,
     CharacterFormComponent,
     DividerDropdownComponent,
-    CreateButtonDirective
+    CreateButtonDirective,
+    SpinnerComponent
   ],
   templateUrl: './character-create.component.html',
   styleUrls: ['./character-create.component.scss'],
