@@ -1,10 +1,11 @@
 import { Directive, ElementRef, Renderer2, inject } from '@angular/core';
+import { FocusVisibleDirective } from '../focus-visible.directive';
 import { ButtonCommonStyleDirective } from './button-common-style.directive';
 
 @Directive({
   selector: '[appGreenButton]',
   standalone: true,
-  hostDirectives: [ButtonCommonStyleDirective]
+  hostDirectives: [ButtonCommonStyleDirective, FocusVisibleDirective]
 })
 export class GreenButtonDirective { 
   elementRef = inject(ElementRef);

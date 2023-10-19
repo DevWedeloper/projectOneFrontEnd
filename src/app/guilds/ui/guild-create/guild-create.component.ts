@@ -20,6 +20,7 @@ import { Character } from 'src/app/shared/interfaces/character.interface';
 import { CustomInputComponent } from 'src/app/shared/ui/components/custom-input/custom-input.component';
 import { DividerDropdownComponent } from 'src/app/shared/ui/components/divider-dropdown/divider-dropdown.component';
 import { SearchItemsComponent } from 'src/app/shared/ui/components/search-items/search-items.component';
+import { CreateButtonDirective } from 'src/app/shared/ui/directives/button/create-button.directive';
 import { ErrorTextDirective } from 'src/app/shared/ui/directives/error-text.directive';
 import { GuildFormService } from '../../data-access/guild-form.service';
 import { GuildLoadingService } from '../../data-access/guild-loading.service';
@@ -34,7 +35,8 @@ import { GuildLoadingService } from '../../data-access/guild-loading.service';
     SearchItemsComponent,
     ErrorTextDirective,
     DividerDropdownComponent,
-    CustomInputComponent
+    CustomInputComponent,
+    CreateButtonDirective
   ],
   templateUrl: './guild-create.component.html',
   styleUrls: ['./guild-create.component.scss'],

@@ -25,7 +25,6 @@ import { SearchItemsComponent } from 'src/app/shared/ui/components/search-items/
 import { GreenButtonDirective } from 'src/app/shared/ui/directives/button/green-button.directive';
 import { RedButtonDirective } from 'src/app/shared/ui/directives/button/red-button.directive';
 import { ErrorTextDirective } from 'src/app/shared/ui/directives/error-text.directive';
-import { FocusVisibleDirective } from 'src/app/shared/ui/directives/focus-visible.directive';
 import { GuildActionsService } from '../../data-access/guild-actions.service';
 
 @Component({
@@ -44,7 +43,6 @@ import { GuildActionsService } from '../../data-access/guild-actions.service';
     CustomInputComponent,
     GreenButtonDirective,
     RedButtonDirective,
-    FocusVisibleDirective
   ],
 })
 export class GuildEditComponent implements OnInit {
