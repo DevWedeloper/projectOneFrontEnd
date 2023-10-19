@@ -23,6 +23,12 @@
       />
       <label for="password" class="form-label">Password</label>
     </div>
-    <button appFocusVisible type="submit" class="btn">Login</button>
+    <button appFocusVisible type="submit" class="btn">
+      <app-spinner
+        [size]="25"
+        *ngIf="authService.loginLoading$ | async"
+      ></app-spinner>
+      Login
+    </button>
   </form>
 </div>

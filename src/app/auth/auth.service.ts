@@ -35,10 +35,12 @@ export class AuthService {
     }),
     takeUntilDestroyed()
   );
+  loginLoading$ = new BehaviorSubject<boolean>(false);
 
   constructor() {
     this.login$
       .pipe(
+        tap(() => this.loginLoading$.next(true)),
         switchMap((user) => {
           return this.http.post<AuthResponse>(`${this.url}/login`, user).pipe(
             tap((response) => {
@@ -49,13 +51,14 @@ export class AuthService {
             }),
             catchError(() => {
               this.router.navigate(['/login']);
+              this.loginLoading$.next(false);
               return EMPTY;
             })
           );
         }),
         takeUntilDestroyed()
       )
-      .subscribe();
+      .subscribe(() => this.loginLoading$.next(false));
   }
 
   logout(): void {
@@ -163,5 +166,4 @@ export class AuthService {
   private clearCurrentUser(): void {
     localStorage.removeItem(this.currentUser);
   }
-
 }
