@@ -25,7 +25,6 @@ import { SearchItemsComponent } from 'src/app/shared/ui/components/search-items/
 import { GreenButtonDirective } from 'src/app/shared/ui/directives/button/green-button.directive';
 import { RedButtonDirective } from 'src/app/shared/ui/directives/button/red-button.directive';
 import { ErrorTextDirective } from 'src/app/shared/ui/directives/error-text.directive';
-import { FocusVisibleDirective } from 'src/app/shared/ui/directives/focus-visible.directive';
 import { CharacterActionsService } from '../../data-access/character-actions-service';
 import { CharacterFormService } from '../../data-access/character-form.service';
 import { CharacterFormComponent } from '../character-form/character-form.component';
@@ -46,7 +45,6 @@ import { CharacterFormComponent } from '../character-form/character-form.compone
     ReactiveFormsModule,
     ErrorTextDirective,
     CustomInputComponent,
-    FocusVisibleDirective,
     GreenButtonDirective,
     RedButtonDirective
   ],

@@ -34,7 +34,6 @@
     </div>
     <div class="btn-container">
       <button
-        appFocusVisible
         appGreenButton
         (click)="
           joinGuild.emit({
@@ -47,7 +46,6 @@
         Join
       </button>
       <button
-        appFocusVisible
         appRedButton
         (click)="
           leaveGuild.emit({ character: character!, joinGuildForm })
