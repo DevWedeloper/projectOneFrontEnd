@@ -67,7 +67,7 @@
   cursor: pointer;
 }
 
-.btn:active {
+.btn:not([disabled]):active {
   transform: scale(0.9);
 }
 

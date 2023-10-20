@@ -33,6 +33,7 @@
               newGuildNameForm: updateGuildNameForm
             })
           "
+          [disabled]="gas.updateNameLoading$ | async"
         >
           <app-spinner
             [size]="20"
@@ -80,6 +81,7 @@
               newLeaderId: selectedLeaderId$.value
             })
           "
+          [disabled]="gas.updateLeaderLoading$ | async"
         >
           <app-spinner
             [size]="20"
@@ -124,6 +126,7 @@
             newMemberForm: addMemberForm
           })
         "
+        [disabled]="gas.addMemberLoading$ | async"
       >
         <app-spinner
           [size]="20"
@@ -140,6 +143,10 @@
       <button
         appRedButton
         (click)="removeMember.emit({ guildId: guild!._id, oldMember: member })"
+        [disabled]="
+          (gas.removeMemberLoading$ | async) &&
+          gas.memberToRemove$.value?._id === member._id
+        "
       >
         <app-spinner
           [size]="20"

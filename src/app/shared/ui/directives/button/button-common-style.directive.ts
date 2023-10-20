@@ -13,5 +13,6 @@ export class ButtonCommonStyleDirective {
     this.renderer.setStyle(this.elementRef.nativeElement, 'padding', '0.5rem');
     this.renderer.setStyle(this.elementRef.nativeElement, 'border-radius', '0.5rem');
     this.renderer.setStyle(this.elementRef.nativeElement, 'color', 'white');
+    this.renderer.setStyle(this.elementRef.nativeElement, 'cursor', 'pointer');
   }
 }
