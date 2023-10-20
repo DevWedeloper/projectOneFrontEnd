@@ -137,8 +137,6 @@ export class GuildActionsService {
       .pipe(
         tap(() => this.addMemberLoading$.next(true)),
         switchMap(({ guildId, newMemberForm }) => {
-          console.log(newMemberForm.value.member);
-          
           if (isMemberOfDifferentGuild(guildId, newMemberForm.value.member)) {
             if (
               !confirm(
