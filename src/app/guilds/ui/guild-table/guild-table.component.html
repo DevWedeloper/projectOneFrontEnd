@@ -49,7 +49,14 @@
     <td>{{ guild.totalMembers }}</td>
     <td class="btn-container" *ngIf="isCurrentUserAdmin">
       <button class="edit-btn" (click)="editGuild.emit(guild)">Edit</button>
-      <button class="delete-btn" (click)="deleteGuild.emit(guild)">
+      <button
+        class="delete-btn"
+        (click)="deleteGuild.emit(guild)"
+        [disabled]="
+          (gas.deleteLoading$ | async) &&
+          gas.guildToUpdate$.value?._id === guild._id
+        "
+      >
         <app-spinner
           [size]="20"
           *ngIf="

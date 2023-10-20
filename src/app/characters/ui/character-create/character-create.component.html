@@ -8,7 +8,7 @@
     <button
       appCreateButton
       type="submit"
-      [disabled]="characterForm.invalid"
+      [disabled]="characterForm.invalid || (cas.createLoading$ | async)"
       (click)="this.createCharacter.emit(this.characterForm)"
     >
       <app-spinner [size]="25" *ngIf="cas.createLoading$ | async"></app-spinner>

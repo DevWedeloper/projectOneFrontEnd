@@ -97,7 +97,7 @@ body {
   background-color: #0056b3;
 }
 
-.create-btn[type="submit"]:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
+button:disabled {
+  background-color: #ccc !important;
+  cursor: not-allowed !important;
 }

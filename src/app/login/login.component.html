@@ -23,7 +23,12 @@
       />
       <label for="password" class="form-label">Password</label>
     </div>
-    <button appFocusVisible type="submit" class="btn">
+    <button
+      appFocusVisible
+      class="btn"
+      type="submit"
+      [disabled]="loginForm.invalid || (authService.loginLoading$ | async)"
+    >
       <app-spinner
         [size]="25"
         *ngIf="authService.loginLoading$ | async"

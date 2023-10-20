@@ -42,17 +42,16 @@
             selectedGuildId: selectedGuildId$.value
           })
         "
+        [disabled]="cas.joinLoading$ | async"
       >
-        <app-spinner
-          [size]="20"
-          *ngIf="cas.joinLoading$ | async"
-        ></app-spinner>
+        <app-spinner [size]="20" *ngIf="cas.joinLoading$ | async"></app-spinner>
         Join
       </button>
       <button
         appRedButton
         (click)="leaveGuild.emit({ character: character!, joinGuildForm })"
         *ngIf="character?.guild"
+        [disabled]="cas.leaveLoading$ | async"
       >
         <app-spinner
           [size]="20"
@@ -65,7 +64,7 @@
   <div class="edit-btn-container">
     <button
       class="edit-btn"
-      [disabled]="characterForm.invalid"
+      [disabled]="characterForm.invalid || (cas.updateLoading$ | async)"
       (click)="
         updateCharacter.emit({
           characterForm: characterForm,

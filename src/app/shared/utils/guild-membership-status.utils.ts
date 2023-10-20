@@ -14,6 +14,7 @@ export const isLeaderOfAGuild = (character: Character): boolean => (
 );
 
 export const isMemberOfDifferentGuild = (guildId: string, character: Character): boolean => (
+  character.guild !== null &&
   guildId !== character.guild?._id &&
   character._id !== character.guild?.leader?._id
 );
