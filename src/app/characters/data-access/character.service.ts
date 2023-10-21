@@ -9,9 +9,10 @@ import {
   catchError,
   combineLatest,
   distinctUntilChanged,
+  shareReplay,
   startWith,
   switchMap,
-  take,
+  take
 } from 'rxjs';
 import { CharacterApiService } from 'src/app/shared/data-access/character-api.service';
 import { QueryParams } from 'src/app/shared/interfaces/query-params.interface';
@@ -50,12 +51,15 @@ export class CharacterService {
         this.characterApiService
           .getCharacters(page, pageSize, sortBy, sortOrder, searchQuery)
           .pipe(catchError(() => EMPTY))
-    )
+    ),
+    shareReplay(1)
   );
 
   constructor() {
-    const observables: Observable<CharacterPagination>[] = [
-      this.characterData$.pipe(take(1)),
+    const observables: Observable<CharacterPagination | void>[] = [
+      this.characterData$.pipe(
+        take(1),
+      ),
     ];
     this.ls.waitForObservables(observables);
 

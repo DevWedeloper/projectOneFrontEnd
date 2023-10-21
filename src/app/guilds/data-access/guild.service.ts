@@ -9,6 +9,7 @@ import {
   catchError,
   combineLatest,
   distinctUntilChanged,
+  shareReplay,
   startWith,
   switchMap,
   take
@@ -50,7 +51,8 @@ export class GuildService {
         this.guildApiService
           .getGuilds(page, pageSize, sortBy, sortOrder, searchQuery)
           .pipe(catchError(() => EMPTY))
-    )
+    ),
+    shareReplay(1)
   );
 
   constructor() {
