@@ -10,7 +10,7 @@ import {
   Output,
   Renderer2,
   ViewChild,
-  inject,
+  inject
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';

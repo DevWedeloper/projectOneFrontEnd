@@ -1,4 +1,7 @@
-<app-table [data]="characterData?.characters" [loading]="ls.loading$ | async">
+<app-table
+  [data]="characterData?.characters"
+  [loading]="ls.loading$ | async"
+>
   <ng-template #searchTemplate>
     <div>
       <input
