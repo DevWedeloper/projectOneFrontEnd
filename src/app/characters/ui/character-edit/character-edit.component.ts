@@ -8,7 +8,6 @@ import {
   Output,
   inject,
 } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   FormBuilder,
   FormGroup,
@@ -80,9 +79,6 @@ export class CharacterEditComponent implements OnInit {
     this.characterForm = this.cfs.initializeCharacterForm();
     this.joinGuildForm = this.fb.group({
       guild: ['', [Validators.required]],
-    });
-    this.cas.characterLeaveGuild$.pipe(takeUntilDestroyed()).subscribe(() => {
-      this.joinGuildForm.reset();
     });
   }
 
