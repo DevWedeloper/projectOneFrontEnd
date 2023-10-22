@@ -7,11 +7,11 @@ export function validateName(
   const name = control.value;
   const errors: { [key: string]: boolean } = {};
 
-  if (name.length < 6) {
+  if (name?.length < 6) {
     errors['minLength'] = true;
   }
 
-  if (name.length > 20) {
+  if (name?.length > 20) {
     errors['maxLength'] = true;
   }
 
