@@ -14,13 +14,33 @@
           [label]="'Guild Name'"
           formControlName="name"
         ></app-custom-input>
-        <div *ngIf="updateGuildNameForm.get('name')?.hasError('validSymbol')">
-          <p appErrorText>Name field should only contain letters, numbers, and underscore.</p>
+        <div
+          *ngIf="
+            updateGuildNameForm.get('name')?.hasError('validSymbol') &&
+            updateGuildNameForm.get('name')?.dirty &&
+            updateGuildNameForm.get('name')?.value
+          "
+        >
+          <p appErrorText>
+            Name field should only contain letters, numbers, and underscore.
+          </p>
         </div>
-        <div *ngIf="updateGuildNameForm.get('name')?.hasError('minLength')">
+        <div
+          *ngIf="
+            updateGuildNameForm.get('name')?.hasError('minLength') &&
+            updateGuildNameForm.get('name')?.dirty &&
+            updateGuildNameForm.get('name')?.value
+          "
+        >
           <p appErrorText>Name field should be at least 6 characters long.</p>
         </div>
-        <div *ngIf="updateGuildNameForm.get('name')?.hasError('maxLength')">
+        <div
+          *ngIf="
+            updateGuildNameForm.get('name')?.hasError('maxLength') &&
+            updateGuildNameForm.get('name')?.dirty &&
+            updateGuildNameForm.get('name')?.value
+          "
+        >
           <p appErrorText>Name field should not exceed 20 characters.</p>
         </div>
         <div *ngIf="updateGuildNameForm.get('name')?.hasError('uniqueName')">
@@ -34,7 +54,8 @@
           appGreenButton
           *ngIf="
             updateGuildNameForm.get('name')?.value !== '' &&
-            updateGuildNameForm.get('name')?.value !== guild?.name
+            updateGuildNameForm.get('name')?.value !== guild?.name && 
+            updateGuildNameForm.valid
           "
           (click)="
             updateGuildName.emit({

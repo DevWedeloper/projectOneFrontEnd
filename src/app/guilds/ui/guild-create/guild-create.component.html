@@ -29,13 +29,33 @@
       >
         <p appErrorText>Guild name is required.</p>
       </div>
-      <div *ngIf="guildForm.get('name')?.hasError('validSymbol')">
-        <p appErrorText>Name field should only contain letters, numbers, and underscore.</p>
+      <div
+        *ngIf="
+          guildForm.get('name')?.hasError('validSymbol') &&
+          guildForm.get('name')?.dirty &&
+          guildForm.get('name')?.value
+        "
+      >
+        <p appErrorText>
+          Name field should only contain letters, numbers, and underscore.
+        </p>
       </div>
-      <div *ngIf="guildForm.get('name')?.hasError('minLength')">
+      <div
+        *ngIf="
+          guildForm.get('name')?.hasError('minLength') &&
+          guildForm.get('name')?.dirty &&
+          guildForm.get('name')?.value
+        "
+      >
         <p appErrorText>Name field should be at least 6 characters long.</p>
       </div>
-      <div *ngIf="guildForm.get('name')?.hasError('maxLength')">
+      <div
+        *ngIf="
+          guildForm.get('name')?.hasError('maxLength') &&
+          guildForm.get('name')?.dirty &&
+          guildForm.get('name')?.value
+        "
+      >
         <p appErrorText>Name field should not exceed 20 characters.</p>
       </div>
       <div *ngIf="guildForm.get('name')?.hasError('uniqueName')">
