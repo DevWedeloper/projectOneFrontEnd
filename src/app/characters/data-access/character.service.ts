@@ -12,12 +12,13 @@ import {
   shareReplay,
   startWith,
   switchMap,
-  take
+  take,
 } from 'rxjs';
 import { CharacterApiService } from 'src/app/shared/data-access/character-api.service';
 import { QueryParams } from 'src/app/shared/interfaces/query-params.interface';
 import { CharacterPagination } from '../interfaces/character-pagination.interface';
 import { CharacterLoadingService } from './character-loading.service';
+import { CharacterSortParams } from 'src/app/characters/interfaces/character-sort-params.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -29,7 +30,7 @@ export class CharacterService {
   ls = inject(CharacterLoadingService);
   currentPage$ = new BehaviorSubject<number>(1);
   pageSize$ = new BehaviorSubject<number>(10);
-  sortParams$ = new BehaviorSubject<{ sortBy: string; sortOrder: string }>({
+  sortParams$ = new BehaviorSubject<CharacterSortParams>({
     sortBy: 'name',
     sortOrder: 'asc',
   });
@@ -57,9 +58,7 @@ export class CharacterService {
 
   constructor() {
     const observables: Observable<CharacterPagination | void>[] = [
-      this.characterData$.pipe(
-        take(1),
-      ),
+      this.characterData$.pipe(take(1)),
     ];
     this.ls.waitForObservables(observables);
 

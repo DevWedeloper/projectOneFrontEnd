@@ -16,6 +16,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { take } from 'rxjs';
 import { Character } from 'src/app/shared/interfaces/character.interface';
+import { CharacterSortParams } from 'src/app/characters/interfaces/character-sort-params.interface';
 import { PaginationComponent } from 'src/app/shared/ui/components/pagination/pagination.component';
 import { SpinnerComponent } from 'src/app/shared/ui/components/spinner/spinner.component';
 import { TableComponent } from 'src/app/shared/ui/components/table/table.component';
@@ -53,10 +54,7 @@ export class CharacterTableComponent implements AfterViewInit {
   @Input({ required: true }) pageSize!: number | null;
   @Output() searchQueryChange = new EventEmitter<string>();
   @Output() pageSizeChange = new EventEmitter<number>();
-  @Output() sortParamsChange = new EventEmitter<{
-    sortBy: string;
-    sortOrder: string;
-  }>();
+  @Output() sortParamsChange = new EventEmitter<CharacterSortParams>();
   @Output() changePage = new EventEmitter<number>();
   @Output() editCharacter = new EventEmitter<Character>();
   @Output() deleteCharacter = new EventEmitter<Character>();
@@ -78,7 +76,7 @@ export class CharacterTableComponent implements AfterViewInit {
       });
   }
 
-  toggleSort(header: string): void {
+  toggleSort(header: CharacterSortParams['sortBy']): void {
     if (this.cs.sortParams$.value.sortBy === header) {
       this.sortParamsChange.emit({
         sortBy: header,
