@@ -1,5 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { validateName } from 'src/app/shared/utils/validate-name.utils';
 
 @Injectable({
   providedIn: 'root',
@@ -9,7 +10,7 @@ export class CharacterFormService {
 
   initializeCharacterForm(): FormGroup {
     return this.fb.group({
-      name: ['', [Validators.required]],
+      name: ['', [Validators.required, validateName]],
       characterType: ['', [Validators.required]],
       health: [
         null,

@@ -26,6 +26,7 @@ import { SpinnerComponent } from 'src/app/shared/ui/components/spinner/spinner.c
 import { GreenButtonDirective } from 'src/app/shared/ui/directives/button/green-button.directive';
 import { RedButtonDirective } from 'src/app/shared/ui/directives/button/red-button.directive';
 import { ErrorTextDirective } from 'src/app/shared/ui/directives/error-text.directive';
+import { validateName } from 'src/app/shared/utils/validate-name.utils';
 import { GuildActionsService } from '../../data-access/guild-actions.service';
 
 @Component({
@@ -88,7 +89,7 @@ export class GuildEditComponent implements OnInit {
       .subscribe(() => this.selectedNewMemberName$.next(''));
 
     this.updateGuildNameForm = this.fb.group({
-      name: ['', [Validators.required]],
+      name: ['', [Validators.required, validateName]],
     });
 
     this.updateGuildLeaderForm = this.fb.group({

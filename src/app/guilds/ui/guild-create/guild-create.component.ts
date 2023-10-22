@@ -4,7 +4,7 @@ import {
   Component,
   EventEmitter,
   Output,
-  inject
+  inject,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -39,7 +39,7 @@ import { GuildLoadingService } from '../../data-access/guild-loading.service';
     DividerDropdownComponent,
     CustomInputComponent,
     CreateButtonDirective,
-    SpinnerComponent
+    SpinnerComponent,
   ],
   templateUrl: './guild-create.component.html',
   styleUrls: ['./guild-create.component.scss'],
@@ -49,13 +49,17 @@ export class GuildCreateComponent {
   gfs = inject(GuildFormService);
   ls = inject(GuildLoadingService);
   gas = inject(GuildActionsService);
-  @Output() createGuild = new EventEmitter<{guildForm: FormGroup, leaderId: string}>();
+  characterApiService = inject(CharacterApiService);
+  @Output() createGuild = new EventEmitter<{
+    guildForm: FormGroup;
+    leaderId: string;
+  }>();
   searchResults$ = new BehaviorSubject<Character[]>([]);
   searchQuery$ = new BehaviorSubject<string>('');
   selectedLeaderId$ = new BehaviorSubject<string>('');
   guildForm!: FormGroup;
 
-  constructor(private characterApiService: CharacterApiService) {
+  constructor() {
     this.searchQuery$
       .pipe(
         debounceTime(300),

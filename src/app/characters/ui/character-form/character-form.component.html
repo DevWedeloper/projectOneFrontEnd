@@ -16,13 +16,33 @@
     >
       <p appErrorText>Name is required.</p>
     </div>
-    <div *ngIf="characterForm.get('name')?.hasError('validSymbol')">
-      <p appErrorText>Name field should only contain letters, numbers, and underscore.</p>
+    <div
+      *ngIf="
+        characterForm.get('name')?.hasError('validSymbol') &&
+        characterForm.get('name')?.dirty &&
+        characterForm.get('name')?.value
+      "
+    >
+      <p appErrorText>
+        Name field should only contain letters, numbers, and underscore.
+      </p>
     </div>
-    <div *ngIf="characterForm.get('name')?.hasError('minLength')">
+    <div
+      *ngIf="
+        characterForm.get('name')?.hasError('minLength') &&
+        characterForm.get('name')?.dirty &&
+        characterForm.get('name')?.value
+      "
+    >
       <p appErrorText>Name field should be at least 6 characters long.</p>
     </div>
-    <div *ngIf="characterForm.get('name')?.hasError('maxLength')">
+    <div
+      *ngIf="
+        characterForm.get('name')?.hasError('maxLength') &&
+        characterForm.get('name')?.dirty &&
+        characterForm.get('name')?.value
+      "
+    >
       <p appErrorText>Name field should not exceed 20 characters.</p>
     </div>
     <div *ngIf="characterForm.get('name')?.hasError('uniqueName')">
