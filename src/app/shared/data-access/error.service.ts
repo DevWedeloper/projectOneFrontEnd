@@ -5,6 +5,18 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class ErrorService {
+  handleValidSymbolError(error: HttpErrorResponse): boolean {
+    return error.error.message.includes('failed: name: Path `name` is invalid');
+  }
+
+  handleMinLengthError(error: HttpErrorResponse): boolean {
+    return error.error.message.includes('is shorter than the minimum allowed length (6).');
+  }
+
+  handleMaxLengthError(error: HttpErrorResponse): boolean {
+    return error.error.message.includes('is longer than the maximum allowed length (20).');
+  }
+
   handleDuplicateKeyError(error: HttpErrorResponse): boolean {
     return error.error.message.includes('E11000 duplicate key error');
   }
