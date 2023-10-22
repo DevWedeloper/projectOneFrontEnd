@@ -63,21 +63,6 @@ export class GuildActionsService {
           return this.guildApiService.createGuild(guild).pipe(
             tap(() => guildForm.reset()),
             catchError((error) => {
-              if (this.es.handleValidSymbolError(error)) {
-                guildForm
-                  .get('name')
-                  ?.setErrors({ validSymbol: true });
-              }
-              if (this.es.handleMinLengthError(error)) {
-                guildForm
-                  .get('name')
-                  ?.setErrors({ minLength: true });
-              }
-              if (this.es.handleMaxLengthError(error)) {
-                guildForm
-                  .get('name')
-                  ?.setErrors({ maxLength: true });
-              }
               if (this.es.handleDuplicateKeyError(error)) {
                 guildForm.get('name')?.setErrors({ uniqueName: true });
               } 
@@ -104,21 +89,6 @@ export class GuildActionsService {
             .updateGuildNameById(guildId, newGuildNameForm.value)
             .pipe(
               catchError((error) => {
-                if (this.es.handleValidSymbolError(error)) {
-                  newGuildNameForm
-                    .get('name')
-                    ?.setErrors({ validSymbol: true });
-                }
-                if (this.es.handleMinLengthError(error)) {
-                  newGuildNameForm
-                    .get('name')
-                    ?.setErrors({ minLength: true });
-                }
-                if (this.es.handleMaxLengthError(error)) {
-                  newGuildNameForm
-                    .get('name')
-                    ?.setErrors({ maxLength: true });
-                }
                 if (this.es.handleDuplicateKeyError(error)) {
                   newGuildNameForm.get('name')?.setErrors({ uniqueName: true });
                 }

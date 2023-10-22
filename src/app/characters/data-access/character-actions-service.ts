@@ -62,21 +62,6 @@ export class CharacterActionsService {
                 characterForm.get('characterType')?.setValue('');
               }),
               catchError((error) => {
-                if (this.es.handleValidSymbolError(error)) {
-                  characterForm
-                    .get('name')
-                    ?.setErrors({ validSymbol: true });
-                }
-                if (this.es.handleMinLengthError(error)) {
-                  characterForm
-                    .get('name')
-                    ?.setErrors({ minLength: true });
-                }
-                if (this.es.handleMaxLengthError(error)) {
-                  characterForm
-                    .get('name')
-                    ?.setErrors({ maxLength: true });
-                }
                 if (this.es.handleDuplicateKeyError(error)) {
                   characterForm.get('name')?.setErrors({ uniqueName: true });
                 }
@@ -128,21 +113,6 @@ export class CharacterActionsService {
                 )
                 .pipe(
                   catchError((error) => {
-                    if (this.es.handleValidSymbolError(error)) {
-                      characterForm
-                        .get('name')
-                        ?.setErrors({ validSymbol: true });
-                    }
-                    if (this.es.handleMinLengthError(error)) {
-                      characterForm
-                        .get('name')
-                        ?.setErrors({ minLength: true });
-                    }
-                    if (this.es.handleMaxLengthError(error)) {
-                      characterForm
-                        .get('name')
-                        ?.setErrors({ maxLength: true });
-                    }
                     if (this.es.handleDuplicateKeyError(error)) {
                       characterForm
                         .get('name')
