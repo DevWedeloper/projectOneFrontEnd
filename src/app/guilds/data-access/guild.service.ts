@@ -17,6 +17,7 @@ import {
 import { GuildApiService } from 'src/app/shared/data-access/guild-api.service';
 import { QueryParams } from 'src/app/shared/interfaces/query-params.interface';
 import { GuildPagination } from '../interfaces/guild-pagination.interface';
+import { GuildSortParams } from '../interfaces/guild-sort-params.interface';
 import { GuildLoadingService } from './guild-loading.service';
 
 @Injectable({
@@ -29,7 +30,7 @@ export class GuildService {
   ls = inject(GuildLoadingService);
   currentPage$ = new BehaviorSubject<number>(1);
   pageSize$ = new BehaviorSubject<number>(10);
-  sortParams$ = new BehaviorSubject<{ sortBy: string; sortOrder: string }>({
+  sortParams$ = new BehaviorSubject<GuildSortParams>({
     sortBy: 'name',
     sortOrder: 'asc',
   });

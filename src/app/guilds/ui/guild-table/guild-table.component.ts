@@ -25,6 +25,7 @@ import { GuildActionsService } from '../../data-access/guild-actions.service';
 import { GuildLoadingService } from '../../data-access/guild-loading.service';
 import { GuildService } from '../../data-access/guild.service';
 import { GuildPagination } from '../../interfaces/guild-pagination.interface';
+import { GuildSortParams } from '../../interfaces/guild-sort-params.interface';
 import { GuildEditComponent } from '../guild-edit/guild-edit.component';
 
 @Component({
@@ -40,7 +41,7 @@ import { GuildEditComponent } from '../guild-edit/guild-edit.component';
     TruncatePipe,
     PaginationComponent,
     TableComponent,
-    SpinnerComponent
+    SpinnerComponent,
   ],
 })
 export class GuildTableComponent implements AfterViewInit {
@@ -55,10 +56,7 @@ export class GuildTableComponent implements AfterViewInit {
   @Input() pageSize!: number | null;
   @Output() searchQueryChange = new EventEmitter<string>();
   @Output() pageSizeChange = new EventEmitter<number>();
-  @Output() sortParamsChange = new EventEmitter<{
-    sortBy: string;
-    sortOrder: string;
-  }>();
+  @Output() sortParamsChange = new EventEmitter<GuildSortParams>();
   @Output() changePage = new EventEmitter<number>();
   @Output() editGuild = new EventEmitter<Guild>();
   @Output() deleteGuild = new EventEmitter<Guild>();
@@ -80,7 +78,7 @@ export class GuildTableComponent implements AfterViewInit {
       });
   }
 
-  toggleSort(header: string): void {
+  toggleSort(header: GuildSortParams['sortBy']): void {
     if (this.gs.sortParams$.value.sortBy === header) {
       this.sortParamsChange.emit({
         sortBy: header,
