@@ -159,7 +159,7 @@ export class GuildActionsService {
           }
           return this.guildApiService.addMemberToGuildById(
             guildId,
-            newMemberForm.value
+            newMemberForm.value.member._id
           );
         }),
         tap((data) => {

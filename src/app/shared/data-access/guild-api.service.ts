@@ -72,7 +72,8 @@ export class GuildApiService {
 
   addMemberToGuildById(guildId: string, newData: string): Observable<GuildUpdateResponse> {
     const url = `${this.baseUrl}/guild/addMember/${guildId}`;
-    return this.http.put<GuildUpdateResponse>(url, newData);
+    const reqBody = { character: newData };
+    return this.http.put<GuildUpdateResponse>(url, reqBody);
   }
 
   removeMemberFromGuildById(
