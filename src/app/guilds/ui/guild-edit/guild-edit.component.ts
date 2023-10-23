@@ -8,7 +8,6 @@ import {
   Output,
   inject,
 } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   FormBuilder,
   FormGroup,
@@ -67,7 +66,6 @@ export class GuildEditComponent implements OnInit {
   @Output() updateGuildLeader = new EventEmitter<{
     guildId: string;
     newLeaderIdForm: FormGroup;
-    newLeaderId: string;
   }>();
   @Output() addMember = new EventEmitter<{
     guildId: string;
@@ -80,14 +78,9 @@ export class GuildEditComponent implements OnInit {
   updateGuildNameForm!: FormGroup;
   updateGuildLeaderForm!: FormGroup;
   addMemberForm!: FormGroup;
-  selectedLeaderId$ = new BehaviorSubject<string>('');
   selectedNewMemberName$ = new BehaviorSubject<string>('');
 
   constructor() {
-    this.gas.guildAddMember$
-      .pipe(takeUntilDestroyed())
-      .subscribe(() => this.selectedNewMemberName$.next(''));
-
     this.updateGuildNameForm = this.fb.group({
       name: ['', [Validators.required, validateName]],
     });

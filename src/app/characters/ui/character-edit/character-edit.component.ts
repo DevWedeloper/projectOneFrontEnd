@@ -6,7 +6,7 @@ import {
   Input,
   OnInit,
   Output,
-  inject,
+  inject
 } from '@angular/core';
 import {
   FormBuilder,
@@ -64,7 +64,6 @@ export class CharacterEditComponent implements OnInit {
   @Output() joinGuild = new EventEmitter<{
     character: Character;
     joinGuildForm: FormGroup;
-    selectedGuildId: string;
   }>();
   @Output() leaveGuild = new EventEmitter<{
     character: Character;
@@ -73,7 +72,6 @@ export class CharacterEditComponent implements OnInit {
   @Output() closeModal = new EventEmitter<void>();
   characterForm!: FormGroup;
   joinGuildForm!: FormGroup;
-  selectedGuildId$ = new BehaviorSubject<string>('');
 
   constructor() {
     this.characterForm = this.cfs.initializeCharacterForm();

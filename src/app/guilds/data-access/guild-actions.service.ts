@@ -34,7 +34,6 @@ export class GuildActionsService {
   guildUpdateLeader$ = new Subject<{
     guildId: string;
     newLeaderIdForm: FormGroup;
-    newLeaderId: string;
   }>();
   guildAddMember$ = new Subject<{
     guildId: string;
@@ -65,7 +64,7 @@ export class GuildActionsService {
             catchError((error) => {
               if (this.es.handleDuplicateKeyError(error)) {
                 guildForm.get('name')?.setErrors({ uniqueName: true });
-              } 
+              }
               if (leaderId === '') {
                 guildForm.get('leader')?.setErrors({ notFound: true });
               }
@@ -110,9 +109,9 @@ export class GuildActionsService {
     this.guildUpdateLeader$
       .pipe(
         tap(() => this.updateLeaderLoading$.next(true)),
-        switchMap(({ guildId, newLeaderIdForm, newLeaderId }) => {
+        switchMap(({ guildId, newLeaderIdForm }) => {
           return this.guildApiService
-            .updateGuildLeaderById(guildId, { leader: newLeaderId })
+            .updateGuildLeaderById(guildId, newLeaderIdForm.value.leader)
             .pipe(
               catchError((error) => {
                 if (this.es.handleNotFoundError(error)) {
@@ -158,10 +157,13 @@ export class GuildActionsService {
               return EMPTY;
             }
           }
-          return this.guildApiService.addMemberToGuildById(
-            guildId,
-            newMemberForm.value
-          );
+          return this.guildApiService
+            .addMemberToGuildById(guildId, newMemberForm.value.member._id)
+            .pipe(
+              tap(() => {
+                newMemberForm.reset();
+              })
+            );
         }),
         tap((data) => {
           this.guildToUpdate$.next(data.guild);

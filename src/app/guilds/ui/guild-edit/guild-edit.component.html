@@ -87,7 +87,6 @@
           ></app-custom-input>
           <app-search-items
             [searchResults$]="searchNewLeaderResults$"
-            (selectedItemId)="selectedLeaderId$.next($event)"
             (selectedItemName)="
               updateGuildLeaderForm.get('leader')?.setValue($event)
             "
@@ -108,7 +107,6 @@
             updateGuildLeader.emit({
               guildId: guild!._id,
               newLeaderIdForm: updateGuildLeaderForm,
-              newLeaderId: selectedLeaderId$.value
             })
           "
           [disabled]="gas.updateLeaderLoading$ | async"
@@ -147,6 +145,7 @@
       <button
         appGreenButton
         *ngIf="
+          addMemberForm.get('member')?.value &&
           addMemberForm.get('member')?.value !== '' &&
           selectAddMember.value !== ''
         "
