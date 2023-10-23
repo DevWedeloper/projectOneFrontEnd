@@ -64,7 +64,7 @@ export class GuildActionsService {
             catchError((error) => {
               if (this.es.handleDuplicateKeyError(error)) {
                 guildForm.get('name')?.setErrors({ uniqueName: true });
-              } 
+              }
               if (leaderId === '') {
                 guildForm.get('leader')?.setErrors({ notFound: true });
               }
@@ -157,10 +157,13 @@ export class GuildActionsService {
               return EMPTY;
             }
           }
-          return this.guildApiService.addMemberToGuildById(
-            guildId,
-            newMemberForm.value.member._id
-          );
+          return this.guildApiService
+            .addMemberToGuildById(guildId, newMemberForm.value.member._id)
+            .pipe(
+              tap(() => {
+                newMemberForm.reset();
+              })
+            );
         }),
         tap((data) => {
           this.guildToUpdate$.next(data.guild);
