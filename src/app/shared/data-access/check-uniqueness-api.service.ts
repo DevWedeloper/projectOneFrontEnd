@@ -10,15 +10,15 @@ export class CheckUniquenessService {
   http = inject(HttpClient);
   baseUrl = environment.baseUrl;
 
-  checkCharacterNameUniqueness(name: string): Observable<{ success: string }> {
+  checkCharacterNameUniqueness(name: string): Observable<{ message: string }> {
     const url = `${this.baseUrl}/character/unique`;
     const reqBody = { name: name };
-    return this.http.post<{ success: string }>(url, reqBody);
+    return this.http.post<{ message: string }>(url, reqBody);
   }
 
-  checkGuildNameUniqueness(name: string): Observable<{ success: string }> {
+  checkGuildNameUniqueness(name: string): Observable<{ message: string }> {
     const url = `${this.baseUrl}/guild/unique`;
     const reqBody = { name: name };
-    return this.http.post<{ success: string }>(url, reqBody);
+    return this.http.post<{ message: string }>(url, reqBody);
   }
 }
