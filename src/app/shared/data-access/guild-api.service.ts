@@ -64,9 +64,10 @@ export class GuildApiService {
     return this.http.put<GuildUpdateResponse>(url, newData);
   }
 
-  updateGuildLeaderById(guildId: string, newData: { leader: string }): Observable<GuildUpdateResponse> {
+  updateGuildLeaderById(guildId: string, newData: string): Observable<GuildUpdateResponse> {
     const url = `${this.baseUrl}/guild/leader/${guildId}`;
-    return this.http.put<GuildUpdateResponse>(url, newData);
+    const reqBody = { character: newData };
+    return this.http.put<GuildUpdateResponse>(url, reqBody);
   }
 
   addMemberToGuildById(guildId: string, newData: string): Observable<GuildUpdateResponse> {

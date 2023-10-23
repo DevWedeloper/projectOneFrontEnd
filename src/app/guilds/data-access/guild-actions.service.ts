@@ -34,7 +34,6 @@ export class GuildActionsService {
   guildUpdateLeader$ = new Subject<{
     guildId: string;
     newLeaderIdForm: FormGroup;
-    newLeaderId: string;
   }>();
   guildAddMember$ = new Subject<{
     guildId: string;
@@ -110,9 +109,9 @@ export class GuildActionsService {
     this.guildUpdateLeader$
       .pipe(
         tap(() => this.updateLeaderLoading$.next(true)),
-        switchMap(({ guildId, newLeaderIdForm, newLeaderId }) => {
+        switchMap(({ guildId, newLeaderIdForm }) => {
           return this.guildApiService
-            .updateGuildLeaderById(guildId, { leader: newLeaderId })
+            .updateGuildLeaderById(guildId, newLeaderIdForm.value.leader)
             .pipe(
               catchError((error) => {
                 if (this.es.handleNotFoundError(error)) {
