@@ -6,7 +6,7 @@ import {
   Input,
   OnInit,
   Output,
-  inject,
+  inject
 } from '@angular/core';
 import {
   FormBuilder,
@@ -64,7 +64,7 @@ export class CharacterEditComponent implements OnInit {
   @Output() joinGuild = new EventEmitter<{
     character: Character;
     joinGuildForm: FormGroup;
-    selectedGuildId: string;
+    selectedGuildId$: BehaviorSubject<string>;
   }>();
   @Output() leaveGuild = new EventEmitter<{
     character: Character;

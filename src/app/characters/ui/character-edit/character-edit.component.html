@@ -39,7 +39,7 @@
           joinGuild.emit({
             character: character!,
             joinGuildForm,
-            selectedGuildId: selectedGuildId$.value
+            selectedGuildId$: selectedGuildId$
           })
         "
         [disabled]="cas.joinLoading$ | async"
