@@ -16,7 +16,6 @@
       </app-custom-input>
       <app-search-items
         [searchResults$]="searchResults$"
-        (selectedItemId)="selectedGuildId$.next($event)"
         (selectedItemName)="joinGuildForm.get('guild')?.setValue($event)"
       ></app-search-items>
       <div
@@ -39,7 +38,6 @@
           joinGuild.emit({
             character: character!,
             joinGuildForm,
-            selectedGuildId$: selectedGuildId$
           })
         "
         [disabled]="cas.joinLoading$ | async"

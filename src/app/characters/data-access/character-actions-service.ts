@@ -35,7 +35,6 @@ export class CharacterActionsService {
   characterJoinGuild$ = new Subject<{
     character: Character;
     joinGuildForm: FormGroup;
-    selectedGuildId$: BehaviorSubject<string>;
   }>();
   characterLeaveGuild$ = new Subject<{
     character: Character;
@@ -144,7 +143,7 @@ export class CharacterActionsService {
     this.characterJoinGuild$
       .pipe(
         tap(() => this.joinLoading$.next(true)),
-        switchMap(({ character, joinGuildForm, selectedGuildId$ }) => {
+        switchMap(({ character, joinGuildForm }) => {
           if (isMemberOfAGuild(character)) {
             if (
               !confirm(
@@ -166,9 +165,8 @@ export class CharacterActionsService {
             }
           }
           return this.characterApiService
-            .joinGuildById(character._id, { guild: selectedGuildId$.value })
+            .joinGuildById(character._id, joinGuildForm.value)
             .pipe(
-              tap(() => selectedGuildId$.next('')),
               catchError((error) => {
                 if (this.es.handleAlreadyMemberError(error)) {
                   joinGuildForm
