@@ -165,7 +165,7 @@ export class CharacterActionsService {
             }
           }
           return this.characterApiService
-            .joinGuildById(character._id, joinGuildForm.value)
+            .joinGuildById(character._id, joinGuildForm.value.guild)
             .pipe(
               catchError((error) => {
                 if (this.es.handleAlreadyMemberError(error)) {
