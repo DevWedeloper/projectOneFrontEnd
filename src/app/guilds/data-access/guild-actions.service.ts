@@ -215,7 +215,6 @@ export class GuildActionsService {
       )
       .subscribe(() => {
         this.gs.refetchPage$.next();
-        this.deleteLoading$.next(false);
       });
   }
 }

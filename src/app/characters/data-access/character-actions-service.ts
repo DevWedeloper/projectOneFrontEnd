@@ -257,7 +257,6 @@ export class CharacterActionsService {
       )
       .subscribe(() => {
         this.cs.refetchPage$.next();
-        this.deleteLoading$.next(false);
       });
   }
 }
