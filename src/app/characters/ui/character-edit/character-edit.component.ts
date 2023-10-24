@@ -4,10 +4,9 @@ import {
   Component,
   EventEmitter,
   Input,
-  OnDestroy,
   OnInit,
   Output,
-  inject,
+  inject
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
@@ -53,7 +52,7 @@ import { CharacterFormComponent } from '../character-form/character-form.compone
     SpinnerComponent,
   ],
 })
-export class CharacterEditComponent implements OnInit, OnDestroy {
+export class CharacterEditComponent implements OnInit {
   cfs = inject(CharacterFormService);
   cas = inject(CharacterActionsService);
   cjgfs = inject(CharacterJoinGuildFormService);
@@ -104,9 +103,5 @@ export class CharacterEditComponent implements OnInit, OnDestroy {
     });
     this.cfs.initialName$.next(this.characterForm.get('name')?.value);
     this.cjgfs.initialName$.next(this.joinGuildForm.get('guild')?.value);
-  }
-
-  ngOnDestroy(): void {
-    this.cfs.initialName$.next('');
   }
 }
