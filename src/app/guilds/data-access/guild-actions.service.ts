@@ -54,19 +54,16 @@ export class GuildActionsService {
     this.guildCreate$
       .pipe(
         tap(() => this.createLoading$.next(true)),
-        switchMap(({ guildForm, leaderId }) => {
+        switchMap(({ guildForm }) => {
           const guild = {
             name: guildForm.get('name')?.value,
-            leader: leaderId,
+            character: guildForm.get('leader')?.value
           };
           return this.guildApiService.createGuild(guild).pipe(
             tap(() => guildForm.reset()),
             catchError((error) => {
               if (this.es.handleDuplicateKeyError(error)) {
                 guildForm.get('name')?.setErrors({ uniqueName: true });
-              }
-              if (leaderId === '') {
-                guildForm.get('leader')?.setErrors({ notFound: true });
               }
               this.createLoading$.next(false);
               return EMPTY;
