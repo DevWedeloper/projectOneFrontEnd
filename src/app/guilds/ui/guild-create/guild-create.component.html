@@ -100,7 +100,7 @@
           <p appErrorText>Leader name is required.</p>
         </div>
         <div *ngIf="gfs.leaderValidationStatus$ | async">
-          <p style="color: aqua">Checking if unique..</p>
+          <p style="color: aqua">Checking if leader exists..</p>
         </div>
         <div
           *ngIf="

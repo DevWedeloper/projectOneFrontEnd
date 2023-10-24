@@ -155,7 +155,7 @@ export class GuildActionsService {
             }
           }
           return this.guildApiService
-            .addMemberToGuildById(guildId, newMemberForm.value.member._id)
+            .addMemberToGuildById(guildId, newMemberForm.value.member)
             .pipe(
               tap(() => {
                 newMemberForm.reset();

@@ -43,6 +43,20 @@
         >
           <p appErrorText>Name field should not exceed 20 characters.</p>
         </div>
+        <div *ngIf="gefs.updateNameValidationStatus$ | async">
+          <p style="color: aqua">Checking if unique..</p>
+        </div>
+        <div
+          *ngIf="
+            (gefs.updateNameValidationStatus$ | async) === false &&
+            !updateGuildNameForm.get('name')?.invalid &&
+            updateGuildNameForm.get('name')?.value !==
+              (gefs.initialName$ | async) &&
+            updateGuildNameForm.get('name')?.value !== guild?.name
+          "
+        >
+          <p style="color: green">Unique!</p>
+        </div>
         <div *ngIf="updateGuildNameForm.get('name')?.hasError('uniqueName')">
           <p appErrorText>
             This guild name is already taken. Please choose another one.
@@ -54,7 +68,7 @@
           appGreenButton
           *ngIf="
             updateGuildNameForm.get('name')?.value !== '' &&
-            updateGuildNameForm.get('name')?.value !== guild?.name && 
+            updateGuildNameForm.get('name')?.value !== guild?.name &&
             updateGuildNameForm.valid
           "
           (click)="
@@ -91,9 +105,25 @@
               updateGuildLeaderForm.get('leader')?.setValue($event)
             "
           ></app-search-items>
-        </div>
-        <div *ngIf="updateGuildLeaderForm.get('leader')?.hasError('notFound')">
-          <p appErrorText>Leader not found.</p>
+          <div *ngIf="gefs.updateLeaderValidationStatus$ | async">
+            <p style="color: aqua">Checking if leader exists..</p>
+          </div>
+          <div
+            *ngIf="
+              (gefs.updateLeaderValidationStatus$ | async) === false &&
+              !updateGuildLeaderForm.get('leader')?.invalid &&
+              updateGuildLeaderForm.get('leader')?.value !==
+                (gefs.initialLeader$ | async) &&
+              updateGuildLeaderForm.get('leader')?.value !== guild?.leader?.name
+            "
+          >
+            <p style="color: green">Leader exists!</p>
+          </div>
+          <div
+            *ngIf="updateGuildLeaderForm.get('leader')?.hasError('notFound')"
+          >
+            <p appErrorText>Leader not found.</p>
+          </div>
         </div>
       </div>
       <div class="btn-container">
@@ -101,7 +131,9 @@
           appGreenButton
           *ngIf="
             updateGuildLeaderForm.get('leader')?.value !== '' &&
-            updateGuildLeaderForm.get('leader')?.value !== guild?.leader?.name
+            updateGuildLeaderForm.get('leader')?.value !==
+              guild?.leader?.name &&
+            updateGuildLeaderForm.valid
           "
           (click)="
             updateGuildLeader.emit({
@@ -128,41 +160,54 @@
             [type]="'text'"
             [id]="'addMember'"
             [label]="'Add Member'"
-            [value]="selectedNewMemberName$.value"
+            formControlName="member"
             (input)="
               searchNewMemberResultsQueryChange.emit(selectAddMember.value)
             "
           ></app-custom-input>
           <app-search-items
             [searchResults$]="searchNewMemberResults$"
-            (selectedItemName)="selectedNewMemberName$.next($event)"
-            (selectedItemData)="addMemberForm.get('member')?.setValue($event)"
+            (selectedItemName)="addMemberForm.get('member')?.setValue($event)"
           ></app-search-items>
+          <div *ngIf="gefs.addMemberValidationStatus$ | async">
+            <p style="color: aqua">Checking if character exists..</p>
+          </div>
+          <div
+            *ngIf="
+              (gefs.addMemberValidationStatus$ | async) === false &&
+              !addMemberForm.get('member')?.invalid
+            "
+          >
+            <p style="color: green">Character exists!</p>
+          </div>
+          <div *ngIf="addMemberForm.get('member')?.hasError('notFound')">
+            <p appErrorText>Character not found.</p>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="btn-container">
-      <button
-        appGreenButton
-        *ngIf="
-          addMemberForm.get('member')?.value &&
-          addMemberForm.get('member')?.value !== '' &&
-          selectAddMember.value !== ''
-        "
-        (click)="
-          addMember.emit({
-            guildId: guild!._id,
-            newMemberForm: addMemberForm
-          })
-        "
-        [disabled]="gas.addMemberLoading$ | async"
-      >
-        <app-spinner
-          [size]="20"
-          *ngIf="gas.addMemberLoading$ | async"
-        ></app-spinner>
-        Confirm
-      </button>
+      <div class="btn-container">
+        <button
+          appGreenButton
+          *ngIf="
+            addMemberForm.get('member')?.value &&
+            addMemberForm.get('member')?.value !== '' &&
+            addMemberForm.valid
+          "
+          (click)="
+            addMember.emit({
+              guildId: guild!._id,
+              newMemberForm: addMemberForm
+            })
+          "
+          [disabled]="gas.addMemberLoading$ | async"
+        >
+          <app-spinner
+            [size]="20"
+            *ngIf="gas.addMemberLoading$ | async"
+          ></app-spinner>
+          Confirm
+        </button>
+      </div>
     </div>
   </div>
 
