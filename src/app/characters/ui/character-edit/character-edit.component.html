@@ -37,7 +37,8 @@
         *ngIf="
           (cjgfs.validationStatus$ | async) === false &&
           !joinGuildForm.get('guild')?.invalid &&
-          joinGuildForm.get('guild')?.value !== (cjgfs.initialName$ | async)
+          joinGuildForm.get('guild')?.value !== (cjgfs.initialName$ | async) &&
+          joinGuildForm.get('guild')?.value !== character?.guild?.name
         "
       >
         <p style="color: green">Guild exists!</p>
@@ -54,6 +55,10 @@
             character: character!,
             joinGuildForm,
           })
+        "
+        *ngIf="
+          joinGuildForm.valid &&
+          joinGuildForm.get('guild')?.value !== character?.guild?.name
         "
         [disabled]="cas.joinLoading$ | async"
       >
