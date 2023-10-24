@@ -35,6 +35,7 @@ import { CharacterFormComponent } from '../character-form/character-form.compone
   selector: 'app-character-edit',
   templateUrl: './character-edit.component.html',
   styleUrls: ['./character-edit.component.scss'],
+  providers: [CharacterFormService],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [

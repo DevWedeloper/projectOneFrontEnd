@@ -27,6 +27,7 @@ import { CharacterFormComponent } from '../character-form/character-form.compone
   ],
   templateUrl: './character-create.component.html',
   styleUrls: ['./character-create.component.scss'],
+  providers: [CharacterFormService],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CharacterCreateComponent {
