@@ -30,6 +30,21 @@
       >
         Guild not found
       </div>
+      <div *ngIf="cjgfs.validationStatus$ | async">
+        <p style="color: aqua">Checking if guild exists..</p>
+      </div>
+      <div
+        *ngIf="
+          (cjgfs.validationStatus$ | async) === false &&
+          !joinGuildForm.get('guild')?.invalid &&
+          joinGuildForm.get('guild')?.value !== (cjgfs.initialName$ | async)
+        "
+      >
+        <p style="color: green">Guild exists!</p>
+      </div>
+      <div *ngIf="joinGuildForm.get('guild')?.hasError('guildNotFound')">
+        <p appErrorText>Guild does not exist.</p>
+      </div>
     </div>
     <div class="btn-container">
       <button

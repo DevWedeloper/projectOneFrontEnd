@@ -2,6 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
+  FormGroup,
   ValidationErrors,
   Validators,
 } from '@angular/forms';
@@ -13,33 +14,42 @@ import {
   finalize,
   map,
   of,
-  switchMap,
+  switchMap
 } from 'rxjs';
 import { CheckUniquenessService } from 'src/app/shared/data-access/check-uniqueness-api.service';
-import { validateName } from 'src/app/shared/utils/validate-name.utils';
 
 @Injectable({
   providedIn: 'root',
 })
-export class GuildFormService {
+export class CharacterJoinGuildFormService {
   fb = inject(FormBuilder);
   checkUniquenessApi = inject(CheckUniquenessService);
   validationStatus$ = new BehaviorSubject<boolean>(false);
+  isInitialValueSet$ = new BehaviorSubject<boolean>(false);
+  initialName$ = new BehaviorSubject<string>('');
 
-  initializeGuildForm() {
+  initializeJoinGuildForm(): FormGroup {
     return this.fb.group({
-      name: [
+      guild: [
         '',
-        [Validators.required, validateName],
-        [this.validateGuildNameUniqueness.bind(this)],
-      ],
-      leader: ['', [Validators.required]],
+        [Validators.required],
+        [this.validateGuildExisting.bind(this)],
+      ]
     });
   }
 
-  private validateGuildNameUniqueness(
+  private validateGuildExisting(
     control: AbstractControl
   ): Observable<ValidationErrors | null> {
+    if (this.isInitialValueSet$.value) {
+      return of(null);
+    }
+
+    const nameField = control.getRawValue();
+    if (nameField === this.initialName$.value) {
+      return of(null);
+    }
+
     this.validationStatus$.next(true);
     return of(control.value).pipe(
       debounceTime(300),
@@ -47,11 +57,11 @@ export class GuildFormService {
         this.checkUniquenessApi.checkGuildNameUniqueness(name).pipe(
           map((response) =>
             response.message === 'Guild name is unique'
-              ? null
-              : { uniqueName: false }
+              ? { guildNotFound: true }
+              : null
           ),
           catchError(() => {
-            return of({ uniqueName: true });
+            return of(null);
           })
         )
       ),
