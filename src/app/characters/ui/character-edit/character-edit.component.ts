@@ -4,10 +4,12 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnDestroy,
   OnInit,
   Output,
-  inject
+  inject,
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   FormBuilder,
   FormGroup,
@@ -15,7 +17,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, take } from 'rxjs';
 import { Character } from 'src/app/shared/interfaces/character.interface';
 import { Guild } from 'src/app/shared/interfaces/guild.interface';
 import { CustomInputComponent } from 'src/app/shared/ui/components/custom-input/custom-input.component';
@@ -47,10 +49,10 @@ import { CharacterFormComponent } from '../character-form/character-form.compone
     CustomInputComponent,
     GreenButtonDirective,
     RedButtonDirective,
-    SpinnerComponent
+    SpinnerComponent,
   ],
 })
-export class CharacterEditComponent implements OnInit {
+export class CharacterEditComponent implements OnInit, OnDestroy {
   cfs = inject(CharacterFormService);
   cas = inject(CharacterActionsService);
   fb = inject(FormBuilder);
@@ -75,9 +77,15 @@ export class CharacterEditComponent implements OnInit {
 
   constructor() {
     this.characterForm = this.cfs.initializeCharacterForm();
+    this.cfs.isInitialValueSet$.next(true);
     this.joinGuildForm = this.fb.group({
       guild: ['', [Validators.required]],
     });
+    this.characterForm.valueChanges
+      .pipe(take(1), takeUntilDestroyed())
+      .subscribe(() => {
+        this.cfs.isInitialValueSet$.next(false);
+      });
   }
 
   ngOnInit(): void {
@@ -94,5 +102,10 @@ export class CharacterEditComponent implements OnInit {
     this.joinGuildForm.patchValue({
       guild: this.character?.guild?.name || null,
     });
+    this.cfs.initialName$.next(this.characterForm.get('name')?.value);
+  }
+
+  ngOnDestroy(): void {
+    this.cfs.initialName$.next('');
   }
 }

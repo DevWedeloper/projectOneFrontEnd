@@ -7,7 +7,6 @@ import {
   inject,
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { BehaviorSubject } from 'rxjs';
 import { DividerDropdownComponent } from 'src/app/shared/ui/components/divider-dropdown/divider-dropdown.component';
 import { SpinnerComponent } from 'src/app/shared/ui/components/spinner/spinner.component';
 import { CreateButtonDirective } from 'src/app/shared/ui/directives/button/create-button.directive';
@@ -36,10 +35,10 @@ export class CharacterCreateComponent {
   cas = inject(CharacterActionsService);
   @Output() createCharacter = new EventEmitter<FormGroup>();
   characterForm!: FormGroup;
-  showForm = new BehaviorSubject<boolean>(false);
 
   constructor() {
     this.characterForm = this.cfs.initializeCharacterForm();
+    this.cfs.isInitialValueSet$.next(false);
   }
 
   resetForm(): void {
