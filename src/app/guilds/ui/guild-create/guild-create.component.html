@@ -29,12 +29,12 @@
       >
         <p appErrorText>Guild name is required.</p>
       </div>
-      <div *ngIf="gfs.validationStatus$ | async">
+      <div *ngIf="gfs.guildNameValidationStatus$ | async">
         <p style="color: aqua">Checking if unique..</p>
       </div>
       <div
         *ngIf="
-          (gfs.validationStatus$ | async) === false &&
+          (gfs.guildNameValidationStatus$ | async) === false &&
           !guildForm.get('name')?.invalid
         "
       >
@@ -91,17 +91,28 @@
           (selectedItemId)="selectedLeaderId$.next($event)"
           (selectedItemName)="guildForm.get('leader')?.setValue($event)"
         ></app-search-items>
-      </div>
-      <div
-        *ngIf="
-          guildForm.get('leader')?.hasError('required') &&
-          guildForm.get('leader')?.touched
-        "
-      >
-        <p appErrorText>Leader name is required.</p>
-      </div>
-      <div *ngIf="guildForm.get('leader')?.hasError('notFound')">
-        <p appErrorText>Leader not found. Please choose a valid leader.</p>
+        <div
+          *ngIf="
+            guildForm.get('leader')?.hasError('required') &&
+            guildForm.get('leader')?.touched
+          "
+        >
+          <p appErrorText>Leader name is required.</p>
+        </div>
+        <div *ngIf="gfs.leaderValidationStatus$ | async">
+          <p style="color: aqua">Checking if unique..</p>
+        </div>
+        <div
+          *ngIf="
+            (gfs.leaderValidationStatus$ | async) === false &&
+            !guildForm.get('leader')?.invalid
+          "
+        >
+          <p style="color: green">Leader exists!</p>
+        </div>
+        <div *ngIf="guildForm.get('leader')?.hasError('notFound')">
+          <p appErrorText>Leader not found. Please choose a valid leader.</p>
+        </div>
       </div>
     </div>
 

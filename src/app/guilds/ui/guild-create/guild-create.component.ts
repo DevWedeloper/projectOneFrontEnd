@@ -78,5 +78,15 @@ export class GuildCreateComponent {
       });
 
     this.guildForm = this.gfs.initializeGuildForm();
+    
+
+    this.guildForm.valueChanges
+      .pipe(takeUntilDestroyed())
+      .subscribe(() => {
+        Object.keys(this.guildForm.controls).forEach(controlName => {
+          const control = this.guildForm.get(controlName);
+          console.log(`${controlName} is valid: ${control?.valid}`);
+        });
+      });
   }
 }

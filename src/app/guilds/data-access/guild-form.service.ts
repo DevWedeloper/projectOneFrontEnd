@@ -13,7 +13,7 @@ import {
   finalize,
   map,
   of,
-  switchMap,
+  switchMap
 } from 'rxjs';
 import { CheckUniquenessService } from 'src/app/shared/data-access/check-uniqueness-api.service';
 import { validateName } from 'src/app/shared/utils/validate-name.utils';
@@ -24,7 +24,8 @@ import { validateName } from 'src/app/shared/utils/validate-name.utils';
 export class GuildFormService {
   fb = inject(FormBuilder);
   checkUniquenessApi = inject(CheckUniquenessService);
-  validationStatus$ = new BehaviorSubject<boolean>(false);
+  guildNameValidationStatus$ = new BehaviorSubject<boolean>(false);
+  leaderValidationStatus$ = new BehaviorSubject<boolean>(false);
 
   initializeGuildForm() {
     return this.fb.group({
@@ -33,14 +34,18 @@ export class GuildFormService {
         [Validators.required, validateName],
         [this.validateGuildNameUniqueness.bind(this)],
       ],
-      leader: ['', [Validators.required]],
+      leader: [
+        '',
+        [Validators.required],
+        [this.validateLeaderExisting.bind(this)],
+      ],
     });
   }
 
   private validateGuildNameUniqueness(
     control: AbstractControl
   ): Observable<ValidationErrors | null> {
-    this.validationStatus$.next(true);
+    this.guildNameValidationStatus$.next(true);
     return of(control.value).pipe(
       debounceTime(300),
       switchMap((name) =>
@@ -55,7 +60,29 @@ export class GuildFormService {
           })
         )
       ),
-      finalize(() => this.validationStatus$.next(false))
+      finalize(() => this.guildNameValidationStatus$.next(false))
+    );
+  }
+
+  private validateLeaderExisting(
+    control: AbstractControl
+  ): Observable<ValidationErrors | null> {
+    this.leaderValidationStatus$.next(true);
+    return of(control.value).pipe(
+      debounceTime(300),
+      switchMap((name) =>
+        this.checkUniquenessApi.checkCharacterNameUniqueness(name).pipe(
+          map((response) =>
+            response.message === 'Character name is unique'
+              ? { notFound: true }
+              : null
+          ),
+          catchError(() => {
+            return of(null);
+          })
+        )
+      ),
+      finalize(() => this.leaderValidationStatus$.next(false))
     );
   }
 }
