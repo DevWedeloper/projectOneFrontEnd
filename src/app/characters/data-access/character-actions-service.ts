@@ -7,10 +7,12 @@ import {
   Subject,
   catchError,
   forkJoin,
+  of,
   switchMap,
-  tap,
+  tap
 } from 'rxjs';
 import { CharacterApiService } from 'src/app/shared/data-access/character-api.service';
+import { CheckGuildRelationStatusServiceApi } from 'src/app/shared/data-access/check-guild-relation-status.service-api';
 import { ErrorService } from 'src/app/shared/data-access/error.service';
 import { Character } from 'src/app/shared/interfaces/character.interface';
 import {
@@ -26,6 +28,9 @@ import { CharacterService } from './character.service';
 export class CharacterActionsService {
   cs = inject(CharacterService);
   characterApiService = inject(CharacterApiService);
+  checkGuildRelationStatusApiService = inject(
+    CheckGuildRelationStatusServiceApi
+  );
   es = inject(ErrorService);
   characterCreate$ = new Subject<FormGroup>();
   characterUpdate$ = new Subject<{
@@ -142,28 +147,41 @@ export class CharacterActionsService {
 
     this.characterJoinGuild$
       .pipe(
-        tap(() => this.joinLoading$.next(true)),
+        tap(() => {this.joinLoading$.next(true);}),
         switchMap(({ character, joinGuildForm }) => {
-          if (isMemberOfAGuild(character)) {
-            if (
-              !confirm(
-                'This character has a guild, proceeding would remove it from the guild, are you sure?'
-              )
-            ) {
-              this.joinLoading$.next(false);
-              return EMPTY;
-            }
-          }
-          if (isLeaderOfAGuild(character)) {
-            if (
-              !confirm(
-                'This character is a leader of a guild, proceeding would delete its previous guild, are you sure?'
-              )
-            ) {
-              this.joinLoading$.next(false);
-              return EMPTY;
-            }
-          }
+          this.checkGuildRelationStatusApiService
+            .checkGuildRelationStatus(character._id)
+            .pipe(
+              switchMap((data) => {
+                if (data.hasNoGuild) {
+                  return EMPTY;
+                }
+                if (data.memberOfGuild) {
+                  if (
+                    !confirm(
+                      'This character has a guild, proceeding would remove it from the guild, are you sure?'
+                    )
+                  ) {
+                    this.joinLoading$.next(false);
+                    return EMPTY;
+                  }
+                }
+                if (data.leaderOfGuild) {
+                  if (
+                    !confirm(
+                      'This character is a leader of a guild, proceeding would delete its previous guild, are you sure?'
+                    )
+                  ) {
+                    this.joinLoading$.next(false);
+                    return EMPTY;
+                  }
+                }
+                return EMPTY;
+              })
+            ).subscribe();
+          return of({ character, joinGuildForm });
+        }),
+        switchMap(({ character, joinGuildForm }) => {
           return this.characterApiService
             .joinGuildById(character._id, joinGuildForm.value.guild)
             .pipe(
