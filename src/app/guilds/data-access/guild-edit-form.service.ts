@@ -16,6 +16,7 @@ import {
   of,
   switchMap
 } from 'rxjs';
+import { CheckIfMemberApiService } from 'src/app/dashboard/data-access/check-if-member-api.service';
 import { CheckUniquenessService } from 'src/app/shared/data-access/check-uniqueness-api.service';
 import { validateName } from 'src/app/shared/utils/validate-name.utils';
 
@@ -25,9 +26,12 @@ import { validateName } from 'src/app/shared/utils/validate-name.utils';
 export class GuildEditFormService {
   fb = inject(FormBuilder);
   checkUniquenessApi = inject(CheckUniquenessService);
+  checkIfMemberApi = inject(CheckIfMemberApiService);
   updateNameValidationStatus$ = new BehaviorSubject<boolean>(false);
   updateLeaderValidationStatus$ = new BehaviorSubject<boolean>(false);
+  ifMemberValidationStatus$ = new BehaviorSubject<boolean>(false);
   addMemberValidationStatus$ = new BehaviorSubject<boolean>(false);
+  ifNotMemberValidationStatus$ = new BehaviorSubject<boolean>(false);
   updateNameInitialValueSet$ = new BehaviorSubject<boolean>(false);
   updateLeaderInitialValueSet$ = new BehaviorSubject<boolean>(false);
   initialName$ = new BehaviorSubject<string>('');
@@ -43,22 +47,28 @@ export class GuildEditFormService {
     });
   }
 
-  initializeUpdateLeaderForm(): FormGroup {
+  initializeUpdateLeaderForm(guild: string | null): FormGroup {
     return this.fb.group({
       leader: [
         '',
         [Validators.required],
-        [this.validateLeaderExisting.bind(this)],
+        [
+          this.validateLeaderExisting.bind(this),
+          (control) => this.checkIfMember(control, guild),
+        ],
       ],
     });
   }
 
-  initializeAddMemberForm(): FormGroup {
+  initializeAddMemberForm(guild: string | null): FormGroup {
     return this.fb.group({
       member: [
         '',
         [Validators.required],
-        [this.validateAddMemberExisting.bind(this)],
+        [
+          this.validateAddMemberExisting.bind(this),
+          (control) => this.checkIfNotMember(control, guild),
+        ],
       ],
     });
   }
@@ -144,6 +154,69 @@ export class GuildEditFormService {
         )
       ),
       finalize(() => this.addMemberValidationStatus$.next(false))
+    );
+  }
+
+  private checkIfMember(
+    control: AbstractControl,
+    guild: string | null
+  ): Observable<ValidationErrors | null> {
+    if (!guild) {
+      return of(null);
+    }
+
+    const nameField = control.getRawValue();
+    if (nameField === this.initialLeader$.value) {
+      return of(null);
+    }
+
+    if (this.updateLeaderInitialValueSet$.value) {
+      return of(null);
+    }
+
+    this.ifMemberValidationStatus$.next(true);
+    return of(control.value).pipe(
+      debounceTime(300),
+      switchMap((name) =>
+        this.checkIfMemberApi.checkIfMember(name, guild).pipe(
+          map((response) => {
+            return response.message === 'Not member'
+              ? { notMember: true }
+              : null;
+          }),
+          catchError(() => {
+            return of(null);
+          })
+        )
+      ),
+      finalize(() => this.ifMemberValidationStatus$.next(false))
+    );
+  }
+
+  private checkIfNotMember(
+    control: AbstractControl,
+    guild: string | null
+  ): Observable<ValidationErrors | null> {
+    if (!guild) {
+      return of(null);
+    }
+
+    this.ifNotMemberValidationStatus$.next(true);
+    return of(control.value).pipe(
+      debounceTime(300),
+      switchMap((name) =>
+        this.checkIfMemberApi.checkIfMember(name, guild).pipe(
+          map((response) => {
+            return response.message === 'Member'
+              ? { alreadyMember: true }
+              : null;
+          }),
+          catchError(() => {
+            return of(null);
+          })
+        )
+      ),
+      finalize(() => this.ifNotMemberValidationStatus$.next(false))
     );
   }
 }

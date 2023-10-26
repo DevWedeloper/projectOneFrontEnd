@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
+  DestroyRef,
   EventEmitter,
   Input,
   OnInit,
@@ -51,6 +52,7 @@ export class GuildEditComponent implements OnInit {
   gas = inject(GuildActionsService);
   gefs = inject(GuildEditFormService);
   fb = inject(FormBuilder);
+  destroyRef = inject(DestroyRef);
   @Input({ required: true }) guild!: Guild | null;
   @Input({ required: true }) searchNewLeaderResults$ = new BehaviorSubject<
     Character[]
@@ -87,16 +89,16 @@ export class GuildEditComponent implements OnInit {
       .subscribe(() => {
         this.gefs.updateNameInitialValueSet$.next(false);
       });
-    this.updateGuildLeaderForm = this.gefs.initializeUpdateLeaderForm();
-    this.updateGuildLeaderForm.valueChanges
-      .pipe(take(1), takeUntilDestroyed())
-      .subscribe(() => {
-        this.gefs.updateLeaderInitialValueSet$.next(false);
-      });
-    this.addMemberForm = this.gefs.initializeAddMemberForm();
   }
 
   ngOnInit(): void {
+    this.addMemberForm = this.gefs.initializeAddMemberForm(this.guild?._id || null);
+    this.updateGuildLeaderForm = this.gefs.initializeUpdateLeaderForm(this.guild?._id || null);
+    this.updateGuildLeaderForm.valueChanges
+      .pipe(take(1), takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => {
+        this.gefs.updateLeaderInitialValueSet$.next(false);
+      });
     this.updateGuildNameForm.patchValue({
       name: this.guild?.name,
     });
