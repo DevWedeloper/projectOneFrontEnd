@@ -67,7 +67,6 @@
         <button
           appGreenButton
           *ngIf="
-            updateGuildNameForm.get('name')?.value !== '' &&
             updateGuildNameForm.get('name')?.value !== guild?.name &&
             updateGuildNameForm.valid
           "
@@ -130,7 +129,6 @@
         <button
           appGreenButton
           *ngIf="
-            updateGuildLeaderForm.get('leader')?.value !== '' &&
             updateGuildLeaderForm.get('leader')?.value !==
               guild?.leader?.name &&
             updateGuildLeaderForm.valid
@@ -189,8 +187,6 @@
         <button
           appGreenButton
           *ngIf="
-            addMemberForm.get('member')?.value &&
-            addMemberForm.get('member')?.value !== '' &&
             addMemberForm.valid
           "
           (click)="
