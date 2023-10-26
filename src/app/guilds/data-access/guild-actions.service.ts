@@ -6,17 +6,15 @@ import {
   EMPTY,
   Subject,
   catchError,
+  of,
   switchMap,
   tap,
 } from 'rxjs';
+import { CheckGuildRelationStatusServiceApi } from 'src/app/shared/data-access/check-guild-relation-status.service-api';
 import { ErrorService } from 'src/app/shared/data-access/error.service';
 import { GuildApiService } from 'src/app/shared/data-access/guild-api.service';
 import { Character } from 'src/app/shared/interfaces/character.interface';
 import { Guild } from 'src/app/shared/interfaces/guild.interface';
-import {
-  isLeaderOfDifferentGuild,
-  isMemberOfDifferentGuild,
-} from 'src/app/shared/utils/guild-membership-status.utils';
 import { GuildService } from './guild.service';
 
 @Injectable({
@@ -25,6 +23,9 @@ import { GuildService } from './guild.service';
 export class GuildActionsService {
   gs = inject(GuildService);
   guildApiService = inject(GuildApiService);
+  checkGuildRelationStatusApiService = inject(
+    CheckGuildRelationStatusServiceApi
+  );
   es = inject(ErrorService);
   guildCreate$ = new Subject<{ guildForm: FormGroup; leaderId: string }>();
   guildUpdateName$ = new Subject<{
@@ -55,9 +56,43 @@ export class GuildActionsService {
       .pipe(
         tap(() => this.createLoading$.next(true)),
         switchMap(({ guildForm }) => {
+          this.checkGuildRelationStatusApiService
+            .checkGuildRelationStatus(guildForm.value.leader)
+            .pipe(
+              switchMap((data) => {
+                if (data.hasNoGuild) {
+                  return EMPTY;
+                }
+                if (data.memberOfGuild) {
+                  if (
+                    !confirm(
+                      'This character has a guild, proceeding would remove it from the guild, are you sure?'
+                    )
+                  ) {
+                    this.createLoading$.next(false);
+                    return EMPTY;
+                  }
+                }
+                if (data.leaderOfGuild) {
+                  if (
+                    !confirm(
+                      'This character is a leader of a guild, proceeding would delete its previous guild, are you sure?'
+                    )
+                  ) {
+                    this.createLoading$.next(false);
+                    return EMPTY;
+                  }
+                }
+                return EMPTY;
+              })
+            )
+            .subscribe();
+          return of({ guildForm });
+        }),
+        switchMap(({ guildForm }) => {
           const guild = {
             name: guildForm.get('name')?.value,
-            character: guildForm.get('leader')?.value
+            character: guildForm.get('leader')?.value,
           };
           return this.guildApiService.createGuild(guild).pipe(
             tap(() => guildForm.reset()),
@@ -134,26 +169,40 @@ export class GuildActionsService {
       .pipe(
         tap(() => this.addMemberLoading$.next(true)),
         switchMap(({ guildId, newMemberForm }) => {
-          if (isMemberOfDifferentGuild(guildId, newMemberForm.value.member)) {
-            if (
-              !confirm(
-                'This character has a previous guild, proceeding would remove it from the previous guild, are you sure?'
-              )
-            ) {
-              this.addMemberLoading$.next(false);
-              return EMPTY;
-            }
-          }
-          if (isLeaderOfDifferentGuild(guildId, newMemberForm.value.member)) {
-            if (
-              !confirm(
-                'This character is a leader of a guild, proceeding would delete its previous guild, are you sure?'
-              )
-            ) {
-              this.addMemberLoading$.next(false);
-              return EMPTY;
-            }
-          }
+          this.checkGuildRelationStatusApiService
+            .checkGuildRelationStatus(newMemberForm.value.member)
+            .pipe(
+              switchMap((data) => {
+                if (data.hasNoGuild) {
+                  return EMPTY;
+                }
+                if (data.memberOfGuild) {
+                  if (
+                    !confirm(
+                      'This character has a guild, proceeding would remove it from the guild, are you sure?'
+                    )
+                  ) {
+                    this.addMemberLoading$.next(false);
+                    return EMPTY;
+                  }
+                }
+                if (data.leaderOfGuild) {
+                  if (
+                    !confirm(
+                      'This character is a leader of a guild, proceeding would delete its previous guild, are you sure?'
+                    )
+                  ) {
+                    this.addMemberLoading$.next(false);
+                    return EMPTY;
+                  }
+                }
+                return EMPTY;
+              })
+            )
+            .subscribe();
+          return of({ guildId, newMemberForm });
+        }),
+        switchMap(({ guildId, newMemberForm }) => {
           return this.guildApiService
             .addMemberToGuildById(guildId, newMemberForm.value.member)
             .pipe(
