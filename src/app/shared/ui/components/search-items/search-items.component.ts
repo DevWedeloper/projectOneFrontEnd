@@ -10,7 +10,7 @@ import {
   QueryList,
   Renderer2,
   ViewChildren,
-  inject
+  inject,
 } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Character } from '../../../interfaces/character.interface';
@@ -18,11 +18,11 @@ import { Guild } from '../../../interfaces/guild.interface';
 
 @Component({
   selector: 'app-search-items',
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './search-items.component.html',
   styleUrls: ['./search-items.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
-  imports: [CommonModule],
 })
 export class SearchItemsComponent<T extends Character | Guild> {
   elementRef = inject(ElementRef);
@@ -30,7 +30,7 @@ export class SearchItemsComponent<T extends Character | Guild> {
   @Input({ required: true }) searchResults$ = new BehaviorSubject<T[]>([]);
   @Output() selectedItem = new EventEmitter<Character | Guild>();
   @ViewChildren('searchItems') searchItems!: QueryList<ElementRef>;
-  currentFocusedIndex = -1;
+  private currentFocusedIndex = -1;
 
   selectItem(result: Character | Guild) {
     this.selectedItem.emit(result);
