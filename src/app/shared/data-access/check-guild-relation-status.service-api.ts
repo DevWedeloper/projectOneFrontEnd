@@ -6,7 +6,7 @@ import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root',
 })
-export class CheckGuildRelationStatusService {
+export class CheckGuildRelationStatusServiceApi {
   http = inject(HttpClient);
   baseUrl = environment.baseUrl;
 
