@@ -52,7 +52,7 @@ export class CharacterJoinGuildFormService {
 
     this.validationStatus$.next(true);
     return of(control.value).pipe(
-      debounceTime(300),
+      debounceTime(500),
       switchMap((name) =>
         this.checkUniquenessApi.checkGuildNameUniqueness(name).pipe(
           map((response) =>

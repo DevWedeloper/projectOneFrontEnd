@@ -69,7 +69,7 @@ export class CharacterFormService {
 
     this.validationStatus$.next(true);
     return of(control.value).pipe(
-      debounceTime(300),
+      debounceTime(500),
       switchMap((name) =>
         this.checkUniquenessApi.checkCharacterNameUniqueness(name).pipe(
           map((response) =>

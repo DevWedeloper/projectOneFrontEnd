@@ -87,7 +87,7 @@ export class GuildEditFormService {
 
     this.updateNameValidationStatus$.next(true);
     return of(control.value).pipe(
-      debounceTime(300),
+      debounceTime(500),
       switchMap((name) =>
         this.checkUniquenessApi.checkGuildNameUniqueness(name).pipe(
           map((response) =>
@@ -118,7 +118,7 @@ export class GuildEditFormService {
 
     this.updateLeaderValidationStatus$.next(true);
     return of(control.value).pipe(
-      debounceTime(300),
+      debounceTime(500),
       switchMap((name) =>
         this.checkUniquenessApi.checkCharacterNameUniqueness(name).pipe(
           map((response) =>
@@ -140,7 +140,7 @@ export class GuildEditFormService {
   ): Observable<ValidationErrors | null> {
     this.addMemberValidationStatus$.next(true);
     return of(control.value).pipe(
-      debounceTime(300),
+      debounceTime(500),
       switchMap((name) =>
         this.checkUniquenessApi.checkCharacterNameUniqueness(name).pipe(
           map((response) =>
@@ -176,7 +176,7 @@ export class GuildEditFormService {
 
     this.ifMemberValidationStatus$.next(true);
     return of(control.value).pipe(
-      debounceTime(300),
+      debounceTime(500),
       switchMap((name) =>
         this.checkIfMemberApi.checkIfMember(name, guild).pipe(
           map((response) => {
@@ -203,7 +203,7 @@ export class GuildEditFormService {
 
     this.ifNotMemberValidationStatus$.next(true);
     return of(control.value).pipe(
-      debounceTime(300),
+      debounceTime(500),
       switchMap((name) =>
         this.checkIfMemberApi.checkIfMember(name, guild).pipe(
           map((response) => {

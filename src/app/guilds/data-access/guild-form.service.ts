@@ -47,7 +47,7 @@ export class GuildFormService {
   ): Observable<ValidationErrors | null> {
     this.guildNameValidationStatus$.next(true);
     return of(control.value).pipe(
-      debounceTime(300),
+      debounceTime(500),
       switchMap((name) =>
         this.checkUniquenessApi.checkGuildNameUniqueness(name).pipe(
           map((response) =>
@@ -69,7 +69,7 @@ export class GuildFormService {
   ): Observable<ValidationErrors | null> {
     this.leaderValidationStatus$.next(true);
     return of(control.value).pipe(
-      debounceTime(300),
+      debounceTime(500),
       switchMap((name) =>
         this.checkUniquenessApi.checkCharacterNameUniqueness(name).pipe(
           map((response) =>
