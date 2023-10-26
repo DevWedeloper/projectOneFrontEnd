@@ -2,20 +2,21 @@ import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
+  DestroyRef,
   EventEmitter,
   Input,
   OnInit,
   Output,
   inject,
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   FormBuilder,
   FormGroup,
   FormsModule,
-  ReactiveFormsModule,
-  Validators,
+  ReactiveFormsModule
 } from '@angular/forms';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, take } from 'rxjs';
 import { Character } from 'src/app/shared/interfaces/character.interface';
 import { Guild } from 'src/app/shared/interfaces/guild.interface';
 import { CustomInputComponent } from 'src/app/shared/ui/components/custom-input/custom-input.component';
@@ -25,8 +26,8 @@ import { SpinnerComponent } from 'src/app/shared/ui/components/spinner/spinner.c
 import { GreenButtonDirective } from 'src/app/shared/ui/directives/button/green-button.directive';
 import { RedButtonDirective } from 'src/app/shared/ui/directives/button/red-button.directive';
 import { ErrorTextDirective } from 'src/app/shared/ui/directives/error-text.directive';
-import { validateName } from 'src/app/shared/utils/validate-name.utils';
 import { GuildActionsService } from '../../data-access/guild-actions.service';
+import { GuildEditFormService } from '../../data-access/guild-edit-form.service';
 
 @Component({
   selector: 'app-guild-edit',
@@ -44,12 +45,14 @@ import { GuildActionsService } from '../../data-access/guild-actions.service';
     CustomInputComponent,
     GreenButtonDirective,
     RedButtonDirective,
-    SpinnerComponent
+    SpinnerComponent,
   ],
 })
 export class GuildEditComponent implements OnInit {
   gas = inject(GuildActionsService);
+  gefs = inject(GuildEditFormService);
   fb = inject(FormBuilder);
+  destroyRef = inject(DestroyRef);
   @Input({ required: true }) guild!: Guild | null;
   @Input({ required: true }) searchNewLeaderResults$ = new BehaviorSubject<
     Character[]
@@ -78,29 +81,32 @@ export class GuildEditComponent implements OnInit {
   updateGuildNameForm!: FormGroup;
   updateGuildLeaderForm!: FormGroup;
   addMemberForm!: FormGroup;
-  selectedNewMemberName$ = new BehaviorSubject<string>('');
 
   constructor() {
-    this.updateGuildNameForm = this.fb.group({
-      name: ['', [Validators.required, validateName]],
-    });
-
-    this.updateGuildLeaderForm = this.fb.group({
-      leader: ['', [Validators.required]],
-    });
-
-    this.addMemberForm = this.fb.group({
-      member: ['', [Validators.required]],
-    });
+    this.updateGuildNameForm = this.gefs.initializeUpdateNameForm();
+    this.updateGuildNameForm.valueChanges
+      .pipe(take(1), takeUntilDestroyed())
+      .subscribe(() => {
+        this.gefs.updateNameInitialValueSet$.next(false);
+      });
   }
 
   ngOnInit(): void {
+    this.addMemberForm = this.gefs.initializeAddMemberForm(this.guild?._id || null);
+    this.updateGuildLeaderForm = this.gefs.initializeUpdateLeaderForm(this.guild?._id || null);
+    this.updateGuildLeaderForm.valueChanges
+      .pipe(take(1), takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => {
+        this.gefs.updateLeaderInitialValueSet$.next(false);
+      });
     this.updateGuildNameForm.patchValue({
       name: this.guild?.name,
     });
     this.updateGuildLeaderForm.patchValue({
       leader: this.guild?.leader?.name,
     });
+    this.gefs.initialName$.next(this.updateGuildNameForm.get('name')?.value);
+    this.gefs.initialLeader$.next(this.updateGuildLeaderForm.get('leader')?.value);
   }
 
   trackBy(index: number): number {

@@ -1,22 +1,20 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { GuildUpdateResponse } from 'src/app/guilds/interfaces/guild-update-response.interface';
 import { Character } from 'src/app/shared/interfaces/character.interface';
 import { Guild } from 'src/app/shared/interfaces/guild.interface';
 import { environment } from 'src/environments/environment';
 import { GuildPagination } from '../../guilds/interfaces/guild-pagination.interface';
-import { GuildOnCreation } from '../interfaces/guild-without-id.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class GuildApiService {
+  http = inject(HttpClient);
   baseUrl = environment.baseUrl;
 
-  constructor(private http: HttpClient) {}
-
-  createGuild(guildData: GuildOnCreation): Observable<Guild> {
+  createGuild(guildData: { name: string, character: string }): Observable<Guild> {
     const url = `${this.baseUrl}/guild`;
     return this.http.post<Guild>(url, guildData);
   }

@@ -29,6 +29,17 @@
       >
         <p appErrorText>Guild name is required.</p>
       </div>
+      <div *ngIf="gfs.guildNameValidationStatus$ | async">
+        <p style="color: aqua">Checking if unique..</p>
+      </div>
+      <div
+        *ngIf="
+          (gfs.guildNameValidationStatus$ | async) === false &&
+          !guildForm.get('name')?.invalid
+        "
+      >
+        <p style="color: green">Unique!</p>
+      </div>
       <div
         *ngIf="
           guildForm.get('name')?.hasError('validSymbol') &&
@@ -77,20 +88,30 @@
         ></app-custom-input>
         <app-search-items
           [searchResults$]="searchResults$"
-          (selectedItemId)="selectedLeaderId$.next($event)"
-          (selectedItemName)="guildForm.get('leader')?.setValue($event)"
+          (selectedItem)="guildForm.get('leader')?.setValue($event.name)"
         ></app-search-items>
-      </div>
-      <div
-        *ngIf="
-          guildForm.get('leader')?.hasError('required') &&
-          guildForm.get('leader')?.touched
-        "
-      >
-        <p appErrorText>Leader name is required.</p>
-      </div>
-      <div *ngIf="guildForm.get('leader')?.hasError('notFound')">
-        <p appErrorText>Leader not found. Please choose a valid leader.</p>
+        <div
+          *ngIf="
+            guildForm.get('leader')?.hasError('required') &&
+            guildForm.get('leader')?.touched
+          "
+        >
+          <p appErrorText>Leader name is required.</p>
+        </div>
+        <div *ngIf="gfs.leaderValidationStatus$ | async">
+          <p style="color: aqua">Checking if leader exists..</p>
+        </div>
+        <div
+          *ngIf="
+            (gfs.leaderValidationStatus$ | async) === false &&
+            !guildForm.get('leader')?.invalid
+          "
+        >
+          <p style="color: green">Leader exists!</p>
+        </div>
+        <div *ngIf="guildForm.get('leader')?.hasError('notFound')">
+          <p appErrorText>Leader not found. Please choose a valid leader.</p>
+        </div>
       </div>
     </div>
 
