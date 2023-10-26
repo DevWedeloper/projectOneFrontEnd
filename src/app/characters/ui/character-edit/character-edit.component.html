@@ -16,7 +16,7 @@
       </app-custom-input>
       <app-search-items
         [searchResults$]="searchResults$"
-        (selectedItemName)="joinGuildForm.get('guild')?.setValue($event)"
+        (selectedItem)="joinGuildForm.get('guild')?.setValue($event.name)"
       ></app-search-items>
       <div
         *ngIf="joinGuildForm.get('guild')?.hasError('alreadyMember')"

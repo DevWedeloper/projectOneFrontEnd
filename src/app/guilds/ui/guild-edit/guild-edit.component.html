@@ -100,8 +100,8 @@
           ></app-custom-input>
           <app-search-items
             [searchResults$]="searchNewLeaderResults$"
-            (selectedItemName)="
-              updateGuildLeaderForm.get('leader')?.setValue($event)
+            (selectedItem)="
+              updateGuildLeaderForm.get('leader')?.setValue($event.name)
             "
           ></app-search-items>
           <div *ngIf="gefs.updateLeaderValidationStatus$ | async">
@@ -181,7 +181,7 @@
           ></app-custom-input>
           <app-search-items
             [searchResults$]="searchNewMemberResults$"
-            (selectedItemName)="addMemberForm.get('member')?.setValue($event)"
+            (selectedItem)="addMemberForm.get('member')?.setValue($event.name)"
           ></app-search-items>
           <div *ngIf="gefs.addMemberValidationStatus$ | async">
             <p style="color: aqua">Checking if character exists..</p>

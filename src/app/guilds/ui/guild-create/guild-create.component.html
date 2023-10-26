@@ -88,8 +88,7 @@
         ></app-custom-input>
         <app-search-items
           [searchResults$]="searchResults$"
-          (selectedItemId)="selectedLeaderId$.next($event)"
-          (selectedItemName)="guildForm.get('leader')?.setValue($event)"
+          (selectedItem)="guildForm.get('leader')?.setValue($event.name)"
         ></app-search-items>
         <div
           *ngIf="

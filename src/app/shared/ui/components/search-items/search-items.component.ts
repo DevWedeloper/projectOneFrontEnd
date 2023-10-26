@@ -28,16 +28,12 @@ export class SearchItemsComponent<T extends Character | Guild> {
   elementRef = inject(ElementRef);
   renderer = inject(Renderer2);
   @Input({ required: true }) searchResults$ = new BehaviorSubject<T[]>([]);
-  @Output() selectedItemId = new EventEmitter<string>();
-  @Output() selectedItemName = new EventEmitter<string>();
-  @Output() selectedItemData = new EventEmitter<Character | Guild>();
+  @Output() selectedItem = new EventEmitter<Character | Guild>();
   @ViewChildren('searchItems') searchItems!: QueryList<ElementRef>;
   currentFocusedIndex = -1;
 
   selectItem(result: Character | Guild) {
-    this.selectedItemId.emit(result._id);
-    this.selectedItemName.emit(result.name);
-    this.selectedItemData.emit(result);
+    this.selectedItem.emit(result);
     this.searchResults$.next([]);
   }
 
@@ -88,8 +84,7 @@ export class SearchItemsComponent<T extends Character | Guild> {
     const elementToFocus = this.searchItems.toArray()[index];
     elementToFocus.nativeElement.focus();
     const result = this.searchResults$.value[index];
-    this.selectedItemId.emit(result._id);
-    this.selectedItemName.emit(result.name);
+    this.selectedItem.emit(result);
   }
 
   trackBy(index: number): number {
