@@ -6,12 +6,10 @@ import {
   EMPTY,
   Subject,
   catchError,
-  of,
   switchMap,
-  tap,
+  tap
 } from 'rxjs';
 import { CheckGuildRelationStatusServiceApi } from 'src/app/shared/data-access/check-guild-relation-status.service-api';
-import { ErrorService } from 'src/app/shared/data-access/error.service';
 import { GuildApiService } from 'src/app/shared/data-access/guild-api.service';
 import { Character } from 'src/app/shared/interfaces/character.interface';
 import { Guild } from 'src/app/shared/interfaces/guild.interface';
@@ -26,7 +24,6 @@ export class GuildActionsService {
   checkGuildRelationStatusApiService = inject(
     CheckGuildRelationStatusServiceApi
   );
-  es = inject(ErrorService);
   guildCreate$ = new Subject<{ guildForm: FormGroup; leaderId: string }>();
   guildUpdateName$ = new Subject<{
     guildId: string;
@@ -56,7 +53,7 @@ export class GuildActionsService {
       .pipe(
         tap(() => this.createLoading$.next(true)),
         switchMap(({ guildForm }) => {
-          this.checkGuildRelationStatusApiService
+          return this.checkGuildRelationStatusApiService
             .checkGuildRelationStatus(guildForm.value.leader)
             .pipe(
               switchMap((data) => {
@@ -83,27 +80,19 @@ export class GuildActionsService {
                     return EMPTY;
                   }
                 }
-                return EMPTY;
+                const guild = {
+                  name: guildForm.get('name')?.value,
+                  character: guildForm.get('leader')?.value,
+                };
+                return this.guildApiService.createGuild(guild).pipe(
+                  tap(() => guildForm.reset()),
+                  catchError(() => {
+                    this.createLoading$.next(false);
+                    return EMPTY;
+                  })
+                );
               })
-            )
-            .subscribe();
-          return of({ guildForm });
-        }),
-        switchMap(({ guildForm }) => {
-          const guild = {
-            name: guildForm.get('name')?.value,
-            character: guildForm.get('leader')?.value,
-          };
-          return this.guildApiService.createGuild(guild).pipe(
-            tap(() => guildForm.reset()),
-            catchError((error) => {
-              if (this.es.handleDuplicateKeyError(error)) {
-                guildForm.get('name')?.setErrors({ uniqueName: true });
-              }
-              this.createLoading$.next(false);
-              return EMPTY;
-            })
-          );
+            );
         }),
         takeUntilDestroyed()
       )
@@ -119,10 +108,7 @@ export class GuildActionsService {
           return this.guildApiService
             .updateGuildNameById(guildId, newGuildNameForm.value)
             .pipe(
-              catchError((error) => {
-                if (this.es.handleDuplicateKeyError(error)) {
-                  newGuildNameForm.get('name')?.setErrors({ uniqueName: true });
-                }
+              catchError(() => {
                 this.updateNameLoading$.next(false);
                 return EMPTY;
               })
@@ -145,10 +131,7 @@ export class GuildActionsService {
           return this.guildApiService
             .updateGuildLeaderById(guildId, newLeaderIdForm.value.leader)
             .pipe(
-              catchError((error) => {
-                if (this.es.handleNotFoundError(error)) {
-                  newLeaderIdForm.get('leader')?.setErrors({ notFound: true });
-                }
+              catchError(() => {
                 this.updateLeaderLoading$.next(false);
                 return EMPTY;
               })
@@ -169,7 +152,7 @@ export class GuildActionsService {
       .pipe(
         tap(() => this.addMemberLoading$.next(true)),
         switchMap(({ guildId, newMemberForm }) => {
-          this.checkGuildRelationStatusApiService
+          return this.checkGuildRelationStatusApiService
             .checkGuildRelationStatus(newMemberForm.value.member)
             .pipe(
               switchMap((data) => {
@@ -196,18 +179,13 @@ export class GuildActionsService {
                     return EMPTY;
                   }
                 }
-                return EMPTY;
-              })
-            )
-            .subscribe();
-          return of({ guildId, newMemberForm });
-        }),
-        switchMap(({ guildId, newMemberForm }) => {
-          return this.guildApiService
-            .addMemberToGuildById(guildId, newMemberForm.value.member)
-            .pipe(
-              tap(() => {
-                newMemberForm.reset();
+                return this.guildApiService
+                  .addMemberToGuildById(guildId, newMemberForm.value.member)
+                  .pipe(
+                    tap(() => {
+                      newMemberForm.reset();
+                    })
+                  );
               })
             );
         }),
