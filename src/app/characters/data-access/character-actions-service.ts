@@ -7,9 +7,8 @@ import {
   Subject,
   catchError,
   forkJoin,
-  of,
   switchMap,
-  tap
+  tap,
 } from 'rxjs';
 import { CharacterApiService } from 'src/app/shared/data-access/character-api.service';
 import { CheckGuildRelationStatusServiceApi } from 'src/app/shared/data-access/check-guild-relation-status.service-api';
@@ -147,54 +146,52 @@ export class CharacterActionsService {
 
     this.characterJoinGuild$
       .pipe(
-        tap(() => {this.joinLoading$.next(true);}),
+        tap(() => {
+          this.joinLoading$.next(true);
+        }),
         switchMap(({ character, joinGuildForm }) => {
-          this.checkGuildRelationStatusApiService
+          return this.checkGuildRelationStatusApiService
             .checkGuildRelationStatus(character._id)
             .pipe(
               switchMap((data) => {
                 if (data.hasNoGuild) {
                   return EMPTY;
                 }
-                if (data.memberOfGuild) {
-                  if (
-                    !confirm(
-                      'This character has a guild, proceeding would remove it from the guild, are you sure?'
-                    )
-                  ) {
-                    this.joinLoading$.next(false);
-                    return EMPTY;
-                  }
+                if (
+                  data.memberOfGuild &&
+                  !confirm(
+                    'This character has a guild, proceeding would remove it from the guild, are you sure?'
+                  )
+                ) {
+                  this.joinLoading$.next(false);
+                  return EMPTY;
                 }
-                if (data.leaderOfGuild) {
-                  if (
-                    !confirm(
-                      'This character is a leader of a guild, proceeding would delete its previous guild, are you sure?'
-                    )
-                  ) {
-                    this.joinLoading$.next(false);
-                    return EMPTY;
-                  }
+                if (
+                  data.leaderOfGuild &&
+                  !confirm(
+                    'This character is a leader of a guild, proceeding would delete its previous guild, are you sure?'
+                  )
+                ) {
+                  this.joinLoading$.next(false);
+                  return EMPTY;
                 }
-                return EMPTY;
-              })
-            ).subscribe();
-          return of({ character, joinGuildForm });
-        }),
-        switchMap(({ character, joinGuildForm }) => {
-          return this.characterApiService
-            .joinGuildById(character._id, joinGuildForm.value.guild)
-            .pipe(
-              catchError((error) => {
-                if (this.es.handleAlreadyMemberError(error)) {
-                  joinGuildForm
-                    .get('guild')
-                    ?.setErrors({ alreadyMember: true });
-                } else {
-                  joinGuildForm.get('guild')?.setErrors({ notFound: true });
-                }
-                this.joinLoading$.next(false);
-                return EMPTY;
+                return this.characterApiService
+                  .joinGuildById(character._id, joinGuildForm.value.guild)
+                  .pipe(
+                    catchError((error) => {
+                      if (this.es.handleAlreadyMemberError(error)) {
+                        joinGuildForm
+                          .get('guild')
+                          ?.setErrors({ alreadyMember: true });
+                      } else {
+                        joinGuildForm
+                          .get('guild')
+                          ?.setErrors({ notFound: true });
+                      }
+                      this.joinLoading$.next(false);
+                      return EMPTY;
+                    })
+                  );
               })
             );
         }),

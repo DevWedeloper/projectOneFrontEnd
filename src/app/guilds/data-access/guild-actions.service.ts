@@ -6,9 +6,8 @@ import {
   EMPTY,
   Subject,
   catchError,
-  of,
   switchMap,
-  tap,
+  tap
 } from 'rxjs';
 import { CheckGuildRelationStatusServiceApi } from 'src/app/shared/data-access/check-guild-relation-status.service-api';
 import { ErrorService } from 'src/app/shared/data-access/error.service';
@@ -56,7 +55,7 @@ export class GuildActionsService {
       .pipe(
         tap(() => this.createLoading$.next(true)),
         switchMap(({ guildForm }) => {
-          this.checkGuildRelationStatusApiService
+          return this.checkGuildRelationStatusApiService
             .checkGuildRelationStatus(guildForm.value.leader)
             .pipe(
               switchMap((data) => {
@@ -83,27 +82,22 @@ export class GuildActionsService {
                     return EMPTY;
                   }
                 }
-                return EMPTY;
+                const guild = {
+                  name: guildForm.get('name')?.value,
+                  character: guildForm.get('leader')?.value,
+                };
+                return this.guildApiService.createGuild(guild).pipe(
+                  tap(() => guildForm.reset()),
+                  catchError((error) => {
+                    if (this.es.handleDuplicateKeyError(error)) {
+                      guildForm.get('name')?.setErrors({ uniqueName: true });
+                    }
+                    this.createLoading$.next(false);
+                    return EMPTY;
+                  })
+                );
               })
-            )
-            .subscribe();
-          return of({ guildForm });
-        }),
-        switchMap(({ guildForm }) => {
-          const guild = {
-            name: guildForm.get('name')?.value,
-            character: guildForm.get('leader')?.value,
-          };
-          return this.guildApiService.createGuild(guild).pipe(
-            tap(() => guildForm.reset()),
-            catchError((error) => {
-              if (this.es.handleDuplicateKeyError(error)) {
-                guildForm.get('name')?.setErrors({ uniqueName: true });
-              }
-              this.createLoading$.next(false);
-              return EMPTY;
-            })
-          );
+            );
         }),
         takeUntilDestroyed()
       )
@@ -169,7 +163,7 @@ export class GuildActionsService {
       .pipe(
         tap(() => this.addMemberLoading$.next(true)),
         switchMap(({ guildId, newMemberForm }) => {
-          this.checkGuildRelationStatusApiService
+          return this.checkGuildRelationStatusApiService
             .checkGuildRelationStatus(newMemberForm.value.member)
             .pipe(
               switchMap((data) => {
@@ -196,18 +190,13 @@ export class GuildActionsService {
                     return EMPTY;
                   }
                 }
-                return EMPTY;
-              })
-            )
-            .subscribe();
-          return of({ guildId, newMemberForm });
-        }),
-        switchMap(({ guildId, newMemberForm }) => {
-          return this.guildApiService
-            .addMemberToGuildById(guildId, newMemberForm.value.member)
-            .pipe(
-              tap(() => {
-                newMemberForm.reset();
+                return this.guildApiService
+                  .addMemberToGuildById(guildId, newMemberForm.value.member)
+                  .pipe(
+                    tap(() => {
+                      newMemberForm.reset();
+                    })
+                  );
               })
             );
         }),
