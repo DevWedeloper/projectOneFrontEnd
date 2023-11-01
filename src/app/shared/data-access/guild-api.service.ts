@@ -76,10 +76,10 @@ export class GuildApiService {
 
   removeMemberFromGuildById(
     guildId: string,
-    newData: Character
+    newData: string
   ): Observable<GuildUpdateResponse> {
     const url = `${this.baseUrl}/guild/removeMember/${guildId}`;
-    const requestBody = { member: newData };
+    const requestBody = { character: newData };
     return this.http.put<GuildUpdateResponse>(url, requestBody);
   }
 
