@@ -234,7 +234,7 @@ export class GuildActionsService {
           }
           return this.guildApiService.removeMemberFromGuildById(
             guildId,
-            oldMember
+            oldMember._id
           );
         }),
         tap((data) => {
