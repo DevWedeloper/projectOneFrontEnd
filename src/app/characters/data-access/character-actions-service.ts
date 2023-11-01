@@ -12,7 +12,6 @@ import {
 } from 'rxjs';
 import { CharacterApiService } from 'src/app/shared/data-access/character-api.service';
 import { CheckGuildRelationStatusServiceApi } from 'src/app/shared/data-access/check-guild-relation-status.service-api';
-import { ErrorService } from 'src/app/shared/data-access/error.service';
 import { Character } from 'src/app/shared/interfaces/character.interface';
 import {
   isLeaderOfAGuild,
@@ -30,7 +29,6 @@ export class CharacterActionsService {
   checkGuildRelationStatusApiService = inject(
     CheckGuildRelationStatusServiceApi
   );
-  es = inject(ErrorService);
   characterCreate$ = new Subject<FormGroup>();
   characterUpdate$ = new Subject<{
     characterForm: FormGroup;
@@ -64,10 +62,7 @@ export class CharacterActionsService {
                 characterForm.reset();
                 characterForm.get('characterType')?.setValue('');
               }),
-              catchError((error) => {
-                if (this.es.handleDuplicateKeyError(error)) {
-                  characterForm.get('name')?.setErrors({ uniqueName: true });
-                }
+              catchError(() => {
                 this.createLoading$.next(false);
                 return EMPTY;
               })
@@ -115,12 +110,7 @@ export class CharacterActionsService {
                   attribute
                 )
                 .pipe(
-                  catchError((error) => {
-                    if (this.es.handleDuplicateKeyError(error)) {
-                      characterForm
-                        .get('name')
-                        ?.setErrors({ uniqueName: true });
-                    }
+                  catchError(() => {
                     this.updateLoading$.next(false);
                     return EMPTY;
                   })
@@ -178,16 +168,7 @@ export class CharacterActionsService {
                 return this.characterApiService
                   .joinGuildById(character._id, joinGuildForm.value.guild)
                   .pipe(
-                    catchError((error) => {
-                      if (this.es.handleAlreadyMemberError(error)) {
-                        joinGuildForm
-                          .get('guild')
-                          ?.setErrors({ alreadyMember: true });
-                      } else {
-                        joinGuildForm
-                          .get('guild')
-                          ?.setErrors({ notFound: true });
-                      }
+                    catchError(() => {
                       this.joinLoading$.next(false);
                       return EMPTY;
                     })

@@ -10,7 +10,6 @@ import {
   tap
 } from 'rxjs';
 import { CheckGuildRelationStatusServiceApi } from 'src/app/shared/data-access/check-guild-relation-status.service-api';
-import { ErrorService } from 'src/app/shared/data-access/error.service';
 import { GuildApiService } from 'src/app/shared/data-access/guild-api.service';
 import { Character } from 'src/app/shared/interfaces/character.interface';
 import { Guild } from 'src/app/shared/interfaces/guild.interface';
@@ -25,7 +24,6 @@ export class GuildActionsService {
   checkGuildRelationStatusApiService = inject(
     CheckGuildRelationStatusServiceApi
   );
-  es = inject(ErrorService);
   guildCreate$ = new Subject<{ guildForm: FormGroup; leaderId: string }>();
   guildUpdateName$ = new Subject<{
     guildId: string;
@@ -88,10 +86,7 @@ export class GuildActionsService {
                 };
                 return this.guildApiService.createGuild(guild).pipe(
                   tap(() => guildForm.reset()),
-                  catchError((error) => {
-                    if (this.es.handleDuplicateKeyError(error)) {
-                      guildForm.get('name')?.setErrors({ uniqueName: true });
-                    }
+                  catchError(() => {
                     this.createLoading$.next(false);
                     return EMPTY;
                   })
@@ -113,10 +108,7 @@ export class GuildActionsService {
           return this.guildApiService
             .updateGuildNameById(guildId, newGuildNameForm.value)
             .pipe(
-              catchError((error) => {
-                if (this.es.handleDuplicateKeyError(error)) {
-                  newGuildNameForm.get('name')?.setErrors({ uniqueName: true });
-                }
+              catchError(() => {
                 this.updateNameLoading$.next(false);
                 return EMPTY;
               })
@@ -139,10 +131,7 @@ export class GuildActionsService {
           return this.guildApiService
             .updateGuildLeaderById(guildId, newLeaderIdForm.value.leader)
             .pipe(
-              catchError((error) => {
-                if (this.es.handleNotFoundError(error)) {
-                  newLeaderIdForm.get('leader')?.setErrors({ notFound: true });
-                }
+              catchError(() => {
                 this.updateLeaderLoading$.next(false);
                 return EMPTY;
               })
