@@ -70,7 +70,7 @@ export class CharacterStatsService {
         'Armor',
         'Crit Chance',
       ];
-      const dataset = [
+      const dataset: ChartConfiguration<'radar'>['data']['datasets'] = [
         {
           data: [
             selectedCharacter?.health != null
@@ -111,7 +111,7 @@ export class CharacterStatsService {
       map((data) => {
         const ids = data.map((item) => item._id);
         const counts = data.map((item) => item.count);
-        const dataset = [{ data: counts || [] }];
+        const dataset: ChartConfiguration<'polarArea'>['data']['datasets'] = [{ data: counts || [] }];
         return { ids, dataset };
       })
     );
@@ -171,7 +171,7 @@ export class CharacterStatsService {
           const combinedAttributes = characters.map(
             (character) => character[attribute as keyof Character] as number
           );
-          const dataset = [
+          const dataset: ChartConfiguration<'bar'>['data']['datasets'] = [
             {
               data: combinedAttributes || [],
               backgroundColor: `${backgroundColor}`,

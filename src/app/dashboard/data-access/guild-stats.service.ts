@@ -140,7 +140,7 @@ export class GuildStatsService {
         const combinedAttributes = guilds
           .map((guild) => guild.combinedAttribute)
           .reverse();
-        const dataset = [
+        const dataset: ChartConfiguration<'bar'>['data']['datasets'] = [
           {
             data: combinedAttributes || [],
             backgroundColor: `${backgroundColor}`,
@@ -173,7 +173,7 @@ export class GuildStatsService {
             attribute.charAt(0).toUpperCase() + attribute.slice(1)
           }` as keyof AverageCharacterStats
         ] as number;
-        const dataset = [
+        const dataset: ChartConfiguration<'bar'>['data']['datasets'] = [
           {
             data: Array(5).fill(averageAttribute),
             label: `avg.${label}`,
