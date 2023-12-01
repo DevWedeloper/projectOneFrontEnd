@@ -3,7 +3,7 @@ $sidebar-closed-width: 48px;
 $sidebar-opened-width: 210px;
 
 .navbar {
-  position: fixed;
+  position: sticky;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -105,9 +105,7 @@ $sidebar-opened-width: 210px;
 
 .right-container {
   position: relative;
-  min-height: 100vh;
   left: $sidebar-closed-width;
-  padding-top: $navbar-height;
   width: calc(100% - $sidebar-closed-width);
   color: var(--text-color);
   transition: all 0.15s ease-in-out, background-color 0s, color 0s;
