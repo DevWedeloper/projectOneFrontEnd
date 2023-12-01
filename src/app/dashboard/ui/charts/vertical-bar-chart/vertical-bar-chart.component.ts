@@ -10,7 +10,6 @@ import { ChartConfiguration } from 'chart.js';
 import { NgChartsModule, ThemeService } from 'ng2-charts';
 import { ChartColorService } from 'src/app/dashboard/data-access/chart-color.service';
 import { smoothTransitionAnimation } from 'src/app/shared/ui/animations/smooth-transition.animations';
-import { TooltipDirective } from 'src/app/shared/ui/components/tooltip/tooltip.directive';
 import { TruncatePipe } from 'src/app/shared/ui/pipes/truncate.pipe';
 import { VerticalBarChartSkeletonComponent } from '../../skeletons/vertical-bar-chart-skeleton/vertical-bar-chart-skeleton.component';
 
@@ -19,7 +18,6 @@ import { VerticalBarChartSkeletonComponent } from '../../skeletons/vertical-bar-
   standalone: true,
   imports: [
     CommonModule,
-    TooltipDirective,
     TruncatePipe,
     VerticalBarChartSkeletonComponent,
     NgChartsModule,
