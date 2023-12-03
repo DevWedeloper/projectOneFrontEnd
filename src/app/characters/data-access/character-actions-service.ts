@@ -144,9 +144,6 @@ export class CharacterActionsService {
             .checkGuildRelationStatus(character._id)
             .pipe(
               switchMap((data) => {
-                if (data.hasNoGuild) {
-                  return EMPTY;
-                }
                 if (
                   data.memberOfGuild &&
                   !confirm(
