@@ -46,7 +46,7 @@
   <ng-template #rowsTemplate let-guild>
     <td>{{ guild.name | truncate : 15 }}</td>
     <td>{{ guild.leader.name | truncate : 15 }}</td>
-    <td>{{ guild.totalMembers }}</td>
+    <td>{{ guild.totalMembers }} / {{ guild.maxMembers }}</td>
     <td class="btn-container" *ngIf="isCurrentUserAdmin">
       <button class="edit-btn" (click)="editGuild.emit(guild)">Edit</button>
       <button
