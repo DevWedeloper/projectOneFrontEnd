@@ -156,9 +156,6 @@ export class GuildActionsService {
             .checkGuildRelationStatus(newMemberForm.value.member)
             .pipe(
               switchMap((data) => {
-                if (data.hasNoGuild) {
-                  return EMPTY;
-                }
                 if (data.memberOfGuild) {
                   if (
                     !confirm(
