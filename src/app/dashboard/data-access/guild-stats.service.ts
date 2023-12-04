@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { ChartConfiguration } from 'chart.js';
 import { Observable, combineLatest, map } from 'rxjs';
+import { Guild } from 'src/app/shared/interfaces/guild.interface';
 import { AverageCharacterStats } from '../interfaces/character-average-interface';
 import { AverageGuildStats } from '../interfaces/guild-average-attribute.interface';
 import { WellRoundedGuild } from '../interfaces/well-rounded-guild.interface';
@@ -138,8 +139,8 @@ export class GuildStatsService {
       map((guilds) => {
         const names = guilds.map((guild) => guild.name).reverse();
         const combinedAttributes = guilds
-          .map((guild) => guild.combinedAttribute)
-          .reverse();
+        .map((guild) => this.mapAttributeToValue(attribute, guild))
+        .reverse();
         const dataset: ChartConfiguration<'bar'>['data']['datasets'] = [
           {
             data: combinedAttributes || [],
@@ -149,6 +150,25 @@ export class GuildStatsService {
         return { names, dataset };
       })
     );
+  }
+
+  private mapAttributeToValue(attribute: string, guild: Guild): number {
+    switch (attribute) {
+      case 'health':
+        return guild.totalHealth;
+      case 'strength':
+        return guild.totalStrength;
+      case 'agility':
+        return guild.totalAgility;
+        case 'intelligence':
+          return guild.totalIntelligence;
+      case 'armor':
+        return guild.totalArmor;
+      case 'critChance':
+        return guild.totalCritChance;
+      default:
+        throw new Error(`Unknown attribute: ${attribute}`);
+    }
   }
 
   private generateTopGuildsByAverageAttribute({
