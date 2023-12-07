@@ -70,15 +70,26 @@ $sidebar-opened-width: 210px;
   background-color: var(--text-color-reverse);
 }
 
+.sidebar-link:hover .icon-container svg,
+.sidebar-link:focus-visible .icon-container svg {
+  fill: var(--main-color);
+}
+
+.sidebar-link:hover .link-text,
+.sidebar-link:focus-visible .link-text {
+  color: var(--main-color);
+}
+
 .sidebar-link .icon-container {
   display: flex;
   justify-content: center;
   margin-left: 0.5rem;
 }
 
-.icon-container img {
+.icon-container svg {
   width: 2rem;
   user-select: none;
+  fill: var(--text-color)
 }
 
 .link-text {
@@ -165,7 +176,4 @@ $sidebar-opened-width: 210px;
     left: 0;
     width: 100%;
   }
-}
-
-@media (max-width: 500px) {
 }

@@ -14,7 +14,7 @@
 }
 
 .dropdown-content::before {
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
 }
@@ -56,6 +56,15 @@
   margin-right: 0.5rem;
 }
 
-.dropdown-item img {
+.dropdown-item img,
+.icon-container svg {
   width: 1.5rem;
+}
+
+.icon-container svg {
+  fill: var(--main-color);
+}
+
+.logout-text {
+  color: var(--main-color);;
 }
