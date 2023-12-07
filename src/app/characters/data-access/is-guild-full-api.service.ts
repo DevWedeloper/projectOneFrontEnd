@@ -10,9 +10,9 @@ export class isGuildFullApiService {
   http = inject(HttpClient);
   baseUrl = environment.baseUrl;
 
-  isGuildFull(guild: string): Observable<{ message: string }> {
+  isGuildFull(guild: string): Observable<{ isFull: boolean }> {
     const url = `${this.baseUrl}/guild/isFull`;
     const reqBody = { guild };
-    return this.http.post<{ message: string }>(url, reqBody);
+    return this.http.post<{ isFull: boolean }>(url, reqBody);
   }
 }
