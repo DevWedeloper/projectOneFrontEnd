@@ -216,7 +216,7 @@
           *ngIf="addMemberForm.valid"
           (click)="
             addMember.emit({
-              guildId: guild!._id,
+              guild: guild!,
               newMemberForm: addMemberForm
             })
           "
@@ -234,13 +234,23 @@
 
   <div class="members-container">
     <div *ngFor="let member of guild?.members; trackBy: trackBy">
-      <p>{{ member.name }}</p>
+      <div class="leader-text-container">
+        <p>
+          {{ member.name }}
+        </p>
+        <img
+          *ngIf="member._id === guild?.leader?._id"
+          src="assets/images/icons/crown.svg"
+          alt="Crown Logo"
+        />
+      </div>
       <button
         appRedButton
         (click)="removeMember.emit({ guildId: guild!._id, oldMember: member })"
         [disabled]="
-          (gas.removeMemberLoading$ | async) &&
-          gas.memberToRemove$.value?._id === member._id
+          ((gas.removeMemberLoading$ | async) &&
+            gas.memberToRemove$.value?._id === member._id) ||
+          member._id === guild?.leader?._id
         "
       >
         <app-spinner

@@ -1,10 +1,10 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Guild } from 'src/app/shared/interfaces/guild.interface';
 import { environment } from 'src/environments/environment';
-import { WellRoundedGuild } from '../interfaces/well-rounded-guild.interface';
-import { GuildAttribute } from '../interfaces/guild-attribute.interface';
 import { AverageGuildStats } from '../interfaces/guild-average-attribute.interface';
+import { WellRoundedGuild } from '../interfaces/well-rounded-guild.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -14,9 +14,9 @@ export class GuildStatsApiService {
 
   constructor(private http: HttpClient) { }
 
-  getTopGuildsByAttribute(attribute: string): Observable<GuildAttribute[]> {
+  getTopGuildsByAttribute(attribute: string): Observable<Guild[]> {
     const url = `${this.baseUrl}/guildStats/topAttribute/${attribute}`;
-    return this.http.get<GuildAttribute[]>(url);
+    return this.http.get<Guild[]>(url);
   }
 
   getTopWellRoundedGuilds(): Observable<WellRoundedGuild[]> {

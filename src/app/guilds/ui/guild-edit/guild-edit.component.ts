@@ -71,7 +71,7 @@ export class GuildEditComponent implements OnInit {
     newLeaderIdForm: FormGroup;
   }>();
   @Output() addMember = new EventEmitter<{
-    guildId: string;
+    guild: Guild;
     newMemberForm: FormGroup;
   }>();
   @Output() removeMember = new EventEmitter<{

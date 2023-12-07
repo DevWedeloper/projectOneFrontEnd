@@ -16,7 +16,7 @@ import {
   of,
   switchMap
 } from 'rxjs';
-import { CheckIfMemberApiService } from 'src/app/dashboard/data-access/check-if-member-api.service';
+import { CheckIfMemberApiService } from 'src/app/guilds/data-access/check-if-member-api.service';
 import { CheckUniquenessService } from 'src/app/shared/data-access/check-uniqueness-api.service';
 import { validateName } from 'src/app/shared/utils/validate-name.utils';
 
