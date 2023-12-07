@@ -70,11 +70,13 @@ $sidebar-opened-width: 210px;
   background-color: var(--text-color-reverse);
 }
 
-.sidebar-link:hover .icon-container svg {
+.sidebar-link:hover .icon-container svg,
+.sidebar-link:focus-visible .icon-container svg {
   fill: var(--main-color);
 }
 
-.sidebar-link:hover .link-text {
+.sidebar-link:hover .link-text,
+.sidebar-link:focus-visible .link-text {
   color: var(--main-color);
 }
 
