@@ -216,7 +216,7 @@
           *ngIf="addMemberForm.valid"
           (click)="
             addMember.emit({
-              guildId: guild!._id,
+              guild: guild!,
               newMemberForm: addMemberForm
             })
           "

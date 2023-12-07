@@ -34,7 +34,7 @@ export class GuildActionsService {
     newLeaderIdForm: FormGroup;
   }>();
   guildAddMember$ = new Subject<{
-    guildId: string;
+    guild: Guild;
     newMemberForm: FormGroup;
   }>();
   guildRemoveMember$ = new Subject<{ guildId: string; oldMember: Character }>();
@@ -148,7 +148,12 @@ export class GuildActionsService {
     this.guildAddMember$
       .pipe(
         tap(() => this.addMemberLoading$.next(true)),
-        switchMap(({ guildId, newMemberForm }) => {
+        switchMap(({ guild, newMemberForm }) => {
+          if (guild.totalMembers === guild.maxMembers) {
+            confirm('Guild is full.');
+            this.addMemberLoading$.next(false);
+            return EMPTY;
+          }
           return this.checkGuildRelationStatusApiService
             .checkGuildRelationStatus(newMemberForm.value.member)
             .pipe(
@@ -174,7 +179,7 @@ export class GuildActionsService {
                   }
                 }
                 return this.guildApiService
-                  .addMemberToGuildById(guildId, newMemberForm.value.member)
+                  .addMemberToGuildById(guild._id, newMemberForm.value.member)
                   .pipe(
                     tap(() => {
                       newMemberForm.reset();
