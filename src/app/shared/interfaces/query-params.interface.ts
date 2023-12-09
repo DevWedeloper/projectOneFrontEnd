@@ -3,5 +3,6 @@ export interface QueryParams {
   pageSize: number;
   sortBy?: string;
   sortOrder?: string;
+  name?: string;
   searchQuery?: string;
 }

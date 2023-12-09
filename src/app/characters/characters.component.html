@@ -14,7 +14,9 @@
     (sortParamsChange)="cs.sortParams$.next($event)"
     (changePage)="cs.currentPage$.next($event)"
     (editCharacter)="
-      cas.characterToUpdate$.next($event); ms.open(modalTemplate)
+      cas.characterToUpdate$.next($event);
+      ms.open(modalTemplate);
+      cs.name$.next(cas.characterToUpdate$.value!.name)
     "
     (deleteCharacter)="cas.characterDelete$.next($event)"
   ></app-character-table>
@@ -28,6 +30,6 @@
     (joinGuild)="cas.characterJoinGuild$.next($event)"
     (leaveGuild)="cas.characterLeaveGuild$.next($event)"
     (updateCharacter)="cas.characterUpdate$.next($event)"
-    (closeModal)="ms.close()"
+    (closeModal)="ms.close(); cs.name$.next(undefined)"
   ></app-character-edit>
 </ng-template>

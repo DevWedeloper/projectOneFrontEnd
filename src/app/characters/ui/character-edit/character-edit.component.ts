@@ -4,6 +4,7 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnDestroy,
   OnInit,
   Output,
   inject
@@ -52,7 +53,7 @@ import { CharacterFormComponent } from '../character-form/character-form.compone
     SpinnerComponent,
   ],
 })
-export class CharacterEditComponent implements OnInit {
+export class CharacterEditComponent implements OnInit, OnDestroy {
   cfs = inject(CharacterFormService);
   cas = inject(CharacterActionsService);
   cjgfs = inject(CharacterJoinGuildFormService);
@@ -103,5 +104,9 @@ export class CharacterEditComponent implements OnInit {
     });
     this.cfs.initialName$.next(this.characterForm.get('name')?.value);
     this.cjgfs.initialName$.next(this.joinGuildForm.get('guild')?.value);
+  }
+
+  ngOnDestroy(): void {
+    this.closeModal.emit();
   }
 }

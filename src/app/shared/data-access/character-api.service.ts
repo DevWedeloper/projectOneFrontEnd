@@ -45,7 +45,7 @@ export class CharacterApiService {
   }
 
   getCharacterByName(name: string): Observable<Character> {
-    const url = `${this.baseUrl}/character/${name}`;
+    const url = `${this.baseUrl}/character/name/${name}`;
     return this.http.get<Character>(url);
   }
 
