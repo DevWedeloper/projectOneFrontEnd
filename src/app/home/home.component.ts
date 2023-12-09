@@ -1,38 +1,40 @@
-import { MediaMatcher } from '@angular/cdk/layout';
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Renderer2, inject } from '@angular/core';
-import { RouterLink, RouterOutlet } from '@angular/router';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Renderer2,
+  inject,
+} from '@angular/core';
+import { RouterOutlet } from '@angular/router';
 import { AuthService } from '../auth/auth.service';
 import { ThemeService } from '../shared/data-access/theme.service';
 import { HomeService } from './data-access/home.service';
-import { SettingsDropdownComponent } from './features/settings-dropdown/settings-dropdown.component';
+import { NavbarComponent } from './ui/navbar/navbar.component';
+import { SidebarComponent } from './ui/sidebar/sidebar.component';
 
 @Component({
-    selector: 'app-home',
-    templateUrl: './home.component.html',
-    styleUrls: ['./home.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: true,
-    imports: [CommonModule, RouterLink, RouterOutlet, SettingsDropdownComponent]
+  selector: 'app-home',
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    CommonModule,
+    RouterOutlet,
+    NavbarComponent,
+    SidebarComponent
+  ],
 })
 export class HomeComponent {
+  ts = inject(ThemeService);
   hs = inject(HomeService);
   renderer = inject(Renderer2);
-  mediaMatcher = inject(MediaMatcher);
-  ts = inject(ThemeService);
   authService = inject(AuthService);
-  isSidebarOpen = false;
-
-  mobileQuery = this.mediaMatcher.matchMedia('(max-width: 768px)');
 
   constructor() {
     this.checkPreferredTheme();
     this.authService.autoLogout();
     this.authService.setUserRole();
-  }
-
-  toggleSidebar(): void {
-    this.isSidebarOpen = !this.isSidebarOpen;
   }
 
   checkPreferredTheme(): void {
@@ -45,9 +47,4 @@ export class HomeComponent {
       this.renderer.removeClass(document.body, 'dark-theme');
     }
   }
-
-  closeMenu(): void {
-    this.isSidebarOpen = false;
-  }
-  
 }
