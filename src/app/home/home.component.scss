@@ -1,14 +1,10 @@
-$navbar-height: 48px;
-$sidebar-closed-width: 48px;
-$sidebar-opened-width: 210px;
-
 .navbar {
   position: sticky;
   display: flex;
   justify-content: space-between;
   align-items: center;
   inset: 0;
-  height: $navbar-height;
+  height: var(--navbar-height);
   width: 100%;
   padding: 0 7px;
   background-color: var(--main-color);
@@ -17,8 +13,8 @@ $sidebar-opened-width: 210px;
 }
 
 .navbar div:nth-child(2) {
-  width: $navbar-height;
-  height: $navbar-height;
+  width: var(--navbar-height);
+  height: var(--navbar-height);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -34,9 +30,9 @@ $sidebar-opened-width: 210px;
 
 .sidebar {
   position: fixed;
-  height: calc(100vh - $navbar-height);
-  top: $navbar-height;
-  width: $sidebar-closed-width;
+  height: calc(100vh - var(--navbar-height));
+  top: var(--navbar-height);
+  width: var(--sidebar-closed-width);
   background-color: var(--secondary-color);
   transition: width 75ms ease-in-out;
   z-index: 1;
@@ -62,7 +58,7 @@ $sidebar-opened-width: 210px;
 .sidebar-link {
   display: flex;
   align-items: center;
-  height: $sidebar-closed-width;
+  height: var(--sidebar-closed-width);
   text-decoration: none;
 }
 
@@ -107,7 +103,7 @@ $sidebar-opened-width: 210px;
 }
 
 .sidebar.open {
-  width: $sidebar-opened-width;
+  width: var(--sidebar-opened-width);
 }
 
 .sidebar.open .link-text {
@@ -118,15 +114,15 @@ $sidebar-opened-width: 210px;
 
 .right-container {
   position: relative;
-  left: $sidebar-closed-width;
-  width: calc(100% - $sidebar-closed-width);
+  left: var(--sidebar-closed-width);
+  width: calc(100% - var(--sidebar-closed-width));
   color: var(--text-color);
   transition: all 0.15s ease-in-out, background-color 0s, color 0s;
 }
 
 .sidebar.open ~ .right-container {
-  left: $sidebar-opened-width;
-  width: calc(100% - $sidebar-opened-width);
+  left: var(--sidebar-opened-width);
+  width: calc(100% - var(--sidebar-opened-width));
 }
 
 .right-container .main-content {
@@ -147,7 +143,7 @@ $sidebar-opened-width: 210px;
 
 @media (max-width: 768px) {
   .sidebar {
-    width: $sidebar-opened-width;
+    width: var(--sidebar-opened-width);
     transform: translateX(-100%);
     transition: transform 0.15s ease-in-out;
   }
