@@ -71,12 +71,14 @@ $sidebar-opened-width: 210px;
 }
 
 .sidebar-link:hover .icon-container svg,
-.sidebar-link:focus-visible .icon-container svg {
+.sidebar-link:focus-visible .icon-container svg,
+.sidebar-link.active .icon-container svg {
   fill: var(--main-color);
 }
 
 .sidebar-link:hover .link-text,
-.sidebar-link:focus-visible .link-text {
+.sidebar-link:focus-visible .link-text,
+.sidebar-link.active .link-text {
   color: var(--main-color);
 }
 
