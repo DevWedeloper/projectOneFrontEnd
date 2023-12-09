@@ -34,6 +34,7 @@ export class GuildService {
     sortBy: 'name',
     sortOrder: 'asc',
   });
+  name$ = new BehaviorSubject<string | undefined>(undefined);
   searchQuery$ = new BehaviorSubject<string>('');
   refetchPage$ = new Subject<void>();
 
@@ -62,16 +63,17 @@ export class GuildService {
     ];
     this.ls.waitForObservables(observables);
 
-    combineLatest([this.currentPage$, this.pageSize$, this.sortParams$])
+    combineLatest([this.currentPage$, this.pageSize$, this.sortParams$, this.name$])
       .pipe(
         distinctUntilChanged(),
-        switchMap(([currentPage, pageSize, sortParams]) => {
+        switchMap(([currentPage, pageSize, sortParams, name]) => {
           const { sortBy, sortOrder } = sortParams;
           const queryParams: QueryParams = {
             page: currentPage,
             pageSize: pageSize,
             sortBy: sortBy,
             sortOrder: sortOrder,
+            name: name
           };
           return this.router.navigate([], {
             relativeTo: this.route,

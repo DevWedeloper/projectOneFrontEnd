@@ -5,6 +5,7 @@ import {
   DestroyRef,
   EventEmitter,
   Input,
+  OnDestroy,
   OnInit,
   Output,
   inject,
@@ -48,7 +49,7 @@ import { GuildEditFormService } from '../../data-access/guild-edit-form.service'
     SpinnerComponent,
   ],
 })
-export class GuildEditComponent implements OnInit {
+export class GuildEditComponent implements OnInit, OnDestroy {
   gas = inject(GuildActionsService);
   gefs = inject(GuildEditFormService);
   fb = inject(FormBuilder);
@@ -78,6 +79,7 @@ export class GuildEditComponent implements OnInit {
     guildId: string;
     oldMember: Character;
   }>();
+  @Output() closeEdit = new EventEmitter<void>();
   updateGuildNameForm!: FormGroup;
   updateGuildLeaderForm!: FormGroup;
   addMemberForm!: FormGroup;
@@ -107,6 +109,10 @@ export class GuildEditComponent implements OnInit {
     });
     this.gefs.initialName$.next(this.updateGuildNameForm.get('name')?.value);
     this.gefs.initialLeader$.next(this.updateGuildLeaderForm.get('leader')?.value);
+  }
+
+  ngOnDestroy(): void {
+    this.closeEdit.emit();
   }
 
   trackBy(index: number): number {

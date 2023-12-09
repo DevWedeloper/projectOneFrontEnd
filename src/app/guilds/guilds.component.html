@@ -13,7 +13,11 @@
     (pageSizeChange)="gs.pageSize$.next($event)"
     (sortParamsChange)="gs.sortParams$.next($event)"
     (changePage)="gs.currentPage$.next($event)"
-    (editGuild)="gas.guildToUpdate$.next($event); ms.open(modalTemplate)"
+    (editGuild)="
+      gas.guildToUpdate$.next($event);
+      ms.open(modalTemplate);
+      gs.name$.next(gas.guildToUpdate$.value!.name)
+    "
     (deleteGuild)="gas.guildDelete$.next($event)"
   ></app-guild-table>
 </div>
@@ -33,5 +37,6 @@
     (updateGuildLeader)="gas.guildUpdateLeader$.next($event)"
     (addMember)="gas.guildAddMember$.next($event)"
     (removeMember)="gas.guildRemoveMember$.next($event)"
+    (closeEdit)="ms.close(); gs.name$.next(undefined)"
   ></app-guild-edit>
 </ng-template>
