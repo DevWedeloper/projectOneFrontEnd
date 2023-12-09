@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, TemplateRef, ViewChild, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
 import {
@@ -12,6 +12,8 @@ import {
   take,
 } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
+import { CharacterApiService } from '../shared/data-access/character-api.service';
+import { GuildApiService } from '../shared/data-access/guild-api.service';
 import { Character } from '../shared/interfaces/character.interface';
 import { ModalService } from '../shared/ui/components/modal/modal.service';
 import { GuildActionsService } from './data-access/guild-actions.service';
@@ -19,8 +21,6 @@ import { GuildService } from './data-access/guild.service';
 import { GuildCreateComponent } from './ui/guild-create/guild-create.component';
 import { GuildEditComponent } from './ui/guild-edit/guild-edit.component';
 import { GuildTableComponent } from './ui/guild-table/guild-table.component';
-import { GuildApiService } from '../shared/data-access/guild-api.service';
-import { CharacterApiService } from '../shared/data-access/character-api.service';
 
 @Component({
   selector: 'app-guilds',
@@ -48,6 +48,7 @@ export class GuildsComponent {
   searchNewLeaderResultsQuery$ = new BehaviorSubject<string>('');
   searchNewMemberResults$ = new BehaviorSubject<Character[]>([]);
   searchNewMemberResultsQuery$ = new BehaviorSubject<string>('');
+  @ViewChild('modalTemplate') editComponent!: TemplateRef<HTMLElement>;
 
   constructor() {
     this.route.queryParams
@@ -59,6 +60,18 @@ export class GuildsComponent {
           sortBy: params['sortBy'] || 'name',
           sortOrder: params['sortOrder'] || 'asc',
         });
+        this.gs.name$.next(params['name'] || undefined);
+
+        const characterName = params['name'];
+        if (characterName) {
+          this.guildApiService
+            .getGuildByName(params['name'])
+            .pipe(takeUntilDestroyed())
+            .subscribe((data) => {
+              this.gas.guildToUpdate$.next(data);
+              this.ms.open(this.editComponent);
+            });
+        }
       });
 
     this.tableSearchQuery$

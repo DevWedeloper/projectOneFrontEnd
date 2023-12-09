@@ -45,7 +45,7 @@ export class GuildApiService {
   }
 
   getGuildByName(name: string): Observable<Guild> {
-    const url = `${this.baseUrl}/guild/${name}`;
+    const url = `${this.baseUrl}/guild/name/${name}`;
     return this.http.get<Guild>(url);
   }
 

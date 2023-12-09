@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, TemplateRef, ViewChild, inject } from '@angular/core';
 import { AuthService } from 'src/app/auth/auth.service';
 
 import { CommonModule } from '@angular/common';
@@ -13,6 +13,7 @@ import {
   switchMap,
   take,
 } from 'rxjs';
+import { CharacterApiService } from '../shared/data-access/character-api.service';
 import { GuildApiService } from '../shared/data-access/guild-api.service';
 import { Guild } from '../shared/interfaces/guild.interface';
 import { ModalService } from '../shared/ui/components/modal/modal.service';
@@ -42,9 +43,11 @@ export class CharactersComponent {
   cs = inject(CharacterService);
   ms = inject(ModalService);
   guildApiService = inject(GuildApiService);
+  characterApiService = inject(CharacterApiService);
   tableSearchQuery$ = new Subject<string>();
   searchResults$ = new BehaviorSubject<Guild[]>([]);
   guildSearchQuery$ = new BehaviorSubject<string>('');
+  @ViewChild('modalTemplate') editComponent!: TemplateRef<HTMLElement>;
 
   constructor() {
     this.route.queryParams
@@ -56,6 +59,18 @@ export class CharactersComponent {
           sortBy: params['sortBy'] || 'name',
           sortOrder: params['sortOrder'] || 'asc',
         });
+        this.cs.name$.next(params['name'] || undefined);
+
+        const characterName = params['name'];
+        if (characterName) {
+          this.characterApiService
+            .getCharacterByName(params['name'])
+            .pipe(takeUntilDestroyed())
+            .subscribe((data) => {
+              this.cas.characterToUpdate$.next(data);
+              this.ms.open(this.editComponent);
+            });
+        }
       });
 
     this.tableSearchQuery$
