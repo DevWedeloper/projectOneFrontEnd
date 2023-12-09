@@ -10,7 +10,7 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { AuthService } from '../auth/auth.service';
 import { ThemeService } from '../shared/data-access/theme.service';
 import { HomeService } from './data-access/home.service';
-import { SettingsDropdownComponent } from './features/settings-dropdown/settings-dropdown.component';
+import { NavbarComponent } from './ui/navbar/navbar.component';
 
 @Component({
   selector: 'app-home',
@@ -22,8 +22,8 @@ import { SettingsDropdownComponent } from './features/settings-dropdown/settings
     CommonModule,
     RouterLink,
     RouterOutlet,
-    SettingsDropdownComponent,
     RouterLinkActive,
+    NavbarComponent
   ],
 })
 export class HomeComponent {
@@ -40,10 +40,6 @@ export class HomeComponent {
     this.checkPreferredTheme();
     this.authService.autoLogout();
     this.authService.setUserRole();
-  }
-
-  toggleSidebar(): void {
-    this.isSidebarOpen = !this.isSidebarOpen;
   }
 
   checkPreferredTheme(): void {

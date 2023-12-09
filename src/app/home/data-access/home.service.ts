@@ -6,4 +6,5 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class HomeService {
   isSettingsDropdownOpen$ = new BehaviorSubject<boolean>(false);
+  isSidebarOpen$ = new BehaviorSubject<boolean>(false);
 }
