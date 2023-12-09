@@ -1,4 +1,4 @@
-.right-container {
+.main-container {
   position: relative;
   left: var(--sidebar-closed-width);
   width: calc(100% - var(--sidebar-closed-width));
@@ -6,7 +6,7 @@
   transition: all 0.15s ease-in-out, background-color 0s, color 0s;
 }
 
-.right-container .main-content {
+.main-container .main-content {
   margin: 18px;
 }
 
@@ -16,7 +16,7 @@
 }
 
 @media (max-width: 768px) {
-  .right-container {
+  .main-container {
     left: 0;
     width: 100%;
   }
