@@ -25,9 +25,7 @@ export class PaginationComponent implements OnChanges {
   }
 
   updatePagesCountAndGeneratePages(): void {
-    if (this.total && this.pageSize) {
-      this.pagesCount = Math.ceil(this.total / this.pageSize);
-    }
+    this.pagesCount = Math.ceil((this.total || 1) / (this.pageSize || 1));
     this.generatePages();
   }
 
