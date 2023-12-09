@@ -44,6 +44,11 @@ export class CharacterApiService {
     return this.http.get<Character>(url);
   }
 
+  getCharacterByName(name: string): Observable<Character> {
+    const url = `${this.baseUrl}/character/${name}`;
+    return this.http.get<Character>(url);
+  }
+
   searchCharactersByName(searchQuery: string): Observable<Character[]> {
     const url = `${this.baseUrl}/character/search?name=${searchQuery}`;
     return this.http.get<Character[]>(url);

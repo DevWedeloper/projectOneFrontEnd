@@ -44,6 +44,11 @@ export class GuildApiService {
     return this.http.get<Guild>(url);
   }
 
+  getGuildByName(name: string): Observable<Guild> {
+    const url = `${this.baseUrl}/guild/${name}`;
+    return this.http.get<Guild>(url);
+  }
+
   searchGuildsByName(searchQuery: string): Observable<Guild[]> {
     const url = `${this.baseUrl}/guild/search?name=${searchQuery}`;
     return this.http.get<Guild[]>(url);
