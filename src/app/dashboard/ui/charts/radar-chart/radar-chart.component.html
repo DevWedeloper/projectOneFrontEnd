@@ -1,4 +1,8 @@
-<div class="radar-chart" *ngIf="!loading" [@smoothTransition]>
+<div
+  class="radar-chart"
+  *ngIf="!loading && topWellRoundedCharacters"
+  [@smoothTransition]
+>
   <div class="radar-chart-text-container">
     <div class="radar-chart-text">
       <div
@@ -35,4 +39,5 @@
     </canvas>
   </div>
 </div>
-<app-radar-chart-skeleton *ngIf="loading"></app-radar-chart-skeleton>
+<app-no-data *ngIf="!loading && !topWellRoundedCharacters" />
+<app-radar-chart-skeleton *ngIf="loading" />

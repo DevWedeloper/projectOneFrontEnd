@@ -57,6 +57,9 @@ export class GuildStatsService {
     .getTopWellRoundedGuilds()
     .pipe(
       map((guilds) => {
+        if (guilds.length === 0) {
+          return null;
+        }
         const names = guilds.map((guild) => guild.name);
         const combinedAttributes = guilds.map((guild) => guild.membersAverage);
         const dataset = [
@@ -110,6 +113,7 @@ export class GuildStatsService {
         }
       | WellRoundedGuild[]
       | AverageGuildStats[]
+      | null
     >[] = [
       this.topGuildsByHealth$,
       this.topGuildsByStrength$,
@@ -134,9 +138,12 @@ export class GuildStatsService {
   }: TopGuildsByAttributeOptions): Observable<{
     names: string[];
     dataset: ChartConfiguration<'bar'>['data']['datasets'];
-  }> {
+  } | null> {
     return this.guildStatsApiService.getTopGuildsByAttribute(attribute).pipe(
       map((guilds) => {
+        if (guilds.length === 0) {
+          return null;
+        }
         const names = guilds.map((guild) => guild.name).reverse();
         const combinedAttributes = guilds
         .map((guild) => this.mapAttributeToValue(attribute, guild))
@@ -178,12 +185,15 @@ export class GuildStatsService {
   }: TopGuildsByAverageAttributeOptions): Observable<{
     names: string[];
     dataset: ChartConfiguration<'bar'>['data']['datasets'];
-  }> {
+  } | null> {
     return combineLatest([
       this.averageCharacterStats$,
       this.guildStatsApiService.getTopGuildsByAverageAttribute(attribute),
     ]).pipe(
       map(([averageCharacterStats, guilds]) => {
+        if (guilds.length === 0) {
+          return null;
+        }
         const names = guilds.map((guild) => guild.name).reverse();
         const combinedAttributes = guilds
           .map((guild) => guild.averageAttribute)

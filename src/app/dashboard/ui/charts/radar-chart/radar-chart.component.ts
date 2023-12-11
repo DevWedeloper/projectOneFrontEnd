@@ -6,7 +6,7 @@ import {
   Input,
   Output,
   ViewChild,
-  inject,
+  inject
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ChartConfiguration } from 'chart.js';
@@ -14,13 +14,19 @@ import { BaseChartDirective, NgChartsModule, ThemeService } from 'ng2-charts';
 import { debounceTime, distinctUntilChanged, fromEvent, tap } from 'rxjs';
 import { ChartColorService } from 'src/app/dashboard/data-access/chart-color.service';
 import { WellRoundedCharacter } from 'src/app/dashboard/interfaces/well-rounded-character.interface';
+import { NoDataComponent } from 'src/app/shared/ui/components/no-data/no-data.component';
 import { smoothTransitionAnimation } from '../../../../shared/ui/animations/smooth-transition.animations';
 import { RadarChartSkeletonComponent } from '../../skeletons/radar-chart-skeleton/radar-chart-skeleton.component';
 
 @Component({
   selector: 'app-radar-chart',
   standalone: true,
-  imports: [CommonModule, NgChartsModule, RadarChartSkeletonComponent],
+  imports: [
+    CommonModule,
+    NgChartsModule,
+    RadarChartSkeletonComponent,
+    NoDataComponent,
+  ],
   providers: [ThemeService],
   templateUrl: './radar-chart.component.html',
   styleUrls: ['./radar-chart.component.scss'],

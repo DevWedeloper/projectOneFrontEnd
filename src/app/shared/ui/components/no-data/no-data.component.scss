@@ -1,0 +1,11 @@
+:host {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.logo {
+  width: 10%;
+  min-width: 10rem;
+  fill: var(--text-color);
+}

@@ -1,12 +1,12 @@
 .chart-group-container {
-  margin-bottom: 0.5rem;
-  overflow: hidden;
+  margin-bottom: var(--main-container-margin);
 }
 
 .chart-container {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(calc(50% - 4px), 1fr));
   gap: 0.5rem;
+  height: 100%;
 }
 
 .chart-container-item {
