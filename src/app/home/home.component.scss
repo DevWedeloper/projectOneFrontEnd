@@ -7,7 +7,7 @@
 }
 
 .main-container .main-content {
-  margin: 18px;
+  margin: var(--main-container-margin);
 }
 
 .sidebar-open {
