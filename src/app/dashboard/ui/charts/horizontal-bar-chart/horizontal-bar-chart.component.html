@@ -2,16 +2,15 @@
   <h2 *ngIf="label" class="chart-item-heading" [@smoothTransition]>
     {{ label }}
   </h2>
-  <div class="canvas-container" [@smoothTransition]>
-    <canvas
-      baseChart
-      [datasets]="barChartDataset"
-      [options]="barChartOptions"
-      [labels]="barChartLabels"
-      [type]="'bar'"
-    >
-    </canvas>
-  </div>
+  <canvas
+    baseChart
+    [datasets]="barChartDataset"
+    [options]="barChartOptions"
+    [labels]="barChartLabels"
+    [type]="'bar'"
+    [@smoothTransition]
+  >
+  </canvas>
 </ng-container>
 <app-no-data *ngIf="!loading && !barChartLabels && !barChartDataset" />
 <app-horizontal-bar-chart-skeleton *ngIf="loading" />
