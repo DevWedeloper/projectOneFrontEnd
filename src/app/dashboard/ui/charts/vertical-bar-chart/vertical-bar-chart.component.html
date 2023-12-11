@@ -1,8 +1,8 @@
-<div *ngIf="!loading && barChartDataset && barChartLabels" [@smoothTransition]>
-  <div class="chart-item-heading">
-    <h2>{{ label }}</h2>
-  </div>
-  <div>
+<ng-container *ngIf="!loading && barChartDataset && barChartLabels">
+  <h2 *ngIf="label" class="chart-item-heading" [@smoothTransition]>
+    {{ label }}
+  </h2>
+  <div [@smoothTransition]>
     <canvas
       baseChart
       [datasets]="barChartDataset"
@@ -12,6 +12,6 @@
     >
     </canvas>
   </div>
-</div>
+</ng-container>
 <app-no-data *ngIf="!loading && !barChartDataset && !barChartLabels" />
 <app-vertical-bar-chart-skeleton *ngIf="loading" />
