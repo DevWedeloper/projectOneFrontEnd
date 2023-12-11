@@ -1,4 +1,4 @@
-<div *ngIf="!loading" [@smoothTransition]>
+<div *ngIf="!loading && barChartLabels && barChartDataset" [@smoothTransition]>
   <div class="chart-item-heading">
     <h2>{{ label }}</h2>
   </div>
@@ -13,4 +13,5 @@
     </canvas>
   </div>
 </div>
-<app-horizontal-bar-chart-skeleton *ngIf="loading"></app-horizontal-bar-chart-skeleton>
+<app-no-data *ngIf="!loading && !barChartLabels && !barChartDataset" />
+<app-horizontal-bar-chart-skeleton *ngIf="loading" />

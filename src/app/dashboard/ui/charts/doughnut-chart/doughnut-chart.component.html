@@ -1,4 +1,8 @@
-<div *ngIf="!loading" [@smoothTransition] class="chart-container">
+<div
+  *ngIf="!loading && polarAreaChartDatasets && polarAreaChartLabels"
+  [@smoothTransition]
+  class="chart-container"
+>
   <canvas
     baseChart
     [datasets]="polarAreaChartDatasets"
@@ -8,4 +12,7 @@
   >
   </canvas>
 </div>
-<app-doughnut-chart-skeleton *ngIf="loading"></app-doughnut-chart-skeleton>
+<app-no-data
+  *ngIf="!loading && !polarAreaChartDatasets && !polarAreaChartLabels"
+/>
+<app-doughnut-chart-skeleton *ngIf="loading" />

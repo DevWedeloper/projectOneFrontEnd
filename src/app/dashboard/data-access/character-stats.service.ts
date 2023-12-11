@@ -52,8 +52,16 @@ export class CharacterStatsService {
     attribute: 'critChance',
     backgroundColor: this.ccs.critChanceColor,
   });
-  topWellRoundedCharacters$ =
-    this.characterStatsApiService.getTopWellRoundedCharacters();
+  topWellRoundedCharacters$ = this.characterStatsApiService
+    .getTopWellRoundedCharacters()
+    .pipe(
+      map((characters) => {
+        if (characters.length === 0) {
+          return null;
+        }
+        return characters;
+      })
+    );
   averageCharacterStats$ =
     this.characterStatsApiService.getAverageCharacterStats();
   radarChartCharacter$ = new BehaviorSubject<WellRoundedCharacter | null>(null);
@@ -109,9 +117,14 @@ export class CharacterStatsService {
     .getCharacterDistributionByType()
     .pipe(
       map((data) => {
+        if (data.length === 0) {
+          return null;
+        }
         const ids = data.map((item) => item._id);
         const counts = data.map((item) => item.count);
-        const dataset: ChartConfiguration<'polarArea'>['data']['datasets'] = [{ data: counts || [] }];
+        const dataset: ChartConfiguration<'polarArea'>['data']['datasets'] = [
+          { data: counts || [] },
+        ];
         return { ids, dataset };
       })
     );
@@ -132,6 +145,7 @@ export class CharacterStatsService {
           ids: string[];
           dataset: ChartConfiguration<'polarArea'>['data']['datasets'];
         }
+      | null
     >[] = [
       this.topCharactersByHealth$,
       this.topCharactersByStrength$,
@@ -150,7 +164,7 @@ export class CharacterStatsService {
         take(1),
         takeUntilDestroyed(),
         tap((characters) => {
-          this.radarChartCharacter$.next(characters[0]);
+          this.radarChartCharacter$.next(characters?.[0] || null);
         })
       )
       .subscribe();
@@ -162,18 +176,21 @@ export class CharacterStatsService {
   }: TopCharactersByAttributeOptions): Observable<{
     names: string[];
     dataset: ChartConfiguration<'bar'>['data']['datasets'];
-  }> {
+  } | null> {
     return this.characterStatsApiService
       .getTopCharactersByAttribute(attribute)
       .pipe(
         map((characters) => {
+          if (characters.length === 0) {
+            return null;
+          }
           const names = characters.map((characters) => characters.name);
           const combinedAttributes = characters.map(
             (character) => character[attribute as keyof Character] as number
           );
           const dataset: ChartConfiguration<'bar'>['data']['datasets'] = [
             {
-              data: combinedAttributes || [],
+              data: combinedAttributes,
               backgroundColor: `${backgroundColor}`,
             },
           ];

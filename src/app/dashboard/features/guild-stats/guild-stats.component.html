@@ -9,8 +9,8 @@
     <div class="chart-container-item">
       <app-vertical-bar-chart
         [label]="'Health'"
-        [barChartLabels]="(gss.topGuildsByHealth$ | async)?.names"
-        [barChartDataset]="(gss.topGuildsByHealth$ | async)?.dataset"
+        [barChartLabels]="(gss.topGuildsByHealth$ | async)?.names || null"
+        [barChartDataset]="(gss.topGuildsByHealth$ | async)?.dataset || null"
         [loading]="ls.loading$ | async"
       ></app-vertical-bar-chart>
     </div>
@@ -18,8 +18,8 @@
     <div class="chart-container-item">
       <app-vertical-bar-chart
         [label]="'Strength'"
-        [barChartLabels]="(gss.topGuildsByStrength$ | async)?.names"
-        [barChartDataset]="(gss.topGuildsByStrength$ | async)?.dataset"
+        [barChartLabels]="(gss.topGuildsByStrength$ | async)?.names || null"
+        [barChartDataset]="(gss.topGuildsByStrength$ | async)?.dataset || null"
         [loading]="ls.loading$ | async"
       ></app-vertical-bar-chart>
     </div>
@@ -27,8 +27,8 @@
     <div class="chart-container-item">
       <app-vertical-bar-chart
         [label]="'Agility'"
-        [barChartLabels]="(gss.topGuildsByAgility$ | async)?.names"
-        [barChartDataset]="(gss.topGuildsByAgility$ | async)?.dataset"
+        [barChartLabels]="(gss.topGuildsByAgility$ | async)?.names || null"
+        [barChartDataset]="(gss.topGuildsByAgility$ | async)?.dataset || null"
         [loading]="ls.loading$ | async"
       ></app-vertical-bar-chart>
     </div>
@@ -36,8 +36,8 @@
     <div class="chart-container-item">
       <app-vertical-bar-chart
         [label]="'Intelligence'"
-        [barChartLabels]="(gss.topGuildsByIntelligence$ | async)?.names"
-        [barChartDataset]="(gss.topGuildsByIntelligence$ | async)?.dataset"
+        [barChartLabels]="(gss.topGuildsByIntelligence$ | async)?.names || null"
+        [barChartDataset]="(gss.topGuildsByIntelligence$ | async)?.dataset || null"
         [loading]="ls.loading$ | async"
       ></app-vertical-bar-chart>
     </div>
@@ -45,8 +45,8 @@
     <div class="chart-container-item">
       <app-vertical-bar-chart
         [label]="'Armor'"
-        [barChartLabels]="(gss.topGuildsByArmor$ | async)?.names"
-        [barChartDataset]="(gss.topGuildsByArmor$ | async)?.dataset"
+        [barChartLabels]="(gss.topGuildsByArmor$ | async)?.names || null"
+        [barChartDataset]="(gss.topGuildsByArmor$ | async)?.dataset || null"
         [loading]="ls.loading$ | async"
       ></app-vertical-bar-chart>
     </div>
@@ -54,8 +54,8 @@
     <div class="chart-container-item">
       <app-vertical-bar-chart
         [label]="'Crit Chance'"
-        [barChartLabels]="(gss.topGuildsByCritChance$ | async)?.names"
-        [barChartDataset]="(gss.topGuildsByCritChance$ | async)?.dataset"
+        [barChartLabels]="(gss.topGuildsByCritChance$ | async)?.names || null"
+        [barChartDataset]="(gss.topGuildsByCritChance$ | async)?.dataset || null"
         [loading]="ls.loading$ | async"
       ></app-vertical-bar-chart>
     </div>
@@ -73,8 +73,8 @@
     <div class="chart-container-item">
       <app-vertical-bar-chart
         [label]="'Health'"
-        [barChartLabels]="(gss.topGuildsByAverageHealthData$ | async)?.names"
-        [barChartDataset]="(gss.topGuildsByAverageHealthData$ | async)?.dataset"
+        [barChartLabels]="(gss.topGuildsByAverageHealthData$ | async)?.names || null"
+        [barChartDataset]="(gss.topGuildsByAverageHealthData$ | async)?.dataset || null"
         [loading]="ls.loading$ | async"
       ></app-vertical-bar-chart>
     </div>
@@ -82,9 +82,9 @@
     <div class="chart-container-item">
       <app-vertical-bar-chart
         [label]="'Strength'"
-        [barChartLabels]="(gss.topGuildsByAverageStrengthData$ | async)?.names"
+        [barChartLabels]="(gss.topGuildsByAverageStrengthData$ | async)?.names || null"
         [barChartDataset]="
-          (gss.topGuildsByAverageStrengthData$ | async)?.dataset
+          (gss.topGuildsByAverageStrengthData$ | async)?.dataset || null
         "
         [loading]="ls.loading$ | async"
       ></app-vertical-bar-chart>
@@ -93,9 +93,9 @@
     <div class="chart-container-item">
       <app-vertical-bar-chart
         [label]="'Agility'"
-        [barChartLabels]="(gss.topGuildsByAverageAgilityData$ | async)?.names"
+        [barChartLabels]="(gss.topGuildsByAverageAgilityData$ | async)?.names || null"
         [barChartDataset]="
-          (gss.topGuildsByAverageAgilityData$ | async)?.dataset
+          (gss.topGuildsByAverageAgilityData$ | async)?.dataset || null
         "
         [loading]="ls.loading$ | async"
       ></app-vertical-bar-chart>
@@ -105,10 +105,10 @@
       <app-vertical-bar-chart
         [label]="'Intelligence'"
         [barChartLabels]="
-          (gss.topGuildsByAverageIntelligenceData$ | async)?.names
+          (gss.topGuildsByAverageIntelligenceData$ | async)?.names || null
         "
         [barChartDataset]="
-          (gss.topGuildsByAverageIntelligenceData$ | async)?.dataset
+          (gss.topGuildsByAverageIntelligenceData$ | async)?.dataset || null
         "
         [loading]="ls.loading$ | async"
       ></app-vertical-bar-chart>
@@ -117,8 +117,8 @@
     <div class="chart-container-item">
       <app-vertical-bar-chart
         [label]="'Armor'"
-        [barChartLabels]="(gss.topGuildsByAverageArmorData$ | async)?.names"
-        [barChartDataset]="(gss.topGuildsByAverageArmorData$ | async)?.dataset"
+        [barChartLabels]="(gss.topGuildsByAverageArmorData$ | async)?.names || null"
+        [barChartDataset]="(gss.topGuildsByAverageArmorData$ | async)?.dataset || null"
         [loading]="ls.loading$ | async"
       ></app-vertical-bar-chart>
     </div>
@@ -127,10 +127,10 @@
       <app-vertical-bar-chart
         [label]="'Crit Chance'"
         [barChartLabels]="
-          (gss.topGuildsByAverageCritChanceData$ | async)?.names
+          (gss.topGuildsByAverageCritChanceData$ | async)?.names || null
         "
         [barChartDataset]="
-          (gss.topGuildsByAverageCritChanceData$ | async)?.dataset
+          (gss.topGuildsByAverageCritChanceData$ | async)?.dataset || null
         "
         [loading]="ls.loading$ | async"
       ></app-vertical-bar-chart>
@@ -147,8 +147,8 @@
   </div>
   <div class="chart-container-item">
     <app-horizontal-bar-chart
-      [barChartLabels]="(gss.topWellRoundedGuilds$ | async)?.names"
-      [barChartDataset]="(gss.topWellRoundedGuilds$ | async)?.dataset"
+      [barChartLabels]="(gss.topWellRoundedGuilds$ | async)?.names || null || null"
+      [barChartDataset]="(gss.topWellRoundedGuilds$ | async)?.dataset || null || null"
       [loading]="ls.loading$ | async"
     ></app-horizontal-bar-chart>
   </div>
