@@ -14,7 +14,7 @@ import {
   finalize,
   map,
   of,
-  switchMap
+  switchMap,
 } from 'rxjs';
 import { CheckIfMemberApiService } from 'src/app/guilds/data-access/check-if-member-api.service';
 import { CheckUniquenessService } from 'src/app/shared/data-access/check-uniqueness-api.service';
@@ -93,10 +93,10 @@ export class GuildEditFormService {
           map((response) =>
             response.message === 'Guild name is unique'
               ? null
-              : { uniqueName: false }
+              : { uniqueName: true }
           ),
           catchError(() => {
-            return of({ uniqueName: true });
+            return of(null);
           })
         )
       ),
