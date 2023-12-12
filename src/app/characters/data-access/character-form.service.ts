@@ -6,7 +6,16 @@ import {
   ValidationErrors,
   Validators,
 } from '@angular/forms';
-import { Observable, of, debounceTime, switchMap, map, catchError, BehaviorSubject, finalize } from 'rxjs';
+import {
+  Observable,
+  of,
+  debounceTime,
+  switchMap,
+  map,
+  catchError,
+  BehaviorSubject,
+  finalize,
+} from 'rxjs';
 import { CheckUniquenessService } from 'src/app/shared/data-access/check-uniqueness-api.service';
 import { validateName } from 'src/app/shared/utils/validate-name.utils';
 
@@ -73,10 +82,12 @@ export class CharacterFormService {
       switchMap((name) =>
         this.checkUniquenessApi.checkCharacterNameUniqueness(name).pipe(
           map((response) =>
-            response.message === 'Character name is unique' ? null : { uniqueName: false }
+            response.message === 'Character name is unique'
+              ? null
+              : { uniqueName: true }
           ),
           catchError(() => {
-            return of({ uniqueName: true });
+            return of(null);
           })
         )
       ),

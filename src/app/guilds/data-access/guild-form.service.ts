@@ -53,10 +53,10 @@ export class GuildFormService {
           map((response) =>
             response.message === 'Guild name is unique'
               ? null
-              : { uniqueName: false }
+              : { uniqueName: true }
           ),
           catchError(() => {
-            return of({ uniqueName: true });
+            return of(null);
           })
         )
       ),
