@@ -23,7 +23,7 @@ import { User } from './interface/user.interface';
 export class AuthService {
   http = inject(HttpClient);
   router = inject(Router);
-  url = environment.baseUrl;
+  url = environment.authUrl;
   private accessTokenKey = 'access_token';
   private refreshTokenKey = 'refresh_token';
   private currentUser = 'current_user';
