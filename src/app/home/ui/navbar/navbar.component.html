@@ -22,10 +22,11 @@
   <div
     (mouseenter)="hs.isSettingsDropdownOpen$.next(true)"
     (mouseleave)="hs.isSettingsDropdownOpen$.next(false)"
+    (focus)="hs.isSettingsDropdownOpen$.next(true)"
+    tabindex="0"
   >
     <a
       class="navbar-link"
-      tabindex="1"
       [ngStyle]="{
         filter:
           (ts.isDarkMode$ | async)

@@ -37,7 +37,8 @@
   border-bottom-right-radius: 0.5rem;
 }
 
-.dropdown-item:hover {
+.dropdown-item:hover,
+.dropdown-item:focus-visible {
   background-color: var(--primary-color);
 }
 

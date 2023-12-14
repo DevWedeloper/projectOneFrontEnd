@@ -1,10 +1,11 @@
 <div class="settings-dropdown">
   <ul [@fadeInOut] class="dropdown-content">
     <li
+      #links
       class="dropdown-item"
       (click)="themeOnClick()"
       (keyup.enter)="themeOnClick()"
-      tabindex="2"
+      tabindex="0"
       [ngStyle]="{
         filter: (ts.isDarkMode$ | async) ? 'brightness(1.2)' : 'brightness(0.8)'
       }"
@@ -30,10 +31,11 @@
       </a>
     </li>
     <li
+      #links
       class="dropdown-item"
       (click)="logout()"
       (keyup.enter)="logout()"
-      tabindex="3"
+      tabindex="0"
       [ngStyle]="{
         filter: (ts.isDarkMode$ | async) ? 'brightness(1.2)' : 'brightness(0.8)'
       }"
