@@ -85,6 +85,7 @@
           [label]="'Leader'"
           formControlName="leader"
           (input)="searchQuery$.next(search.value)"
+          (blurEvent)="searchQuery$.next('')"
         ></app-custom-input>
         <app-search-items
           [searchResults$]="searchResults$"
