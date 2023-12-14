@@ -75,18 +75,6 @@ export class SettingsDropdownComponent {
     }
   }
 
-  themeOnClick(): void {
-    this.ts.darkMode$.next(!this.ts.darkMode$.value);
-    if (this.ts.darkMode$.value) {
-      this.renderer.addClass(document.body, 'dark-theme');
-      localStorage.setItem('preferredTheme', 'dark');
-    } else {
-      this.renderer.removeClass(document.body, 'dark-theme');
-      localStorage.setItem('preferredTheme', 'light');
-    }
-    this.ts.styles$.next(getComputedStyle(document.body));
-  }
-
   logout(): void {
     if (!confirm('Are you sure you want to logout?')) {
       return;
