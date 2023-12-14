@@ -44,6 +44,8 @@ export class GuildsComponent {
   route = inject(ActivatedRoute);
   ms = inject(ModalService);
   tableSearchQuery$ = new Subject<string>();
+  searchLeaderResults$ = new BehaviorSubject<Character[]>([]);
+  searchLeaderResultsQuery$ = new BehaviorSubject<string>('');
   searchNewLeaderResults$ = new BehaviorSubject<Character[]>([]);
   searchNewLeaderResultsQuery$ = new BehaviorSubject<string>('');
   searchNewMemberResults$ = new BehaviorSubject<Character[]>([]);
@@ -79,6 +81,23 @@ export class GuildsComponent {
       .subscribe((searchQuery) => {
         this.gs.currentPage$.next(1);
         this.gs.searchQuery$.next(searchQuery);
+      });
+
+    this.searchLeaderResultsQuery$
+      .pipe(
+        debounceTime(300),
+        distinctUntilChanged(),
+        switchMap((query) => {
+          if (query.trim() !== '') {
+            return this.characterApiService.searchCharactersByName(query);
+          } else {
+            return of([]);
+          }
+        }),
+        takeUntilDestroyed()
+      )
+      .subscribe((characters) => {
+        this.searchLeaderResults$.next(characters);
       });
 
     this.searchNewLeaderResultsQuery$

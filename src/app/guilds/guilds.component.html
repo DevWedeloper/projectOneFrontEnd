@@ -1,7 +1,11 @@
 <div class="content-container">
   <app-guild-create
     *ngIf="authService.isCurrentUserAdmin$ | async"
+    [searchLeaderResults$]="searchLeaderResults$"
     (createGuild)="gas.guildCreate$.next($event)"
+    (searchLeaderResultsQueryChange)="
+      searchLeaderResultsQuery$.next($event)
+    "
   ></app-guild-create>
 
   <app-guild-table
