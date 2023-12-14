@@ -1,6 +1,18 @@
 import { animate, style, transition, trigger } from '@angular/animations';
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, ElementRef, HostBinding, Renderer2, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  DestroyRef,
+  ElementRef,
+  HostBinding,
+  HostListener,
+  QueryList,
+  Renderer2,
+  ViewChildren,
+  inject,
+} from '@angular/core';
 import { AuthService } from 'src/app/auth/auth.service';
 import { ThemeService } from 'src/app/shared/data-access/theme.service';
 import { HomeService } from '../../data-access/home.service';
@@ -19,8 +31,19 @@ import { HomeService } from '../../data-access/home.service';
         animate('150ms', style({ opacity: 1, transform: 'translateY(0)' })),
       ]),
       transition(':leave', [
-        style({ opacity: 1, transform: 'translateY(0)', pointerEvents: 'none' }),
-        animate('150ms', style({ opacity: 0, transform: 'translateY(-10px)', pointerEvents: 'none' })),
+        style({
+          opacity: 1,
+          transform: 'translateY(0)',
+          pointerEvents: 'none',
+        }),
+        animate(
+          '150ms',
+          style({
+            opacity: 0,
+            transform: 'translateY(-10px)',
+            pointerEvents: 'none',
+          })
+        ),
       ]),
     ]),
   ],
@@ -31,25 +54,24 @@ export class SettingsDropdownComponent {
   hs = inject(HomeService);
   renderer = inject(Renderer2);
   elementRef = inject(ElementRef);
+  destroyRef = inject(DestroyRef);
+  cdr = inject(ChangeDetectorRef);
   @HostBinding('@fadeInOut') animateElement = true;
+  @ViewChildren('links') links!: QueryList<ElementRef>;
+  private skipInitialCheck = true;
 
-  themeOnClick(): void {
-    this.ts.darkMode$.next(!this.ts.darkMode$.value);
-    if (this.ts.darkMode$.value) {
-      this.renderer.addClass(document.body, 'dark-theme');
-      localStorage.setItem('preferredTheme', 'dark');
-    } else {
-      this.renderer.removeClass(document.body, 'dark-theme');
-      localStorage.setItem('preferredTheme', 'light');
-    }
-    this.ts.styles$.next(getComputedStyle(document.body));
-  }
-  
-  logout(): void {
-    if (!confirm('Are you sure you want to logout?')) {
+  @HostListener('document:focusin', ['$event'])
+  onDocumentFocusIn(event: Event) {
+    if (this.skipInitialCheck) {
+      this.skipInitialCheck = false;
       return;
     }
-    this.authService.logout();
+    if (
+      !this.links.some((child) =>
+        child.nativeElement.contains(event.target as Node)
+      )
+    ) {
+      this.hs.isSettingsDropdownOpen$.next(false);
+    }
   }
-  
 }

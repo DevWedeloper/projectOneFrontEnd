@@ -7,10 +7,8 @@ import {
   EventEmitter,
   Input,
   Output,
-  QueryList,
   TemplateRef,
-  ViewChildren,
-  inject,
+  inject
 } from '@angular/core';
 import { Character } from '../../../interfaces/character.interface';
 import { Guild } from '../../../interfaces/guild.interface';
@@ -40,7 +38,6 @@ export class TableComponent<T extends Character | Guild> {
   @ContentChild('paginationTemplate') pagination:
     | TemplateRef<HTMLElement>
     | undefined;
-  @ViewChildren('tableData') tableData!: QueryList<HTMLElement>;
 
   trackBy(index: number): number {
     return index;
