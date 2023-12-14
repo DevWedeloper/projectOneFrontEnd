@@ -85,6 +85,7 @@
           formControlName="leader"
           (input)="searchLeaderResultsQueryChange.emit(search.value)"
           (focusEvent)="toggleSearchContainer.next(true)"
+          (clickEvent)="toggleSearchContainer.next(true)"
         ></app-custom-input>
         <app-search-items
           *ngIf="toggleSearchContainer | async"

@@ -98,6 +98,7 @@
             formControlName="leader"
             (input)="searchNewLeaderResultsQueryChange.emit(selectMember.value)"
             (focusEvent)="toggleNewLeaderSearchContainer.next(true)"
+            (clickEvent)="toggleNewLeaderSearchContainer.next(true)"
           ></app-custom-input>
           <app-search-items
             *ngIf="toggleNewLeaderSearchContainer | async"
@@ -185,6 +186,7 @@
               searchNewMemberResultsQueryChange.emit(selectAddMember.value)
             "
             (focusEvent)="toggleNewMemberSearchContainer.next(true)"
+            (clickEvent)="toggleNewMemberSearchContainer.next(true)"
           ></app-custom-input>
           <app-search-items
             *ngIf="toggleNewMemberSearchContainer | async"

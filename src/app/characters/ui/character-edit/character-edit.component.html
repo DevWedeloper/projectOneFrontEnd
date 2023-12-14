@@ -13,6 +13,7 @@
         formControlName="guild"
         (input)="searchQueryChange.emit(search.value)"
         (focusEvent)="toggleSearchContainer.next(true)"
+        (clickEvent)="toggleSearchContainer.next(true)"
       >
       </app-custom-input>
       <app-search-items

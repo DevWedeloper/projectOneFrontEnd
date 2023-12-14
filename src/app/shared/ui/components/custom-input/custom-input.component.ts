@@ -34,6 +34,7 @@ export class CustomInputComponent implements ControlValueAccessor {
   @Input() value!: string;
   @Input() step!: number;
   @Output() focusEvent = new EventEmitter<void>();
+  @Output() clickEvent = new EventEmitter<void>();
 
   onChange: any = () => {};
   onTouch: any = () => {};
