@@ -83,6 +83,8 @@ export class GuildEditComponent implements OnInit, OnDestroy {
   updateGuildNameForm!: FormGroup;
   updateGuildLeaderForm!: FormGroup;
   addMemberForm!: FormGroup;
+  toggleNewLeaderSearchContainer = new BehaviorSubject<boolean>(false);
+  toggleNewMemberSearchContainer = new BehaviorSubject<boolean>(false);
 
   constructor() {
     this.updateGuildNameForm = this.gefs.initializeUpdateNameForm();

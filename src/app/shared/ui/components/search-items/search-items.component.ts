@@ -29,19 +29,25 @@ export class SearchItemsComponent<T extends Character | Guild> {
   renderer = inject(Renderer2);
   @Input({ required: true }) searchResults$ = new BehaviorSubject<T[]>([]);
   @Output() selectedItem = new EventEmitter<Character | Guild>();
+  @Output() closeComponent = new EventEmitter<void>();
   @ViewChildren('searchItems') searchItems!: QueryList<ElementRef>;
   private currentFocusedIndex = -1;
+  private skipInitialCheck = true;
 
   selectItem(result: Character | Guild) {
     this.selectedItem.emit(result);
-    this.searchResults$.next([]);
+    this.closeComponent.emit();
   }
 
   @HostListener('document:click', ['$event'])
   onClick(event: MouseEvent) {
+    if (this.skipInitialCheck) {
+      this.skipInitialCheck = false;
+      return;
+    }
     const clickedInside = this.elementRef.nativeElement.contains(event.target);
     if (!clickedInside) {
-      this.searchResults$.next([]);
+      this.closeComponent.emit();
     }
   }
 
@@ -62,20 +68,10 @@ export class SearchItemsComponent<T extends Character | Guild> {
   }
 
   @HostListener('document:keydown.Tab', ['$event'])
-  onTabKey() {
-    this.searchResults$.next([]);
-    this.currentFocusedIndex = -1;
-  }
-
   @HostListener('document:keydown.Enter', ['$event'])
-  onEnterKey() {
-    this.searchResults$.next([]);
-    this.currentFocusedIndex = -1;
-  }
-
   @HostListener('document:keydown.Shift.Tab', ['$event'])
-  onShiftTabKey() {
-    this.searchResults$.next([]);
+  onKeydown() {
+    this.closeComponent.emit();
     this.currentFocusedIndex = -1;
   }
 

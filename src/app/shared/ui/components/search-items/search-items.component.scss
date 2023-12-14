@@ -1,4 +1,4 @@
-.search-results {
+:host {
   position: absolute;
   top: calc(100% + 5px);
   left: 0;
@@ -12,19 +12,19 @@
   z-index: 2;
 }
 
-.search-results ul {
+ul {
   list-style: none;
 }
 
-.search-results li {
+li {
   padding: 5px;
   cursor: pointer;
 }
 
-.search-results li:hover {
+li:hover {
   background-color: var(--secondary-color);
 }
 
-.search-results li:focus {
+li:focus {
   background-color: var(--secondary-color);
 }
