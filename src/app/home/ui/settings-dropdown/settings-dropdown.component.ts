@@ -74,11 +74,4 @@ export class SettingsDropdownComponent {
       this.hs.isSettingsDropdownOpen$.next(false);
     }
   }
-
-  logout(): void {
-    if (!confirm('Are you sure you want to logout?')) {
-      return;
-    }
-    this.authService.logout();
-  }
 }
