@@ -93,8 +93,4 @@ export class SettingsDropdownComponent {
     }
     this.authService.logout();
   }
-
-  test(): void {
-    console.log('here');
-  }
 }
