@@ -105,7 +105,10 @@
             (selectedItem)="
               updateGuildLeaderForm.get('leader')?.setValue($event.name)
             "
-            (closeComponent)="toggleNewLeaderSearchContainer.next(false); searchNewLeaderResultsQueryChange.emit('')"
+            (closeComponent)="
+              toggleNewLeaderSearchContainer.next(false);
+              searchNewLeaderResultsQueryChange.emit('')
+            "
           ></app-search-items>
           <div *ngIf="gefs.updateLeaderValidationStatus$ | async">
             <p style="color: aqua">Checking if leader exists..</p>
@@ -187,7 +190,10 @@
             *ngIf="toggleNewMemberSearchContainer | async"
             [searchResults$]="searchNewMemberResults$"
             (selectedItem)="addMemberForm.get('member')?.setValue($event.name)"
-            (closeComponent)="toggleNewMemberSearchContainer.next(false); searchNewMemberResultsQueryChange.emit('')"
+            (closeComponent)="
+              toggleNewMemberSearchContainer.next(false);
+              searchNewMemberResultsQueryChange.emit('')
+            "
           ></app-search-items>
           <div *ngIf="gefs.addMemberValidationStatus$ | async">
             <p style="color: aqua">Checking if character exists..</p>

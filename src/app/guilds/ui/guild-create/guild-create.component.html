@@ -90,7 +90,10 @@
           *ngIf="toggleSearchContainer | async"
           [searchResults$]="searchLeaderResults$"
           (selectedItem)="guildForm.get('leader')?.setValue($event.name)"
-          (closeComponent)="toggleSearchContainer.next(false); searchLeaderResultsQueryChange.emit('')"
+          (closeComponent)="
+            toggleSearchContainer.next(false);
+            searchLeaderResultsQueryChange.emit('')
+          "
         ></app-search-items>
         <div
           *ngIf="

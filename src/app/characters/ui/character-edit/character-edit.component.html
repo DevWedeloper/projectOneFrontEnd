@@ -19,7 +19,9 @@
         *ngIf="toggleSearchContainer | async"
         [searchResults$]="searchResults$"
         (selectedItem)="joinGuildForm.get('guild')?.setValue($event.name)"
-        (closeComponent)="toggleSearchContainer.next(false); searchQueryChange.emit('')"
+        (closeComponent)="
+          toggleSearchContainer.next(false); searchQueryChange.emit('')
+        "
       ></app-search-items>
       <div
         *ngIf="joinGuildForm.get('guild')?.hasError('alreadyMember')"
