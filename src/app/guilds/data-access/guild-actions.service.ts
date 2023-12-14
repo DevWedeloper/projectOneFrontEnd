@@ -24,7 +24,7 @@ export class GuildActionsService {
   checkGuildRelationStatusApiService = inject(
     CheckGuildRelationStatusServiceApi
   );
-  guildCreate$ = new Subject<{ guildForm: FormGroup; leaderId: string }>();
+  guildCreate$ = new Subject<{ guildForm: FormGroup }>();
   guildUpdateName$ = new Subject<{
     guildId: string;
     newGuildNameForm: FormGroup;

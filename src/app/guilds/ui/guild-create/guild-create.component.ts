@@ -49,10 +49,8 @@ export class GuildCreateComponent {
   >([]);
   @Output() createGuild = new EventEmitter<{
     guildForm: FormGroup;
-    leaderId: string;
   }>();
   @Output() searchLeaderResultsQueryChange = new EventEmitter<string>();
-  selectedLeaderId$ = new BehaviorSubject<string>('');
   guildForm!: FormGroup;
 
   constructor() {
