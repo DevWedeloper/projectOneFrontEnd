@@ -79,19 +79,9 @@ export class SearchItemsComponent<T extends Character | Guild> {
   }
 
   @HostListener('document:keydown.Tab', ['$event'])
-  onTabKey() {
-    this.searchResults$.next([]);
-    this.currentFocusedIndex = -1;
-  }
-
   @HostListener('document:keydown.Enter', ['$event'])
-  onEnterKey() {
-    this.searchResults$.next([]);
-    this.currentFocusedIndex = -1;
-  }
-
   @HostListener('document:keydown.Shift.Tab', ['$event'])
-  onShiftTabKey() {
+  onKeydown() {
     this.searchResults$.next([]);
     this.currentFocusedIndex = -1;
   }
