@@ -33,7 +33,6 @@ export class CustomInputComponent implements ControlValueAccessor {
   @Input({ required: true }) label!: string;
   @Input() value!: string;
   @Input() step!: number;
-  @Output() blurEvent = new EventEmitter<void>();
 
   onChange: any = () => {};
   onTouch: any = () => {};

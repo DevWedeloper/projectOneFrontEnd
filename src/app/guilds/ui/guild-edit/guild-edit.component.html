@@ -97,7 +97,6 @@
             [label]="'Leader'"
             formControlName="leader"
             (input)="searchNewLeaderResultsQueryChange.emit(selectMember.value)"
-            (blurEvent)="searchNewLeaderResultsQueryChange.emit('')"
           ></app-custom-input>
           <app-search-items
             [searchResults$]="searchNewLeaderResults$"
@@ -179,7 +178,6 @@
             (input)="
               searchNewMemberResultsQueryChange.emit(selectAddMember.value)
             "
-            (blurEvent)="searchNewMemberResultsQueryChange.emit('')"
           ></app-custom-input>
           <app-search-items
             [searchResults$]="searchNewMemberResults$"

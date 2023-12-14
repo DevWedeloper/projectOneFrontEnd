@@ -12,7 +12,6 @@
         [label]="'Guild'"
         formControlName="guild"
         (input)="searchQueryChange.emit(search.value)"
-        (blurEvent)="searchQueryChange.emit('')"
       >
       </app-custom-input>
       <app-search-items
