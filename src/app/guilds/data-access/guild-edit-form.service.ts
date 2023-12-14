@@ -18,7 +18,6 @@ import {
 } from 'rxjs';
 import { CheckIfMemberApiService } from 'src/app/guilds/data-access/check-if-member-api.service';
 import { CheckUniquenessService } from 'src/app/shared/data-access/check-uniqueness-api.service';
-import { validateName } from 'src/app/shared/utils/validate-name.utils';
 
 @Injectable({
   providedIn: 'root',
@@ -41,7 +40,13 @@ export class GuildEditFormService {
     return this.fb.group({
       name: [
         '',
-        [Validators.required, validateName],
+        [
+          Validators.required,
+          Validators.required,
+          Validators.minLength(6),
+          Validators.maxLength(20),
+          Validators.pattern(/^[a-zA-Z0-9_]+$/),
+        ],
         [this.validateGuildNameUniqueness.bind(this)],
       ],
     });

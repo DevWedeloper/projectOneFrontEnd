@@ -41,7 +41,7 @@
       </div>
       <div
         *ngIf="
-          guildForm.get('name')?.hasError('validSymbol') &&
+          guildForm.get('name')?.hasError('pattern') &&
           guildForm.get('name')?.dirty &&
           guildForm.get('name')?.value
         "
@@ -52,7 +52,7 @@
       </div>
       <div
         *ngIf="
-          guildForm.get('name')?.hasError('minLength') &&
+          guildForm.get('name')?.hasError('minlength') &&
           guildForm.get('name')?.dirty &&
           guildForm.get('name')?.value
         "
@@ -61,7 +61,7 @@
       </div>
       <div
         *ngIf="
-          guildForm.get('name')?.hasError('maxLength') &&
+          guildForm.get('name')?.hasError('maxlength') &&
           guildForm.get('name')?.dirty &&
           guildForm.get('name')?.value
         "

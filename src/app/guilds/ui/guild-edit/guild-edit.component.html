@@ -16,7 +16,7 @@
         ></app-custom-input>
         <div
           *ngIf="
-            updateGuildNameForm.get('name')?.hasError('validSymbol') &&
+            updateGuildNameForm.get('name')?.hasError('pattern') &&
             updateGuildNameForm.get('name')?.dirty &&
             updateGuildNameForm.get('name')?.value
           "
@@ -27,7 +27,7 @@
         </div>
         <div
           *ngIf="
-            updateGuildNameForm.get('name')?.hasError('minLength') &&
+            updateGuildNameForm.get('name')?.hasError('minlength') &&
             updateGuildNameForm.get('name')?.dirty &&
             updateGuildNameForm.get('name')?.value
           "
@@ -36,7 +36,7 @@
         </div>
         <div
           *ngIf="
-            updateGuildNameForm.get('name')?.hasError('maxLength') &&
+            updateGuildNameForm.get('name')?.hasError('maxlength') &&
             updateGuildNameForm.get('name')?.dirty &&
             updateGuildNameForm.get('name')?.value
           "

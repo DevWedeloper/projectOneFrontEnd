@@ -13,10 +13,9 @@ import {
   finalize,
   map,
   of,
-  switchMap
+  switchMap,
 } from 'rxjs';
 import { CheckUniquenessService } from 'src/app/shared/data-access/check-uniqueness-api.service';
-import { validateName } from 'src/app/shared/utils/validate-name.utils';
 
 @Injectable({
   providedIn: 'root',
@@ -31,7 +30,13 @@ export class GuildFormService {
     return this.fb.group({
       name: [
         '',
-        [Validators.required, validateName],
+        [
+          Validators.required,
+          Validators.required,
+          Validators.minLength(6),
+          Validators.maxLength(20),
+          Validators.pattern(/^[a-zA-Z0-9_]+$/),
+        ],
         [this.validateGuildNameUniqueness.bind(this)],
       ],
       leader: [

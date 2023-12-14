@@ -7,17 +7,16 @@ import {
   Validators,
 } from '@angular/forms';
 import {
-  Observable,
-  of,
-  debounceTime,
-  switchMap,
-  map,
-  catchError,
   BehaviorSubject,
+  Observable,
+  catchError,
+  debounceTime,
   finalize,
+  map,
+  of,
+  switchMap,
 } from 'rxjs';
 import { CheckUniquenessService } from 'src/app/shared/data-access/check-uniqueness-api.service';
-import { validateName } from 'src/app/shared/utils/validate-name.utils';
 
 @Injectable({
   providedIn: 'root',
@@ -33,7 +32,12 @@ export class CharacterFormService {
     return this.fb.group({
       name: [
         '',
-        [Validators.required, validateName],
+        [
+          Validators.required,
+          Validators.minLength(6),
+          Validators.maxLength(20),
+          Validators.pattern(/^[a-zA-Z0-9_]+$/),
+        ],
         [this.validateCharacterNameUniqueness.bind(this)],
       ],
       characterType: ['', [Validators.required]],
