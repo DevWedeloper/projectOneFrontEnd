@@ -3,18 +3,12 @@ import {
   ChangeDetectionStrategy,
   Component,
   EventEmitter,
+  Input,
   Output,
   inject,
 } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {
-  BehaviorSubject,
-  debounceTime,
-  distinctUntilChanged,
-  of,
-  switchMap,
-} from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { CharacterApiService } from 'src/app/shared/data-access/character-api.service';
 import { Character } from 'src/app/shared/interfaces/character.interface';
 import { CustomInputComponent } from 'src/app/shared/ui/components/custom-input/custom-input.component';
@@ -50,33 +44,18 @@ export class GuildCreateComponent {
   ls = inject(GuildLoadingService);
   gas = inject(GuildActionsService);
   characterApiService = inject(CharacterApiService);
+  @Input({ required: true }) searchLeaderResults$ = new BehaviorSubject<
+    Character[]
+  >([]);
   @Output() createGuild = new EventEmitter<{
     guildForm: FormGroup;
     leaderId: string;
   }>();
-  searchResults$ = new BehaviorSubject<Character[]>([]);
-  searchQuery$ = new BehaviorSubject<string>('');
+  @Output() searchLeaderResultsQueryChange = new EventEmitter<string>();
   selectedLeaderId$ = new BehaviorSubject<string>('');
   guildForm!: FormGroup;
 
   constructor() {
-    this.searchQuery$
-      .pipe(
-        debounceTime(300),
-        distinctUntilChanged(),
-        switchMap((query) => {
-          if (query.trim() !== '') {
-            return this.characterApiService.searchCharactersByName(query);
-          } else {
-            return of([]);
-          }
-        }),
-        takeUntilDestroyed()
-      )
-      .subscribe((characters) => {
-        this.searchResults$.next(characters);
-      });
-
     this.guildForm = this.gfs.initializeGuildForm();
   }
 }
