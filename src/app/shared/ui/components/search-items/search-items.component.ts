@@ -34,31 +34,20 @@ export class SearchItemsComponent<T extends Character | Guild> {
   private currentFocusedIndex = -1;
   private skipInitialCheck = true;
 
-  @HostListener('document:focusin', ['$event'])
-  onDocumentFocusIn(event: Event) {
-    if (this.skipInitialCheck) {
-      this.skipInitialCheck = false;
-      return;
-    }
-    if (
-      !this.searchItems.some((child) =>
-        child.nativeElement.contains(event.target as Node)
-      )
-    ) {
-      this.closeComponent.emit();
-    }
-  }
-
   selectItem(result: Character | Guild) {
     this.selectedItem.emit(result);
-    this.searchResults$.next([]);
+    this.closeComponent.emit();
   }
 
   @HostListener('document:click', ['$event'])
   onClick(event: MouseEvent) {
+    if (this.skipInitialCheck) {
+      this.skipInitialCheck = false;
+      return;
+    }
     const clickedInside = this.elementRef.nativeElement.contains(event.target);
     if (!clickedInside) {
-      this.searchResults$.next([]);
+      this.closeComponent.emit();
     }
   }
 
@@ -82,7 +71,7 @@ export class SearchItemsComponent<T extends Character | Guild> {
   @HostListener('document:keydown.Enter', ['$event'])
   @HostListener('document:keydown.Shift.Tab', ['$event'])
   onKeydown() {
-    this.searchResults$.next([]);
+    this.closeComponent.emit();
     this.currentFocusedIndex = -1;
   }
 
