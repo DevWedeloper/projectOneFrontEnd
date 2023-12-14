@@ -6,6 +6,7 @@
   (input)="updateValue(search.value)"
   [step]="step"
   (blur)="onTouch()"
+  (focus)="focusEvent.emit()"
   autocomplete="off"
   required
 />

@@ -52,6 +52,7 @@ export class GuildCreateComponent {
   }>();
   @Output() searchLeaderResultsQueryChange = new EventEmitter<string>();
   guildForm!: FormGroup;
+  toggleSearchContainer = new BehaviorSubject<boolean>(false);
 
   constructor() {
     this.guildForm = this.gfs.initializeGuildForm();

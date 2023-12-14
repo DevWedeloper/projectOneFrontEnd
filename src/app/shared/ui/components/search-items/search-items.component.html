@@ -15,3 +15,6 @@
     </li>
   </ul>
 </div>
+<ng-container *ngIf="(searchResults$ | async)!.length === 0">
+  <p>No search data...</p>
+</ng-container>

@@ -29,8 +29,25 @@ export class SearchItemsComponent<T extends Character | Guild> {
   renderer = inject(Renderer2);
   @Input({ required: true }) searchResults$ = new BehaviorSubject<T[]>([]);
   @Output() selectedItem = new EventEmitter<Character | Guild>();
+  @Output() closeComponent = new EventEmitter<void>();
   @ViewChildren('searchItems') searchItems!: QueryList<ElementRef>;
   private currentFocusedIndex = -1;
+  private skipInitialCheck = true;
+
+  @HostListener('document:focusin', ['$event'])
+  onDocumentFocusIn(event: Event) {
+    if (this.skipInitialCheck) {
+      this.skipInitialCheck = false;
+      return;
+    }
+    if (
+      !this.searchItems.some((child) =>
+        child.nativeElement.contains(event.target as Node)
+      )
+    ) {
+      this.closeComponent.emit();
+    }
+  }
 
   selectItem(result: Character | Guild) {
     this.selectedItem.emit(result);

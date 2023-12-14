@@ -12,11 +12,14 @@
         [label]="'Guild'"
         formControlName="guild"
         (input)="searchQueryChange.emit(search.value)"
+        (focusEvent)="toggleSearchContainer.next(true)"
       >
       </app-custom-input>
       <app-search-items
+        *ngIf="toggleSearchContainer | async"
         [searchResults$]="searchResults$"
         (selectedItem)="joinGuildForm.get('guild')?.setValue($event.name)"
+        (closeComponent)="toggleSearchContainer.next(false); searchQueryChange.emit('')"
       ></app-search-items>
       <div
         *ngIf="joinGuildForm.get('guild')?.hasError('alreadyMember')"

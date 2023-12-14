@@ -76,6 +76,7 @@ export class CharacterEditComponent implements OnInit, OnDestroy {
   @Output() closeModal = new EventEmitter<void>();
   characterForm!: FormGroup;
   joinGuildForm!: FormGroup;
+  toggleSearchContainer = new BehaviorSubject<boolean>(false);
 
   constructor() {
     this.characterForm = this.cfs.initializeCharacterForm();
