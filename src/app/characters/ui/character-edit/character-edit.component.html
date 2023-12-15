@@ -1,107 +1,99 @@
 <ng-container *ngIf="joinGuildForm.statusChanges | async"></ng-container>
 
-<div class="edit-container">
-  <h2>Edit Character</h2>
-  <app-character-form [characterForm]="characterForm"></app-character-form>
-  <div class="content-container">
-    <div class="input-container" [formGroup]="joinGuildForm">
-      <app-custom-input
-        #search
-        [type]="'text'"
-        [id]="'guild'"
-        [label]="'Guild'"
-        formControlName="guild"
-        (input)="searchQueryChange.emit(search.value)"
-        (focusEvent)="toggleSearchContainer.next(true)"
-        (clickEvent)="toggleSearchContainer.next(true)"
-      >
-      </app-custom-input>
-      <app-search-items
-        *ngIf="toggleSearchContainer | async"
-        [searchResults$]="searchResults$"
-        (selectedItem)="joinGuildForm.get('guild')?.setValue($event.name)"
-        (closeComponent)="
-          toggleSearchContainer.next(false); searchQueryChange.emit('')
-        "
-      ></app-search-items>
-      <div
-        *ngIf="joinGuildForm.get('guild')?.hasError('alreadyMember')"
-        appErrorText
-      >
-        Already a member of this guild
-      </div>
-      <div
-        *ngIf="joinGuildForm.get('guild')?.hasError('notFound')"
-        appErrorText
-      >
-        Guild not found
-      </div>
-      <div *ngIf="cjgfs.validationStatus$ | async">
-        <p style="color: aqua">Checking if guild exists..</p>
-      </div>
-      <div
-        *ngIf="
-          (cjgfs.validationStatus$ | async) === false &&
-          !joinGuildForm.get('guild')?.invalid &&
-          joinGuildForm.get('guild')?.value !== (cjgfs.initialName$ | async) &&
-          joinGuildForm.get('guild')?.value !== character?.guild?.name
-        "
-      >
-        <p style="color: green">Guild exists!</p>
-      </div>
-      <div *ngIf="joinGuildForm.get('guild')?.hasError('guildNotFound')">
-        <p appErrorText>Guild does not exist.</p>
-      </div>
+<h2>Edit Character</h2>
+<app-character-form [characterForm]="characterForm"></app-character-form>
+<div class="content-container">
+  <div class="input-container" [formGroup]="joinGuildForm">
+    <app-custom-input
+      #search
+      [type]="'text'"
+      [id]="'guild'"
+      [label]="'Guild'"
+      formControlName="guild"
+      (input)="searchQueryChange.emit(search.value)"
+      (focusEvent)="toggleSearchContainer.next(true)"
+      (clickEvent)="toggleSearchContainer.next(true)"
+    >
+    </app-custom-input>
+    <app-search-items
+      *ngIf="toggleSearchContainer | async"
+      [searchResults$]="searchResults$"
+      (selectedItem)="joinGuildForm.get('guild')?.setValue($event.name)"
+      (closeComponent)="
+        toggleSearchContainer.next(false); searchQueryChange.emit('')
+      "
+    ></app-search-items>
+    <div
+      *ngIf="joinGuildForm.get('guild')?.hasError('alreadyMember')"
+      appErrorText
+    >
+      Already a member of this guild
     </div>
-    <div class="btn-container">
-      <button
-        appGreenButton
-        (click)="
-          joinGuild.emit({
-            character: character!,
-            joinGuildForm,
-          })
-        "
-        *ngIf="
-          joinGuildForm.valid &&
-          joinGuildForm.get('guild')?.value !== character?.guild?.name
-        "
-        [disabled]="cas.joinLoading$ | async"
-      >
-        <app-spinner [size]="20" *ngIf="cas.joinLoading$ | async"></app-spinner>
-        Join
-      </button>
-      <button
-        appRedButton
-        (click)="leaveGuild.emit({ character: character!, joinGuildForm })"
-        *ngIf="
-          character?.guild !== null &&
-          character?.guild?.name === joinGuildForm.get('guild')?.value &&
-          (cas.joinLoading$ | async) === false
-        "
-        [disabled]="cas.leaveLoading$ | async"
-      >
-        <app-spinner
-          [size]="20"
-          *ngIf="cas.leaveLoading$ | async"
-        ></app-spinner>
-        Leave
-      </button>
+    <div *ngIf="joinGuildForm.get('guild')?.hasError('notFound')" appErrorText>
+      Guild not found
     </div>
-  </div>
-  <div class="edit-btn-container">
-    <button
-      class="edit-btn"
-      [disabled]="characterForm.invalid || (cas.updateLoading$ | async)"
-      (click)="
-        updateCharacter.emit({
-          characterForm: characterForm,
-          previousCharacterData: character!
-        })
+    <div *ngIf="cjgfs.validationStatus$ | async">
+      <p style="color: aqua">Checking if guild exists..</p>
+    </div>
+    <div
+      *ngIf="
+        (cjgfs.validationStatus$ | async) === false &&
+        !joinGuildForm.get('guild')?.invalid &&
+        joinGuildForm.get('guild')?.value !== (cjgfs.initialName$ | async) &&
+        joinGuildForm.get('guild')?.value !== character?.guild?.name
       "
     >
-      <app-spinner [size]="20" *ngIf="cas.updateLoading$ | async"></app-spinner>
-      Save
+      <p style="color: green">Guild exists!</p>
+    </div>
+    <div *ngIf="joinGuildForm.get('guild')?.hasError('guildNotFound')">
+      <p appErrorText>Guild does not exist.</p>
+    </div>
+  </div>
+  <div class="btn-container">
+    <button
+      appGreenButton
+      (click)="
+        joinGuild.emit({
+          character: character!,
+          joinGuildForm,
+        })
+      "
+      *ngIf="
+        joinGuildForm.valid &&
+        joinGuildForm.get('guild')?.value !== character?.guild?.name
+      "
+      [disabled]="cas.joinLoading$ | async"
+    >
+      <app-spinner [size]="20" *ngIf="cas.joinLoading$ | async"></app-spinner>
+      Join
+    </button>
+    <button
+      appRedButton
+      (click)="leaveGuild.emit({ character: character!, joinGuildForm })"
+      *ngIf="
+        character?.guild !== null &&
+        character?.guild?.name === joinGuildForm.get('guild')?.value &&
+        (cas.joinLoading$ | async) === false
+      "
+      [disabled]="cas.leaveLoading$ | async"
+    >
+      <app-spinner [size]="20" *ngIf="cas.leaveLoading$ | async"></app-spinner>
+      Leave
     </button>
   </div>
+</div>
+<div class="edit-btn-container">
+  <button
+    class="edit-btn"
+    [disabled]="characterForm.invalid || (cas.updateLoading$ | async)"
+    (click)="
+      updateCharacter.emit({
+        characterForm: characterForm,
+        previousCharacterData: character!
+      })
+    "
+  >
+    <app-spinner [size]="20" *ngIf="cas.updateLoading$ | async"></app-spinner>
+    Save
+  </button>
 </div>
