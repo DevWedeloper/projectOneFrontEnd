@@ -11,10 +11,9 @@ import {
   Observable,
   catchError,
   debounceTime,
-  finalize,
   map,
   of,
-  switchMap,
+  switchMap
 } from 'rxjs';
 import { CheckUniquenessService } from 'src/app/shared/data-access/check-uniqueness-api.service';
 
@@ -24,8 +23,6 @@ import { CheckUniquenessService } from 'src/app/shared/data-access/check-uniquen
 export class CharacterFormService {
   fb = inject(FormBuilder);
   checkUniquenessApi = inject(CheckUniquenessService);
-  validationStatus$ = new BehaviorSubject<boolean>(false);
-  isInitialValueSet$ = new BehaviorSubject<boolean>(false);
   initialName$ = new BehaviorSubject<string>('');
 
   initializeCharacterForm(): FormGroup {
@@ -71,16 +68,11 @@ export class CharacterFormService {
   private validateCharacterNameUniqueness(
     control: AbstractControl
   ): Observable<ValidationErrors | null> {
-    if (this.isInitialValueSet$.value) {
-      return of(null);
-    }
-
     const nameField = control.getRawValue();
     if (nameField === this.initialName$.value) {
       return of(null);
     }
 
-    this.validationStatus$.next(true);
     return of(control.value).pipe(
       debounceTime(500),
       switchMap((name) =>
@@ -95,7 +87,6 @@ export class CharacterFormService {
           })
         )
       ),
-      finalize(() => this.validationStatus$.next(false))
     );
   }
 }

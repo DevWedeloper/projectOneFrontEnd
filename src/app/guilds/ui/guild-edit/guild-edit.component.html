@@ -43,16 +43,15 @@
         >
           <p appErrorText>Name field should not exceed 20 characters.</p>
         </div>
-        <div *ngIf="gefs.updateNameValidationStatus$ | async">
+        <div *ngIf="updateGuildNameForm.get('name')?.pending">
           <p style="color: aqua">Checking if unique..</p>
         </div>
         <div
           *ngIf="
-            (gefs.updateNameValidationStatus$ | async) === false &&
+            !updateGuildNameForm.get('name')?.pending &&
             !updateGuildNameForm.get('name')?.invalid &&
             updateGuildNameForm.get('name')?.value !==
-              (gefs.initialName$ | async) &&
-            updateGuildNameForm.get('name')?.value !== guild?.name
+              (gefs.initialName$ | async)
           "
         >
           <p style="color: green">Unique!</p>

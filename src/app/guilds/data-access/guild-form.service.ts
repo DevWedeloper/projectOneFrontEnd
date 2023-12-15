@@ -6,14 +6,12 @@ import {
   Validators,
 } from '@angular/forms';
 import {
-  BehaviorSubject,
   Observable,
   catchError,
   debounceTime,
-  finalize,
   map,
   of,
-  switchMap,
+  switchMap
 } from 'rxjs';
 import { CheckUniquenessService } from 'src/app/shared/data-access/check-uniqueness-api.service';
 
@@ -23,8 +21,6 @@ import { CheckUniquenessService } from 'src/app/shared/data-access/check-uniquen
 export class GuildFormService {
   fb = inject(FormBuilder);
   checkUniquenessApi = inject(CheckUniquenessService);
-  guildNameValidationStatus$ = new BehaviorSubject<boolean>(false);
-  leaderValidationStatus$ = new BehaviorSubject<boolean>(false);
 
   initializeGuildForm() {
     return this.fb.group({
@@ -50,7 +46,6 @@ export class GuildFormService {
   private validateGuildNameUniqueness(
     control: AbstractControl
   ): Observable<ValidationErrors | null> {
-    this.guildNameValidationStatus$.next(true);
     return of(control.value).pipe(
       debounceTime(500),
       switchMap((name) =>
@@ -65,14 +60,12 @@ export class GuildFormService {
           })
         )
       ),
-      finalize(() => this.guildNameValidationStatus$.next(false))
     );
   }
 
   private validateLeaderExisting(
     control: AbstractControl
   ): Observable<ValidationErrors | null> {
-    this.leaderValidationStatus$.next(true);
     return of(control.value).pipe(
       debounceTime(500),
       switchMap((name) =>
@@ -87,7 +80,6 @@ export class GuildFormService {
           })
         )
       ),
-      finalize(() => this.leaderValidationStatus$.next(false))
     );
   }
 }

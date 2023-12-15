@@ -10,14 +10,13 @@ import {
   Output,
   inject,
 } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   FormBuilder,
   FormGroup,
   FormsModule,
   ReactiveFormsModule
 } from '@angular/forms';
-import { BehaviorSubject, take } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { Character } from 'src/app/shared/interfaces/character.interface';
 import { Guild } from 'src/app/shared/interfaces/guild.interface';
 import { CustomInputComponent } from 'src/app/shared/ui/components/custom-input/custom-input.component';
@@ -88,21 +87,11 @@ export class GuildEditComponent implements OnInit, OnDestroy {
 
   constructor() {
     this.updateGuildNameForm = this.gefs.initializeUpdateNameForm();
-    this.updateGuildNameForm.valueChanges
-      .pipe(take(1), takeUntilDestroyed())
-      .subscribe(() => {
-        this.gefs.updateNameInitialValueSet$.next(false);
-      });
   }
 
   ngOnInit(): void {
     this.addMemberForm = this.gefs.initializeAddMemberForm(this.guild?._id || null);
     this.updateGuildLeaderForm = this.gefs.initializeUpdateLeaderForm(this.guild?._id || null);
-    this.updateGuildLeaderForm.valueChanges
-      .pipe(take(1), takeUntilDestroyed(this.destroyRef))
-      .subscribe(() => {
-        this.gefs.updateLeaderInitialValueSet$.next(false);
-      });
     this.updateGuildNameForm.patchValue({
       name: this.guild?.name,
     });

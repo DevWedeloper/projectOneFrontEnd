@@ -31,8 +31,6 @@ export class GuildEditFormService {
   ifMemberValidationStatus$ = new BehaviorSubject<boolean>(false);
   addMemberValidationStatus$ = new BehaviorSubject<boolean>(false);
   ifNotMemberValidationStatus$ = new BehaviorSubject<boolean>(false);
-  updateNameInitialValueSet$ = new BehaviorSubject<boolean>(false);
-  updateLeaderInitialValueSet$ = new BehaviorSubject<boolean>(false);
   initialName$ = new BehaviorSubject<string>('');
   initialLeader$ = new BehaviorSubject<string>('');
 
@@ -81,10 +79,6 @@ export class GuildEditFormService {
   private validateGuildNameUniqueness(
     control: AbstractControl
   ): Observable<ValidationErrors | null> {
-    if (this.updateNameInitialValueSet$.value) {
-      return of(null);
-    }
-
     const nameField = control.getRawValue();
     if (nameField === this.initialName$.value) {
       return of(null);
@@ -112,10 +106,6 @@ export class GuildEditFormService {
   private validateLeaderExisting(
     control: AbstractControl
   ): Observable<ValidationErrors | null> {
-    if (this.updateLeaderInitialValueSet$.value) {
-      return of(null);
-    }
-
     const nameField = control.getRawValue();
     if (nameField === this.initialLeader$.value) {
       return of(null);
@@ -174,11 +164,7 @@ export class GuildEditFormService {
     if (nameField === this.initialLeader$.value) {
       return of(null);
     }
-
-    if (this.updateLeaderInitialValueSet$.value) {
-      return of(null);
-    }
-
+    
     this.ifMemberValidationStatus$.next(true);
     return of(control.value).pipe(
       debounceTime(500),

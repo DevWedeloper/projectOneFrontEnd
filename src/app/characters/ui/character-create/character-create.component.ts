@@ -39,7 +39,6 @@ export class CharacterCreateComponent {
 
   constructor() {
     this.characterForm = this.cfs.initializeCharacterForm();
-    this.cfs.isInitialValueSet$.next(false);
   }
 
   resetForm(): void {

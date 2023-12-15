@@ -16,12 +16,12 @@
     >
       <p appErrorText>Name is required.</p>
     </div>
-    <div *ngIf="cfs.validationStatus$ | async">
+    <div *ngIf="characterForm.get('name')?.pending">
       <p style="color: aqua">Checking if unique..</p>
     </div>
     <div
       *ngIf="
-        (cfs.validationStatus$ | async) === false &&
+        !characterForm.get('name')?.pending &&
         !characterForm.get('name')?.invalid &&
         characterForm.get('name')?.value !== (cfs.initialName$ | async)
       "
