@@ -2,7 +2,7 @@
   <app-character-create
     *ngIf="authService.isCurrentUserAdmin$ | async"
     (createCharacter)="cas.characterCreate$.next($event)"
-  ></app-character-create>
+  />
 
   <app-character-table
     [characterData]="cs.characterData$ | async"
@@ -19,7 +19,7 @@
       cs.name$.next(cas.characterToUpdate$.value!.name)
     "
     (deleteCharacter)="cas.characterDelete$.next($event)"
-  ></app-character-table>
+  />
 </div>
 
 <ng-template #modalTemplate>
@@ -31,5 +31,5 @@
     (leaveGuild)="cas.characterLeaveGuild$.next($event)"
     (updateCharacter)="cas.characterUpdate$.next($event)"
     (closeModal)="ms.close(); cs.name$.next(undefined)"
-  ></app-character-edit>
+  />
 </ng-template>

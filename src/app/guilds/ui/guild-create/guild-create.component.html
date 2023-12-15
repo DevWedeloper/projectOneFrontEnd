@@ -1,4 +1,4 @@
-<ng-container *ngIf="guildForm.statusChanges | async"></ng-container>
+<ng-container *ngIf="guildForm.statusChanges | async" />
 <app-divider-dropdown
   [label]="'Create Guild'"
   [loading]="ls.loading$ | async"
@@ -19,7 +19,7 @@
         [id]="'name'"
         [label]="'Guild Name'"
         formControlName="name"
-      ></app-custom-input>
+      />
       <div
         *ngIf="
           guildForm.get('name')?.hasError('required') &&
@@ -33,8 +33,7 @@
       </div>
       <div
         *ngIf="
-          !guildForm.get('name')?.pending &&
-          !guildForm.get('name')?.invalid
+          !guildForm.get('name')?.pending && !guildForm.get('name')?.invalid
         "
       >
         <p style="color: green">Unique!</p>
@@ -83,10 +82,13 @@
           [id]="'leader'"
           [label]="'Leader'"
           formControlName="leader"
-          (input)="searchLeaderResultsQueryChange.emit(search.value)"
+          (input)="
+            searchLeaderResultsQueryChange.emit(search.value);
+            toggleSearchContainer.next(true)
+          "
           (focusEvent)="toggleSearchContainer.next(true)"
           (clickEvent)="toggleSearchContainer.next(true)"
-        ></app-custom-input>
+        />
         <app-search-items
           *ngIf="toggleSearchContainer | async"
           [searchResults$]="searchLeaderResults$"
@@ -95,7 +97,7 @@
             toggleSearchContainer.next(false);
             searchLeaderResultsQueryChange.emit('')
           "
-        ></app-search-items>
+        />
         <div
           *ngIf="
             guildForm.get('leader')?.hasError('required') &&
@@ -127,10 +129,7 @@
         type="submit"
         [disabled]="guildForm.invalid || (gas.createLoading$ | async)"
       >
-        <app-spinner
-          [size]="25"
-          *ngIf="gas.createLoading$ | async"
-        ></app-spinner>
+        <app-spinner [size]="25" *ngIf="gas.createLoading$ | async" />
         Create Guild
       </button>
     </div>

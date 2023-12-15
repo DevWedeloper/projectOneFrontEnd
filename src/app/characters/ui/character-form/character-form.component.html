@@ -1,4 +1,4 @@
-<ng-container *ngIf="characterForm.statusChanges | async"></ng-container>
+<ng-container *ngIf="characterForm.statusChanges | async"/>
 
 <form [formGroup]="characterForm" class="form">
   <div class="form-group">
@@ -7,7 +7,7 @@
       [id]="'name'"
       [label]="'Name'"
       formControlName="name"
-    ></app-custom-input>
+    />
     <div
       *ngIf="
         characterForm.get('name')?.hasError('required') &&
@@ -88,7 +88,7 @@
       [id]="'health'"
       [label]="'Health'"
       formControlName="health"
-    ></app-custom-input>
+    />
     <div
       *ngIf="
         characterForm.get('health')?.hasError('required') &&
@@ -113,7 +113,7 @@
       [id]="'strength'"
       [label]="'Strength'"
       formControlName="strength"
-    ></app-custom-input>
+    />
     <div
       *ngIf="
         characterForm.get('strength')?.hasError('required') &&
@@ -138,7 +138,7 @@
       [id]="'agility'"
       [label]="'Agility'"
       formControlName="agility"
-    ></app-custom-input>
+    />
     <div
       *ngIf="
         characterForm.get('agility')?.hasError('required') &&
@@ -163,7 +163,7 @@
       [id]="'intelligence'"
       [label]="'Intelligence'"
       formControlName="intelligence"
-    ></app-custom-input>
+    />
     <div
       *ngIf="
         characterForm.get('intelligence')?.hasError('required') &&
@@ -188,7 +188,7 @@
       [id]="'armor'"
       [label]="'Armor'"
       formControlName="armor"
-    ></app-custom-input>
+    />
     <div
       *ngIf="
         characterForm.get('armor')?.hasError('required') &&
@@ -214,7 +214,7 @@
       [label]="'Crit Chance'"
       formControlName="critChance"
       [step]="0.01"
-    ></app-custom-input>
+    />
     <div
       *ngIf="
         characterForm.get('critChance')?.hasError('required') &&

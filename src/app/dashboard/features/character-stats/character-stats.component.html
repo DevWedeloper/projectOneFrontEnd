@@ -3,7 +3,7 @@
     <app-heading
       [label]="'Top Characters By Attribute'"
       [loading]="ls.loading$ | async"
-    ></app-heading>
+    />
   </div>
   <div class="chart-container">
     <div class="chart-container-item">
@@ -12,7 +12,7 @@
         [barChartLabels]="(css.topCharactersByHealth$ | async)?.names || null"
         [barChartDataset]="(css.topCharactersByHealth$ | async)?.dataset || null"
         [loading]="ls.loading$ | async"
-      ></app-horizontal-bar-chart>
+      />
     </div>
 
     <div class="chart-container-item">
@@ -21,7 +21,7 @@
         [barChartLabels]="(css.topCharactersByStrength$ | async)?.names || null"
         [barChartDataset]="(css.topCharactersByStrength$ | async)?.dataset || null"
         [loading]="ls.loading$ | async"
-      ></app-horizontal-bar-chart>
+      />
     </div>
 
     <div class="chart-container-item">
@@ -30,7 +30,7 @@
         [barChartLabels]="(css.topCharactersByAgility$ | async)?.names || null"
         [barChartDataset]="(css.topCharactersByAgility$ | async)?.dataset || null"
         [loading]="ls.loading$ | async"
-      ></app-horizontal-bar-chart>
+      />
     </div>
 
     <div class="chart-container-item">
@@ -39,7 +39,7 @@
         [barChartLabels]="(css.topCharactersByIntelligence$ | async)?.names || null"
         [barChartDataset]="(css.topCharactersByIntelligence$ | async)?.dataset || null"
         [loading]="ls.loading$ | async"
-      ></app-horizontal-bar-chart>
+      />
     </div>
 
     <div class="chart-container-item">
@@ -48,7 +48,7 @@
         [barChartLabels]="(css.topCharactersByArmor$ | async)?.names || null"
         [barChartDataset]="(css.topCharactersByArmor$ | async)?.dataset || null"
         [loading]="ls.loading$ | async"
-      ></app-horizontal-bar-chart>
+      />
     </div>
 
     <div class="chart-container-item">
@@ -57,7 +57,7 @@
         [barChartLabels]="(css.topCharactersByCritChance$ | async)?.names || null"
         [barChartDataset]="(css.topCharactersByCritChance$ | async)?.dataset || null"
         [loading]="ls.loading$ | async"
-      ></app-horizontal-bar-chart>
+      />
     </div>
   </div>
 </div>
@@ -67,7 +67,7 @@
     <app-heading
       [label]="'Top Overall Characters'"
       [loading]="ls.loading$ | async"
-    ></app-heading>
+    />
   </div>
   <div class="chart-group-container">
     <div class="chart-container-item">
@@ -78,7 +78,7 @@
         [radarChartDatasets]="(css.radarChartDataset$ | async)?.dataset"
         [loading]="ls.loading$ | async"
         (selectedCharacterChange)="css.radarChartCharacter$.next($event)"
-      ></app-radar-chart>
+      />
     </div>
   </div>
 </div>
@@ -88,7 +88,7 @@
     <app-heading
       [label]="'Class Distribution'"
       [loading]="ls.loading$ | async"
-    ></app-heading>
+    />
   </div>
   <div class="chart-container-item">
     <app-doughnut-chart
@@ -97,6 +97,6 @@
         (css.characterDistributionByType$ | async)?.dataset || null
       "
       [loading]="ls.loading$ | async"
-    ></app-doughnut-chart>
+    />
   </div>
 </div>

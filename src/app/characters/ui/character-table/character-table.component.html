@@ -99,7 +99,7 @@
               (cas.deleteLoading$ | async) &&
               cas.characterToUpdate$.value?._id === character._id
             "
-          ></app-spinner>
+          />
           Delete
         </button>
       </div>
@@ -112,6 +112,6 @@
       [pageSize]="pageSize"
       [total]="characterData?.totalCharacters"
       (changePage)="changePage.emit($event)"
-    ></app-pagination>
+    />
   </ng-template>
 </app-table>
