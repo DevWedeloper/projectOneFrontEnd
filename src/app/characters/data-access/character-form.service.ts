@@ -7,17 +7,15 @@ import {
   Validators,
 } from '@angular/forms';
 import {
-  Observable,
-  of,
-  debounceTime,
-  switchMap,
-  map,
-  catchError,
   BehaviorSubject,
-  finalize,
+  Observable,
+  catchError,
+  debounceTime,
+  map,
+  of,
+  switchMap
 } from 'rxjs';
 import { CheckUniquenessService } from 'src/app/shared/data-access/check-uniqueness-api.service';
-import { validateName } from 'src/app/shared/utils/validate-name.utils';
 
 @Injectable({
   providedIn: 'root',
@@ -25,15 +23,18 @@ import { validateName } from 'src/app/shared/utils/validate-name.utils';
 export class CharacterFormService {
   fb = inject(FormBuilder);
   checkUniquenessApi = inject(CheckUniquenessService);
-  validationStatus$ = new BehaviorSubject<boolean>(false);
-  isInitialValueSet$ = new BehaviorSubject<boolean>(false);
   initialName$ = new BehaviorSubject<string>('');
 
   initializeCharacterForm(): FormGroup {
     return this.fb.group({
       name: [
         '',
-        [Validators.required, validateName],
+        [
+          Validators.required,
+          Validators.minLength(6),
+          Validators.maxLength(20),
+          Validators.pattern(/^[a-zA-Z0-9_]+$/),
+        ],
         [this.validateCharacterNameUniqueness.bind(this)],
       ],
       characterType: ['', [Validators.required]],
@@ -67,16 +68,11 @@ export class CharacterFormService {
   private validateCharacterNameUniqueness(
     control: AbstractControl
   ): Observable<ValidationErrors | null> {
-    if (this.isInitialValueSet$.value) {
-      return of(null);
-    }
-
     const nameField = control.getRawValue();
     if (nameField === this.initialName$.value) {
       return of(null);
     }
 
-    this.validationStatus$.next(true);
     return of(control.value).pipe(
       debounceTime(500),
       switchMap((name) =>
@@ -91,7 +87,6 @@ export class CharacterFormService {
           })
         )
       ),
-      finalize(() => this.validationStatus$.next(false))
     );
   }
 }

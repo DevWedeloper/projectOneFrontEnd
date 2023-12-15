@@ -9,14 +9,13 @@ import {
   Output,
   inject
 } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   FormBuilder,
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { BehaviorSubject, take } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { Character } from 'src/app/shared/interfaces/character.interface';
 import { Guild } from 'src/app/shared/interfaces/guild.interface';
 import { CustomInputComponent } from 'src/app/shared/ui/components/custom-input/custom-input.component';
@@ -80,13 +79,7 @@ export class CharacterEditComponent implements OnInit, OnDestroy {
 
   constructor() {
     this.characterForm = this.cfs.initializeCharacterForm();
-    this.cfs.isInitialValueSet$.next(true);
     this.joinGuildForm = this.cjgfs.initializeJoinGuildForm();
-    this.characterForm.valueChanges
-      .pipe(take(1), takeUntilDestroyed())
-      .subscribe(() => {
-        this.cfs.isInitialValueSet$.next(false);
-      });
   }
 
   ngOnInit(): void {

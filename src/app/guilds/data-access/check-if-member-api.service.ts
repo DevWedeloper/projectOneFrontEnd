@@ -10,8 +10,14 @@ export class CheckIfMemberApiService {
   http = inject(HttpClient);
   baseUrl = environment.baseUrl;
 
-  checkIfMember(character: string, guild: string): Observable<{ message: string }> {
-    const url = `${this.baseUrl}/guild/checkIfMember`;
+  isMember(character: string, guild: string): Observable<{ message: string }> {
+    const url = `${this.baseUrl}/guild/isMember`;
+    const reqBody = { character: character, guild: guild };
+    return this.http.post<{ message: string }>(url, reqBody);
+  }
+
+  isNotMember(character: string, guild: string): Observable<{ message: string }> {
+    const url = `${this.baseUrl}/guild/isNotMember`;
     const reqBody = { character: character, guild: guild };
     return this.http.post<{ message: string }>(url, reqBody);
   }

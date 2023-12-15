@@ -16,12 +16,12 @@
     >
       <p appErrorText>Name is required.</p>
     </div>
-    <div *ngIf="cfs.validationStatus$ | async">
+    <div *ngIf="characterForm.get('name')?.pending">
       <p style="color: aqua">Checking if unique..</p>
     </div>
     <div
       *ngIf="
-        (cfs.validationStatus$ | async) === false &&
+        !characterForm.get('name')?.pending &&
         !characterForm.get('name')?.invalid &&
         characterForm.get('name')?.value !== (cfs.initialName$ | async)
       "
@@ -30,7 +30,7 @@
     </div>
     <div
       *ngIf="
-        characterForm.get('name')?.hasError('validSymbol') &&
+        characterForm.get('name')?.hasError('pattern') &&
         characterForm.get('name')?.dirty &&
         characterForm.get('name')?.value
       "
@@ -41,7 +41,7 @@
     </div>
     <div
       *ngIf="
-        characterForm.get('name')?.hasError('minLength') &&
+        characterForm.get('name')?.hasError('minlength') &&
         characterForm.get('name')?.dirty &&
         characterForm.get('name')?.value
       "
@@ -50,7 +50,7 @@
     </div>
     <div
       *ngIf="
-        characterForm.get('name')?.hasError('maxLength') &&
+        characterForm.get('name')?.hasError('maxlength') &&
         characterForm.get('name')?.dirty &&
         characterForm.get('name')?.value
       "

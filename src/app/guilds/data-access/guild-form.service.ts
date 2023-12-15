@@ -6,17 +6,14 @@ import {
   Validators,
 } from '@angular/forms';
 import {
-  BehaviorSubject,
   Observable,
   catchError,
   debounceTime,
-  finalize,
   map,
   of,
   switchMap
 } from 'rxjs';
 import { CheckUniquenessService } from 'src/app/shared/data-access/check-uniqueness-api.service';
-import { validateName } from 'src/app/shared/utils/validate-name.utils';
 
 @Injectable({
   providedIn: 'root',
@@ -24,14 +21,18 @@ import { validateName } from 'src/app/shared/utils/validate-name.utils';
 export class GuildFormService {
   fb = inject(FormBuilder);
   checkUniquenessApi = inject(CheckUniquenessService);
-  guildNameValidationStatus$ = new BehaviorSubject<boolean>(false);
-  leaderValidationStatus$ = new BehaviorSubject<boolean>(false);
 
   initializeGuildForm() {
     return this.fb.group({
       name: [
         '',
-        [Validators.required, validateName],
+        [
+          Validators.required,
+          Validators.required,
+          Validators.minLength(6),
+          Validators.maxLength(20),
+          Validators.pattern(/^[a-zA-Z0-9_]+$/),
+        ],
         [this.validateGuildNameUniqueness.bind(this)],
       ],
       leader: [
@@ -45,7 +46,6 @@ export class GuildFormService {
   private validateGuildNameUniqueness(
     control: AbstractControl
   ): Observable<ValidationErrors | null> {
-    this.guildNameValidationStatus$.next(true);
     return of(control.value).pipe(
       debounceTime(500),
       switchMap((name) =>
@@ -60,14 +60,12 @@ export class GuildFormService {
           })
         )
       ),
-      finalize(() => this.guildNameValidationStatus$.next(false))
     );
   }
 
   private validateLeaderExisting(
     control: AbstractControl
   ): Observable<ValidationErrors | null> {
-    this.leaderValidationStatus$.next(true);
     return of(control.value).pipe(
       debounceTime(500),
       switchMap((name) =>
@@ -82,7 +80,6 @@ export class GuildFormService {
           })
         )
       ),
-      finalize(() => this.leaderValidationStatus$.next(false))
     );
   }
 }

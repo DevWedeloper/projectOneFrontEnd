@@ -28,12 +28,12 @@
       >
         <p appErrorText>Guild name is required.</p>
       </div>
-      <div *ngIf="gfs.guildNameValidationStatus$ | async">
+      <div *ngIf="guildForm.get('name')?.pending">
         <p style="color: aqua">Checking if unique..</p>
       </div>
       <div
         *ngIf="
-          (gfs.guildNameValidationStatus$ | async) === false &&
+          !guildForm.get('name')?.pending &&
           !guildForm.get('name')?.invalid
         "
       >
@@ -41,7 +41,7 @@
       </div>
       <div
         *ngIf="
-          guildForm.get('name')?.hasError('validSymbol') &&
+          guildForm.get('name')?.hasError('pattern') &&
           guildForm.get('name')?.dirty &&
           guildForm.get('name')?.value
         "
@@ -52,7 +52,7 @@
       </div>
       <div
         *ngIf="
-          guildForm.get('name')?.hasError('minLength') &&
+          guildForm.get('name')?.hasError('minlength') &&
           guildForm.get('name')?.dirty &&
           guildForm.get('name')?.value
         "
@@ -61,7 +61,7 @@
       </div>
       <div
         *ngIf="
-          guildForm.get('name')?.hasError('maxLength') &&
+          guildForm.get('name')?.hasError('maxlength') &&
           guildForm.get('name')?.dirty &&
           guildForm.get('name')?.value
         "
@@ -104,12 +104,12 @@
         >
           <p appErrorText>Leader name is required.</p>
         </div>
-        <div *ngIf="gfs.leaderValidationStatus$ | async">
+        <div *ngIf="guildForm.get('leader')?.pending">
           <p style="color: aqua">Checking if leader exists..</p>
         </div>
         <div
           *ngIf="
-            (gfs.leaderValidationStatus$ | async) === false &&
+            !guildForm.get('leader')?.pending &&
             !guildForm.get('leader')?.invalid
           "
         >
