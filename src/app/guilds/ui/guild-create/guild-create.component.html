@@ -83,7 +83,7 @@
           [id]="'leader'"
           [label]="'Leader'"
           formControlName="leader"
-          (input)="searchLeaderResultsQueryChange.emit(search.value)"
+          (input)="searchLeaderResultsQueryChange.emit(search.value); toggleSearchContainer.next(true)"
           (focusEvent)="toggleSearchContainer.next(true)"
           (clickEvent)="toggleSearchContainer.next(true)"
         />

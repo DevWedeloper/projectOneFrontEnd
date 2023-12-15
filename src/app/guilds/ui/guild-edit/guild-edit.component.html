@@ -93,7 +93,7 @@
           [id]="'leader'"
           [label]="'Leader'"
           formControlName="leader"
-          (input)="searchNewLeaderResultsQueryChange.emit(selectMember.value)"
+          (input)="searchNewLeaderResultsQueryChange.emit(selectMember.value); toggleNewLeaderSearchContainer.next(true)"
           (focusEvent)="toggleNewLeaderSearchContainer.next(true)"
           (clickEvent)="toggleNewLeaderSearchContainer.next(true)"
         />
@@ -159,7 +159,8 @@
           [label]="'Add Member'"
           formControlName="member"
           (input)="
-            searchNewMemberResultsQueryChange.emit(selectAddMember.value)
+            searchNewMemberResultsQueryChange.emit(selectAddMember.value);
+            toggleNewMemberSearchContainer.next(true)
           "
           (focusEvent)="toggleNewMemberSearchContainer.next(true)"
           (clickEvent)="toggleNewMemberSearchContainer.next(true)"

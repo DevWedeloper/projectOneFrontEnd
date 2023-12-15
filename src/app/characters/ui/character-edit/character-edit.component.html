@@ -10,12 +10,12 @@
       [id]="'guild'"
       [label]="'Guild'"
       formControlName="guild"
-      (input)="searchQueryChange.emit(search.value)"
+      (input)="searchQueryChange.emit(search.value); toggleSearchContainer.next(true)"
       (focusEvent)="toggleSearchContainer.next(true)"
       (clickEvent)="toggleSearchContainer.next(true)"
     />
     <app-search-items
-      *ngIf="toggleSearchContainer | async"
+      *ngIf="(toggleSearchContainer | async)"
       [searchResults$]="searchResults$"
       (selectedItem)="joinGuildForm.get('guild')?.setValue($event.name)"
       (closeComponent)="
