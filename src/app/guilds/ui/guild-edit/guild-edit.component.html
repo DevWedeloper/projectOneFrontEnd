@@ -3,253 +3,240 @@
   *ngIf="updateGuildLeaderForm.statusChanges | async"
 ></ng-container>
 
-<div class="edit-container">
-  <h2>Edit Guild</h2>
-  <div class="edit-actions-container">
-    <div class="content-container">
-      <div class="input-container" [formGroup]="updateGuildNameForm">
-        <app-custom-input
-          [type]="'text'"
-          [id]="'name'"
-          [label]="'Guild Name'"
-          formControlName="name"
-        ></app-custom-input>
-        <div
-          *ngIf="
-            updateGuildNameForm.get('name')?.hasError('pattern') &&
-            updateGuildNameForm.get('name')?.dirty &&
-            updateGuildNameForm.get('name')?.value
-          "
-        >
-          <p appErrorText>
-            Name field should only contain letters, numbers, and underscore.
-          </p>
-        </div>
-        <div
-          *ngIf="
-            updateGuildNameForm.get('name')?.hasError('minlength') &&
-            updateGuildNameForm.get('name')?.dirty &&
-            updateGuildNameForm.get('name')?.value
-          "
-        >
-          <p appErrorText>Name field should be at least 6 characters long.</p>
-        </div>
-        <div
-          *ngIf="
-            updateGuildNameForm.get('name')?.hasError('maxlength') &&
-            updateGuildNameForm.get('name')?.dirty &&
-            updateGuildNameForm.get('name')?.value
-          "
-        >
-          <p appErrorText>Name field should not exceed 20 characters.</p>
-        </div>
-        <div *ngIf="updateGuildNameForm.get('name')?.pending">
-          <p style="color: aqua">Checking if unique..</p>
-        </div>
-        <div
-          *ngIf="
-            !updateGuildNameForm.get('name')?.pending &&
-            !updateGuildNameForm.get('name')?.invalid &&
-            updateGuildNameForm.get('name')?.value !==
-              (gefs.initialName$ | async)
-          "
-        >
-          <p style="color: green">Unique!</p>
-        </div>
-        <div *ngIf="updateGuildNameForm.get('name')?.hasError('uniqueName')">
-          <p appErrorText>
-            This guild name is already taken. Please choose another one.
-          </p>
-        </div>
-      </div>
-      <div class="btn-container">
-        <button
-          appGreenButton
-          *ngIf="
-            updateGuildNameForm.get('name')?.value !== guild?.name &&
-            updateGuildNameForm.valid
-          "
-          (click)="
-            updateGuildName.emit({
-              guildId: guild!._id,
-              newGuildNameForm: updateGuildNameForm
-            })
-          "
-          [disabled]="gas.updateNameLoading$ | async"
-        >
-          <app-spinner
-            [size]="20"
-            *ngIf="gas.updateNameLoading$ | async"
-          ></app-spinner>
-          Change
-        </button>
-      </div>
-    </div>
-
-    <div class="content-container">
-      <div class="input-container" [formGroup]="updateGuildLeaderForm">
-        <div style="position: relative">
-          <app-custom-input
-            #selectMember
-            [type]="'text'"
-            [id]="'leader'"
-            [label]="'Leader'"
-            formControlName="leader"
-            (input)="searchNewLeaderResultsQueryChange.emit(selectMember.value)"
-            (focusEvent)="toggleNewLeaderSearchContainer.next(true)"
-            (clickEvent)="toggleNewLeaderSearchContainer.next(true)"
-          ></app-custom-input>
-          <app-search-items
-            *ngIf="toggleNewLeaderSearchContainer | async"
-            [searchResults$]="searchNewLeaderResults$"
-            (selectedItem)="
-              updateGuildLeaderForm.get('leader')?.setValue($event.name)
-            "
-            (closeComponent)="
-              toggleNewLeaderSearchContainer.next(false);
-              searchNewLeaderResultsQueryChange.emit('')
-            "
-          ></app-search-items>
-          <div *ngIf="updateGuildLeaderForm.get('leader')?.pending">
-            <p style="color: aqua">Checking if member..</p>
-          </div>
-          <div
-            *ngIf="
-              !updateGuildLeaderForm.get('leader')?.pending &&
-              !updateGuildLeaderForm.get('leader')?.invalid &&
-              updateGuildLeaderForm.get('leader')?.value !==
-                guild?.leader?.name
-            "
-          >
-            <p style="color: green">Leader exists!</p>
-          </div>
-          <div
-            *ngIf="
-              updateGuildLeaderForm.get('leader')?.hasError('notMember')
-            "
-          >
-            <p appErrorText>Only guild members could be leader.</p>
-          </div>
-        </div>
-      </div>
-      <div class="btn-container">
-        <button
-          appGreenButton
-          *ngIf="
-            updateGuildLeaderForm.get('leader')?.value !==
-              guild?.leader?.name && updateGuildLeaderForm.valid
-          "
-          (click)="
-            updateGuildLeader.emit({
-              guildId: guild!._id,
-              newLeaderIdForm: updateGuildLeaderForm,
-            })
-          "
-          [disabled]="gas.updateLeaderLoading$ | async"
-        >
-          <app-spinner
-            [size]="20"
-            *ngIf="gas.updateLeaderLoading$ | async"
-          ></app-spinner>
-          Change
-        </button>
-      </div>
-    </div>
-
-    <div class="content-container">
-      <div class="input-container" [formGroup]="addMemberForm">
-        <div style="position: relative">
-          <app-custom-input
-            #selectAddMember
-            [type]="'text'"
-            [id]="'addMember'"
-            [label]="'Add Member'"
-            formControlName="member"
-            (input)="
-              searchNewMemberResultsQueryChange.emit(selectAddMember.value)
-            "
-            (focusEvent)="toggleNewMemberSearchContainer.next(true)"
-            (clickEvent)="toggleNewMemberSearchContainer.next(true)"
-          ></app-custom-input>
-          <app-search-items
-            *ngIf="toggleNewMemberSearchContainer | async"
-            [searchResults$]="searchNewMemberResults$"
-            (selectedItem)="addMemberForm.get('member')?.setValue($event.name)"
-            (closeComponent)="
-              toggleNewMemberSearchContainer.next(false);
-              searchNewMemberResultsQueryChange.emit('')
-            "
-          ></app-search-items>
-          <div
-            *ngIf="addMemberForm.get('member')?.pending"
-          >
-            <p style="color: aqua">Checking if already a member..</p>
-          </div>
-          <div
-            *ngIf="
-              !addMemberForm.get('member')?.pending &&
-              addMemberForm.valid
-            "
-          >
-            <p style="color: green">Character exists!</p>
-          </div>
-          <div *ngIf="addMemberForm.get('member')?.hasError('alreadyMember')">
-            <p appErrorText>Character is already a member or doesn't exist.</p>
-          </div>
-        </div>
-      </div>
-      <div class="btn-container">
-        <button
-          appGreenButton
-          *ngIf="addMemberForm.valid"
-          (click)="
-            addMember.emit({
-              guild: guild!,
-              newMemberForm: addMemberForm
-            })
-          "
-          [disabled]="gas.addMemberLoading$ | async"
-        >
-          <app-spinner
-            [size]="20"
-            *ngIf="gas.addMemberLoading$ | async"
-          ></app-spinner>
-          Confirm
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <div class="members-container">
-    <div *ngFor="let member of guild?.members; trackBy: trackBy">
-      <div class="leader-text-container">
-        <p>
-          {{ member.name }}
-        </p>
-        <img
-          *ngIf="member._id === guild?.leader?._id"
-          src="assets/images/icons/crown.svg"
-          alt="Crown Logo"
-        />
-      </div>
-      <button
-        appRedButton
-        (click)="removeMember.emit({ guildId: guild!._id, oldMember: member })"
-        [disabled]="
-          ((gas.removeMemberLoading$ | async) &&
-            gas.memberToRemove$.value?._id === member._id) ||
-          member._id === guild?.leader?._id
+<h2>Edit Guild</h2>
+<div class="edit-actions-container">
+  <div class="content-container">
+    <div class="input-container" [formGroup]="updateGuildNameForm">
+      <app-custom-input
+        [type]="'text'"
+        [id]="'name'"
+        [label]="'Guild Name'"
+        formControlName="name"
+      ></app-custom-input>
+      <div
+        *ngIf="
+          updateGuildNameForm.get('name')?.hasError('pattern') &&
+          updateGuildNameForm.get('name')?.dirty &&
+          updateGuildNameForm.get('name')?.value
         "
+      >
+        <p appErrorText>
+          Name field should only contain letters, numbers, and underscore.
+        </p>
+      </div>
+      <div
+        *ngIf="
+          updateGuildNameForm.get('name')?.hasError('minlength') &&
+          updateGuildNameForm.get('name')?.dirty &&
+          updateGuildNameForm.get('name')?.value
+        "
+      >
+        <p appErrorText>Name field should be at least 6 characters long.</p>
+      </div>
+      <div
+        *ngIf="
+          updateGuildNameForm.get('name')?.hasError('maxlength') &&
+          updateGuildNameForm.get('name')?.dirty &&
+          updateGuildNameForm.get('name')?.value
+        "
+      >
+        <p appErrorText>Name field should not exceed 20 characters.</p>
+      </div>
+      <div *ngIf="updateGuildNameForm.get('name')?.pending">
+        <p style="color: aqua">Checking if unique..</p>
+      </div>
+      <div
+        *ngIf="
+          !updateGuildNameForm.get('name')?.pending &&
+          !updateGuildNameForm.get('name')?.invalid &&
+          updateGuildNameForm.get('name')?.value !== (gefs.initialName$ | async)
+        "
+      >
+        <p style="color: green">Unique!</p>
+      </div>
+      <div *ngIf="updateGuildNameForm.get('name')?.hasError('uniqueName')">
+        <p appErrorText>
+          This guild name is already taken. Please choose another one.
+        </p>
+      </div>
+    </div>
+    <div class="btn-container">
+      <button
+        appGreenButton
+        *ngIf="
+          updateGuildNameForm.get('name')?.value !== guild?.name &&
+          updateGuildNameForm.valid
+        "
+        (click)="
+          updateGuildName.emit({
+            guildId: guild!._id,
+            newGuildNameForm: updateGuildNameForm
+          })
+        "
+        [disabled]="gas.updateNameLoading$ | async"
       >
         <app-spinner
           [size]="20"
-          *ngIf="
-            (gas.removeMemberLoading$ | async) &&
-            gas.memberToRemove$.value?._id === member._id
-          "
+          *ngIf="gas.updateNameLoading$ | async"
         ></app-spinner>
-        Kick
+        Change
       </button>
     </div>
+  </div>
+
+  <div class="content-container">
+    <div class="input-container" [formGroup]="updateGuildLeaderForm">
+      <div style="position: relative">
+        <app-custom-input
+          #selectMember
+          [type]="'text'"
+          [id]="'leader'"
+          [label]="'Leader'"
+          formControlName="leader"
+          (input)="searchNewLeaderResultsQueryChange.emit(selectMember.value)"
+          (focusEvent)="toggleNewLeaderSearchContainer.next(true)"
+          (clickEvent)="toggleNewLeaderSearchContainer.next(true)"
+        ></app-custom-input>
+        <app-search-items
+          *ngIf="toggleNewLeaderSearchContainer | async"
+          [searchResults$]="searchNewLeaderResults$"
+          (selectedItem)="
+            updateGuildLeaderForm.get('leader')?.setValue($event.name)
+          "
+          (closeComponent)="
+            toggleNewLeaderSearchContainer.next(false);
+            searchNewLeaderResultsQueryChange.emit('')
+          "
+        ></app-search-items>
+        <div *ngIf="updateGuildLeaderForm.get('leader')?.pending">
+          <p style="color: aqua">Checking if member..</p>
+        </div>
+        <div
+          *ngIf="
+            !updateGuildLeaderForm.get('leader')?.pending &&
+            !updateGuildLeaderForm.get('leader')?.invalid &&
+            updateGuildLeaderForm.get('leader')?.value !== guild?.leader?.name
+          "
+        >
+          <p style="color: green">Leader exists!</p>
+        </div>
+        <div *ngIf="updateGuildLeaderForm.get('leader')?.hasError('notMember')">
+          <p appErrorText>Only guild members could be leader.</p>
+        </div>
+      </div>
+    </div>
+    <div class="btn-container">
+      <button
+        appGreenButton
+        *ngIf="
+          updateGuildLeaderForm.get('leader')?.value !== guild?.leader?.name &&
+          updateGuildLeaderForm.valid
+        "
+        (click)="
+          updateGuildLeader.emit({
+            guildId: guild!._id,
+            newLeaderIdForm: updateGuildLeaderForm,
+          })
+        "
+        [disabled]="gas.updateLeaderLoading$ | async"
+      >
+        <app-spinner
+          [size]="20"
+          *ngIf="gas.updateLeaderLoading$ | async"
+        ></app-spinner>
+        Change
+      </button>
+    </div>
+  </div>
+
+  <div class="content-container">
+    <div class="input-container" [formGroup]="addMemberForm">
+      <div style="position: relative">
+        <app-custom-input
+          #selectAddMember
+          [type]="'text'"
+          [id]="'addMember'"
+          [label]="'Add Member'"
+          formControlName="member"
+          (input)="
+            searchNewMemberResultsQueryChange.emit(selectAddMember.value)
+          "
+          (focusEvent)="toggleNewMemberSearchContainer.next(true)"
+          (clickEvent)="toggleNewMemberSearchContainer.next(true)"
+        ></app-custom-input>
+        <app-search-items
+          *ngIf="toggleNewMemberSearchContainer | async"
+          [searchResults$]="searchNewMemberResults$"
+          (selectedItem)="addMemberForm.get('member')?.setValue($event.name)"
+          (closeComponent)="
+            toggleNewMemberSearchContainer.next(false);
+            searchNewMemberResultsQueryChange.emit('')
+          "
+        ></app-search-items>
+        <div *ngIf="addMemberForm.get('member')?.pending">
+          <p style="color: aqua">Checking if already a member..</p>
+        </div>
+        <div
+          *ngIf="!addMemberForm.get('member')?.pending && addMemberForm.valid"
+        >
+          <p style="color: green">Character exists!</p>
+        </div>
+        <div *ngIf="addMemberForm.get('member')?.hasError('alreadyMember')">
+          <p appErrorText>Character is already a member or doesn't exist.</p>
+        </div>
+      </div>
+    </div>
+    <div class="btn-container">
+      <button
+        appGreenButton
+        *ngIf="addMemberForm.valid"
+        (click)="
+          addMember.emit({
+            guild: guild!,
+            newMemberForm: addMemberForm
+          })
+        "
+        [disabled]="gas.addMemberLoading$ | async"
+      >
+        <app-spinner
+          [size]="20"
+          *ngIf="gas.addMemberLoading$ | async"
+        ></app-spinner>
+        Confirm
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="members-container">
+  <div *ngFor="let member of guild?.members; trackBy: trackBy">
+    <div class="leader-text-container">
+      <p>
+        {{ member.name }}
+      </p>
+      <img
+        *ngIf="member._id === guild?.leader?._id"
+        src="assets/images/icons/crown.svg"
+        alt="Crown Logo"
+      />
+    </div>
+    <button
+      appRedButton
+      (click)="removeMember.emit({ guildId: guild!._id, oldMember: member })"
+      [disabled]="
+        ((gas.removeMemberLoading$ | async) &&
+          gas.memberToRemove$.value?._id === member._id) ||
+        member._id === guild?.leader?._id
+      "
+    >
+      <app-spinner
+        [size]="20"
+        *ngIf="
+          (gas.removeMemberLoading$ | async) &&
+          gas.memberToRemove$.value?._id === member._id
+        "
+      ></app-spinner>
+      Kick
+    </button>
   </div>
 </div>
