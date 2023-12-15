@@ -1,7 +1,7 @@
 <div *ngIf="!loading">
   <div class="options">
-    <ng-container *ngTemplateOutlet="pageSize!"></ng-container>
-    <ng-container *ngTemplateOutlet="search!"></ng-container>
+    <ng-container *ngTemplateOutlet="pageSize!"/>
+    <ng-container *ngTemplateOutlet="search!"/>
   </div>
   <div class="table-container">
     <table class="table">
@@ -9,7 +9,7 @@
         <tr>
           <ng-container
             *ngTemplateOutlet="headers || defaultHeaderTemplate"
-          ></ng-container>
+          />
         </tr>
       </thead>
       <tbody>
@@ -19,13 +19,13 @@
               rows || defaultRowTemplate;
               context: { $implicit: row }
             "
-          ></ng-container>
+          />
         </tr>
       </tbody>
     </table>
   </div>
   <div class="pagination">
-    <ng-container *ngTemplateOutlet="pagination!"></ng-container>
+    <ng-container *ngTemplateOutlet="pagination!"/>
   </div>
 </div>
 
@@ -37,4 +37,4 @@
   <td *ngFor="let row of row | keyvalue">{{ row.value }}</td>
 </ng-template>
 
-<app-table-skeleton *ngIf="loading"></app-table-skeleton>
+<app-table-skeleton *ngIf="loading"/>

@@ -1,7 +1,7 @@
-<ng-container *ngIf="joinGuildForm.statusChanges | async"></ng-container>
+<ng-container *ngIf="joinGuildForm.statusChanges | async"/>
 
 <h2>Edit Character</h2>
-<app-character-form [characterForm]="characterForm"></app-character-form>
+<app-character-form [characterForm]="characterForm"/>
 <form class="content-container">
   <div class="input-container" [formGroup]="joinGuildForm">
     <app-custom-input
@@ -13,8 +13,7 @@
       (input)="searchQueryChange.emit(search.value)"
       (focusEvent)="toggleSearchContainer.next(true)"
       (clickEvent)="toggleSearchContainer.next(true)"
-    >
-    </app-custom-input>
+    />
     <app-search-items
       *ngIf="toggleSearchContainer | async"
       [searchResults$]="searchResults$"
@@ -22,7 +21,7 @@
       (closeComponent)="
         toggleSearchContainer.next(false); searchQueryChange.emit('')
       "
-    ></app-search-items>
+    />
     <div
       *ngIf="joinGuildForm.get('guild')?.hasError('alreadyMember')"
       appErrorText
@@ -64,7 +63,7 @@
       "
       [disabled]="cas.joinLoading$ | async"
     >
-      <app-spinner [size]="20" *ngIf="cas.joinLoading$ | async"></app-spinner>
+      <app-spinner [size]="20" *ngIf="cas.joinLoading$ | async"/>
       Join
     </button>
     <button
@@ -77,7 +76,7 @@
       "
       [disabled]="cas.leaveLoading$ | async"
     >
-      <app-spinner [size]="20" *ngIf="cas.leaveLoading$ | async"></app-spinner>
+      <app-spinner [size]="20" *ngIf="cas.leaveLoading$ | async"/>
       Leave
     </button>
   </div>
@@ -93,7 +92,7 @@
       })
     "
   >
-    <app-spinner [size]="20" *ngIf="cas.updateLoading$ | async"></app-spinner>
+    <app-spinner [size]="20" *ngIf="cas.updateLoading$ | async"/>
     Save
   </button>
 </div>

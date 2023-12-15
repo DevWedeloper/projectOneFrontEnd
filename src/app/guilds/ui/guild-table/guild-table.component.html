@@ -63,7 +63,7 @@
             (gas.deleteLoading$ | async) &&
             gas.guildToUpdate$.value?._id === guild._id
           "
-        ></app-spinner
+        />
         >Delete
       </button>
     </td>
@@ -75,6 +75,6 @@
       [pageSize]="pageSize"
       [total]="guildData?.totalGuilds"
       (changePage)="changePage.emit($event)"
-    ></app-pagination>
+    />
   </ng-template>
 </app-table>
