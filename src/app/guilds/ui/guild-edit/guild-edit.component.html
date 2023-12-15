@@ -1,7 +1,5 @@
-<ng-container *ngIf="updateGuildNameForm.statusChanges | async"/>
-<ng-container
-  *ngIf="updateGuildLeaderForm.statusChanges | async"
-/>
+<ng-container *ngIf="updateGuildNameForm.statusChanges | async" />
+<ng-container *ngIf="updateGuildLeaderForm.statusChanges | async" />
 
 <h2>Edit Guild</h2>
 <div class="edit-actions-container">
@@ -75,10 +73,7 @@
         "
         [disabled]="gas.updateNameLoading$ | async"
       >
-        <app-spinner
-          [size]="20"
-          *ngIf="gas.updateNameLoading$ | async"
-        />
+        <app-spinner [size]="20" *ngIf="gas.updateNameLoading$ | async" />
         Change
       </button>
     </div>
@@ -93,7 +88,10 @@
           [id]="'leader'"
           [label]="'Leader'"
           formControlName="leader"
-          (input)="searchNewLeaderResultsQueryChange.emit(selectMember.value); toggleNewLeaderSearchContainer.next(true)"
+          (input)="
+            searchNewLeaderResultsQueryChange.emit(selectMember.value);
+            toggleNewLeaderSearchContainer.next(true)
+          "
           (focusEvent)="toggleNewLeaderSearchContainer.next(true)"
           (clickEvent)="toggleNewLeaderSearchContainer.next(true)"
         />
@@ -140,10 +138,7 @@
         "
         [disabled]="gas.updateLeaderLoading$ | async"
       >
-        <app-spinner
-          [size]="20"
-          *ngIf="gas.updateLeaderLoading$ | async"
-        />
+        <app-spinner [size]="20" *ngIf="gas.updateLeaderLoading$ | async" />
         Change
       </button>
     </div>
@@ -199,10 +194,7 @@
         "
         [disabled]="gas.addMemberLoading$ | async"
       >
-        <app-spinner
-          [size]="20"
-          *ngIf="gas.addMemberLoading$ | async"
-        />
+        <app-spinner [size]="20" *ngIf="gas.addMemberLoading$ | async" />
         Confirm
       </button>
     </div>
