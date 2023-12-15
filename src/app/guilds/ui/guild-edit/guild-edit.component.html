@@ -5,7 +5,7 @@
 
 <h2>Edit Guild</h2>
 <div class="edit-actions-container">
-  <div class="content-container">
+  <form class="content-container">
     <div class="input-container" [formGroup]="updateGuildNameForm">
       <app-custom-input
         [type]="'text'"
@@ -82,9 +82,9 @@
         Change
       </button>
     </div>
-  </div>
+  </form>
 
-  <div class="content-container">
+  <form class="content-container">
     <div class="input-container" [formGroup]="updateGuildLeaderForm">
       <div style="position: relative">
         <app-custom-input
@@ -147,9 +147,9 @@
         Change
       </button>
     </div>
-  </div>
+  </form>
 
-  <div class="content-container">
+  <form class="content-container">
     <div class="input-container" [formGroup]="addMemberForm">
       <div style="position: relative">
         <app-custom-input
@@ -205,7 +205,7 @@
         Confirm
       </button>
     </div>
-  </div>
+  </form>
 </div>
 
 <div class="members-container">
