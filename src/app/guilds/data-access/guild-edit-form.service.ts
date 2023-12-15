@@ -11,10 +11,9 @@ import {
   Observable,
   catchError,
   debounceTime,
-  finalize,
   map,
   of,
-  switchMap,
+  switchMap
 } from 'rxjs';
 import { CheckIfMemberApiService } from 'src/app/guilds/data-access/check-if-member-api.service';
 import { CheckUniquenessService } from 'src/app/shared/data-access/check-uniqueness-api.service';
@@ -26,11 +25,6 @@ export class GuildEditFormService {
   fb = inject(FormBuilder);
   checkUniquenessApi = inject(CheckUniquenessService);
   checkIfMemberApi = inject(CheckIfMemberApiService);
-  updateNameValidationStatus$ = new BehaviorSubject<boolean>(false);
-  updateLeaderValidationStatus$ = new BehaviorSubject<boolean>(false);
-  ifMemberValidationStatus$ = new BehaviorSubject<boolean>(false);
-  addMemberValidationStatus$ = new BehaviorSubject<boolean>(false);
-  ifNotMemberValidationStatus$ = new BehaviorSubject<boolean>(false);
   initialName$ = new BehaviorSubject<string>('');
   initialLeader$ = new BehaviorSubject<string>('');
 
@@ -56,7 +50,6 @@ export class GuildEditFormService {
         '',
         [Validators.required],
         [
-          this.validateLeaderExisting.bind(this),
           (control) => this.checkIfMember(control, guild),
         ],
       ],
@@ -69,7 +62,6 @@ export class GuildEditFormService {
         '',
         [Validators.required],
         [
-          this.validateAddMemberExisting.bind(this),
           (control) => this.checkIfNotMember(control, guild),
         ],
       ],
@@ -84,7 +76,6 @@ export class GuildEditFormService {
       return of(null);
     }
 
-    this.updateNameValidationStatus$.next(true);
     return of(control.value).pipe(
       debounceTime(500),
       switchMap((name) =>
@@ -99,56 +90,6 @@ export class GuildEditFormService {
           })
         )
       ),
-      finalize(() => this.updateNameValidationStatus$.next(false))
-    );
-  }
-
-  private validateLeaderExisting(
-    control: AbstractControl
-  ): Observable<ValidationErrors | null> {
-    const nameField = control.getRawValue();
-    if (nameField === this.initialLeader$.value) {
-      return of(null);
-    }
-
-    this.updateLeaderValidationStatus$.next(true);
-    return of(control.value).pipe(
-      debounceTime(500),
-      switchMap((name) =>
-        this.checkUniquenessApi.checkCharacterNameUniqueness(name).pipe(
-          map((response) =>
-            response.message === 'Character name is unique'
-              ? { notFound: true }
-              : null
-          ),
-          catchError(() => {
-            return of(null);
-          })
-        )
-      ),
-      finalize(() => this.updateLeaderValidationStatus$.next(false))
-    );
-  }
-
-  private validateAddMemberExisting(
-    control: AbstractControl
-  ): Observable<ValidationErrors | null> {
-    this.addMemberValidationStatus$.next(true);
-    return of(control.value).pipe(
-      debounceTime(500),
-      switchMap((name) =>
-        this.checkUniquenessApi.checkCharacterNameUniqueness(name).pipe(
-          map((response) =>
-            response.message === 'Character name is unique'
-              ? { notFound: true }
-              : null
-          ),
-          catchError(() => {
-            return of(null);
-          })
-        )
-      ),
-      finalize(() => this.addMemberValidationStatus$.next(false))
     );
   }
 
@@ -165,11 +106,10 @@ export class GuildEditFormService {
       return of(null);
     }
     
-    this.ifMemberValidationStatus$.next(true);
     return of(control.value).pipe(
       debounceTime(500),
       switchMap((name) =>
-        this.checkIfMemberApi.checkIfMember(name, guild).pipe(
+        this.checkIfMemberApi.isNotMember(name, guild).pipe(
           map((response) => {
             return response.message === 'Not member'
               ? { notMember: true }
@@ -180,7 +120,6 @@ export class GuildEditFormService {
           })
         )
       ),
-      finalize(() => this.ifMemberValidationStatus$.next(false))
     );
   }
 
@@ -192,11 +131,10 @@ export class GuildEditFormService {
       return of(null);
     }
 
-    this.ifNotMemberValidationStatus$.next(true);
     return of(control.value).pipe(
       debounceTime(500),
       switchMap((name) =>
-        this.checkIfMemberApi.checkIfMember(name, guild).pipe(
+        this.checkIfMemberApi.isMember(name, guild).pipe(
           map((response) => {
             return response.message === 'Member'
               ? { alreadyMember: true }
@@ -207,7 +145,6 @@ export class GuildEditFormService {
           })
         )
       ),
-      finalize(() => this.ifNotMemberValidationStatus$.next(false))
     );
   }
 }

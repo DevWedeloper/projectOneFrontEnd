@@ -110,38 +110,22 @@
               searchNewLeaderResultsQueryChange.emit('')
             "
           ></app-search-items>
-          <div *ngIf="gefs.updateLeaderValidationStatus$ | async">
-            <p style="color: aqua">Checking if leader exists..</p>
+          <div *ngIf="updateGuildLeaderForm.get('leader')?.pending">
+            <p style="color: aqua">Checking if member..</p>
           </div>
           <div
             *ngIf="
-              (gefs.ifMemberValidationStatus$ | async) &&
-              (gefs.updateLeaderValidationStatus$ | async) === false
-            "
-          >
-            <p style="color: aqua">Checking if part of the guild..</p>
-          </div>
-          <div
-            *ngIf="
-              (gefs.updateLeaderValidationStatus$ | async) === false &&
+              !updateGuildLeaderForm.get('leader')?.pending &&
+              !updateGuildLeaderForm.get('leader')?.invalid &&
               updateGuildLeaderForm.get('leader')?.value !==
-                (gefs.initialLeader$ | async) &&
-              updateGuildLeaderForm.get('leader')?.value !==
-                guild?.leader?.name &&
-              updateGuildLeaderForm.valid
+                guild?.leader?.name
             "
           >
             <p style="color: green">Leader exists!</p>
           </div>
           <div
-            *ngIf="updateGuildLeaderForm.get('leader')?.hasError('notFound')"
-          >
-            <p appErrorText>Leader not found.</p>
-          </div>
-          <div
             *ngIf="
-              updateGuildLeaderForm.get('leader')?.hasError('notMember') &&
-              !updateGuildLeaderForm.get('leader')?.hasError('notFound')
+              updateGuildLeaderForm.get('leader')?.hasError('notMember')
             "
           >
             <p appErrorText>Only guild members could be leader.</p>
@@ -196,30 +180,21 @@
               searchNewMemberResultsQueryChange.emit('')
             "
           ></app-search-items>
-          <div *ngIf="gefs.addMemberValidationStatus$ | async">
-            <p style="color: aqua">Checking if character exists..</p>
-          </div>
           <div
-            *ngIf="
-              (gefs.ifNotMemberValidationStatus$ | async) &&
-              (gefs.addMemberValidationStatus$ | async) === false
-            "
+            *ngIf="addMemberForm.get('member')?.pending"
           >
             <p style="color: aqua">Checking if already a member..</p>
           </div>
           <div
             *ngIf="
-              (gefs.addMemberValidationStatus$ | async) === false &&
+              !addMemberForm.get('member')?.pending &&
               addMemberForm.valid
             "
           >
             <p style="color: green">Character exists!</p>
           </div>
-          <div *ngIf="addMemberForm.get('member')?.hasError('notFound')">
-            <p appErrorText>Character not found.</p>
-          </div>
           <div *ngIf="addMemberForm.get('member')?.hasError('alreadyMember')">
-            <p appErrorText>Character is already a member.</p>
+            <p appErrorText>Character is already a member or doesn't exist.</p>
           </div>
         </div>
       </div>
