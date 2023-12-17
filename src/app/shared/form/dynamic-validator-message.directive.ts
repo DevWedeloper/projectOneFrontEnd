@@ -17,7 +17,7 @@ import {
   NgModel,
 } from '@angular/forms';
 import { EMPTY, filter, fromEvent, iif, merge, skip, startWith } from 'rxjs';
-import { OnTouchedErrorStateMatcherService } from './error-state-matcher.service';
+import { ErrorStateMatcherService } from './error-state-matcher.service';
 import { InputErrorComponent } from './input-error/input-error.component';
 
 @Directive({
@@ -39,7 +39,7 @@ export class DynamicValidatorMessageDirective implements OnInit {
   private elementRef = inject(ElementRef);
   private parentContainer = inject(ControlContainer, { optional: true });
   @Input()
-  errorStateMatcher = inject(OnTouchedErrorStateMatcherService);
+  errorStateMatcher = inject(ErrorStateMatcherService);
   @Input()
   container = inject(ViewContainerRef);
   private get form() {
