@@ -10,7 +10,6 @@ import {
   Observable,
   catchError,
   debounceTime,
-  finalize,
   map,
   of,
   switchMap
@@ -23,7 +22,6 @@ import { CheckUniquenessService } from 'src/app/shared/data-access/check-uniquen
 export class CharacterJoinGuildFormService {
   fb = inject(FormBuilder);
   checkUniquenessApi = inject(CheckUniquenessService);
-  validationStatus$ = new BehaviorSubject<boolean>(false);
   isInitialValueSet$ = new BehaviorSubject<boolean>(false);
   initialName$ = new BehaviorSubject<string>('');
 
@@ -49,7 +47,6 @@ export class CharacterJoinGuildFormService {
       return of(null);
     }
 
-    this.validationStatus$.next(true);
     return of(control.value).pipe(
       debounceTime(500),
       switchMap((name) =>
@@ -64,7 +61,6 @@ export class CharacterJoinGuildFormService {
           })
         )
       ),
-      finalize(() => this.validationStatus$.next(false))
     );
   }
 }

@@ -24,14 +24,13 @@
         toggleSearchContainer.next(false); searchQueryChange.emit('')
       "
     />
-    <div *ngIf="cjgfs.validationStatus$ | async">
+    <div *ngIf="joinGuildForm.get('guild')?.pending">
       <p style="color: aqua">Checking if guild exists..</p>
     </div>
     <div
       *ngIf="
-        (cjgfs.validationStatus$ | async) === false &&
+        !joinGuildForm.get('guild')?.pending &&
         !joinGuildForm.get('guild')?.invalid &&
-        joinGuildForm.get('guild')?.value !== (cjgfs.initialName$ | async) &&
         joinGuildForm.get('guild')?.value !== character?.guild?.name
       "
     >
