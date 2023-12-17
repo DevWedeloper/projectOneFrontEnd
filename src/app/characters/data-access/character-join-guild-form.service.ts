@@ -22,7 +22,6 @@ import { CheckUniquenessService } from 'src/app/shared/data-access/check-uniquen
 export class CharacterJoinGuildFormService {
   fb = inject(FormBuilder);
   checkUniquenessApi = inject(CheckUniquenessService);
-  isInitialValueSet$ = new BehaviorSubject<boolean>(false);
   initialName$ = new BehaviorSubject<string>('');
 
   initializeJoinGuildForm(): FormGroup {
@@ -38,10 +37,6 @@ export class CharacterJoinGuildFormService {
   private validateGuildExisting(
     control: AbstractControl
   ): Observable<ValidationErrors | null> {
-    if (this.isInitialValueSet$.value) {
-      return of(null);
-    }
-
     const nameField = control.getRawValue();
     if (nameField === this.initialName$.value) {
       return of(null);
