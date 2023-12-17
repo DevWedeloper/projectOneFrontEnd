@@ -11,35 +11,6 @@
         [label]="'Guild Name'"
         formControlName="name"
       />
-      <div
-        *ngIf="
-          updateGuildNameForm.get('name')?.hasError('pattern') &&
-          updateGuildNameForm.get('name')?.dirty &&
-          updateGuildNameForm.get('name')?.value
-        "
-      >
-        <p appErrorText>
-          Name field should only contain letters, numbers, and underscore.
-        </p>
-      </div>
-      <div
-        *ngIf="
-          updateGuildNameForm.get('name')?.hasError('minlength') &&
-          updateGuildNameForm.get('name')?.dirty &&
-          updateGuildNameForm.get('name')?.value
-        "
-      >
-        <p appErrorText>Name field should be at least 6 characters long.</p>
-      </div>
-      <div
-        *ngIf="
-          updateGuildNameForm.get('name')?.hasError('maxlength') &&
-          updateGuildNameForm.get('name')?.dirty &&
-          updateGuildNameForm.get('name')?.value
-        "
-      >
-        <p appErrorText>Name field should not exceed 20 characters.</p>
-      </div>
       <div *ngIf="updateGuildNameForm.get('name')?.pending">
         <p style="color: aqua">Checking if unique..</p>
       </div>
@@ -51,11 +22,6 @@
         "
       >
         <p style="color: green">Unique!</p>
-      </div>
-      <div *ngIf="updateGuildNameForm.get('name')?.hasError('uniqueName')">
-        <p appErrorText>
-          This guild name is already taken. Please choose another one.
-        </p>
       </div>
     </div>
     <div class="btn-container">
@@ -118,9 +84,6 @@
         >
           <p style="color: green">Leader exists!</p>
         </div>
-        <div *ngIf="updateGuildLeaderForm.get('leader')?.hasError('notMember')">
-          <p appErrorText>Only guild members could be leader.</p>
-        </div>
       </div>
     </div>
     <div class="btn-container">
@@ -176,9 +139,6 @@
           *ngIf="!addMemberForm.get('member')?.pending && addMemberForm.valid"
         >
           <p style="color: green">Character exists!</p>
-        </div>
-        <div *ngIf="addMemberForm.get('member')?.hasError('alreadyMember')">
-          <p appErrorText>Character is already a member or doesn't exist.</p>
         </div>
       </div>
     </div>
