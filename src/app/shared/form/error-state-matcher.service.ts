@@ -21,6 +21,10 @@ export class ErrorStateMatcherService implements ErrorStateMatcher {
     );
   }
 }
+
+@Injectable({
+  providedIn: 'root',
+})
 export class OnTouchedErrorStateMatcherService implements ErrorStateMatcher {
   isErrorVisible(
     control: AbstractControl | null,
