@@ -72,7 +72,8 @@ export class DynamicValidatorMessageDirective implements OnInit {
             )
           ) {
             if (!this.componentRef) {
-              this.componentRef = this.container.createComponent(InputErrorComponent);
+              this.componentRef =
+                this.container.createComponent(InputErrorComponent);
               this.componentRef.changeDetectorRef.markForCheck();
             }
             this.componentRef.setInput('errors', this.ngControl.errors);
