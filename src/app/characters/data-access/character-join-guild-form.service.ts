@@ -3,8 +3,7 @@ import {
   AbstractControl,
   FormBuilder,
   FormGroup,
-  ValidationErrors,
-  Validators,
+  ValidationErrors
 } from '@angular/forms';
 import {
   BehaviorSubject,
@@ -31,9 +30,9 @@ export class CharacterJoinGuildFormService {
   initializeJoinGuildForm(): FormGroup {
     return this.fb.group({
       guild: [
-        '',
-        [Validators.required],
-        [this.validateGuildExisting.bind(this)],
+        null, {
+          asyncValidators: [this.validateGuildExisting.bind(this)],
+        }
       ]
     });
   }
@@ -57,7 +56,7 @@ export class CharacterJoinGuildFormService {
         this.checkUniquenessApi.checkGuildNameUniqueness(name).pipe(
           map((response) =>
             response.message === 'Guild name is unique'
-              ? { guildNotFound: true }
+              ? { notFound: true }
               : null
           ),
           catchError(() => {

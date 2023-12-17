@@ -24,15 +24,6 @@
         toggleSearchContainer.next(false); searchQueryChange.emit('')
       "
     />
-    <div
-      *ngIf="joinGuildForm.get('guild')?.hasError('alreadyMember')"
-      appErrorText
-    >
-      Already a member of this guild
-    </div>
-    <div *ngIf="joinGuildForm.get('guild')?.hasError('notFound')" appErrorText>
-      Guild not found
-    </div>
     <div *ngIf="cjgfs.validationStatus$ | async">
       <p style="color: aqua">Checking if guild exists..</p>
     </div>
@@ -45,9 +36,6 @@
       "
     >
       <p style="color: green">Guild exists!</p>
-    </div>
-    <div *ngIf="joinGuildForm.get('guild')?.hasError('guildNotFound')">
-      <p appErrorText>Guild does not exist.</p>
     </div>
   </div>
   <div class="btn-container">
