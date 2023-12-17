@@ -1,0 +1,3 @@
+<div *ngFor="let error of errors | keyvalue; trackBy: trackBy" class="input-error">
+  {{ error.key | errorMessage: error.value }}
+</div>
