@@ -39,7 +39,7 @@ export class CharacterJoinGuildFormService {
     control: AbstractControl
   ): Observable<ValidationErrors | null> {
     const nameField = control.getRawValue();
-    if (nameField === this.initialName$.value) {
+    if (nameField === this.initialName$.value || nameField === '') {
       return of(null);
     }
 
