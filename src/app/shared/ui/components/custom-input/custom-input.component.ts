@@ -55,6 +55,5 @@ export class CustomInputComponent implements ControlValueAccessor {
   updateValue(input: string) {
     this.value = input;
     this.onChange(input);
-    this.onTouch();
   }
 }
