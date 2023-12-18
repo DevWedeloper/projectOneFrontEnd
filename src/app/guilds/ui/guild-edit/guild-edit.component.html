@@ -122,7 +122,7 @@
     <div class="btn-container">
       <button
         appGreenButton
-        *ngIf="addMemberForm.valid"
+        *ngIf="addMemberForm.get('member')?.value !== '' && addMemberForm.valid"
         (click)="
           addMember.emit({
             guild: guild!,
