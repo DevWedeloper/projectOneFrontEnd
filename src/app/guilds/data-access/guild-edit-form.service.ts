@@ -54,6 +54,7 @@ export class GuildEditFormService {
         {
           asyncValidators: (control: AbstractControl) =>
             this.checkIfMember(control, guild),
+          updateOn: 'blur',
         },
       ],
     });
@@ -66,6 +67,7 @@ export class GuildEditFormService {
         {
           asyncValidators: (control: AbstractControl) =>
             this.checkIfNotMember(control, guild),
+          updateOn: 'blur',
         },
       ],
     });

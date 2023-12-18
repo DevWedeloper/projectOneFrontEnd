@@ -33,8 +33,11 @@ export class GuildFormService {
       ],
       leader: [
         '',
-        [Validators.required],
-        [this.validateLeaderExisting.bind(this)],
+        {
+          validators: [Validators.required],
+          asyncValidators: [this.validateLeaderExisting.bind(this)],
+          updateOn: 'blur',
+        },
       ],
     });
   }
