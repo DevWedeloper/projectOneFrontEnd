@@ -10,9 +10,9 @@
         [label]="'Guild Name'"
         formControlName="name"
       />
-      <div *ngIf="updateGuildNameForm.get('name')?.pending">
+      <ng-container *ngIf="updateGuildNameForm.get('name')?.pending">
         <p style="color: aqua">Checking if unique..</p>
-      </div>
+      </ng-container>
     </div>
     <div class="btn-container">
       <button
@@ -62,9 +62,9 @@
             searchNewLeaderResultsQueryChange.emit('')
           "
         />
-        <div *ngIf="updateGuildLeaderForm.get('leader')?.pending">
+        <ng-container *ngIf="updateGuildLeaderForm.get('leader')?.pending">
           <p style="color: aqua">Checking if member..</p>
-        </div>
+        </ng-container>
       </div>
     </div>
     <div class="btn-container">
@@ -113,9 +113,9 @@
             searchNewMemberResultsQueryChange.emit('')
           "
         />
-        <div *ngIf="addMemberForm.get('member')?.pending">
+        <ng-container *ngIf="addMemberForm.get('member')?.pending">
           <p style="color: aqua">Checking if already a member..</p>
-        </div>
+        </ng-container>
       </div>
     </div>
     <div class="btn-container">

@@ -24,9 +24,9 @@
         toggleSearchContainer.next(false); searchQueryChange.emit('')
       "
     />
-    <div *ngIf="joinGuildForm.get('guild')?.pending">
+    <ng-container *ngIf="joinGuildForm.get('guild')?.pending">
       <p style="color: aqua">Checking if guild exists..</p>
-    </div>
+    </ng-container>
   </div>
   <div class="btn-container">
     <button
