@@ -13,7 +13,7 @@ import {
   debounceTime,
   map,
   of,
-  switchMap
+  switchMap,
 } from 'rxjs';
 import { CheckIfMemberApiService } from 'src/app/guilds/data-access/check-if-member-api.service';
 import { CheckUniquenessService } from 'src/app/shared/data-access/check-uniqueness-api.service';
@@ -32,14 +32,17 @@ export class GuildEditFormService {
     return this.fb.group({
       name: [
         '',
-        [
-          Validators.required,
-          Validators.required,
-          Validators.minLength(6),
-          Validators.maxLength(20),
-          Validators.pattern(/^[a-zA-Z0-9_]+$/),
-        ],
-        [this.validateGuildNameUniqueness.bind(this)],
+        {
+          validators: [
+            Validators.required,
+            Validators.required,
+            Validators.minLength(6),
+            Validators.maxLength(20),
+            Validators.pattern(/^[a-zA-Z0-9_]+$/),
+          ],
+          asyncValidators: [this.validateGuildNameUniqueness.bind(this)],
+          updateOn: 'blur',
+        },
       ],
     });
   }
@@ -48,10 +51,10 @@ export class GuildEditFormService {
     return this.fb.group({
       leader: [
         '',
-        [Validators.required],
-        [
-          (control) => this.checkIfMember(control, guild),
-        ],
+        {
+          asyncValidators: (control: AbstractControl) =>
+            this.checkIfMember(control, guild),
+        },
       ],
     });
   }
@@ -60,10 +63,10 @@ export class GuildEditFormService {
     return this.fb.group({
       member: [
         '',
-        [Validators.required],
-        [
-          (control) => this.checkIfNotMember(control, guild),
-        ],
+        {
+          asyncValidators: (control: AbstractControl) =>
+            this.checkIfNotMember(control, guild),
+        },
       ],
     });
   }
@@ -89,7 +92,7 @@ export class GuildEditFormService {
             return of(null);
           })
         )
-      ),
+      )
     );
   }
 
@@ -105,7 +108,7 @@ export class GuildEditFormService {
     if (nameField === this.initialLeader$.value) {
       return of(null);
     }
-    
+
     return of(control.value).pipe(
       debounceTime(500),
       switchMap((name) =>
@@ -119,7 +122,7 @@ export class GuildEditFormService {
             return of(null);
           })
         )
-      ),
+      )
     );
   }
 
@@ -128,6 +131,11 @@ export class GuildEditFormService {
     guild: string | null
   ): Observable<ValidationErrors | null> {
     if (!guild) {
+      return of(null);
+    }
+
+    const nameField = control.getRawValue();
+    if (nameField === '') {
       return of(null);
     }
 
@@ -144,7 +152,7 @@ export class GuildEditFormService {
             return of(null);
           })
         )
-      ),
+      )
     );
   }
 }

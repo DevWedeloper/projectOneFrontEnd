@@ -10,6 +10,7 @@ import {
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 import { CharacterApiService } from 'src/app/shared/data-access/character-api.service';
+import { DynamicValidatorMessageDirective } from 'src/app/shared/form/dynamic-validator-message.directive';
 import { Character } from 'src/app/shared/interfaces/character.interface';
 import { CustomInputComponent } from 'src/app/shared/ui/components/custom-input/custom-input.component';
 import { DividerDropdownComponent } from 'src/app/shared/ui/components/divider-dropdown/divider-dropdown.component';
@@ -34,6 +35,7 @@ import { GuildLoadingService } from '../../data-access/guild-loading.service';
     CustomInputComponent,
     CreateButtonDirective,
     SpinnerComponent,
+    DynamicValidatorMessageDirective
   ],
   templateUrl: './guild-create.component.html',
   styleUrls: ['./guild-create.component.scss'],

@@ -5,14 +5,7 @@ import {
   ValidationErrors,
   Validators,
 } from '@angular/forms';
-import {
-  Observable,
-  catchError,
-  debounceTime,
-  map,
-  of,
-  switchMap
-} from 'rxjs';
+import { Observable, catchError, debounceTime, map, of, switchMap } from 'rxjs';
 import { CheckUniquenessService } from 'src/app/shared/data-access/check-uniqueness-api.service';
 
 @Injectable({
@@ -26,14 +19,17 @@ export class GuildFormService {
     return this.fb.group({
       name: [
         '',
-        [
-          Validators.required,
-          Validators.required,
-          Validators.minLength(6),
-          Validators.maxLength(20),
-          Validators.pattern(/^[a-zA-Z0-9_]+$/),
-        ],
-        [this.validateGuildNameUniqueness.bind(this)],
+        {
+          validators: [
+            Validators.required,
+            Validators.required,
+            Validators.minLength(6),
+            Validators.maxLength(20),
+            Validators.pattern(/^[a-zA-Z0-9_]+$/),
+          ],
+          asyncValidators: [this.validateGuildNameUniqueness.bind(this)],
+          updateOn: 'blur',
+        },
       ],
       leader: [
         '',
@@ -59,7 +55,7 @@ export class GuildFormService {
             return of(null);
           })
         )
-      ),
+      )
     );
   }
 
@@ -79,7 +75,7 @@ export class GuildFormService {
             return of(null);
           })
         )
-      ),
+      )
     );
   }
 }

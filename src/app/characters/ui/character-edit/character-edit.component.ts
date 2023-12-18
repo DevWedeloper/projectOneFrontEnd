@@ -16,6 +16,7 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
+import { DynamicValidatorMessageDirective } from 'src/app/shared/form/dynamic-validator-message.directive';
 import { Character } from 'src/app/shared/interfaces/character.interface';
 import { Guild } from 'src/app/shared/interfaces/guild.interface';
 import { CustomInputComponent } from 'src/app/shared/ui/components/custom-input/custom-input.component';
@@ -50,6 +51,7 @@ import { CharacterFormComponent } from '../character-form/character-form.compone
     GreenButtonDirective,
     RedButtonDirective,
     SpinnerComponent,
+    DynamicValidatorMessageDirective
   ],
 })
 export class CharacterEditComponent implements OnInit, OnDestroy {

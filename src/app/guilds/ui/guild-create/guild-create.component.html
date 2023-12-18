@@ -20,58 +20,9 @@
         [label]="'Guild Name'"
         formControlName="name"
       />
-      <div
-        *ngIf="
-          guildForm.get('name')?.hasError('required') &&
-          guildForm.get('name')?.touched
-        "
-      >
-        <p appErrorText>Guild name is required.</p>
-      </div>
-      <div *ngIf="guildForm.get('name')?.pending">
+      <ng-container *ngIf="guildForm.get('name')?.pending">
         <p style="color: aqua">Checking if unique..</p>
-      </div>
-      <div
-        *ngIf="
-          !guildForm.get('name')?.pending && !guildForm.get('name')?.invalid
-        "
-      >
-        <p style="color: green">Unique!</p>
-      </div>
-      <div
-        *ngIf="
-          guildForm.get('name')?.hasError('pattern') &&
-          guildForm.get('name')?.dirty &&
-          guildForm.get('name')?.value
-        "
-      >
-        <p appErrorText>
-          Name field should only contain letters, numbers, and underscore.
-        </p>
-      </div>
-      <div
-        *ngIf="
-          guildForm.get('name')?.hasError('minlength') &&
-          guildForm.get('name')?.dirty &&
-          guildForm.get('name')?.value
-        "
-      >
-        <p appErrorText>Name field should be at least 6 characters long.</p>
-      </div>
-      <div
-        *ngIf="
-          guildForm.get('name')?.hasError('maxlength') &&
-          guildForm.get('name')?.dirty &&
-          guildForm.get('name')?.value
-        "
-      >
-        <p appErrorText>Name field should not exceed 20 characters.</p>
-      </div>
-      <div *ngIf="guildForm.get('name')?.hasError('uniqueName')">
-        <p appErrorText>
-          This guild name is already taken. Please choose another one.
-        </p>
-      </div>
+      </ng-container>
     </div>
 
     <div class="form-group">
@@ -98,28 +49,9 @@
             searchLeaderResultsQueryChange.emit('')
           "
         />
-        <div
-          *ngIf="
-            guildForm.get('leader')?.hasError('required') &&
-            guildForm.get('leader')?.touched
-          "
-        >
-          <p appErrorText>Leader name is required.</p>
-        </div>
-        <div *ngIf="guildForm.get('leader')?.pending">
+        <ng-container *ngIf="guildForm.get('leader')?.pending">
           <p style="color: aqua">Checking if leader exists..</p>
-        </div>
-        <div
-          *ngIf="
-            !guildForm.get('leader')?.pending &&
-            !guildForm.get('leader')?.invalid
-          "
-        >
-          <p style="color: green">Leader exists!</p>
-        </div>
-        <div *ngIf="guildForm.get('leader')?.hasError('notFound')">
-          <p appErrorText>Leader not found. Please choose a valid leader.</p>
-        </div>
+        </ng-container>
       </div>
     </div>
 

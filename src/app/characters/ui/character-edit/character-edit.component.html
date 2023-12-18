@@ -24,31 +24,9 @@
         toggleSearchContainer.next(false); searchQueryChange.emit('')
       "
     />
-    <div
-      *ngIf="joinGuildForm.get('guild')?.hasError('alreadyMember')"
-      appErrorText
-    >
-      Already a member of this guild
-    </div>
-    <div *ngIf="joinGuildForm.get('guild')?.hasError('notFound')" appErrorText>
-      Guild not found
-    </div>
-    <div *ngIf="cjgfs.validationStatus$ | async">
+    <ng-container *ngIf="joinGuildForm.get('guild')?.pending">
       <p style="color: aqua">Checking if guild exists..</p>
-    </div>
-    <div
-      *ngIf="
-        (cjgfs.validationStatus$ | async) === false &&
-        !joinGuildForm.get('guild')?.invalid &&
-        joinGuildForm.get('guild')?.value !== (cjgfs.initialName$ | async) &&
-        joinGuildForm.get('guild')?.value !== character?.guild?.name
-      "
-    >
-      <p style="color: green">Guild exists!</p>
-    </div>
-    <div *ngIf="joinGuildForm.get('guild')?.hasError('guildNotFound')">
-      <p appErrorText>Guild does not exist.</p>
-    </div>
+    </ng-container>
   </div>
   <div class="btn-container">
     <button
@@ -61,7 +39,8 @@
       "
       *ngIf="
         joinGuildForm.valid &&
-        joinGuildForm.get('guild')?.value !== character?.guild?.name
+        joinGuildForm.get('guild')?.value !== character?.guild?.name &&
+        joinGuildForm.get('guild')?.value !== ''
       "
       [disabled]="cas.joinLoading$ | async"
     >
