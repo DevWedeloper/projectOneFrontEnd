@@ -3,7 +3,7 @@ import {
   AbstractControl,
   FormBuilder,
   FormGroup,
-  ValidationErrors
+  ValidationErrors,
 } from '@angular/forms';
 import {
   BehaviorSubject,
@@ -12,7 +12,7 @@ import {
   debounceTime,
   map,
   of,
-  switchMap
+  switchMap,
 } from 'rxjs';
 import { CheckUniquenessService } from 'src/app/shared/data-access/check-uniqueness-api.service';
 
@@ -27,10 +27,11 @@ export class CharacterJoinGuildFormService {
   initializeJoinGuildForm(): FormGroup {
     return this.fb.group({
       guild: [
-        null, {
+        null,
+        {
           asyncValidators: [this.validateGuildExisting.bind(this)],
-        }
-      ]
+        },
+      ],
     });
   }
 
@@ -55,7 +56,7 @@ export class CharacterJoinGuildFormService {
             return of(null);
           })
         )
-      ),
+      )
     );
   }
 }
