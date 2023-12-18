@@ -17,7 +17,7 @@
     <select appFocusVisible id="characterType" formControlName="characterType">
       <option value="" disabled selected>Class</option>
       <option
-        *ngFor="let type of cts.getCharacterTypes() | async"
+        *ngFor="let type of cas.characterTypes$ | async"
         [value]="type.typeName"
       >
         {{ type.typeName }}

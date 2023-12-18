@@ -8,7 +8,7 @@ import {
   catchError,
   forkJoin,
   switchMap,
-  tap,
+  tap
 } from 'rxjs';
 import { CharacterApiService } from 'src/app/shared/data-access/character-api.service';
 import { CheckGuildRelationStatusServiceApi } from 'src/app/shared/data-access/check-guild-relation-status.service-api';
@@ -18,6 +18,7 @@ import {
   isMemberOfAGuild,
   isNotMemberOfAGuild,
 } from 'src/app/shared/utils/guild-membership-status.utils';
+import { CharacterTypeService } from './character-type.service';
 import { CharacterService } from './character.service';
 import { isGuildFullApiService } from './is-guild-full-api.service';
 
@@ -31,6 +32,8 @@ export class CharacterActionsService {
     CheckGuildRelationStatusServiceApi
   );
   isGuildFullApiService = inject(isGuildFullApiService);
+  characterTypeService = inject(CharacterTypeService);
+  characterTypes$ = this.characterTypeService.getCharacterTypes();
   characterCreate$ = new Subject<FormGroup>();
   characterUpdate$ = new Subject<{
     characterForm: FormGroup;
