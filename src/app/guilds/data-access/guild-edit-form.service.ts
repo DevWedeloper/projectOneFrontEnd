@@ -47,11 +47,9 @@ export class GuildEditFormService {
   initializeUpdateLeaderForm(guild: string | null): FormGroup {
     return this.fb.group({
       leader: [
-        '',
-        [Validators.required],
-        [
-          (control) => this.checkIfMember(control, guild),
-        ],
+        '', {
+          asyncValidators: (control: AbstractControl) => this.checkIfMember(control, guild),
+        }
       ],
     });
   }
@@ -59,12 +57,10 @@ export class GuildEditFormService {
   initializeAddMemberForm(guild: string | null): FormGroup {
     return this.fb.group({
       member: [
-        '',
-        [Validators.required],
-        [
-          (control) => this.checkIfNotMember(control, guild),
-        ],
-      ],
+        '', {
+          asyncValidators: (control: AbstractControl) => this.checkIfNotMember(control, guild),
+        }
+      ]
     });
   }
 
@@ -128,6 +124,11 @@ export class GuildEditFormService {
     guild: string | null
   ): Observable<ValidationErrors | null> {
     if (!guild) {
+      return of(null);
+    }
+
+    const nameField = control.getRawValue();
+    if (nameField === '') {
       return of(null);
     }
 
