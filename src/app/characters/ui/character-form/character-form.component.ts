@@ -10,8 +10,8 @@ import { DynamicValidatorMessageDirective } from 'src/app/shared/form/dynamic-va
 import { CustomInputComponent } from 'src/app/shared/ui/components/custom-input/custom-input.component';
 import { ErrorTextDirective } from 'src/app/shared/ui/directives/error-text.directive';
 import { FocusVisibleDirective } from 'src/app/shared/ui/directives/focus-visible.directive';
+import { CharacterActionsService } from '../../data-access/character-actions-service';
 import { CharacterFormService } from '../../data-access/character-form.service';
-import { CharacterTypeService } from '../../data-access/character-type.service';
 
 @Component({
   selector: 'app-character-form',
@@ -31,6 +31,6 @@ import { CharacterTypeService } from '../../data-access/character-type.service';
 })
 export class CharacterFormComponent {
   @Input() characterForm!: FormGroup;
-  cts = inject(CharacterTypeService);
+  cas = inject(CharacterActionsService);
   cfs = inject(CharacterFormService);
 }
