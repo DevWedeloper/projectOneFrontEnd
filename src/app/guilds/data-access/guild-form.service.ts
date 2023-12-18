@@ -26,14 +26,17 @@ export class GuildFormService {
     return this.fb.group({
       name: [
         '',
-        [
-          Validators.required,
-          Validators.required,
-          Validators.minLength(6),
-          Validators.maxLength(20),
-          Validators.pattern(/^[a-zA-Z0-9_]+$/),
-        ],
-        [this.validateGuildNameUniqueness.bind(this)],
+        {
+          validators: [
+            Validators.required,
+            Validators.required,
+            Validators.minLength(6),
+            Validators.maxLength(20),
+            Validators.pattern(/^[a-zA-Z0-9_]+$/),
+          ],
+          asyncValidators: [this.validateGuildNameUniqueness.bind(this)],
+          updateOn: 'blur'
+        },
       ],
       leader: [
         '',

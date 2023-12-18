@@ -13,7 +13,7 @@ import {
   debounceTime,
   map,
   of,
-  switchMap
+  switchMap,
 } from 'rxjs';
 import { CheckUniquenessService } from 'src/app/shared/data-access/check-uniqueness-api.service';
 
@@ -29,13 +29,16 @@ export class CharacterFormService {
     return this.fb.group({
       name: [
         '',
-        [
-          Validators.required,
-          Validators.minLength(6),
-          Validators.maxLength(20),
-          Validators.pattern(/^[a-zA-Z0-9_]+$/),
-        ],
-        [this.validateCharacterNameUniqueness.bind(this)],
+        {
+          validators: [
+            Validators.required,
+            Validators.minLength(6),
+            Validators.maxLength(20),
+            Validators.pattern(/^[a-zA-Z0-9_]+$/),
+          ],
+          asyncValidators: [this.validateCharacterNameUniqueness.bind(this)],
+          updateOn: 'blur',
+        },
       ],
       characterType: ['', [Validators.required]],
       health: [
@@ -86,7 +89,7 @@ export class CharacterFormService {
             return of(null);
           })
         )
-      ),
+      )
     );
   }
 }

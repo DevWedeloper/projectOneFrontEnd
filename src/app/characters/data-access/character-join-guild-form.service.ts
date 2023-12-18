@@ -30,6 +30,7 @@ export class CharacterJoinGuildFormService {
         null,
         {
           asyncValidators: [this.validateGuildExisting.bind(this)],
+          updateOn: 'blur',
         },
       ],
     });
