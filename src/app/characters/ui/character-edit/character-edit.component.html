@@ -27,15 +27,6 @@
     <div *ngIf="joinGuildForm.get('guild')?.pending">
       <p style="color: aqua">Checking if guild exists..</p>
     </div>
-    <div
-      *ngIf="
-        !joinGuildForm.get('guild')?.pending &&
-        !joinGuildForm.get('guild')?.invalid &&
-        joinGuildForm.get('guild')?.value !== character?.guild?.name
-      "
-    >
-      <p style="color: green">Guild exists!</p>
-    </div>
   </div>
   <div class="btn-container">
     <button
