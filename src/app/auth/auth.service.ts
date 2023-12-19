@@ -70,6 +70,12 @@ export class AuthService {
     this.router.navigate(['/login']);
   }
 
+  forceLogout(): void {
+    this.clearTokens();
+    this.clearCurrentUser();
+    this.router.navigate(['/login']);
+  }
+
   autoLogout(): void {
     const refreshToken = this.getRefreshToken();
     if (!refreshToken) {
@@ -81,8 +87,8 @@ export class AuthService {
       const currentTime = Math.floor(Date.now() / 1000);
       const timeUntilExpiry = decodedToken.exp - currentTime;
       setTimeout(() => {
-        !confirm('Your session has expired, please login again.');
-        this.logout();
+        confirm('Your session has expired, please login again.');
+        this.forceLogout();
       }, timeUntilExpiry * 1000);
     } catch (error) {
       console.error('Error decoding access token:', error);
