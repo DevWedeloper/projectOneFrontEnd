@@ -1,8 +1,8 @@
 <ng-container *ngIf="updateGuildNameForm.statusChanges | async" />
 
 <h2>Edit Guild</h2>
-<div class="edit-actions-container">
-  <form class="content-container">
+<div class="actions-container">
+  <form>
     <div class="input-container" [formGroup]="updateGuildNameForm">
       <app-custom-input
         [type]="'text'"
@@ -35,7 +35,7 @@
     </div>
   </form>
 
-  <form class="content-container">
+  <form>
     <div class="input-container" [formGroup]="updateGuildLeaderForm">
       <div style="position: relative">
         <app-custom-input
@@ -88,7 +88,7 @@
     </div>
   </form>
 
-  <form class="content-container">
+  <form>
     <div class="input-container" [formGroup]="addMemberForm">
       <div style="position: relative">
         <app-custom-input
