@@ -9,11 +9,18 @@ h2 {
   margin-bottom: 1rem;
 }
 
-.content-container {
+.actions-container {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.actions-container > form {
   position: relative; 
   display: flex;
   justify-content: space-between;
   gap: 0.5rem;
+  flex: 1;
 }
 
 .input-container {
@@ -25,12 +32,6 @@ h2 {
   display: flex;
   gap: 0.5rem;
   align-items: center;
-}
-
-.edit-actions-container {
-  display: flex;
-  gap: 0.5rem;
-  margin-bottom: 0.5rem;
 }
 
 .members-container {
