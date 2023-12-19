@@ -1,4 +1,4 @@
-<ng-container *ngIf="(searchResults$ | async)!.length > 0">
+<div class="container" *ngIf="(searchResults$ | async)!.length > 0">
   <ul>
     <li
       #searchItems
@@ -10,7 +10,4 @@
       {{ result.name }}
     </li>
   </ul>
-</ng-container>
-<ng-container *ngIf="(searchResults$ | async)!.length === 0">
-  <p>No search data...</p>
-</ng-container>
+</div>

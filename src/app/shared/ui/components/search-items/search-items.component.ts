@@ -32,7 +32,6 @@ export class SearchItemsComponent<T extends Character | Guild> {
   @Output() closeComponent = new EventEmitter<void>();
   @ViewChildren('searchItems') searchItems!: QueryList<ElementRef>;
   private currentFocusedIndex = -1;
-  private skipInitialCheck = true;
 
   selectItem(result: Character | Guild) {
     this.selectedItem.emit(result);
@@ -41,10 +40,6 @@ export class SearchItemsComponent<T extends Character | Guild> {
 
   @HostListener('document:click', ['$event'])
   onClick(event: MouseEvent) {
-    if (this.skipInitialCheck) {
-      this.skipInitialCheck = false;
-      return;
-    }
     const clickedInside = this.elementRef.nativeElement.contains(event.target);
     if (!clickedInside) {
       this.closeComponent.emit();
