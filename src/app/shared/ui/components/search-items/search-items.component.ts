@@ -24,7 +24,9 @@ import { Guild } from '../../../interfaces/guild.interface';
   styleUrls: ['./search-items.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SearchItemsComponent<T extends Character | Guild> implements OnDestroy {
+export class SearchItemsComponent<T extends Character | Guild>
+  implements OnDestroy
+{
   elementRef = inject(ElementRef);
   renderer = inject(Renderer2);
   @Input({ required: true }) searchResults: T[] | null = [];
