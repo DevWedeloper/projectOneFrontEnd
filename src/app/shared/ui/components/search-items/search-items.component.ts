@@ -83,6 +83,7 @@ export class SearchItemsComponent<T extends Character | Guild>
     if (this.searchResults) {
       const elementToFocus = this.searchItems.toArray()[index];
       elementToFocus.nativeElement.focus();
+      elementToFocus.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
   }
 
