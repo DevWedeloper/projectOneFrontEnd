@@ -53,7 +53,7 @@
         />
         <app-search-items
           *ngIf="toggleNewLeaderSearchContainer | async"
-          [searchResults$]="searchNewLeaderResults$"
+          [searchResults]="searchNewLeaderResults"
           (selectedItem)="
             updateGuildLeaderForm.get('leader')?.setValue($event.name)
           "
@@ -106,7 +106,7 @@
         />
         <app-search-items
           *ngIf="toggleNewMemberSearchContainer | async"
-          [searchResults$]="searchNewMemberResults$"
+          [searchResults]="searchNewMemberResults"
           (selectedItem)="addMemberForm.get('member')?.setValue($event.name)"
           (closeComponent)="
             toggleNewMemberSearchContainer.next(false);

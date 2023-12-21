@@ -1,7 +1,7 @@
 <div class="content-container">
   <app-guild-create
     *ngIf="authService.isCurrentUserAdmin$ | async"
-    [searchLeaderResults$]="searchLeaderResults$"
+    [searchLeaderResults]="searchLeaderResults$ | async"
     (createGuild)="gas.guildCreate$.next($event)"
     (searchLeaderResultsQueryChange)="
       searchLeaderResultsQuery$.next($event)
@@ -29,8 +29,8 @@
 <ng-template #modalTemplate>
   <app-guild-edit
     [guild]="gas.guildToUpdate$ | async"
-    [searchNewLeaderResults$]="searchNewLeaderResults$"
-    [searchNewMemberResults$]="searchNewMemberResults$"
+    [searchNewLeaderResults]="searchNewLeaderResults$ | async"
+    [searchNewMemberResults]="searchNewMemberResults$ | async"
     (searchNewLeaderResultsQueryChange)="
       searchNewLeaderResultsQuery$.next($event)
     "

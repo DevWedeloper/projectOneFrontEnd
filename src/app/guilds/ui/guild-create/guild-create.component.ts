@@ -46,9 +46,7 @@ export class GuildCreateComponent {
   ls = inject(GuildLoadingService);
   gas = inject(GuildActionsService);
   characterApiService = inject(CharacterApiService);
-  @Input({ required: true }) searchLeaderResults$ = new BehaviorSubject<
-    Character[]
-  >([]);
+  @Input({ required: true }) searchLeaderResults!: Character[] | null;
   @Output() createGuild = new EventEmitter<{
     guildForm: FormGroup;
   }>();

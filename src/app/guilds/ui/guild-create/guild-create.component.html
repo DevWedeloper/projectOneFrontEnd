@@ -42,7 +42,7 @@
         />
         <app-search-items
           *ngIf="toggleSearchContainer | async"
-          [searchResults$]="searchLeaderResults$"
+          [searchResults]="searchLeaderResults"
           (selectedItem)="guildForm.get('leader')?.setValue($event.name)"
           (closeComponent)="
             toggleSearchContainer.next(false);

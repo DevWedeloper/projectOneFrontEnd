@@ -1,8 +1,8 @@
-<div class="container" *ngIf="(searchResults$ | async)!.length > 0">
+<div class="container" *ngIf="searchResults && searchResults.length > 0">
   <ul>
     <li
       #searchItems
-      *ngFor="let result of searchResults$ | async; trackBy: trackBy"
+      *ngFor="let result of searchResults; trackBy: trackBy"
       (click)="selectItem(result)"
       (keydown.enter)="selectItem(result)"
       [tabindex]="-1"

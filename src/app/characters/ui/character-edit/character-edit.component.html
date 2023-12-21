@@ -18,7 +18,7 @@
     />
     <app-search-items
       *ngIf="toggleSearchContainer | async"
-      [searchResults$]="searchResults$"
+      [searchResults]="searchResults"
       (selectedItem)="joinGuildForm.get('guild')?.setValue($event.name)"
       (closeComponent)="
         toggleSearchContainer.next(false); searchQueryChange.emit('')
