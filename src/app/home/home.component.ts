@@ -25,9 +25,9 @@ import { SidebarComponent } from './ui/sidebar/sidebar.component';
   ],
 })
 export class HomeComponent {
-  ts = inject(ThemeService);
-  hs = inject(HomeService);
-  authService = inject(AuthService);
+  private ts = inject(ThemeService);
+  protected hs = inject(HomeService);
+  private authService = inject(AuthService);
 
   constructor() {
     this.ts.checkPreferredTheme();
