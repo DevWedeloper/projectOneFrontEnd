@@ -55,7 +55,10 @@ export class SearchItemsComponent<T extends Character | Guild> {
 
   @HostListener('document:keydown.ArrowDown', ['$event'])
   onArrowDown() {
-    if (this.searchResults && this.currentFocusedIndex < this.searchResults.length - 1) {
+    if (
+      this.searchResults &&
+      this.currentFocusedIndex < this.searchResults.length - 1
+    ) {
       this.currentFocusedIndex++;
       this.focusItem(this.currentFocusedIndex);
     }
