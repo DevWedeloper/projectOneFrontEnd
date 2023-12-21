@@ -25,7 +25,6 @@ export class AuthService {
   router = inject(Router);
   url = environment.authUrl;
   private accessTokenKey = 'access_token';
-  private refreshTokenKey = 'refresh_token';
   private currentUser = 'current_user';
   private userRole$ = new BehaviorSubject<string>('');
   login$ = new Subject<User>();
@@ -45,7 +44,6 @@ export class AuthService {
           return this.http.post<AuthResponse>(`${this.url}/login`, user).pipe(
             tap((response) => {
               this.setAccessToken(response.accessToken);
-              this.setRefreshToken(response.refreshToken);
               this.setCurrentUser(response.userId);
               this.router.navigate(['/']);
             }),
@@ -65,30 +63,29 @@ export class AuthService {
     if (!confirm('Are you sure you want to logout?')) {
       return;
     }
-    this.clearTokens();
+    this.clearAccessToken();
     this.clearCurrentUser();
     this.router.navigate(['/login']);
   }
 
   forceLogout(): void {
-    this.clearTokens();
+    this.clearAccessToken();
     this.clearCurrentUser();
     this.router.navigate(['/login']);
   }
 
   autoLogout(): void {
-    const refreshToken = this.getRefreshToken();
-    if (!refreshToken) {
+    const accessToken = this.getAccessToken();
+    if (!accessToken) {
       throw new Error('Can\'t get refresh token');
     }
 
     try {
-      const decodedToken: DecodedToken = jwt_decode(refreshToken);
+      const decodedToken: DecodedToken = jwt_decode(accessToken);
       const currentTime = Math.floor(Date.now() / 1000);
       const timeUntilExpiry = decodedToken.exp - currentTime;
       setTimeout(() => {
-        confirm('Your session has expired, please login again.');
-        this.forceLogout();
+        this.refreshToken();
       }, timeUntilExpiry * 1000);
     } catch (error) {
       console.error('Error decoding access token:', error);
@@ -112,18 +109,19 @@ export class AuthService {
 
   refreshToken(): Observable<AuthResponse> {
     const userId = this.getCurrentUser();
-    const refreshToken = this.getRefreshToken();
-    if (!refreshToken) {
+    const accessToken = this.getAccessToken();
+    if (!accessToken) {
       return throwError(() => new Error('Refresh token is missing'));
     }
 
     return this.http
-      .post<AuthResponse>(`${this.url}/refresh`, { userId, refreshToken })
+      .post<AuthResponse>(`${this.url}/refresh`, { userId, accessToken })
       .pipe(
         tap((response) => {
           this.setAccessToken(response.accessToken);
         }),
         catchError(() => {
+          confirm('Your session has expired, please login again.');
           this.forceLogout();
           return throwError(
             () => new Error('Token refresh failed, logging out.')
@@ -134,10 +132,6 @@ export class AuthService {
 
   private setAccessToken(accessToken: string): void {
     localStorage.setItem(this.accessTokenKey, accessToken);
-  }
-
-  private setRefreshToken(refreshToken: string): void {
-    localStorage.setItem(this.refreshTokenKey, refreshToken);
   }
 
   private setCurrentUser(userId: string): void {
@@ -157,17 +151,12 @@ export class AuthService {
     return localStorage.getItem(this.accessTokenKey);
   }
 
-  getRefreshToken(): string | null {
-    return localStorage.getItem(this.refreshTokenKey);
-  }
-
   getCurrentUser(): string | null {
     return localStorage.getItem(this.currentUser);
   }
 
-  private clearTokens(): void {
+  private clearAccessToken(): void {
     localStorage.removeItem(this.accessTokenKey);
-    localStorage.removeItem(this.refreshTokenKey);
   }
 
   private clearCurrentUser(): void {
