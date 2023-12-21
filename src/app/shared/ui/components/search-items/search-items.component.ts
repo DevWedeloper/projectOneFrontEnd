@@ -57,6 +57,8 @@ export class SearchItemsComponent<T extends Character | Guild>
     if (this.currentFocusedIndex > 0) {
       this.currentFocusedIndex--;
       this.focusItem(this.currentFocusedIndex);
+    } else if (this.currentFocusedIndex === 0) {
+      this.focusItem(this.currentFocusedIndex);
     }
   }
 
@@ -68,6 +70,8 @@ export class SearchItemsComponent<T extends Character | Guild>
     ) {
       this.currentFocusedIndex++;
       this.focusItem(this.currentFocusedIndex);
+    } else if (this.searchResults && this.currentFocusedIndex === this.searchResults?.length - 1) {
+        this.focusItem(this.currentFocusedIndex);
     }
   }
 
@@ -82,7 +86,9 @@ export class SearchItemsComponent<T extends Character | Guild>
   focusItem(index: number) {
     if (this.searchResults) {
       const elementToFocus = this.searchItems.toArray()[index];
-      elementToFocus.nativeElement.focus();
+      setTimeout(() => {
+        elementToFocus.nativeElement.focus();
+      });
       elementToFocus.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
   }
