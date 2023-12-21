@@ -6,6 +6,7 @@ import {
   EventEmitter,
   HostListener,
   Input,
+  OnDestroy,
   Output,
   QueryList,
   Renderer2,
@@ -23,7 +24,7 @@ import { Guild } from '../../../interfaces/guild.interface';
   styleUrls: ['./search-items.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SearchItemsComponent<T extends Character | Guild> {
+export class SearchItemsComponent<T extends Character | Guild> implements OnDestroy {
   elementRef = inject(ElementRef);
   renderer = inject(Renderer2);
   @Input({ required: true }) searchResults: T[] | null = [];
@@ -31,6 +32,10 @@ export class SearchItemsComponent<T extends Character | Guild> {
   @Output() closeComponent = new EventEmitter<void>();
   @ViewChildren('searchItems') searchItems!: QueryList<ElementRef>;
   private currentFocusedIndex = -1;
+
+  ngOnDestroy(): void {
+    this.closeComponent.emit();
+  }
 
   selectItem(result: Character | Guild) {
     this.selectedItem.emit(result);
