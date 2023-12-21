@@ -74,7 +74,6 @@ export class SearchItemsComponent<T extends Character | Guild> {
 
   focusItem(index: number) {
     if (this.searchResults) {
-      this.currentFocusedIndex = index;
       const elementToFocus = this.searchItems.toArray()[index];
       elementToFocus.nativeElement.focus();
       const result = this.searchResults[index];
