@@ -30,3 +30,7 @@ input {
   padding: 0 35px 0 5px;
   color: var(--text-color);
 }
+
+input[type="number"]::-webkit-inner-spin-button {
+  display: none;
+}
