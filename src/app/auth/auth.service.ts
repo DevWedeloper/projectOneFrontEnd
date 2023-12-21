@@ -115,7 +115,7 @@ export class AuthService {
     }
 
     return this.http
-      .post<AuthResponse>(`${this.url}/refresh`, { userId, accessToken })
+      .post<AuthResponse>(`${this.url}/refresh`, { userId })
       .pipe(
         tap((response) => {
           this.setAccessToken(response.accessToken);
