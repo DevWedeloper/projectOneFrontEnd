@@ -130,14 +130,6 @@ export class AuthService {
       );
   }
 
-  private setAccessToken(accessToken: string): void {
-    localStorage.setItem(this.accessTokenKey, accessToken);
-  }
-
-  private setCurrentUser(userId: string): void {
-    localStorage.setItem(this.currentUser, userId);
-  }
-
   setUserRole(): void {
     const accessToken = this.getAccessToken();
     if (!accessToken) {
@@ -153,6 +145,14 @@ export class AuthService {
 
   getCurrentUser(): string | null {
     return localStorage.getItem(this.currentUser);
+  }
+  
+  private setAccessToken(accessToken: string): void {
+    localStorage.setItem(this.accessTokenKey, accessToken);
+  }
+
+  private setCurrentUser(userId: string): void {
+    localStorage.setItem(this.currentUser, userId);
   }
 
   private clearAccessToken(): void {
