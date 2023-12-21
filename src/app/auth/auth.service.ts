@@ -124,9 +124,7 @@ export class AuthService {
           this.setAccessToken(response.accessToken);
         }),
         catchError(() => {
-          this.clearTokens();
-          this.clearCurrentUser();
-          this.router.navigate(['/login']);
+          this.forceLogout();
           return throwError(
             () => new Error('Token refresh failed, logging out.')
           );
