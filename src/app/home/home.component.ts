@@ -32,19 +32,8 @@ export class HomeComponent {
   authService = inject(AuthService);
 
   constructor() {
-    this.checkPreferredTheme();
+    this.ts.checkPreferredTheme();
     this.authService.autoLogout();
     this.authService.setUserRole();
-  }
-
-  checkPreferredTheme(): void {
-    const preferredTheme = localStorage.getItem('preferredTheme');
-    if (preferredTheme === 'dark') {
-      this.ts.darkMode$.next(true);
-      this.renderer.addClass(document.body, 'dark-theme');
-    } else {
-      this.ts.darkMode$.next(false);
-      this.renderer.removeClass(document.body, 'dark-theme');
-    }
   }
 }
