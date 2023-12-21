@@ -76,8 +76,6 @@ export class SearchItemsComponent<T extends Character | Guild> {
     if (this.searchResults) {
       const elementToFocus = this.searchItems.toArray()[index];
       elementToFocus.nativeElement.focus();
-      const result = this.searchResults[index];
-      this.selectedItem.emit(result);
     }
   }
 
