@@ -60,7 +60,14 @@ export class AuthService {
       .subscribe(() => this.loginLoading$.next(false));
 
     this.logout$
-      .pipe(switchMap((userId) => this.authApiService.logout(userId)))
+      .pipe(
+        switchMap((userId) => {
+          this.clearAccessToken();
+          this.clearCurrentUser();
+          this.router.navigate(['/login']);
+          return this.authApiService.logout(userId);
+        })
+      )
       .subscribe();
 
     this.autoLogout$
@@ -99,9 +106,6 @@ export class AuthService {
       throw new Error('UserId is null');
     }
     this.logout$.next(userId);
-    this.clearAccessToken();
-    this.clearCurrentUser();
-    this.router.navigate(['/login']);
   }
 
   forceLogout(): void {
@@ -110,9 +114,6 @@ export class AuthService {
       throw new Error('UserId is null');
     }
     this.logout$.next(userId);
-    this.clearAccessToken();
-    this.clearCurrentUser();
-    this.router.navigate(['/login']);
   }
 
   isAuthenticated(): boolean {
