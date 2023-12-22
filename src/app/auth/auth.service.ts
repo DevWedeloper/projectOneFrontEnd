@@ -8,9 +8,9 @@ import {
   EMPTY,
   Observable,
   Subject,
-  interval,
   of,
   throwError,
+  timer
 } from 'rxjs';
 import { catchError, switchMap, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
@@ -71,7 +71,7 @@ export class AuthService {
           const decodedToken: DecodedToken = jwt_decode(accessToken);
           const currentTime = Math.floor(Date.now() / 1000);
           const timeUntilExpiry = decodedToken.exp - currentTime;
-          return interval(timeUntilExpiry * 1000).pipe(
+          return timer(timeUntilExpiry * 1000).pipe(
             switchMap(() =>
               this.refreshToken().pipe(
                 tap(() => this.autoLogout$.next()),
