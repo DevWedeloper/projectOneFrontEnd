@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
@@ -13,7 +12,7 @@ import {
   timer
 } from 'rxjs';
 import { catchError, switchMap, tap } from 'rxjs/operators';
-import { environment } from 'src/environments/environment';
+import { AuthApiService } from './auth-api.service';
 import { AuthResponse } from './interface/auth-response.interface';
 import { DecodedToken } from './interface/decoded-token.interface';
 import { User } from './interface/user.interface';
@@ -22,9 +21,8 @@ import { User } from './interface/user.interface';
   providedIn: 'root',
 })
 export class AuthService {
-  http = inject(HttpClient);
   router = inject(Router);
-  url = environment.authUrl;
+  private authApiService = inject(AuthApiService);
   private accessTokenKey = 'access_token';
   private currentUser = 'current_user';
   private userRole$ = new BehaviorSubject<string>('');
@@ -43,7 +41,7 @@ export class AuthService {
       .pipe(
         tap(() => this.loginLoading$.next(true)),
         switchMap((user) => {
-          return this.http.post<AuthResponse>(`${this.url}/login`, user).pipe(
+          return this.authApiService.login(user).pipe(
             tap((response) => {
               this.setAccessToken(response.accessToken);
               this.setCurrentUser(response.userId);
@@ -123,8 +121,11 @@ export class AuthService {
     if (!accessToken) {
       return throwError(() => new Error('Refresh token is missing'));
     }
+    if (!userId) {
+      return throwError(() => new Error('UserId is null'));
+    }
 
-    return this.http.post<AuthResponse>(`${this.url}/refresh`, { userId }).pipe(
+    return this.authApiService.refreshToken(userId).pipe(
       tap((response) => {
         this.setAccessToken(response.accessToken);
       }),
