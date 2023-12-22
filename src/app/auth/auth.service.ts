@@ -8,6 +8,7 @@ import {
   EMPTY,
   Observable,
   Subject,
+  interval,
   of,
   throwError,
 } from 'rxjs';
@@ -35,6 +36,7 @@ export class AuthService {
     takeUntilDestroyed()
   );
   loginLoading$ = new BehaviorSubject<boolean>(false);
+  autoLogout$ = new Subject<void>();
 
   constructor() {
     this.login$
@@ -57,6 +59,32 @@ export class AuthService {
         takeUntilDestroyed()
       )
       .subscribe(() => this.loginLoading$.next(false));
+
+    this.autoLogout$
+      .pipe(
+        switchMap(() => {
+          const accessToken = this.getAccessToken();
+          if (!accessToken) {
+            throw new Error('Can\'t get access token');
+          }
+
+          const decodedToken: DecodedToken = jwt_decode(accessToken);
+          const currentTime = Math.floor(Date.now() / 1000);
+          const timeUntilExpiry = decodedToken.exp - currentTime;
+          return interval(timeUntilExpiry * 1000).pipe(
+            switchMap(() =>
+              this.refreshToken().pipe(
+                tap(() => this.autoLogout$.next()),
+                catchError(() => {
+                  return EMPTY; 
+                })
+              )
+            )
+          );
+        }),
+        takeUntilDestroyed()
+      )
+      .subscribe();
   }
 
   logout(): void {
@@ -72,24 +100,6 @@ export class AuthService {
     this.clearAccessToken();
     this.clearCurrentUser();
     this.router.navigate(['/login']);
-  }
-
-  autoLogout(): void {
-    const accessToken = this.getAccessToken();
-    if (!accessToken) {
-      throw new Error('Can\'t get refresh token');
-    }
-
-    try {
-      const decodedToken: DecodedToken = jwt_decode(accessToken);
-      const currentTime = Math.floor(Date.now() / 1000);
-      const timeUntilExpiry = decodedToken.exp - currentTime;
-      setTimeout(() => {
-        this.refreshToken();
-      }, timeUntilExpiry * 1000);
-    } catch (error) {
-      console.error('Error decoding access token:', error);
-    }
   }
 
   isAuthenticated(): boolean {
@@ -114,20 +124,22 @@ export class AuthService {
       return throwError(() => new Error('Refresh token is missing'));
     }
 
-    return this.http
-      .post<AuthResponse>(`${this.url}/refresh`, { userId })
-      .pipe(
-        tap((response) => {
-          this.setAccessToken(response.accessToken);
-        }),
-        catchError(() => {
+    return this.http.post<AuthResponse>(`${this.url}/refresh`, { userId }).pipe(
+      tap((response) => {
+        this.setAccessToken(response.accessToken);
+      }),
+      catchError((error) => {
+        if (error.error.error === 'Token expired') {
           confirm('Your session has expired, please login again.');
           this.forceLogout();
-          return throwError(
-            () => new Error('Token refresh failed, logging out.')
-          );
-        })
-      );
+          return EMPTY;
+        }
+        this.forceLogout();
+        return throwError(
+          () => new Error('Token refresh failed, logging out.')
+        );
+      })
+    );
   }
 
   setUserRole(): void {
@@ -146,7 +158,7 @@ export class AuthService {
   getCurrentUser(): string | null {
     return localStorage.getItem(this.currentUser);
   }
-  
+
   private setAccessToken(accessToken: string): void {
     localStorage.setItem(this.accessTokenKey, accessToken);
   }

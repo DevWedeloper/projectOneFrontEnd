@@ -31,7 +31,7 @@ export class HomeComponent {
 
   constructor() {
     this.ts.checkPreferredTheme();
-    this.authService.autoLogout();
+    this.authService.autoLogout$.next();
     this.authService.setUserRole();
   }
 }
