@@ -5,14 +5,14 @@ import {
   HttpInterceptor,
   HttpRequest,
 } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError, switchMap } from 'rxjs/operators';
 import { AuthService } from './auth.service';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-  constructor(private authService: AuthService) {}
+  private authService = inject(AuthService);
 
   intercept<T>(
     request: HttpRequest<T>,
@@ -23,7 +23,7 @@ export class AuthInterceptor implements HttpInterceptor {
     }
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
-        if (error.status === 401 && this.authService.getRefreshToken()) {
+        if (error.status === 401 && this.authService.isAuthenticated()) {
           return this.authService.refreshToken().pipe(
             switchMap(() => {
               request = this.addAuthToken(

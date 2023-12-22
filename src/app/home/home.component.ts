@@ -2,8 +2,7 @@ import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
-  Renderer2,
-  inject,
+  inject
 } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { AuthService } from '../auth/auth.service';
@@ -26,25 +25,13 @@ import { SidebarComponent } from './ui/sidebar/sidebar.component';
   ],
 })
 export class HomeComponent {
-  ts = inject(ThemeService);
-  hs = inject(HomeService);
-  renderer = inject(Renderer2);
-  authService = inject(AuthService);
+  private ts = inject(ThemeService);
+  protected hs = inject(HomeService);
+  private authService = inject(AuthService);
 
   constructor() {
-    this.checkPreferredTheme();
-    this.authService.autoLogout();
+    this.ts.checkPreferredTheme();
+    this.authService.autoLogout$.next();
     this.authService.setUserRole();
-  }
-
-  checkPreferredTheme(): void {
-    const preferredTheme = localStorage.getItem('preferredTheme');
-    if (preferredTheme === 'dark') {
-      this.ts.darkMode$.next(true);
-      this.renderer.addClass(document.body, 'dark-theme');
-    } else {
-      this.ts.darkMode$.next(false);
-      this.renderer.removeClass(document.body, 'dark-theme');
-    }
   }
 }

@@ -60,7 +60,7 @@ export class CharacterEditComponent implements OnInit, OnDestroy {
   cjgfs = inject(CharacterJoinGuildFormService);
   fb = inject(FormBuilder);
   @Input({ required: true }) character: Character | null = null;
-  @Input({ required: true }) searchResults$ = new BehaviorSubject<Guild[]>([]);
+  @Input({ required: true }) searchResults!: Guild[] | null;
   @Output() searchQueryChange = new EventEmitter<string>();
   @Output() updateCharacter = new EventEmitter<{
     characterForm: FormGroup;

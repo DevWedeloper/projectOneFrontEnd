@@ -25,7 +25,7 @@
 <ng-template #modalTemplate>
   <app-character-edit
     [character]="cas.characterToUpdate$ | async"
-    [searchResults$]="searchResults$"
+    [searchResults]="searchResults$ | async"
     (searchQueryChange)="guildSearchQuery$.next($event)"
     (joinGuild)="cas.characterJoinGuild$.next($event)"
     (leaveGuild)="cas.characterLeaveGuild$.next($event)"

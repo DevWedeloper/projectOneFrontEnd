@@ -56,12 +56,8 @@ export class GuildEditComponent implements OnInit, OnDestroy {
   fb = inject(FormBuilder);
   destroyRef = inject(DestroyRef);
   @Input({ required: true }) guild!: Guild | null;
-  @Input({ required: true }) searchNewLeaderResults$ = new BehaviorSubject<
-    Character[]
-  >([]);
-  @Input({ required: true }) searchNewMemberResults$ = new BehaviorSubject<
-    Character[]
-  >([]);
+  @Input({ required: true }) searchNewLeaderResults!: Character[] | null;
+  @Input({ required: true }) searchNewMemberResults!: Character[] | null;
   @Output() searchNewLeaderResultsQueryChange = new EventEmitter<string>();
   @Output() searchNewMemberResultsQueryChange = new EventEmitter<string>();
   @Output() updateGuildName = new EventEmitter<{

@@ -6,13 +6,13 @@ import {
   EventEmitter,
   HostListener,
   Input,
+  OnDestroy,
   Output,
   QueryList,
   Renderer2,
   ViewChildren,
   inject,
 } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
 import { Character } from '../../../interfaces/character.interface';
 import { Guild } from '../../../interfaces/guild.interface';
 
@@ -24,14 +24,20 @@ import { Guild } from '../../../interfaces/guild.interface';
   styleUrls: ['./search-items.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SearchItemsComponent<T extends Character | Guild> {
+export class SearchItemsComponent<T extends Character | Guild>
+  implements OnDestroy
+{
   elementRef = inject(ElementRef);
   renderer = inject(Renderer2);
-  @Input({ required: true }) searchResults$ = new BehaviorSubject<T[]>([]);
+  @Input({ required: true }) searchResults: T[] | null = [];
   @Output() selectedItem = new EventEmitter<Character | Guild>();
   @Output() closeComponent = new EventEmitter<void>();
   @ViewChildren('searchItems') searchItems!: QueryList<ElementRef>;
   private currentFocusedIndex = -1;
+
+  ngOnDestroy(): void {
+    this.closeComponent.emit();
+  }
 
   selectItem(result: Character | Guild) {
     this.selectedItem.emit(result);
@@ -51,13 +57,23 @@ export class SearchItemsComponent<T extends Character | Guild> {
     if (this.currentFocusedIndex > 0) {
       this.currentFocusedIndex--;
       this.focusItem(this.currentFocusedIndex);
+    } else if (this.currentFocusedIndex === 0) {
+      this.focusItem(this.currentFocusedIndex);
     }
   }
 
   @HostListener('document:keydown.ArrowDown', ['$event'])
   onArrowDown() {
-    if (this.currentFocusedIndex < this.searchResults$.value.length - 1) {
+    if (
+      this.searchResults &&
+      this.currentFocusedIndex < this.searchResults.length - 1
+    ) {
       this.currentFocusedIndex++;
+      this.focusItem(this.currentFocusedIndex);
+    } else if (
+      this.searchResults &&
+      this.currentFocusedIndex === this.searchResults?.length - 1
+    ) {
       this.focusItem(this.currentFocusedIndex);
     }
   }
@@ -71,11 +87,16 @@ export class SearchItemsComponent<T extends Character | Guild> {
   }
 
   focusItem(index: number) {
-    this.currentFocusedIndex = index;
-    const elementToFocus = this.searchItems.toArray()[index];
-    elementToFocus.nativeElement.focus();
-    const result = this.searchResults$.value[index];
-    this.selectedItem.emit(result);
+    if (this.searchResults) {
+      const elementToFocus = this.searchItems.toArray()[index];
+      setTimeout(() => {
+        elementToFocus.nativeElement.focus();
+      });
+      elementToFocus.nativeElement.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+      });
+    }
   }
 
   trackBy(index: number): number {
