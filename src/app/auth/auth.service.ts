@@ -9,7 +9,7 @@ import {
   Subject,
   of,
   throwError,
-  timer
+  timer,
 } from 'rxjs';
 import { catchError, switchMap, tap } from 'rxjs/operators';
 import { AuthApiService } from './auth-api.service';
@@ -27,6 +27,7 @@ export class AuthService {
   private currentUser = 'current_user';
   private userRole$ = new BehaviorSubject<string>('');
   login$ = new Subject<User>();
+  private logout$ = new Subject<string>();
   isCurrentUserAdmin$ = this.userRole$.pipe(
     switchMap((role) => {
       return of(role === 'admin');
@@ -58,6 +59,10 @@ export class AuthService {
       )
       .subscribe(() => this.loginLoading$.next(false));
 
+    this.logout$
+      .pipe(switchMap((userId) => this.authApiService.logout(userId)))
+      .subscribe();
+
     this.autoLogout$
       .pipe(
         switchMap(() => {
@@ -74,7 +79,7 @@ export class AuthService {
               this.refreshToken().pipe(
                 tap(() => this.autoLogout$.next()),
                 catchError(() => {
-                  return EMPTY; 
+                  return EMPTY;
                 })
               )
             )
@@ -89,12 +94,22 @@ export class AuthService {
     if (!confirm('Are you sure you want to logout?')) {
       return;
     }
+    const userId = this.getCurrentUser();
+    if (!userId) {
+      throw new Error('UserId is null');
+    }
+    this.logout$.next(userId);
     this.clearAccessToken();
     this.clearCurrentUser();
     this.router.navigate(['/login']);
   }
 
   forceLogout(): void {
+    const userId = this.getCurrentUser();
+    if (!userId) {
+      throw new Error('UserId is null');
+    }
+    this.logout$.next(userId);
     this.clearAccessToken();
     this.clearCurrentUser();
     this.router.navigate(['/login']);
