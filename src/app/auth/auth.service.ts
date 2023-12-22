@@ -21,7 +21,7 @@ import { User } from './interface/user.interface';
   providedIn: 'root',
 })
 export class AuthService {
-  router = inject(Router);
+  private router = inject(Router);
   private authApiService = inject(AuthApiService);
   private accessTokenKey = 'access_token';
   private currentUser = 'current_user';
