@@ -7,13 +7,9 @@ import {
   OnDestroy,
   OnInit,
   Output,
-  inject
+  inject,
 } from '@angular/core';
-import {
-  FormGroup,
-  FormsModule,
-  ReactiveFormsModule
-} from '@angular/forms';
+import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 import { DynamicValidatorMessageDirective } from 'src/app/shared/form/dynamic-validator-message.directive';
 import { Character } from 'src/app/shared/interfaces/character.interface';
@@ -45,7 +41,7 @@ import { GuildEditFormService } from '../../data-access/guild-edit-form.service'
     GreenButtonDirective,
     RedButtonDirective,
     SpinnerComponent,
-    DynamicValidatorMessageDirective
+    DynamicValidatorMessageDirective,
   ],
 })
 export class GuildEditComponent implements OnInit, OnDestroy {
@@ -84,8 +80,12 @@ export class GuildEditComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.addMemberForm = this.gefs.initializeAddMemberForm(this.guild?._id || null);
-    this.updateGuildLeaderForm = this.gefs.initializeUpdateLeaderForm(this.guild?._id || null);
+    this.addMemberForm = this.gefs.initializeAddMemberForm(
+      this.guild?._id || null
+    );
+    this.updateGuildLeaderForm = this.gefs.initializeUpdateLeaderForm(
+      this.guild?._id || null
+    );
     this.updateGuildNameForm.patchValue({
       name: this.guild?.name,
     });
@@ -93,7 +93,9 @@ export class GuildEditComponent implements OnInit, OnDestroy {
       leader: this.guild?.leader?.name,
     });
     this.gefs.initialName$.next(this.updateGuildNameForm.get('name')?.value);
-    this.gefs.initialLeader$.next(this.updateGuildLeaderForm.get('leader')?.value);
+    this.gefs.initialLeader$.next(
+      this.updateGuildLeaderForm.get('leader')?.value
+    );
   }
 
   ngOnDestroy(): void {
