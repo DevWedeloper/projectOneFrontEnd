@@ -15,7 +15,6 @@ import { SettingsDropdownComponent } from '../settings-dropdown/settings-dropdow
 export class NavbarComponent {
   protected hs = inject(HomeService);
   protected ts = inject(ThemeService);
-
   protected isMobile = window.innerWidth < 768;
 
   @HostListener('window:resize', ['$event'])
