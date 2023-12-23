@@ -9,8 +9,8 @@
     <span>{{ label }}</span>
   </div>
   <div *ngIf="showContent | async" [@slide]>
-    <ng-content/>
+    <ng-content />
   </div>
 </div>
 
-<app-divider-dropdown-skeleton *ngIf="loading"/>
+<app-divider-dropdown-skeleton *ngIf="loading" />
