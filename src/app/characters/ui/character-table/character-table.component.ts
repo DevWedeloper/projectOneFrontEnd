@@ -58,7 +58,7 @@ export class CharacterTableComponent implements AfterViewInit {
   @Output() changePage = new EventEmitter<number>();
   @Output() editCharacter = new EventEmitter<Character>();
   @Output() deleteCharacter = new EventEmitter<Character>();
-  @ViewChild('perPage', { static: false }) pageSizeElement?: ElementRef;
+  @ViewChild('perPage', { static: false }) private pageSizeElement?: ElementRef;
 
   ngAfterViewInit(): void {
     this.cs.pageSize$
