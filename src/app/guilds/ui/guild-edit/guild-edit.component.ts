@@ -69,11 +69,11 @@ export class GuildEditComponent implements OnInit, OnDestroy {
     oldMember: Character;
   }>();
   @Output() closeEdit = new EventEmitter<void>();
-  updateGuildNameForm!: FormGroup;
-  updateGuildLeaderForm!: FormGroup;
-  addMemberForm!: FormGroup;
-  toggleNewLeaderSearchContainer = new BehaviorSubject<boolean>(false);
-  toggleNewMemberSearchContainer = new BehaviorSubject<boolean>(false);
+  protected updateGuildNameForm!: FormGroup;
+  protected updateGuildLeaderForm!: FormGroup;
+  protected addMemberForm!: FormGroup;
+  protected toggleNewLeaderSearchContainer = new BehaviorSubject<boolean>(false);
+  protected toggleNewMemberSearchContainer = new BehaviorSubject<boolean>(false);
 
   constructor() {
     this.updateGuildNameForm = this.gefs.initializeUpdateNameForm();
