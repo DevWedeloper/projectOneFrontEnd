@@ -15,6 +15,8 @@ export const ERROR_MESSAGES: { [key: string]: (args?: any) => string } = {
   notFound: () => 'Not found',
   alreadyMember: () => 'Already a member or not found',
   notMember: () => 'Not a member or not found',
+  invalidUsername: () => 'Invalid username',
+  invalidPassword: () => 'Invalid password',
 };
 
 export const VALIDATION_ERROR_MESSAGES = new InjectionToken(

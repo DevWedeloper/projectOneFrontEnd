@@ -1,5 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import jwt_decode from 'jwt-decode';
 import {
@@ -15,7 +16,6 @@ import { catchError, switchMap, tap } from 'rxjs/operators';
 import { AuthApiService } from './auth-api.service';
 import { AuthResponse } from './interface/auth-response.interface';
 import { DecodedToken } from './interface/decoded-token.interface';
-import { User } from './interface/user.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -26,7 +26,7 @@ export class AuthService {
   private accessTokenKey = 'access_token';
   private currentUser = 'current_user';
   private userRole$ = new BehaviorSubject<string>('');
-  login$ = new Subject<User>();
+  login$ = new Subject<FormGroup>();
   private logout$ = new Subject<string>();
   isCurrentUserAdmin$ = this.userRole$.pipe(
     switchMap((role) => {
@@ -41,14 +41,20 @@ export class AuthService {
     this.login$
       .pipe(
         tap(() => this.loginLoading$.next(true)),
-        switchMap((user) => {
-          return this.authApiService.login(user).pipe(
+        switchMap((loginForm) => {
+          return this.authApiService.login(loginForm.value).pipe(
             tap((response) => {
               this.setAccessToken(response.accessToken);
               this.setCurrentUser(response.userId);
               this.router.navigate(['/']);
             }),
-            catchError(() => {
+            catchError((error) => {
+              if (error.error.error === 'Invalid username') {
+                loginForm.get('username')?.setErrors({ invalidUsername: true });
+              }
+              if (error.error.error === 'Invalid password') {
+                loginForm.get('password')?.setErrors({ invalidPassword: true });
+              }
               this.router.navigate(['/login']);
               this.loginLoading$.next(false);
               return EMPTY;
