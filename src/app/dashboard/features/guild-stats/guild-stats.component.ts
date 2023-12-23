@@ -20,6 +20,6 @@ import { HeadingComponent } from '../../ui/heading/heading.component';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GuildStatsComponent {
-  gss = inject(GuildStatsService);
-  ls = inject(DashboardLoadingService);
+  protected gss = inject(GuildStatsService);
+  protected ls = inject(DashboardLoadingService);
 }
