@@ -11,7 +11,7 @@ import { CharacterDistributionByType } from '../interfaces/character-distributio
   providedIn: 'root'
 })
 export class CharacterStatsApiService {
-  baseUrl = environment.baseUrl;
+  private baseUrl = environment.baseUrl;
 
   constructor(private http: HttpClient) { }
 
