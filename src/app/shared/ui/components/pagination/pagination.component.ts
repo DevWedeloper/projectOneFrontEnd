@@ -129,40 +129,6 @@ export class PaginationComponent implements OnChanges {
     }
   }
 
-  // if (index === 3 || index === 4) {
-  //   this.pages = [1, '...', ...this.range(this.currentPage + 2, this.currentPage + 4), '...', this.pagesCount];
-  //   this.emitPageNumber(3);
-  // } else if (index === 1 && this.pages[5] !== item) {
-  //   this.pages = [1, '...', ...this.range(this.currentPage - 4, this.currentPage - 2), '...', this.pagesCount];
-  //   this.emitPageNumber(3);
-  // } else if (this.pages[1] && this.pages[5] === item) {
-  //   if (index === 1 && this.currentPage > 6) {
-  //     this.pages = [1, '...', ...this.range(this.currentPage - 4, this.currentPage - 2), '...', this.pagesCount];
-  //     this.emitPageNumber(3);
-  //   } else if (index === 1 && this.currentPage === 4) {
-  //     this.pages = [...this.range(1, 3), '...', this.pagesCount];
-  //     this.emitPageNumber(0);
-  //   } else if (index === 1 && this.currentPage === 5) {
-  //     this.pages = [...this.range(1, 4), '...', this.pagesCount];
-  //     this.emitPageNumber(1);
-  //   } else if (index === 1 && this.currentPage === 6) {
-  //     this.pages = [...this.range(1, 4), '...', this.pagesCount];
-  //     this.emitPageNumber(2);
-  //   } else if (index === 5 && this.currentPage < this.pagesCount - 5) {
-  //     this.pages = [1, '...', ...this.range(this.currentPage + 2, this.currentPage + 4), '...', this.pagesCount];
-  //     this.emitPageNumber(3);
-  //   } else if (index === 5 && this.currentPage === this.pagesCount - 5) {
-  //     this.pages = [1, '...', ...this.range(this.pagesCount - 3, this.pagesCount)];
-  //     this.emitPageNumber(3);
-  //   } else if (index === 5 && this.currentPage === this.pagesCount - 4) {
-  //     this.pages = [1, '...', ...this.range(this.pagesCount - 3, this.pagesCount)];
-  //     this.emitPageNumber(4);
-  //   } else if (index === 5 && this.currentPage === this.pagesCount - 3) {
-  //     this.pages = [1, '...', ...this.range(this.pagesCount - 2, this.pagesCount)];
-  //     this.emitPageNumber(4);
-  //   }
-  // }
-
   private showAllPage(): boolean {
     return this.pagesCount <= this.maxVisiblePages;
   }
