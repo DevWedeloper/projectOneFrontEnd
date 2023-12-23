@@ -68,7 +68,10 @@ export class CharacterApiService {
     return this.http.put<CharacterUpdateResponse>(url, requestBody);
   }
 
-  joinGuildById(characterId: string, newData: string): Observable<CharacterUpdateResponse> {
+  joinGuildById(
+    characterId: string,
+    newData: string
+  ): Observable<CharacterUpdateResponse> {
     const url = `${this.url}/character/join/${characterId}`;
     const reqBody = { guild: newData };
     return this.http.put<CharacterUpdateResponse>(url, reqBody);

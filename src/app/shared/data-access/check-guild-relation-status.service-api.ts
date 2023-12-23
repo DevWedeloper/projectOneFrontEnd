@@ -10,9 +10,7 @@ export class CheckGuildRelationStatusServiceApi {
   private http = inject(HttpClient);
   private url = environment.baseUrl;
 
-  checkGuildRelationStatus(
-    character: string
-  ): Observable<{
+  checkGuildRelationStatus(character: string): Observable<{
     hasNoGuild?: boolean;
     memberOfGuild?: boolean;
     leaderOfGuild?: boolean;
