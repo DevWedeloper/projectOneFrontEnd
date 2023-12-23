@@ -51,10 +51,10 @@ import { GuildEditFormService } from '../../data-access/guild-edit-form.service'
   ],
 })
 export class GuildEditComponent implements OnInit, OnDestroy {
-  gas = inject(GuildActionsService);
-  gefs = inject(GuildEditFormService);
-  fb = inject(FormBuilder);
-  destroyRef = inject(DestroyRef);
+  protected gas = inject(GuildActionsService);
+  private gefs = inject(GuildEditFormService);
+  private fb = inject(FormBuilder);
+  private destroyRef = inject(DestroyRef);
   @Input({ required: true }) guild!: Guild | null;
   @Input({ required: true }) searchNewLeaderResults!: Character[] | null;
   @Input({ required: true }) searchNewMemberResults!: Character[] | null;
