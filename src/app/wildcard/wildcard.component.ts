@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 
 @Component({
@@ -13,7 +13,6 @@ import { BehaviorSubject } from 'rxjs';
   imports: [CommonModule]
 })
 export class WildcardComponent {
-  router = inject(Router);
   route = inject(ActivatedRoute);
   url = new BehaviorSubject<string>('');
 
