@@ -11,27 +11,27 @@ import { CharacterDistributionByType } from '../interfaces/character-distributio
   providedIn: 'root'
 })
 export class CharacterStatsApiService {
-  private baseUrl = environment.baseUrl;
+  private url = environment.baseUrl;
 
   constructor(private http: HttpClient) { }
 
   getTopCharactersByAttribute(attribute: string): Observable<Character[]> {
-    const url = `${this.baseUrl}/characterStats/topStats/${attribute}`;
+    const url = `${this.url}/characterStats/topStats/${attribute}`;
     return this.http.get<Character[]>(url);
   }
 
   getTopWellRoundedCharacters(): Observable<WellRoundedCharacter[]> {
-    const url = `${this.baseUrl}/characterStats/topWellRounded`;
+    const url = `${this.url}/characterStats/topWellRounded`;
     return this.http.get<WellRoundedCharacter[]>(url);
   }
 
   getAverageCharacterStats(): Observable<AverageCharacterStats> {
-    const url = `${this.baseUrl}/characterStats/averageStats`;
+    const url = `${this.url}/characterStats/averageStats`;
     return this.http.get<AverageCharacterStats>(url);
   }
 
   getCharacterDistributionByType(): Observable<CharacterDistributionByType[]> {
-    const url = `${this.baseUrl}/characterStats/characterDistribution`;
+    const url = `${this.url}/characterStats/characterDistribution`;
     return this.http.get<CharacterDistributionByType[]>(url);
   }
 }
