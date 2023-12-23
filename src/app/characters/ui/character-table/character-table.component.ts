@@ -59,8 +59,6 @@ export class CharacterTableComponent implements AfterViewInit {
   @Output() editCharacter = new EventEmitter<Character>();
   @Output() deleteCharacter = new EventEmitter<Character>();
   @ViewChild('perPage', { static: false }) pageSizeElement?: ElementRef;
-  @ViewChild('sortBy', { static: false }) sortByElement?: ElementRef;
-  @ViewChild('sortOrder', { static: false }) sortOrderElement?: ElementRef;
 
   ngAfterViewInit(): void {
     this.cs.pageSize$
