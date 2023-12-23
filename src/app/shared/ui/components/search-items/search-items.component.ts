@@ -10,7 +10,7 @@ import {
   Output,
   QueryList,
   ViewChildren,
-  inject
+  inject,
 } from '@angular/core';
 import { Character } from '../../../interfaces/character.interface';
 import { Guild } from '../../../interfaces/guild.interface';
