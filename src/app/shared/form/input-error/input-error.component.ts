@@ -9,7 +9,7 @@ import { ErrorMessagePipe } from '../error-message.pipe';
   imports: [CommonModule, ErrorMessagePipe],
   templateUrl: './input-error.component.html',
   styleUrls: ['./input-error.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class InputErrorComponent {
   @Input() errors: ValidationErrors | undefined | null = null;
