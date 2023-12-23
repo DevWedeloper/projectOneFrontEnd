@@ -9,7 +9,6 @@ import {
 } from '@angular/core';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
-import { CharacterApiService } from 'src/app/shared/data-access/character-api.service';
 import { DynamicValidatorMessageDirective } from 'src/app/shared/form/dynamic-validator-message.directive';
 import { Character } from 'src/app/shared/interfaces/character.interface';
 import { CustomInputComponent } from 'src/app/shared/ui/components/custom-input/custom-input.component';
@@ -45,7 +44,6 @@ export class GuildCreateComponent {
   private gfs = inject(GuildFormService);
   protected ls = inject(GuildLoadingService);
   protected gas = inject(GuildActionsService);
-  private characterApiService = inject(CharacterApiService);
   @Input({ required: true }) searchLeaderResults!: Character[] | null;
   @Output() createGuild = new EventEmitter<{
     guildForm: FormGroup;
