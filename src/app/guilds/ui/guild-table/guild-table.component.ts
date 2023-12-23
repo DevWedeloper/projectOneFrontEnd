@@ -45,11 +45,11 @@ import { GuildEditComponent } from '../guild-edit/guild-edit.component';
   ],
 })
 export class GuildTableComponent implements AfterViewInit {
-  renderer = inject(Renderer2);
-  destroyRef = inject(DestroyRef);
-  gs = inject(GuildService);
-  ls = inject(GuildLoadingService);
-  gas = inject(GuildActionsService);
+  private renderer = inject(Renderer2);
+  private destroyRef = inject(DestroyRef);
+  private gs = inject(GuildService);
+  protected ls = inject(GuildLoadingService);
+  protected gas = inject(GuildActionsService);
   @Input() guildData!: GuildPagination | null;
   @Input() isCurrentUserAdmin!: boolean | null;
   @Input() currentPage!: number | null;
@@ -60,7 +60,7 @@ export class GuildTableComponent implements AfterViewInit {
   @Output() changePage = new EventEmitter<number>();
   @Output() editGuild = new EventEmitter<Guild>();
   @Output() deleteGuild = new EventEmitter<Guild>();
-  @ViewChild('perPage', { static: false }) pageSizeElement?: ElementRef;
+  @ViewChild('perPage', { static: false }) private pageSizeElement?: ElementRef;
   @ViewChild('sortBy', { static: false }) sortByElement?: ElementRef;
   @ViewChild('sortOrder', { static: false }) sortOrderElement?: ElementRef;
 
