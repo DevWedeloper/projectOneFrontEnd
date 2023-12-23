@@ -36,7 +36,7 @@ export class TableComponent<T extends Character | Guild> {
     | TemplateRef<HTMLElement>
     | undefined;
 
-  trackBy(index: number): number {
+  protected trackBy(index: number): number {
     return index;
   }
 }
