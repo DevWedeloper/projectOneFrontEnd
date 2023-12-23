@@ -7,8 +7,8 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root',
 })
 export class CheckGuildRelationStatusServiceApi {
-  http = inject(HttpClient);
-  url = environment.baseUrl;
+  private http = inject(HttpClient);
+  private url = environment.baseUrl;
 
   checkGuildRelationStatus(
     character: string
