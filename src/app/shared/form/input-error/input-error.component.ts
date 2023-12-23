@@ -14,7 +14,7 @@ import { ErrorMessagePipe } from '../error-message.pipe';
 export class InputErrorComponent {
   @Input() errors: ValidationErrors | undefined | null = null;
 
-  trackBy(index: number): number {
+  protected trackBy(index: number): number {
     return index;
   }
 }
