@@ -8,7 +8,7 @@ import { environment } from 'src/environments/environment';
 })
 export class CheckGuildRelationStatusServiceApi {
   http = inject(HttpClient);
-  baseUrl = environment.baseUrl;
+  url = environment.baseUrl;
 
   checkGuildRelationStatus(
     character: string
@@ -17,7 +17,7 @@ export class CheckGuildRelationStatusServiceApi {
     memberOfGuild?: boolean;
     leaderOfGuild?: boolean;
   }> {
-    const url = `${this.baseUrl}/character/checkGuildRelationStatus`;
+    const url = `${this.url}/character/checkGuildRelationStatus`;
     const reqBody = { character: character };
     return this.http.post(url, reqBody);
   }
