@@ -24,6 +24,6 @@ import { HeadingComponent } from '../../ui/heading/heading.component';
   ],
 })
 export class CharacterStatsComponent {
-  css = inject(CharacterStatsService);
-  ls = inject(DashboardLoadingService);
+  protected css = inject(CharacterStatsService);
+  protected ls = inject(DashboardLoadingService);
 }
