@@ -7,8 +7,8 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class CheckIfMemberApiService {
-  http = inject(HttpClient);
-  baseUrl = environment.baseUrl;
+  private http = inject(HttpClient);
+  private baseUrl = environment.baseUrl;
 
   isMember(character: string, guild: string): Observable<{ message: string }> {
     const url = `${this.baseUrl}/guild/isMember`;
