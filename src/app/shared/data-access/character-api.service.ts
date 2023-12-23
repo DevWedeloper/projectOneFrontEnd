@@ -11,7 +11,7 @@ import { CharacterUpdateResponse } from 'src/app/characters/interfaces/character
 })
 export class CharacterApiService {
   private http = inject(HttpClient);
-  baseUrl = environment.baseUrl;
+  private baseUrl = environment.baseUrl;
 
   createCharacter(characterData: Character): Observable<Character> {
     const url = `${this.baseUrl}/character`;
