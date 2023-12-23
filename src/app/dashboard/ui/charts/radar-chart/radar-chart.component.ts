@@ -14,7 +14,7 @@ import { BaseChartDirective, NgChartsModule, ThemeService } from 'ng2-charts';
 import { debounceTime, distinctUntilChanged, fromEvent, tap } from 'rxjs';
 import { ChartColorService } from 'src/app/dashboard/data-access/chart-color.service';
 import { WellRoundedCharacter } from 'src/app/dashboard/interfaces/well-rounded-character.interface';
-import { NoDataComponent } from 'src/app/shared/ui/components/no-data/no-data.component';
+import { NoDataComponent } from 'src/app/dashboard/ui/no-data/no-data.component';
 import { smoothTransitionAnimation } from '../../../../shared/ui/animations/smooth-transition.animations';
 import { RadarChartSkeletonComponent } from '../../skeletons/radar-chart-skeleton/radar-chart-skeleton.component';
 

@@ -9,7 +9,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ChartConfiguration } from 'chart.js';
 import { NgChartsModule, ThemeService } from 'ng2-charts';
 import { ChartColorService } from 'src/app/dashboard/data-access/chart-color.service';
-import { NoDataComponent } from 'src/app/shared/ui/components/no-data/no-data.component';
+import { NoDataComponent } from 'src/app/dashboard/ui/no-data/no-data.component';
 import { smoothTransitionAnimation } from '../../../../shared/ui/animations/smooth-transition.animations';
 import { HorizontalBarChartSkeletonComponent } from '../../skeletons/horizontal-bar-chart-skeleton/horizontal-bar-chart-skeleton.component';
 
