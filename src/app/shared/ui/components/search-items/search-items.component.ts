@@ -9,9 +9,8 @@ import {
   OnDestroy,
   Output,
   QueryList,
-  Renderer2,
   ViewChildren,
-  inject,
+  inject
 } from '@angular/core';
 import { Character } from '../../../interfaces/character.interface';
 import { Guild } from '../../../interfaces/guild.interface';
@@ -28,7 +27,6 @@ export class SearchItemsComponent<T extends Character | Guild>
   implements OnDestroy
 {
   private elementRef = inject(ElementRef);
-  private renderer = inject(Renderer2);
   @Input({ required: true }) searchResults: T[] | null = [];
   @Output() selectedItem = new EventEmitter<Character | Guild>();
   @Output() closeComponent = new EventEmitter<void>();
