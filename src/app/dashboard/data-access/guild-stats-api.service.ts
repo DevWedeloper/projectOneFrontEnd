@@ -10,7 +10,7 @@ import { WellRoundedGuild } from '../interfaces/well-rounded-guild.interface';
   providedIn: 'root'
 })
 export class GuildStatsApiService {
-  baseUrl = environment.baseUrl;
+  private baseUrl = environment.baseUrl;
 
   constructor(private http: HttpClient) { }
 
