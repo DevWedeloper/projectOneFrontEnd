@@ -8,8 +8,8 @@ import { CharacterType } from '../interfaces/character-type.interface';
   providedIn: 'root',
 })
 export class CharacterTypeService {
-  http = inject(HttpClient);
-  url = environment.baseUrl;
+  private http = inject(HttpClient);
+  private url = environment.baseUrl;
 
   getCharacterTypes(): Observable<CharacterType[]> {
     const url = `${this.url}/characterTypes`;
