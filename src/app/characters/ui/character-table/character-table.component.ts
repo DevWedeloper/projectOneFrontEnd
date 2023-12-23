@@ -10,7 +10,7 @@ import {
   Output,
   Renderer2,
   ViewChild,
-  inject
+  inject,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
@@ -39,7 +39,7 @@ import { CharacterPagination } from '../../interfaces/character-pagination.inter
     PaginationComponent,
     TruncatePipe,
     TableComponent,
-    SpinnerComponent
+    SpinnerComponent,
   ],
 })
 export class CharacterTableComponent implements AfterViewInit {
