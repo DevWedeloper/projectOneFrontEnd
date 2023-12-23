@@ -24,13 +24,13 @@ import { DoughnutChartSkeletonComponent } from '../../skeletons/doughnut-chart-s
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DoughnutChartComponent {
-  tsChartJS = inject(ThemeService);
-  ccs = inject(ChartColorService);
+  private tsChartJS = inject(ThemeService);
+  private ccs = inject(ChartColorService);
   @Input({ required: true }) polarAreaChartLabels!: string[] | null;
   @Input({ required: true })
   polarAreaChartDatasets!: ChartConfiguration<'polarArea'>['data']['datasets'] | null;
   @Input({ required: true }) loading!: boolean | null;
-  polarAreaOptions: ChartConfiguration<'polarArea'>['options'] = {
+  protected polarAreaOptions: ChartConfiguration<'polarArea'>['options'] = {
     maintainAspectRatio: false, 
     plugins: {
       legend: {
