@@ -40,10 +40,12 @@ export class CharacterStatsService {
     attribute: 'agility',
     backgroundColor: this.ccs.agilityColor,
   });
-  readonly topCharactersByIntelligence$ = this.generateTopCharactersByAttribute({
-    attribute: 'intelligence',
-    backgroundColor: this.ccs.intelligenceColor,
-  });
+  readonly topCharactersByIntelligence$ = this.generateTopCharactersByAttribute(
+    {
+      attribute: 'intelligence',
+      backgroundColor: this.ccs.intelligenceColor,
+    }
+  );
   readonly topCharactersByArmor$ = this.generateTopCharactersByAttribute({
     attribute: 'armor',
     backgroundColor: this.ccs.armorColor,
@@ -64,7 +66,8 @@ export class CharacterStatsService {
     );
   readonly averageCharacterStats$ =
     this.characterStatsApiService.getAverageCharacterStats();
-  readonly radarChartCharacter$ = new BehaviorSubject<WellRoundedCharacter | null>(null);
+  readonly radarChartCharacter$ =
+    new BehaviorSubject<WellRoundedCharacter | null>(null);
   readonly radarChartDataset$ = combineLatest([
     this.radarChartCharacter$,
     this.averageCharacterStats$,

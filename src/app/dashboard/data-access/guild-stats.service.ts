@@ -73,37 +73,42 @@ export class GuildStatsService {
     );
   readonly averageCharacterStats$ =
     this.characterStatsApiService.getAverageCharacterStats();
-  readonly topGuildsByAverageHealthData$ = this.generateTopGuildsByAverageAttribute({
-    attribute: 'health',
-    label: 'Health',
-    backgroundColor: this.ccs.healthColor,
-  });
-  readonly topGuildsByAverageStrengthData$ = this.generateTopGuildsByAverageAttribute({
-    attribute: 'strength',
-    label: 'Strength',
-    backgroundColor: this.ccs.strengthColor,
-  });
-  readonly topGuildsByAverageAgilityData$ = this.generateTopGuildsByAverageAttribute({
-    attribute: 'agility',
-    label: 'Agility',
-    backgroundColor: this.ccs.agilityColor,
-  });
+  readonly topGuildsByAverageHealthData$ =
+    this.generateTopGuildsByAverageAttribute({
+      attribute: 'health',
+      label: 'Health',
+      backgroundColor: this.ccs.healthColor,
+    });
+  readonly topGuildsByAverageStrengthData$ =
+    this.generateTopGuildsByAverageAttribute({
+      attribute: 'strength',
+      label: 'Strength',
+      backgroundColor: this.ccs.strengthColor,
+    });
+  readonly topGuildsByAverageAgilityData$ =
+    this.generateTopGuildsByAverageAttribute({
+      attribute: 'agility',
+      label: 'Agility',
+      backgroundColor: this.ccs.agilityColor,
+    });
   readonly topGuildsByAverageIntelligenceData$ =
     this.generateTopGuildsByAverageAttribute({
       attribute: 'intelligence',
       label: 'Intelligence',
       backgroundColor: this.ccs.intelligenceColor,
     });
-  readonly topGuildsByAverageArmorData$ = this.generateTopGuildsByAverageAttribute({
-    attribute: 'armor',
-    label: 'Armor',
-    backgroundColor: this.ccs.armorColor,
-  });
-  readonly topGuildsByAverageCritChanceData$ = this.generateTopGuildsByAverageAttribute({
-    attribute: 'critChance',
-    label: 'Crit Chance',
-    backgroundColor: this.ccs.critChanceColor,
-  });
+  readonly topGuildsByAverageArmorData$ =
+    this.generateTopGuildsByAverageAttribute({
+      attribute: 'armor',
+      label: 'Armor',
+      backgroundColor: this.ccs.armorColor,
+    });
+  readonly topGuildsByAverageCritChanceData$ =
+    this.generateTopGuildsByAverageAttribute({
+      attribute: 'critChance',
+      label: 'Crit Chance',
+      backgroundColor: this.ccs.critChanceColor,
+    });
 
   constructor() {
     const observables: Observable<
@@ -146,8 +151,8 @@ export class GuildStatsService {
         }
         const names = guilds.map((guild) => guild.name).reverse();
         const combinedAttributes = guilds
-        .map((guild) => this.mapAttributeToValue(attribute, guild))
-        .reverse();
+          .map((guild) => this.mapAttributeToValue(attribute, guild))
+          .reverse();
         const dataset: ChartConfiguration<'bar'>['data']['datasets'] = [
           {
             data: combinedAttributes || [],
@@ -167,8 +172,8 @@ export class GuildStatsService {
         return guild.totalStrength;
       case 'agility':
         return guild.totalAgility;
-        case 'intelligence':
-          return guild.totalIntelligence;
+      case 'intelligence':
+        return guild.totalIntelligence;
       case 'armor':
         return guild.totalArmor;
       case 'critChance':
