@@ -8,16 +8,16 @@ import { environment } from 'src/environments/environment';
 })
 export class CheckUniquenessService {
   private http = inject(HttpClient);
-  private baseUrl = environment.baseUrl;
+  private url = environment.baseUrl;
 
   checkCharacterNameUniqueness(name: string): Observable<{ message: string }> {
-    const url = `${this.baseUrl}/character/unique`;
+    const url = `${this.url}/character/unique`;
     const reqBody = { name: name };
     return this.http.post<{ message: string }>(url, reqBody);
   }
 
   checkGuildNameUniqueness(name: string): Observable<{ message: string }> {
-    const url = `${this.baseUrl}/guild/unique`;
+    const url = `${this.url}/guild/unique`;
     const reqBody = { name: name };
     return this.http.post<{ message: string }>(url, reqBody);
   }
