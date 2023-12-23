@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Character } from 'src/app/shared/interfaces/character.interface';
 import { environment } from 'src/environments/environment';
@@ -11,9 +11,8 @@ import { CharacterDistributionByType } from '../interfaces/character-distributio
   providedIn: 'root'
 })
 export class CharacterStatsApiService {
+  http = inject(HttpClient);
   private url = environment.baseUrl;
-
-  constructor(private http: HttpClient) { }
 
   getTopCharactersByAttribute(attribute: string): Observable<Character[]> {
     const url = `${this.url}/characterStats/topStats/${attribute}`;
