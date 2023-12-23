@@ -54,9 +54,9 @@ import { CharacterFormComponent } from '../character-form/character-form.compone
   ],
 })
 export class CharacterEditComponent implements OnInit, OnDestroy {
-  cfs = inject(CharacterFormService);
-  cas = inject(CharacterActionsService);
-  cjgfs = inject(CharacterJoinGuildFormService);
+  private cfs = inject(CharacterFormService);
+  protected cas = inject(CharacterActionsService);
+  private cjgfs = inject(CharacterJoinGuildFormService);
   @Input({ required: true }) character: Character | null = null;
   @Input({ required: true }) searchResults!: Guild[] | null;
   @Output() searchQueryChange = new EventEmitter<string>();
@@ -73,9 +73,9 @@ export class CharacterEditComponent implements OnInit, OnDestroy {
     joinGuildForm: FormGroup;
   }>();
   @Output() closeModal = new EventEmitter<void>();
-  characterForm!: FormGroup;
-  joinGuildForm!: FormGroup;
-  toggleSearchContainer = new BehaviorSubject<boolean>(false);
+  protected characterForm!: FormGroup;
+  protected joinGuildForm!: FormGroup;
+  protected toggleSearchContainer = new BehaviorSubject<boolean>(false);
 
   constructor() {
     this.characterForm = this.cfs.initializeCharacterForm();
