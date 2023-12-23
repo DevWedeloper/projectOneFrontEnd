@@ -10,10 +10,9 @@ import {
   inject
 } from '@angular/core';
 import {
-  FormBuilder,
   FormGroup,
   FormsModule,
-  ReactiveFormsModule,
+  ReactiveFormsModule
 } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 import { DynamicValidatorMessageDirective } from 'src/app/shared/form/dynamic-validator-message.directive';
@@ -58,7 +57,6 @@ export class CharacterEditComponent implements OnInit, OnDestroy {
   cfs = inject(CharacterFormService);
   cas = inject(CharacterActionsService);
   cjgfs = inject(CharacterJoinGuildFormService);
-  fb = inject(FormBuilder);
   @Input({ required: true }) character: Character | null = null;
   @Input({ required: true }) searchResults!: Guild[] | null;
   @Output() searchQueryChange = new EventEmitter<string>();
