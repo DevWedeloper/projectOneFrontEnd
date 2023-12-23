@@ -1,4 +1,4 @@
-import { ApplicationRef, ComponentFactoryResolver, ComponentRef, EmbeddedViewRef, Injectable, Injector, TemplateRef } from '@angular/core';
+import { ApplicationRef, ComponentFactoryResolver, ComponentRef, EmbeddedViewRef, Injectable, Injector, TemplateRef, inject } from '@angular/core';
 import { ModalComponent } from './modal.component';
 import { BehaviorSubject } from 'rxjs';
 
@@ -6,14 +6,11 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root',
 })
 export class ModalService<T> {
+  private componentFactoryResolver = inject(ComponentFactoryResolver);
+  private appRef = inject(ApplicationRef);
+  private injector = inject(Injector);
   private modalComponentRef?: ComponentRef<ModalComponent>;
   isOpen$ = new BehaviorSubject<boolean>(false);
-
-  constructor(
-    private componentFactoryResolver: ComponentFactoryResolver,
-    private appRef: ApplicationRef,
-    private injector: Injector
-  ) {}
 
   open(contentTemplate: TemplateRef<HTMLElement>): void {
     // Destroy previous modal if it exists
