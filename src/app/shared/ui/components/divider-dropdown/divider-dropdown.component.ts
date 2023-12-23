@@ -28,7 +28,7 @@ export class DividerDropdownComponent {
   @Input({ required: true }) label!: string;
   @Input({ required: true }) loading!: boolean | null;
   @Output() dividerToggled = new EventEmitter<void>();
-  showContent = new BehaviorSubject<boolean>(false);
+  protected showContent = new BehaviorSubject<boolean>(false);
 
   toggleDivider(): void {
     this.showContent.next(!this.showContent.value);
