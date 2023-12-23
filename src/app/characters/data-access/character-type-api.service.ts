@@ -7,7 +7,7 @@ import { CharacterType } from '../interfaces/character-type.interface';
 @Injectable({
   providedIn: 'root',
 })
-export class CharacterTypeService {
+export class CharacterTypeApiService {
   private http = inject(HttpClient);
   private url = environment.baseUrl;
 

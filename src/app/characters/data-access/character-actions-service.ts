@@ -18,7 +18,7 @@ import {
   isMemberOfAGuild,
   isNotMemberOfAGuild,
 } from 'src/app/shared/utils/guild-membership-status.utils';
-import { CharacterTypeService } from './character-type.service';
+import { CharacterTypeApiService } from './character-type-api.service';
 import { CharacterService } from './character.service';
 import { isGuildFullApiService } from './is-guild-full-api.service';
 
@@ -32,7 +32,7 @@ export class CharacterActionsService {
     CheckGuildRelationStatusServiceApi
   );
   isGuildFullApiService = inject(isGuildFullApiService);
-  characterTypeService = inject(CharacterTypeService);
+  characterTypeService = inject(CharacterTypeApiService);
   characterTypes$ = this.characterTypeService.getCharacterTypes();
   characterCreate$ = new Subject<FormGroup>();
   characterUpdate$ = new Subject<{
