@@ -9,10 +9,10 @@ import { CharacterType } from '../interfaces/character-type.interface';
 })
 export class CharacterTypeService {
   http = inject(HttpClient);
-  baseUrl = environment.baseUrl;
+  url = environment.baseUrl;
 
   getCharacterTypes(): Observable<CharacterType[]> {
-    const url = `${this.baseUrl}/characterTypes`;
+    const url = `${this.url}/characterTypes`;
     return this.http.get<CharacterType[]>(url);
   }
 }
