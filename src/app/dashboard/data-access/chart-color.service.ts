@@ -6,8 +6,8 @@ import { ThemeService } from 'src/app/shared/data-access/theme.service';
   providedIn: 'root',
 })
 export class ChartColorService {
-  ts = inject(ThemeService);
-  style = getComputedStyle(document.body);
+  private ts = inject(ThemeService);
+  private style = getComputedStyle(document.body);
   secondaryColor$ = new BehaviorSubject<string>('');
   textColor$ = new BehaviorSubject<string>('');
   getStyle$ = combineLatest([this.ts.styles$])
