@@ -29,15 +29,15 @@ import { HorizontalBarChartSkeletonComponent } from '../../skeletons/horizontal-
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HorizontalBarChartComponent {
-  tsChartJS = inject(ThemeService);
-  ccs = inject(ChartColorService);
+  private tsChartJS = inject(ThemeService);
+  private ccs = inject(ChartColorService);
   @Input() label!: string;
   @Input({ required: true }) barChartLabels!: string[] | null;
   @Input({ required: true }) barChartDataset!:
     | ChartConfiguration<'bar'>['data']['datasets']
     | null;
   @Input({ required: true }) loading!: boolean | null;
-  barChartOptions: ChartConfiguration<'bar'>['options'] = {
+  protected barChartOptions: ChartConfiguration<'bar'>['options'] = {
     indexAxis: 'y',
     maintainAspectRatio: false,
     plugins: {
