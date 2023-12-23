@@ -37,17 +37,17 @@ import { CharacterTableComponent } from './ui/character-table/character-table.co
   ],
 })
 export class CharactersComponent {
-  authService = inject(AuthService);
-  cas = inject(CharacterActionsService);
-  route = inject(ActivatedRoute);
-  cs = inject(CharacterService);
-  ms = inject(ModalService);
-  guildApiService = inject(GuildApiService);
-  characterApiService = inject(CharacterApiService);
-  tableSearchQuery$ = new Subject<string>();
-  searchResults$ = new BehaviorSubject<Guild[]>([]);
-  guildSearchQuery$ = new BehaviorSubject<string>('');
-  @ViewChild('modalTemplate') editComponent!: TemplateRef<HTMLElement>;
+  protected authService = inject(AuthService);
+  protected cas = inject(CharacterActionsService);
+  private route = inject(ActivatedRoute);
+  protected cs = inject(CharacterService);
+  protected ms = inject(ModalService);
+  private guildApiService = inject(GuildApiService);
+  private characterApiService = inject(CharacterApiService);
+  protected tableSearchQuery$ = new Subject<string>();
+  protected searchResults$ = new BehaviorSubject<Guild[]>([]);
+  protected guildSearchQuery$ = new BehaviorSubject<string>('');
+  @ViewChild('modalTemplate') protected editComponent!: TemplateRef<HTMLElement>;
 
   constructor() {
     this.route.queryParams
