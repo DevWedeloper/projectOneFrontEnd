@@ -7,17 +7,15 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root',
 })
 export class CheckGuildRelationStatusServiceApi {
-  http = inject(HttpClient);
-  baseUrl = environment.baseUrl;
+  private http = inject(HttpClient);
+  private url = environment.baseUrl;
 
-  checkGuildRelationStatus(
-    character: string
-  ): Observable<{
+  checkGuildRelationStatus(character: string): Observable<{
     hasNoGuild?: boolean;
     memberOfGuild?: boolean;
     leaderOfGuild?: boolean;
   }> {
-    const url = `${this.baseUrl}/character/checkGuildRelationStatus`;
+    const url = `${this.url}/character/checkGuildRelationStatus`;
     const reqBody = { character: character };
     return this.http.post(url, reqBody);
   }

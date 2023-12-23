@@ -24,10 +24,10 @@ import { GuildLoadingService } from './guild-loading.service';
   providedIn: 'root',
 })
 export class GuildService {
-  guildApiService = inject(GuildApiService);
-  router = inject(Router);
-  route = inject(ActivatedRoute);
-  ls = inject(GuildLoadingService);
+  private guildApiService = inject(GuildApiService);
+  private router = inject(Router);
+  private route = inject(ActivatedRoute);
+  private ls = inject(GuildLoadingService);
   currentPage$ = new BehaviorSubject<number>(1);
   pageSize$ = new BehaviorSubject<number>(10);
   sortParams$ = new BehaviorSubject<GuildSortParams>({

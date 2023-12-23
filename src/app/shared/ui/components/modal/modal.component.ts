@@ -10,7 +10,7 @@ import {
   Renderer2,
   TemplateRef,
   ViewChild,
-  inject
+  inject,
 } from '@angular/core';
 import { ThemeService } from 'src/app/shared/data-access/theme.service';
 import { ModalService } from './modal.service';
@@ -36,11 +36,11 @@ import { ModalService } from './modal.service';
   ],
 })
 export class ModalComponent implements AfterViewInit {
-  ms = inject(ModalService);
-  ts = inject(ThemeService);
-  renderer = inject(Renderer2);
+  protected ms = inject(ModalService);
+  protected ts = inject(ThemeService);
+  private renderer = inject(Renderer2);
   @Input() contentTemplate!: TemplateRef<HTMLElement>;
-  @ViewChild('modalElement') modalElement!: ElementRef;
+  @ViewChild('modalElement') private modalElement!: ElementRef;
 
   ngAfterViewInit(): void {
     this.renderer.selectRootElement(this.modalElement.nativeElement).focus();

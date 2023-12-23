@@ -7,17 +7,17 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root',
 })
 export class CheckUniquenessService {
-  http = inject(HttpClient);
-  baseUrl = environment.baseUrl;
+  private http = inject(HttpClient);
+  private url = environment.baseUrl;
 
   checkCharacterNameUniqueness(name: string): Observable<{ message: string }> {
-    const url = `${this.baseUrl}/character/unique`;
+    const url = `${this.url}/character/unique`;
     const reqBody = { name: name };
     return this.http.post<{ message: string }>(url, reqBody);
   }
 
   checkGuildNameUniqueness(name: string): Observable<{ message: string }> {
-    const url = `${this.baseUrl}/guild/unique`;
+    const url = `${this.url}/guild/unique`;
     const reqBody = { name: name };
     return this.http.post<{ message: string }>(url, reqBody);
   }

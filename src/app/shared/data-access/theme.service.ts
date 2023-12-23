@@ -10,7 +10,7 @@ export class ThemeService {
   darkMode$ = new BehaviorSubject<boolean>(false);
   isDarkMode$: Observable<boolean> = this.darkMode$.asObservable();
   styles$ = new BehaviorSubject<CSSStyleDeclaration | null>(null);
-  
+
   constructor() {
     this.renderer = this.rendererFactory.createRenderer(null, null);
   }

@@ -9,7 +9,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ChartConfiguration } from 'chart.js';
 import { NgChartsModule, ThemeService } from 'ng2-charts';
 import { ChartColorService } from 'src/app/dashboard/data-access/chart-color.service';
-import { NoDataComponent } from 'src/app/shared/ui/components/no-data/no-data.component';
+import { NoDataComponent } from 'src/app/dashboard/ui/no-data/no-data.component';
 import { smoothTransitionAnimation } from '../../../../shared/ui/animations/smooth-transition.animations';
 import { HorizontalBarChartSkeletonComponent } from '../../skeletons/horizontal-bar-chart-skeleton/horizontal-bar-chart-skeleton.component';
 
@@ -29,15 +29,15 @@ import { HorizontalBarChartSkeletonComponent } from '../../skeletons/horizontal-
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HorizontalBarChartComponent {
-  tsChartJS = inject(ThemeService);
-  ccs = inject(ChartColorService);
+  private tsChartJS = inject(ThemeService);
+  private ccs = inject(ChartColorService);
   @Input() label!: string;
   @Input({ required: true }) barChartLabels!: string[] | null;
   @Input({ required: true }) barChartDataset!:
     | ChartConfiguration<'bar'>['data']['datasets']
     | null;
   @Input({ required: true }) loading!: boolean | null;
-  barChartOptions: ChartConfiguration<'bar'>['options'] = {
+  protected barChartOptions: ChartConfiguration<'bar'>['options'] = {
     indexAxis: 'y',
     maintainAspectRatio: false,
     plugins: {

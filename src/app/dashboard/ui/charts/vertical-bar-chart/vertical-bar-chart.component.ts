@@ -10,7 +10,7 @@ import { ChartConfiguration } from 'chart.js';
 import { NgChartsModule, ThemeService } from 'ng2-charts';
 import { ChartColorService } from 'src/app/dashboard/data-access/chart-color.service';
 import { smoothTransitionAnimation } from 'src/app/shared/ui/animations/smooth-transition.animations';
-import { NoDataComponent } from 'src/app/shared/ui/components/no-data/no-data.component';
+import { NoDataComponent } from 'src/app/dashboard/ui/no-data/no-data.component';
 import { TruncatePipe } from 'src/app/shared/ui/pipes/truncate.pipe';
 import { VerticalBarChartSkeletonComponent } from '../../skeletons/vertical-bar-chart-skeleton/vertical-bar-chart-skeleton.component';
 
@@ -31,15 +31,15 @@ import { VerticalBarChartSkeletonComponent } from '../../skeletons/vertical-bar-
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class VerticalBarChartComponent {
-  tsChartJS = inject(ThemeService);
-  ccs = inject(ChartColorService);
+  private ccs = inject(ChartColorService);
+  private tsChartJS = inject(ThemeService);
   @Input() label!: string;
   @Input({ required: true }) barChartLabels!: string[] | null;
   @Input({ required: true }) barChartDataset!:
     | ChartConfiguration<'bar'>['data']['datasets']
     | null;
   @Input({ required: true }) loading!: boolean | null;
-  barChartOptions: ChartConfiguration<'bar'>['options'] = {
+  protected barChartOptions: ChartConfiguration<'bar'>['options'] = {
     maintainAspectRatio: false,
     plugins: {
       legend: {

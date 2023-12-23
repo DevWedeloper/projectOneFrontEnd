@@ -6,7 +6,7 @@ import { RouterOutlet } from '@angular/router';
   template: '<router-outlet/>',
   standalone: true,
   imports: [RouterOutlet],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent {
   title = 'projectOne';

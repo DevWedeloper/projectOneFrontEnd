@@ -10,7 +10,7 @@ import { ChartConfiguration } from 'chart.js';
 import { NgChartsModule, ThemeService } from 'ng2-charts';
 import { ChartColorService } from 'src/app/dashboard/data-access/chart-color.service';
 import { smoothTransitionAnimation } from 'src/app/shared/ui/animations/smooth-transition.animations';
-import { NoDataComponent } from 'src/app/shared/ui/components/no-data/no-data.component';
+import { NoDataComponent } from 'src/app/dashboard/ui/no-data/no-data.component';
 import { DoughnutChartSkeletonComponent } from '../../skeletons/doughnut-chart-skeleton/doughnut-chart-skeleton.component';
 
 @Component({
@@ -24,13 +24,13 @@ import { DoughnutChartSkeletonComponent } from '../../skeletons/doughnut-chart-s
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DoughnutChartComponent {
-  tsChartJS = inject(ThemeService);
-  ccs = inject(ChartColorService);
+  private tsChartJS = inject(ThemeService);
+  private ccs = inject(ChartColorService);
   @Input({ required: true }) polarAreaChartLabels!: string[] | null;
   @Input({ required: true })
   polarAreaChartDatasets!: ChartConfiguration<'polarArea'>['data']['datasets'] | null;
   @Input({ required: true }) loading!: boolean | null;
-  polarAreaOptions: ChartConfiguration<'polarArea'>['options'] = {
+  protected polarAreaOptions: ChartConfiguration<'polarArea'>['options'] = {
     maintainAspectRatio: false, 
     plugins: {
       legend: {

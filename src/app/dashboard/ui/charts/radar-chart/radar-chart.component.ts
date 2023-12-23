@@ -14,7 +14,7 @@ import { BaseChartDirective, NgChartsModule, ThemeService } from 'ng2-charts';
 import { debounceTime, distinctUntilChanged, fromEvent, tap } from 'rxjs';
 import { ChartColorService } from 'src/app/dashboard/data-access/chart-color.service';
 import { WellRoundedCharacter } from 'src/app/dashboard/interfaces/well-rounded-character.interface';
-import { NoDataComponent } from 'src/app/shared/ui/components/no-data/no-data.component';
+import { NoDataComponent } from 'src/app/dashboard/ui/no-data/no-data.component';
 import { smoothTransitionAnimation } from '../../../../shared/ui/animations/smooth-transition.animations';
 import { RadarChartSkeletonComponent } from '../../skeletons/radar-chart-skeleton/radar-chart-skeleton.component';
 
@@ -34,8 +34,8 @@ import { RadarChartSkeletonComponent } from '../../skeletons/radar-chart-skeleto
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RadarChartComponent {
-  tsChartJS = inject(ThemeService);
-  ccs = inject(ChartColorService);
+  private tsChartJS = inject(ThemeService);
+  private ccs = inject(ChartColorService);
   @Input({ required: true }) selectedCharacter!: WellRoundedCharacter | null;
   @Input({ required: true }) topWellRoundedCharacters!:
     | WellRoundedCharacter[]
@@ -47,7 +47,7 @@ export class RadarChartComponent {
     | undefined = [];
   @Input({ required: true }) loading!: boolean | null;
   @Output() selectedCharacterChange = new EventEmitter<WellRoundedCharacter>();
-  radarChartOptions: ChartConfiguration<'radar'>['options'] = {
+  protected radarChartOptions: ChartConfiguration<'radar'>['options'] = {
     maintainAspectRatio: false,
     scales: {
       r: {
@@ -71,7 +71,7 @@ export class RadarChartComponent {
     },
   };
   @ViewChild(BaseChartDirective) private chart: BaseChartDirective | undefined;
-  resize$ = fromEvent(window, 'resize').pipe(
+  private resize$ = fromEvent(window, 'resize').pipe(
     debounceTime(300),
     distinctUntilChanged(),
     tap(() => {
@@ -114,7 +114,7 @@ export class RadarChartComponent {
     this.resize$.pipe(takeUntilDestroyed()).subscribe();
   }
 
-  trackBy(index: number): number {
+  protected trackBy(index: number): number {
     return index;
   }
 }

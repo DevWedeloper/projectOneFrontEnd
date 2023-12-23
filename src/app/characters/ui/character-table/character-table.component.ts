@@ -10,7 +10,7 @@ import {
   Output,
   Renderer2,
   ViewChild,
-  inject
+  inject,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
@@ -39,15 +39,15 @@ import { CharacterPagination } from '../../interfaces/character-pagination.inter
     PaginationComponent,
     TruncatePipe,
     TableComponent,
-    SpinnerComponent
+    SpinnerComponent,
   ],
 })
 export class CharacterTableComponent implements AfterViewInit {
-  renderer = inject(Renderer2);
-  destroyRef = inject(DestroyRef);
-  cs = inject(CharacterService);
-  ls = inject(CharacterLoadingService);
-  cas = inject(CharacterActionsService);
+  private renderer = inject(Renderer2);
+  private destroyRef = inject(DestroyRef);
+  private cs = inject(CharacterService);
+  protected ls = inject(CharacterLoadingService);
+  protected cas = inject(CharacterActionsService);
   @Input({ required: true }) characterData!: CharacterPagination | null;
   @Input({ required: true }) isCurrentUserAdmin!: boolean | null;
   @Input({ required: true }) currentPage!: number | null;
@@ -58,9 +58,7 @@ export class CharacterTableComponent implements AfterViewInit {
   @Output() changePage = new EventEmitter<number>();
   @Output() editCharacter = new EventEmitter<Character>();
   @Output() deleteCharacter = new EventEmitter<Character>();
-  @ViewChild('perPage', { static: false }) pageSizeElement?: ElementRef;
-  @ViewChild('sortBy', { static: false }) sortByElement?: ElementRef;
-  @ViewChild('sortOrder', { static: false }) sortOrderElement?: ElementRef;
+  @ViewChild('perPage', { static: false }) private pageSizeElement?: ElementRef;
 
   ngAfterViewInit(): void {
     this.cs.pageSize$
@@ -76,7 +74,7 @@ export class CharacterTableComponent implements AfterViewInit {
       });
   }
 
-  toggleSort(header: CharacterSortParams['sortBy']): void {
+  protected toggleSort(header: CharacterSortParams['sortBy']): void {
     if (this.cs.sortParams$.value.sortBy === header) {
       this.sortParamsChange.emit({
         sortBy: header,
@@ -88,7 +86,7 @@ export class CharacterTableComponent implements AfterViewInit {
     }
   }
 
-  getSortArrow(header: string): string {
+  protected getSortArrow(header: string): string {
     if (this.cs.sortParams$.value.sortBy === header) {
       if (this.cs.sortParams$.value.sortOrder === 'asc') {
         return '&#x25B2;';

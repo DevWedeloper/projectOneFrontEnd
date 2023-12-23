@@ -7,11 +7,11 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class isGuildFullApiService {
-  http = inject(HttpClient);
-  baseUrl = environment.baseUrl;
+  private http = inject(HttpClient);
+  private url = environment.baseUrl;
 
   isGuildFull(guild: string): Observable<{ isFull: boolean }> {
-    const url = `${this.baseUrl}/guild/isFull`;
+    const url = `${this.url}/guild/isFull`;
     const reqBody = { guild };
     return this.http.post<{ isFull: boolean }>(url, reqBody);
   }

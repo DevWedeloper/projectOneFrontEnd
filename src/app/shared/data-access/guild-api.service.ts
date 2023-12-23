@@ -11,11 +11,14 @@ import { GuildPagination } from '../../guilds/interfaces/guild-pagination.interf
   providedIn: 'root',
 })
 export class GuildApiService {
-  http = inject(HttpClient);
-  baseUrl = environment.baseUrl;
+  private http = inject(HttpClient);
+  private url = environment.baseUrl;
 
-  createGuild(guildData: { name: string, character: string }): Observable<Guild> {
-    const url = `${this.baseUrl}/guild`;
+  createGuild(guildData: {
+    name: string;
+    character: string;
+  }): Observable<Guild> {
+    const url = `${this.url}/guild`;
     return this.http.post<Guild>(url, guildData);
   }
 
@@ -26,7 +29,7 @@ export class GuildApiService {
     sortOrder?: string,
     searchQuery?: string
   ): Observable<GuildPagination> {
-    let url = `${this.baseUrl}/guild/?page=${page}&pageSize=${pageSize}`;
+    let url = `${this.url}/guild/?page=${page}&pageSize=${pageSize}`;
     if (sortBy) {
       url += `&sortBy=${sortBy}`;
     }
@@ -40,17 +43,17 @@ export class GuildApiService {
   }
 
   getGuildById(guildId: string): Observable<Guild> {
-    const url = `${this.baseUrl}/guild/${guildId}`;
+    const url = `${this.url}/guild/${guildId}`;
     return this.http.get<Guild>(url);
   }
 
   getGuildByName(name: string): Observable<Guild> {
-    const url = `${this.baseUrl}/guild/name/${name}`;
+    const url = `${this.url}/guild/name/${name}`;
     return this.http.get<Guild>(url);
   }
 
   searchGuildsByName(searchQuery: string): Observable<Guild[]> {
-    const url = `${this.baseUrl}/guild/search?name=${searchQuery}`;
+    const url = `${this.url}/guild/search?name=${searchQuery}`;
     return this.http.get<Guild[]>(url);
   }
 
@@ -58,23 +61,32 @@ export class GuildApiService {
     searchQuery: string,
     guildId: string
   ): Observable<Character[]> {
-    const url = `${this.baseUrl}/guild/${guildId}/searchMember?name=${searchQuery}`;
+    const url = `${this.url}/guild/${guildId}/searchMember?name=${searchQuery}`;
     return this.http.get<Character[]>(url);
   }
 
-  updateGuildNameById(guildId: string, newData: string): Observable<GuildUpdateResponse> {
-    const url = `${this.baseUrl}/guild/name/${guildId}`;
+  updateGuildNameById(
+    guildId: string,
+    newData: string
+  ): Observable<GuildUpdateResponse> {
+    const url = `${this.url}/guild/name/${guildId}`;
     return this.http.put<GuildUpdateResponse>(url, newData);
   }
 
-  updateGuildLeaderById(guildId: string, newData: string): Observable<GuildUpdateResponse> {
-    const url = `${this.baseUrl}/guild/leader/${guildId}`;
+  updateGuildLeaderById(
+    guildId: string,
+    newData: string
+  ): Observable<GuildUpdateResponse> {
+    const url = `${this.url}/guild/leader/${guildId}`;
     const reqBody = { character: newData };
     return this.http.put<GuildUpdateResponse>(url, reqBody);
   }
 
-  addMemberToGuildById(guildId: string, newData: string): Observable<GuildUpdateResponse> {
-    const url = `${this.baseUrl}/guild/addMember/${guildId}`;
+  addMemberToGuildById(
+    guildId: string,
+    newData: string
+  ): Observable<GuildUpdateResponse> {
+    const url = `${this.url}/guild/addMember/${guildId}`;
     const reqBody = { character: newData };
     return this.http.put<GuildUpdateResponse>(url, reqBody);
   }
@@ -83,13 +95,13 @@ export class GuildApiService {
     guildId: string,
     newData: string
   ): Observable<GuildUpdateResponse> {
-    const url = `${this.baseUrl}/guild/removeMember/${guildId}`;
+    const url = `${this.url}/guild/removeMember/${guildId}`;
     const requestBody = { character: newData };
     return this.http.put<GuildUpdateResponse>(url, requestBody);
   }
 
   deleteGuildById(guildId: string): Observable<GuildUpdateResponse> {
-    const url = `${this.baseUrl}/guild/${guildId}`;
+    const url = `${this.url}/guild/${guildId}`;
     return this.http.delete<GuildUpdateResponse>(url);
   }
 }

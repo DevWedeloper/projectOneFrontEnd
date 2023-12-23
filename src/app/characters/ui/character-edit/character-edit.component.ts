@@ -7,14 +7,9 @@ import {
   OnDestroy,
   OnInit,
   Output,
-  inject
+  inject,
 } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  FormsModule,
-  ReactiveFormsModule,
-} from '@angular/forms';
+import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 import { DynamicValidatorMessageDirective } from 'src/app/shared/form/dynamic-validator-message.directive';
 import { Character } from 'src/app/shared/interfaces/character.interface';
@@ -25,7 +20,6 @@ import { SearchItemsComponent } from 'src/app/shared/ui/components/search-items/
 import { SpinnerComponent } from 'src/app/shared/ui/components/spinner/spinner.component';
 import { GreenButtonDirective } from 'src/app/shared/ui/directives/button/green-button.directive';
 import { RedButtonDirective } from 'src/app/shared/ui/directives/button/red-button.directive';
-import { ErrorTextDirective } from 'src/app/shared/ui/directives/error-text.directive';
 import { CharacterActionsService } from '../../data-access/character-actions-service';
 import { CharacterFormService } from '../../data-access/character-form.service';
 import { CharacterJoinGuildFormService } from '../../data-access/character-join-guild-form.service';
@@ -46,19 +40,17 @@ import { CharacterFormComponent } from '../character-form/character-form.compone
     FormsModule,
     SearchItemsComponent,
     ReactiveFormsModule,
-    ErrorTextDirective,
     CustomInputComponent,
     GreenButtonDirective,
     RedButtonDirective,
     SpinnerComponent,
-    DynamicValidatorMessageDirective
+    DynamicValidatorMessageDirective,
   ],
 })
 export class CharacterEditComponent implements OnInit, OnDestroy {
-  cfs = inject(CharacterFormService);
-  cas = inject(CharacterActionsService);
-  cjgfs = inject(CharacterJoinGuildFormService);
-  fb = inject(FormBuilder);
+  private cfs = inject(CharacterFormService);
+  protected cas = inject(CharacterActionsService);
+  private cjgfs = inject(CharacterJoinGuildFormService);
   @Input({ required: true }) character: Character | null = null;
   @Input({ required: true }) searchResults!: Guild[] | null;
   @Output() searchQueryChange = new EventEmitter<string>();
@@ -75,9 +67,9 @@ export class CharacterEditComponent implements OnInit, OnDestroy {
     joinGuildForm: FormGroup;
   }>();
   @Output() closeModal = new EventEmitter<void>();
-  characterForm!: FormGroup;
-  joinGuildForm!: FormGroup;
-  toggleSearchContainer = new BehaviorSubject<boolean>(false);
+  protected characterForm!: FormGroup;
+  protected joinGuildForm!: FormGroup;
+  protected toggleSearchContainer = new BehaviorSubject<boolean>(false);
 
   constructor() {
     this.characterForm = this.cfs.initializeCharacterForm();

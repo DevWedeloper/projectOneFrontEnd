@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
-  DestroyRef,
   EventEmitter,
   Input,
   OnDestroy,
@@ -10,12 +9,7 @@ import {
   Output,
   inject,
 } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  FormsModule,
-  ReactiveFormsModule
-} from '@angular/forms';
+import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 import { DynamicValidatorMessageDirective } from 'src/app/shared/form/dynamic-validator-message.directive';
 import { Character } from 'src/app/shared/interfaces/character.interface';
@@ -26,7 +20,6 @@ import { SearchItemsComponent } from 'src/app/shared/ui/components/search-items/
 import { SpinnerComponent } from 'src/app/shared/ui/components/spinner/spinner.component';
 import { GreenButtonDirective } from 'src/app/shared/ui/directives/button/green-button.directive';
 import { RedButtonDirective } from 'src/app/shared/ui/directives/button/red-button.directive';
-import { ErrorTextDirective } from 'src/app/shared/ui/directives/error-text.directive';
 import { GuildActionsService } from '../../data-access/guild-actions.service';
 import { GuildEditFormService } from '../../data-access/guild-edit-form.service';
 
@@ -42,19 +35,16 @@ import { GuildEditFormService } from '../../data-access/guild-edit-form.service'
     FormsModule,
     ReactiveFormsModule,
     SearchItemsComponent,
-    ErrorTextDirective,
     CustomInputComponent,
     GreenButtonDirective,
     RedButtonDirective,
     SpinnerComponent,
-    DynamicValidatorMessageDirective
+    DynamicValidatorMessageDirective,
   ],
 })
 export class GuildEditComponent implements OnInit, OnDestroy {
-  gas = inject(GuildActionsService);
-  gefs = inject(GuildEditFormService);
-  fb = inject(FormBuilder);
-  destroyRef = inject(DestroyRef);
+  protected gas = inject(GuildActionsService);
+  private gefs = inject(GuildEditFormService);
   @Input({ required: true }) guild!: Guild | null;
   @Input({ required: true }) searchNewLeaderResults!: Character[] | null;
   @Input({ required: true }) searchNewMemberResults!: Character[] | null;
@@ -77,19 +67,27 @@ export class GuildEditComponent implements OnInit, OnDestroy {
     oldMember: Character;
   }>();
   @Output() closeEdit = new EventEmitter<void>();
-  updateGuildNameForm!: FormGroup;
-  updateGuildLeaderForm!: FormGroup;
-  addMemberForm!: FormGroup;
-  toggleNewLeaderSearchContainer = new BehaviorSubject<boolean>(false);
-  toggleNewMemberSearchContainer = new BehaviorSubject<boolean>(false);
+  protected updateGuildNameForm!: FormGroup;
+  protected updateGuildLeaderForm!: FormGroup;
+  protected addMemberForm!: FormGroup;
+  protected toggleNewLeaderSearchContainer = new BehaviorSubject<boolean>(
+    false
+  );
+  protected toggleNewMemberSearchContainer = new BehaviorSubject<boolean>(
+    false
+  );
 
   constructor() {
     this.updateGuildNameForm = this.gefs.initializeUpdateNameForm();
   }
 
   ngOnInit(): void {
-    this.addMemberForm = this.gefs.initializeAddMemberForm(this.guild?._id || null);
-    this.updateGuildLeaderForm = this.gefs.initializeUpdateLeaderForm(this.guild?._id || null);
+    this.addMemberForm = this.gefs.initializeAddMemberForm(
+      this.guild?._id || null
+    );
+    this.updateGuildLeaderForm = this.gefs.initializeUpdateLeaderForm(
+      this.guild?._id || null
+    );
     this.updateGuildNameForm.patchValue({
       name: this.guild?.name,
     });
@@ -97,14 +95,16 @@ export class GuildEditComponent implements OnInit, OnDestroy {
       leader: this.guild?.leader?.name,
     });
     this.gefs.initialName$.next(this.updateGuildNameForm.get('name')?.value);
-    this.gefs.initialLeader$.next(this.updateGuildLeaderForm.get('leader')?.value);
+    this.gefs.initialLeader$.next(
+      this.updateGuildLeaderForm.get('leader')?.value
+    );
   }
 
   ngOnDestroy(): void {
     this.closeEdit.emit();
   }
 
-  trackBy(index: number): number {
+  protected trackBy(index: number): number {
     return index;
   }
 }

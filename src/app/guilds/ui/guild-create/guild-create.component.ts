@@ -9,7 +9,6 @@ import {
 } from '@angular/core';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
-import { CharacterApiService } from 'src/app/shared/data-access/character-api.service';
 import { DynamicValidatorMessageDirective } from 'src/app/shared/form/dynamic-validator-message.directive';
 import { Character } from 'src/app/shared/interfaces/character.interface';
 import { CustomInputComponent } from 'src/app/shared/ui/components/custom-input/custom-input.component';
@@ -17,7 +16,6 @@ import { DividerDropdownComponent } from 'src/app/shared/ui/components/divider-d
 import { SearchItemsComponent } from 'src/app/shared/ui/components/search-items/search-items.component';
 import { SpinnerComponent } from 'src/app/shared/ui/components/spinner/spinner.component';
 import { CreateButtonDirective } from 'src/app/shared/ui/directives/button/create-button.directive';
-import { ErrorTextDirective } from 'src/app/shared/ui/directives/error-text.directive';
 import { GuildActionsService } from '../../data-access/guild-actions.service';
 import { GuildFormService } from '../../data-access/guild-form.service';
 import { GuildLoadingService } from '../../data-access/guild-loading.service';
@@ -30,7 +28,6 @@ import { GuildLoadingService } from '../../data-access/guild-loading.service';
     FormsModule,
     ReactiveFormsModule,
     SearchItemsComponent,
-    ErrorTextDirective,
     DividerDropdownComponent,
     CustomInputComponent,
     CreateButtonDirective,
@@ -42,17 +39,16 @@ import { GuildLoadingService } from '../../data-access/guild-loading.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GuildCreateComponent {
-  gfs = inject(GuildFormService);
-  ls = inject(GuildLoadingService);
-  gas = inject(GuildActionsService);
-  characterApiService = inject(CharacterApiService);
+  private gfs = inject(GuildFormService);
+  protected ls = inject(GuildLoadingService);
+  protected gas = inject(GuildActionsService);
   @Input({ required: true }) searchLeaderResults!: Character[] | null;
   @Output() createGuild = new EventEmitter<{
     guildForm: FormGroup;
   }>();
   @Output() searchLeaderResultsQueryChange = new EventEmitter<string>();
-  guildForm!: FormGroup;
-  toggleSearchContainer = new BehaviorSubject<boolean>(false);
+  protected guildForm!: FormGroup;
+  protected toggleSearchContainer = new BehaviorSubject<boolean>(false);
 
   constructor() {
     this.guildForm = this.gfs.initializeGuildForm();

@@ -24,10 +24,10 @@ import { CharacterSortParams } from 'src/app/characters/interfaces/character-sor
   providedIn: 'root',
 })
 export class CharacterService {
-  characterApiService = inject(CharacterApiService);
-  router = inject(Router);
-  route = inject(ActivatedRoute);
-  ls = inject(CharacterLoadingService);
+  private characterApiService = inject(CharacterApiService);
+  private router = inject(Router);
+  private route = inject(ActivatedRoute);
+  private ls = inject(CharacterLoadingService);
   currentPage$ = new BehaviorSubject<number>(1);
   pageSize$ = new BehaviorSubject<number>(10);
   sortParams$ = new BehaviorSubject<CharacterSortParams>({
@@ -63,7 +63,12 @@ export class CharacterService {
     ];
     this.ls.waitForObservables(observables);
 
-    combineLatest([this.currentPage$, this.pageSize$, this.sortParams$, this.name$])
+    combineLatest([
+      this.currentPage$,
+      this.pageSize$,
+      this.sortParams$,
+      this.name$,
+    ])
       .pipe(
         distinctUntilChanged(),
         switchMap(([currentPage, pageSize, sortParams, name]) => {
@@ -73,7 +78,7 @@ export class CharacterService {
             pageSize: pageSize,
             sortBy: sortBy,
             sortOrder: sortOrder,
-            name: name
+            name: name,
           };
           return this.router.navigate([], {
             relativeTo: this.route,

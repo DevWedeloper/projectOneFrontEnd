@@ -1,5 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, TemplateRef, ViewChild, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  TemplateRef,
+  ViewChild,
+  inject,
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
 import {
@@ -36,21 +42,21 @@ import { GuildTableComponent } from './ui/guild-table/guild-table.component';
   ],
 })
 export class GuildsComponent {
-  characterApiService = inject(CharacterApiService);
-  guildApiService = inject(GuildApiService);
-  authService = inject(AuthService);
-  gs = inject(GuildService);
-  gas = inject(GuildActionsService);
-  route = inject(ActivatedRoute);
-  ms = inject(ModalService);
-  tableSearchQuery$ = new Subject<string>();
-  searchLeaderResults$ = new BehaviorSubject<Character[]>([]);
-  searchLeaderResultsQuery$ = new BehaviorSubject<string>('');
-  searchNewLeaderResults$ = new BehaviorSubject<Character[]>([]);
-  searchNewLeaderResultsQuery$ = new BehaviorSubject<string>('');
-  searchNewMemberResults$ = new BehaviorSubject<Character[]>([]);
-  searchNewMemberResultsQuery$ = new BehaviorSubject<string>('');
-  @ViewChild('modalTemplate') editComponent!: TemplateRef<HTMLElement>;
+  private characterApiService = inject(CharacterApiService);
+  private guildApiService = inject(GuildApiService);
+  protected authService = inject(AuthService);
+  protected gs = inject(GuildService);
+  protected gas = inject(GuildActionsService);
+  private route = inject(ActivatedRoute);
+  protected ms = inject(ModalService);
+  protected tableSearchQuery$ = new Subject<string>();
+  protected searchLeaderResults$ = new BehaviorSubject<Character[]>([]);
+  protected searchLeaderResultsQuery$ = new BehaviorSubject<string>('');
+  protected searchNewLeaderResults$ = new BehaviorSubject<Character[]>([]);
+  protected searchNewLeaderResultsQuery$ = new BehaviorSubject<string>('');
+  protected searchNewMemberResults$ = new BehaviorSubject<Character[]>([]);
+  protected searchNewMemberResultsQuery$ = new BehaviorSubject<string>('');
+  @ViewChild('modalTemplate') private editComponent!: TemplateRef<HTMLElement>;
 
   constructor() {
     this.route.queryParams

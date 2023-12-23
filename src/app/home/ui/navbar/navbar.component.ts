@@ -13,10 +13,9 @@ import { SettingsDropdownComponent } from '../settings-dropdown/settings-dropdow
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NavbarComponent {
-  hs = inject(HomeService);
-  ts = inject(ThemeService);
-
-  isMobile = window.innerWidth < 768;
+  protected hs = inject(HomeService);
+  protected ts = inject(ThemeService);
+  protected isMobile = window.innerWidth < 768;
 
   @HostListener('window:resize', ['$event'])
   onResize(): void {

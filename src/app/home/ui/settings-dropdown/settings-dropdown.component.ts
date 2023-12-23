@@ -2,16 +2,13 @@ import { animate, style, transition, trigger } from '@angular/animations';
 import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
-  DestroyRef,
   ElementRef,
   HostBinding,
   HostListener,
   QueryList,
-  Renderer2,
   ViewChildren,
-  inject,
+  inject
 } from '@angular/core';
 import { AuthService } from 'src/app/auth/auth.service';
 import { ThemeService } from 'src/app/shared/data-access/theme.service';
@@ -49,13 +46,9 @@ import { HomeService } from '../../data-access/home.service';
   ],
 })
 export class SettingsDropdownComponent {
-  ts = inject(ThemeService);
-  authService = inject(AuthService);
-  hs = inject(HomeService);
-  renderer = inject(Renderer2);
-  elementRef = inject(ElementRef);
-  destroyRef = inject(DestroyRef);
-  cdr = inject(ChangeDetectorRef);
+  protected ts = inject(ThemeService);
+  protected authService = inject(AuthService);
+  private hs = inject(HomeService);
   @HostBinding('@fadeInOut') animateElement = true;
   @ViewChildren('links') links!: QueryList<ElementRef>;
   private skipInitialCheck = true;

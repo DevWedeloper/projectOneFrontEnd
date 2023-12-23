@@ -6,25 +6,26 @@ import { ThemeService } from 'src/app/shared/data-access/theme.service';
   providedIn: 'root',
 })
 export class ChartColorService {
-  ts = inject(ThemeService);
-  style = getComputedStyle(document.body);
-  secondaryColor$ = new BehaviorSubject<string>('');
-  textColor$ = new BehaviorSubject<string>('');
-  getStyle$ = combineLatest([this.ts.styles$])
-  .pipe(
+  private ts = inject(ThemeService);
+  private style = getComputedStyle(document.body);
+  readonly secondaryColor$ = new BehaviorSubject<string>('');
+  readonly textColor$ = new BehaviorSubject<string>('');
+  readonly getStyle$ = combineLatest([this.ts.styles$]).pipe(
     map(([styles]) => {
       this.secondaryColor$.next(
-        styles?.getPropertyValue('--secondary-color') || this.style.getPropertyValue('--secondary-color')
+        styles?.getPropertyValue('--secondary-color') ||
+          this.style.getPropertyValue('--secondary-color')
       );
       this.textColor$.next(
-        styles?.getPropertyValue('--text-color') || this.style.getPropertyValue('--text-color')
+        styles?.getPropertyValue('--text-color') ||
+          this.style.getPropertyValue('--text-color')
       );
     })
   );
-  healthColor = 'lightgreen';
-  strengthColor = 'lightblue';
-  agilityColor = 'pink';
-  intelligenceColor = 'yellow';
-  armorColor = 'brown';
-  critChanceColor = 'orange';
+  readonly healthColor = 'lightgreen';
+  readonly strengthColor = 'lightblue';
+  readonly agilityColor = 'pink';
+  readonly intelligenceColor = 'yellow';
+  readonly armorColor = 'brown';
+  readonly critChanceColor = 'orange';
 }

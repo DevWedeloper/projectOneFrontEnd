@@ -27,7 +27,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CustomInputComponent implements ControlValueAccessor {
-  cdr = inject(ChangeDetectorRef);
+  private cdr = inject(ChangeDetectorRef);
   @Input({ required: true }) type!: string;
   @Input({ required: true }) id!: string;
   @Input({ required: true }) label!: string;
@@ -36,8 +36,8 @@ export class CustomInputComponent implements ControlValueAccessor {
   @Output() focusEvent = new EventEmitter<void>();
   @Output() clickEvent = new EventEmitter<void>();
 
-  onChange: any = () => {};
-  onTouch: any = () => {};
+  private onChange: any = () => {};
+  protected onTouch: any = () => {};
 
   registerOnChange(fn: any): void {
     this.onChange = fn;

@@ -30,9 +30,9 @@ import { ValidatorMessageContainerDirective } from '../shared/form/validator-mes
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginComponent {
-  authService = inject(AuthService);
-  fb = inject(FormBuilder);
-  loginForm!: FormGroup;
+  protected authService = inject(AuthService);
+  private fb = inject(FormBuilder);
+  protected loginForm!: FormGroup;
 
   constructor() {
     this.loginForm = this.fb.group({

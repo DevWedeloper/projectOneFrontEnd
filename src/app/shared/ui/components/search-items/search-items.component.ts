@@ -9,7 +9,6 @@ import {
   OnDestroy,
   Output,
   QueryList,
-  Renderer2,
   ViewChildren,
   inject,
 } from '@angular/core';
@@ -27,8 +26,7 @@ import { Guild } from '../../../interfaces/guild.interface';
 export class SearchItemsComponent<T extends Character | Guild>
   implements OnDestroy
 {
-  elementRef = inject(ElementRef);
-  renderer = inject(Renderer2);
+  private elementRef = inject(ElementRef);
   @Input({ required: true }) searchResults: T[] | null = [];
   @Output() selectedItem = new EventEmitter<Character | Guild>();
   @Output() closeComponent = new EventEmitter<void>();
@@ -99,7 +97,7 @@ export class SearchItemsComponent<T extends Character | Guild>
     }
   }
 
-  trackBy(index: number): number {
+  protected trackBy(index: number): number {
     return index;
   }
 }
