@@ -63,7 +63,12 @@ export class CharacterService {
     ];
     this.ls.waitForObservables(observables);
 
-    combineLatest([this.currentPage$, this.pageSize$, this.sortParams$, this.name$])
+    combineLatest([
+      this.currentPage$,
+      this.pageSize$,
+      this.sortParams$,
+      this.name$,
+    ])
       .pipe(
         distinctUntilChanged(),
         switchMap(([currentPage, pageSize, sortParams, name]) => {
@@ -73,7 +78,7 @@ export class CharacterService {
             pageSize: pageSize,
             sortBy: sortBy,
             sortOrder: sortOrder,
-            name: name
+            name: name,
           };
           return this.router.navigate([], {
             relativeTo: this.route,
