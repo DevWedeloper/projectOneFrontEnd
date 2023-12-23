@@ -2,7 +2,6 @@ import { animate, style, transition, trigger } from '@angular/animations';
 import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
   DestroyRef,
   ElementRef,
@@ -11,7 +10,7 @@ import {
   QueryList,
   Renderer2,
   ViewChildren,
-  inject,
+  inject
 } from '@angular/core';
 import { AuthService } from 'src/app/auth/auth.service';
 import { ThemeService } from 'src/app/shared/data-access/theme.service';
@@ -55,7 +54,6 @@ export class SettingsDropdownComponent {
   renderer = inject(Renderer2);
   elementRef = inject(ElementRef);
   destroyRef = inject(DestroyRef);
-  cdr = inject(ChangeDetectorRef);
   @HostBinding('@fadeInOut') animateElement = true;
   @ViewChildren('links') links!: QueryList<ElementRef>;
   private skipInitialCheck = true;
