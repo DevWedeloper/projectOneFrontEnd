@@ -3,12 +3,10 @@ import {
   ChangeDetectionStrategy,
   Component,
   ContentChild,
-  DestroyRef,
   EventEmitter,
   Input,
   Output,
-  TemplateRef,
-  inject
+  TemplateRef
 } from '@angular/core';
 import { Character } from '../../../interfaces/character.interface';
 import { Guild } from '../../../interfaces/guild.interface';
@@ -23,7 +21,6 @@ import { TableSkeletonComponent } from '../skeleton/table-skeleton/table-skeleto
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TableComponent<T extends Character | Guild> {
-  destroyRef = inject(DestroyRef);
   @Input({ required: true }) loading!: boolean | null;
   @Input() data: T[] | undefined = [];
   @Output() tableLoaded = new EventEmitter<boolean>();
