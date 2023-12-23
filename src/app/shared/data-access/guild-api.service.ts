@@ -14,7 +14,10 @@ export class GuildApiService {
   private http = inject(HttpClient);
   private url = environment.baseUrl;
 
-  createGuild(guildData: { name: string, character: string }): Observable<Guild> {
+  createGuild(guildData: {
+    name: string;
+    character: string;
+  }): Observable<Guild> {
     const url = `${this.url}/guild`;
     return this.http.post<Guild>(url, guildData);
   }
@@ -62,18 +65,27 @@ export class GuildApiService {
     return this.http.get<Character[]>(url);
   }
 
-  updateGuildNameById(guildId: string, newData: string): Observable<GuildUpdateResponse> {
+  updateGuildNameById(
+    guildId: string,
+    newData: string
+  ): Observable<GuildUpdateResponse> {
     const url = `${this.url}/guild/name/${guildId}`;
     return this.http.put<GuildUpdateResponse>(url, newData);
   }
 
-  updateGuildLeaderById(guildId: string, newData: string): Observable<GuildUpdateResponse> {
+  updateGuildLeaderById(
+    guildId: string,
+    newData: string
+  ): Observable<GuildUpdateResponse> {
     const url = `${this.url}/guild/leader/${guildId}`;
     const reqBody = { character: newData };
     return this.http.put<GuildUpdateResponse>(url, reqBody);
   }
 
-  addMemberToGuildById(guildId: string, newData: string): Observable<GuildUpdateResponse> {
+  addMemberToGuildById(
+    guildId: string,
+    newData: string
+  ): Observable<GuildUpdateResponse> {
     const url = `${this.url}/guild/addMember/${guildId}`;
     const reqBody = { character: newData };
     return this.http.put<GuildUpdateResponse>(url, reqBody);
