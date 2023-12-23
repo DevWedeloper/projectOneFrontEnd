@@ -10,7 +10,7 @@ import { WellRoundedGuild } from '../interfaces/well-rounded-guild.interface';
   providedIn: 'root'
 })
 export class GuildStatsApiService {
-  http = inject(HttpClient);
+  private http = inject(HttpClient);
   private url = environment.baseUrl;
 
   getTopGuildsByAttribute(attribute: string): Observable<Guild[]> {
