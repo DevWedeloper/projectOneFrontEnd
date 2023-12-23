@@ -8,8 +8,10 @@ import {
   Validators,
 } from '@angular/forms';
 import { AuthService } from '../auth/auth.service';
+import { DynamicValidatorMessageDirective } from '../shared/form/dynamic-validator-message.directive';
 import { SpinnerComponent } from '../shared/ui/components/spinner/spinner.component';
 import { FocusVisibleDirective } from '../shared/ui/directives/focus-visible.directive';
+import { ValidatorMessageContainerDirective } from '../shared/form/validator-message-container.directive';
 
 @Component({
   selector: 'app-login',
@@ -20,6 +22,8 @@ import { FocusVisibleDirective } from '../shared/ui/directives/focus-visible.dir
     ReactiveFormsModule,
     FocusVisibleDirective,
     SpinnerComponent,
+    DynamicValidatorMessageDirective,
+    ValidatorMessageContainerDirective
   ],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
