@@ -26,14 +26,14 @@ import { isGuildFullApiService } from './is-guild-full-api.service';
   providedIn: 'root',
 })
 export class CharacterActionsService {
-  cs = inject(CharacterService);
-  characterApiService = inject(CharacterApiService);
-  checkGuildRelationStatusApiService = inject(
+  private cs = inject(CharacterService);
+  private characterApiService = inject(CharacterApiService);
+  private checkGuildRelationStatusApiService = inject(
     CheckGuildRelationStatusServiceApi
   );
-  isGuildFullApiService = inject(isGuildFullApiService);
-  characterTypeService = inject(CharacterTypeApiService);
-  characterTypes$ = this.characterTypeService.getCharacterTypes();
+  private isGuildFullApiService = inject(isGuildFullApiService);
+  private characterTypeService = inject(CharacterTypeApiService);
+  readonly characterTypes$ = this.characterTypeService.getCharacterTypes();
   characterCreate$ = new Subject<FormGroup>();
   characterUpdate$ = new Subject<{
     characterForm: FormGroup;

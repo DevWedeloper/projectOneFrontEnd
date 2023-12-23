@@ -19,9 +19,9 @@ import { GuildService } from './guild.service';
   providedIn: 'root',
 })
 export class GuildActionsService {
-  gs = inject(GuildService);
-  guildApiService = inject(GuildApiService);
-  checkGuildRelationStatusApiService = inject(
+  private gs = inject(GuildService);
+  private guildApiService = inject(GuildApiService);
+  private checkGuildRelationStatusApiService = inject(
     CheckGuildRelationStatusServiceApi
   );
   guildCreate$ = new Subject<{ guildForm: FormGroup }>();
