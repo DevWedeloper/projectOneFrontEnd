@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Guild } from 'src/app/shared/interfaces/guild.interface';
 import { environment } from 'src/environments/environment';
@@ -10,9 +10,8 @@ import { WellRoundedGuild } from '../interfaces/well-rounded-guild.interface';
   providedIn: 'root'
 })
 export class GuildStatsApiService {
+  http = inject(HttpClient);
   private url = environment.baseUrl;
-
-  constructor(private http: HttpClient) { }
 
   getTopGuildsByAttribute(attribute: string): Observable<Guild[]> {
     const url = `${this.url}/guildStats/topAttribute/${attribute}`;
