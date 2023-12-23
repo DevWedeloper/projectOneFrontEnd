@@ -22,9 +22,9 @@ import { CheckUniquenessService } from 'src/app/shared/data-access/check-uniquen
   providedIn: 'root',
 })
 export class GuildEditFormService {
-  fb = inject(FormBuilder);
-  checkUniquenessApi = inject(CheckUniquenessService);
-  checkIfMemberApi = inject(CheckIfMemberApiService);
+  private fb = inject(FormBuilder);
+  private checkUniquenessApi = inject(CheckUniquenessService);
+  private checkIfMemberApi = inject(CheckIfMemberApiService);
   initialName$ = new BehaviorSubject<string>('');
   initialLeader$ = new BehaviorSubject<string>('');
 
