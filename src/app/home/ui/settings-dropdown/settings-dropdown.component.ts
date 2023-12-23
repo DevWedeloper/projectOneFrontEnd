@@ -48,12 +48,12 @@ import { HomeService } from '../../data-access/home.service';
   ],
 })
 export class SettingsDropdownComponent {
-  ts = inject(ThemeService);
-  authService = inject(AuthService);
-  hs = inject(HomeService);
-  renderer = inject(Renderer2);
-  elementRef = inject(ElementRef);
-  destroyRef = inject(DestroyRef);
+  protected ts = inject(ThemeService);
+  protected authService = inject(AuthService);
+  private hs = inject(HomeService);
+  private renderer = inject(Renderer2);
+  private elementRef = inject(ElementRef);
+  private destroyRef = inject(DestroyRef);
   @HostBinding('@fadeInOut') animateElement = true;
   @ViewChildren('links') links!: QueryList<ElementRef>;
   private skipInitialCheck = true;
