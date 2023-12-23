@@ -11,10 +11,10 @@ import { CharacterUpdateResponse } from 'src/app/characters/interfaces/character
 })
 export class CharacterApiService {
   private http = inject(HttpClient);
-  private baseUrl = environment.baseUrl;
+  private url = environment.baseUrl;
 
   createCharacter(characterData: Character): Observable<Character> {
-    const url = `${this.baseUrl}/character`;
+    const url = `${this.url}/character`;
     return this.http.post<Character>(url, characterData);
   }
 
@@ -25,7 +25,7 @@ export class CharacterApiService {
     sortOrder?: string,
     searchQuery?: string
   ): Observable<CharacterPagination> {
-    let url = `${this.baseUrl}/character/?page=${page}&pageSize=${pageSize}`;
+    let url = `${this.url}/character/?page=${page}&pageSize=${pageSize}`;
     if (sortBy) {
       url += `&sortBy=${sortBy}`;
     }
@@ -39,22 +39,22 @@ export class CharacterApiService {
   }
 
   getCharacterById(characterId: string): Observable<Character> {
-    const url = `${this.baseUrl}/character/${characterId}`;
+    const url = `${this.url}/character/${characterId}`;
     return this.http.get<Character>(url);
   }
 
   getCharacterByName(name: string): Observable<Character> {
-    const url = `${this.baseUrl}/character/name/${name}`;
+    const url = `${this.url}/character/name/${name}`;
     return this.http.get<Character>(url);
   }
 
   searchCharactersByName(searchQuery: string): Observable<Character[]> {
-    const url = `${this.baseUrl}/character/search?name=${searchQuery}`;
+    const url = `${this.url}/character/search?name=${searchQuery}`;
     return this.http.get<Character[]>(url);
   }
 
   searchCharactersByAttribute(searchQuery: string): Observable<Character[]> {
-    const url = `${this.baseUrl}/character/searchAll?term=${searchQuery}`;
+    const url = `${this.url}/character/searchAll?term=${searchQuery}`;
     return this.http.get<Character[]>(url);
   }
 
@@ -63,24 +63,24 @@ export class CharacterApiService {
     newData: string | number,
     attribute: string
   ): Observable<CharacterUpdateResponse> {
-    const url = `${this.baseUrl}/character/${attribute}/${characterId}`;
+    const url = `${this.url}/character/${attribute}/${characterId}`;
     const requestBody = { [attribute]: newData };
     return this.http.put<CharacterUpdateResponse>(url, requestBody);
   }
 
   joinGuildById(characterId: string, newData: string): Observable<CharacterUpdateResponse> {
-    const url = `${this.baseUrl}/character/join/${characterId}`;
+    const url = `${this.url}/character/join/${characterId}`;
     const reqBody = { guild: newData };
     return this.http.put<CharacterUpdateResponse>(url, reqBody);
   }
 
   leaveGuildById(characterId: string): Observable<CharacterUpdateResponse> {
-    const url = `${this.baseUrl}/character/leave/${characterId}`;
+    const url = `${this.url}/character/leave/${characterId}`;
     return this.http.put<CharacterUpdateResponse>(url, {});
   }
 
   deleteCharacterById(characterId: string): Observable<Character> {
-    const url = `${this.baseUrl}/character/${characterId}`;
+    const url = `${this.url}/character/${characterId}`;
     return this.http.delete<Character>(url);
   }
 }
