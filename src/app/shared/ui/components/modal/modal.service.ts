@@ -1,4 +1,13 @@
-import { ApplicationRef, ComponentFactoryResolver, ComponentRef, EmbeddedViewRef, Injectable, Injector, TemplateRef, inject } from '@angular/core';
+import {
+  ApplicationRef,
+  ComponentFactoryResolver,
+  ComponentRef,
+  EmbeddedViewRef,
+  Injectable,
+  Injector,
+  TemplateRef,
+  inject,
+} from '@angular/core';
 import { ModalComponent } from './modal.component';
 import { BehaviorSubject } from 'rxjs';
 
@@ -20,7 +29,8 @@ export class ModalService<T> {
     }
 
     // Create a component factory
-    const factory = this.componentFactoryResolver.resolveComponentFactory(ModalComponent);
+    const factory =
+      this.componentFactoryResolver.resolveComponentFactory(ModalComponent);
 
     // Create a component reference
     this.modalComponentRef = factory.create(this.injector);
@@ -29,7 +39,8 @@ export class ModalService<T> {
     this.appRef.attachView(this.modalComponentRef.hostView);
 
     // Get the DOM element from the component
-    const domElem = (this.modalComponentRef.hostView as EmbeddedViewRef<T>).rootNodes[0] as HTMLElement;
+    const domElem = (this.modalComponentRef.hostView as EmbeddedViewRef<T>)
+      .rootNodes[0] as HTMLElement;
 
     // Append the DOM element to the body
     document.body.appendChild(domElem);
