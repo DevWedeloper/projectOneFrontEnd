@@ -16,7 +16,6 @@ import { DividerDropdownComponent } from 'src/app/shared/ui/components/divider-d
 import { SearchItemsComponent } from 'src/app/shared/ui/components/search-items/search-items.component';
 import { SpinnerComponent } from 'src/app/shared/ui/components/spinner/spinner.component';
 import { CreateButtonDirective } from 'src/app/shared/ui/directives/button/create-button.directive';
-import { ErrorTextDirective } from 'src/app/shared/ui/directives/error-text.directive';
 import { GuildActionsService } from '../../data-access/guild-actions.service';
 import { GuildFormService } from '../../data-access/guild-form.service';
 import { GuildLoadingService } from '../../data-access/guild-loading.service';
@@ -29,7 +28,6 @@ import { GuildLoadingService } from '../../data-access/guild-loading.service';
     FormsModule,
     ReactiveFormsModule,
     SearchItemsComponent,
-    ErrorTextDirective,
     DividerDropdownComponent,
     CustomInputComponent,
     CreateButtonDirective,

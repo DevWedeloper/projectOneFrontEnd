@@ -20,7 +20,6 @@ import { SearchItemsComponent } from 'src/app/shared/ui/components/search-items/
 import { SpinnerComponent } from 'src/app/shared/ui/components/spinner/spinner.component';
 import { GreenButtonDirective } from 'src/app/shared/ui/directives/button/green-button.directive';
 import { RedButtonDirective } from 'src/app/shared/ui/directives/button/red-button.directive';
-import { ErrorTextDirective } from 'src/app/shared/ui/directives/error-text.directive';
 import { CharacterActionsService } from '../../data-access/character-actions-service';
 import { CharacterFormService } from '../../data-access/character-form.service';
 import { CharacterJoinGuildFormService } from '../../data-access/character-join-guild-form.service';
@@ -41,7 +40,6 @@ import { CharacterFormComponent } from '../character-form/character-form.compone
     FormsModule,
     SearchItemsComponent,
     ReactiveFormsModule,
-    ErrorTextDirective,
     CustomInputComponent,
     GreenButtonDirective,
     RedButtonDirective,
