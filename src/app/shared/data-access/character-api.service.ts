@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -10,9 +10,8 @@ import { CharacterUpdateResponse } from 'src/app/characters/interfaces/character
   providedIn: 'root',
 })
 export class CharacterApiService {
+  private http = inject(HttpClient);
   baseUrl = environment.baseUrl;
-
-  constructor(private http: HttpClient) {}
 
   createCharacter(characterData: Character): Observable<Character> {
     const url = `${this.baseUrl}/character`;
