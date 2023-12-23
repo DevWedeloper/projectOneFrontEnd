@@ -54,7 +54,7 @@ export class CharactersComponent {
   protected searchResults$ = new BehaviorSubject<Guild[]>([]);
   protected guildSearchQuery$ = new BehaviorSubject<string>('');
   @ViewChild('modalTemplate')
-  protected editComponent!: TemplateRef<HTMLElement>;
+  private editComponent!: TemplateRef<HTMLElement>;
 
   constructor() {
     this.route.queryParams
