@@ -102,7 +102,7 @@ export class GuildEditComponent implements OnInit, OnDestroy {
     this.closeEdit.emit();
   }
 
-  trackBy(index: number): number {
+  protected trackBy(index: number): number {
     return index;
   }
 }
