@@ -20,8 +20,8 @@ import { CheckUniquenessService } from 'src/app/shared/data-access/check-uniquen
   providedIn: 'root',
 })
 export class CharacterJoinGuildFormService {
-  fb = inject(FormBuilder);
-  checkUniquenessApi = inject(CheckUniquenessService);
+  private fb = inject(FormBuilder);
+  private checkUniquenessApi = inject(CheckUniquenessService);
   initialName$ = new BehaviorSubject<string>('');
 
   initializeJoinGuildForm(): FormGroup {
