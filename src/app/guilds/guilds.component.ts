@@ -50,7 +50,7 @@ export class GuildsComponent {
   protected searchNewLeaderResultsQuery$ = new BehaviorSubject<string>('');
   protected searchNewMemberResults$ = new BehaviorSubject<Character[]>([]);
   protected searchNewMemberResultsQuery$ = new BehaviorSubject<string>('');
-  @ViewChild('modalTemplate') editComponent!: TemplateRef<HTMLElement>;
+  @ViewChild('modalTemplate') private editComponent!: TemplateRef<HTMLElement>;
 
   constructor() {
     this.route.queryParams
