@@ -31,17 +31,17 @@ import { CharacterFormComponent } from '../character-form/character-form.compone
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CharacterCreateComponent {
-  cfs = inject(CharacterFormService);
-  ls = inject(CharacterLoadingService);
-  cas = inject(CharacterActionsService);
+  private cfs = inject(CharacterFormService);
+  protected ls = inject(CharacterLoadingService);
+  protected cas = inject(CharacterActionsService);
   @Output() createCharacter = new EventEmitter<FormGroup>();
-  characterForm!: FormGroup;
+  protected characterForm!: FormGroup;
 
   constructor() {
     this.characterForm = this.cfs.initializeCharacterForm();
   }
 
-  resetForm(): void {
+  protected resetForm(): void {
     this.characterForm.reset();
     this.characterForm.get('characterType')?.setValue('');
   }
