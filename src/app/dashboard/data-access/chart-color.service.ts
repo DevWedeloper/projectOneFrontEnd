@@ -10,14 +10,15 @@ export class ChartColorService {
   private style = getComputedStyle(document.body);
   secondaryColor$ = new BehaviorSubject<string>('');
   textColor$ = new BehaviorSubject<string>('');
-  getStyle$ = combineLatest([this.ts.styles$])
-  .pipe(
+  getStyle$ = combineLatest([this.ts.styles$]).pipe(
     map(([styles]) => {
       this.secondaryColor$.next(
-        styles?.getPropertyValue('--secondary-color') || this.style.getPropertyValue('--secondary-color')
+        styles?.getPropertyValue('--secondary-color') ||
+          this.style.getPropertyValue('--secondary-color')
       );
       this.textColor$.next(
-        styles?.getPropertyValue('--text-color') || this.style.getPropertyValue('--text-color')
+        styles?.getPropertyValue('--text-color') ||
+          this.style.getPropertyValue('--text-color')
       );
     })
   );
