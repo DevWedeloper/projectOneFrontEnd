@@ -23,7 +23,7 @@ import { CharacterFormComponent } from '../character-form/character-form.compone
     CharacterFormComponent,
     DividerDropdownComponent,
     CreateButtonDirective,
-    SpinnerComponent
+    SpinnerComponent,
   ],
   templateUrl: './character-create.component.html',
   styleUrls: ['./character-create.component.scss'],
