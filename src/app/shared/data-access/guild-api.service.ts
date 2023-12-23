@@ -11,8 +11,8 @@ import { GuildPagination } from '../../guilds/interfaces/guild-pagination.interf
   providedIn: 'root',
 })
 export class GuildApiService {
-  http = inject(HttpClient);
-  baseUrl = environment.baseUrl;
+  private http = inject(HttpClient);
+  private baseUrl = environment.baseUrl;
 
   createGuild(guildData: { name: string, character: string }): Observable<Guild> {
     const url = `${this.baseUrl}/guild`;
