@@ -1,4 +1,10 @@
-import { ChangeDetectionStrategy, Component, TemplateRef, ViewChild, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  TemplateRef,
+  ViewChild,
+  inject,
+} from '@angular/core';
 import { AuthService } from 'src/app/auth/auth.service';
 
 import { CommonModule } from '@angular/common';
@@ -47,7 +53,8 @@ export class CharactersComponent {
   protected tableSearchQuery$ = new Subject<string>();
   protected searchResults$ = new BehaviorSubject<Guild[]>([]);
   protected guildSearchQuery$ = new BehaviorSubject<string>('');
-  @ViewChild('modalTemplate') protected editComponent!: TemplateRef<HTMLElement>;
+  @ViewChild('modalTemplate')
+  protected editComponent!: TemplateRef<HTMLElement>;
 
   constructor() {
     this.route.queryParams
