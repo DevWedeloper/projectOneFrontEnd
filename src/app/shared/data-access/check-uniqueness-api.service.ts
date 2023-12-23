@@ -7,8 +7,8 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root',
 })
 export class CheckUniquenessService {
-  http = inject(HttpClient);
-  baseUrl = environment.baseUrl;
+  private http = inject(HttpClient);
+  private baseUrl = environment.baseUrl;
 
   checkCharacterNameUniqueness(name: string): Observable<{ message: string }> {
     const url = `${this.baseUrl}/character/unique`;
