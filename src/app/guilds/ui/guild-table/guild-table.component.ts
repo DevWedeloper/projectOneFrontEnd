@@ -76,7 +76,7 @@ export class GuildTableComponent implements AfterViewInit {
       });
   }
 
-  toggleSort(header: GuildSortParams['sortBy']): void {
+  protected toggleSort(header: GuildSortParams['sortBy']): void {
     if (this.gs.sortParams$.value.sortBy === header) {
       this.sortParamsChange.emit({
         sortBy: header,
@@ -88,7 +88,7 @@ export class GuildTableComponent implements AfterViewInit {
     }
   }
 
-  getSortArrow(header: string): string {
+  protected getSortArrow(header: string): string {
     if (this.gs.sortParams$.value.sortBy === header) {
       if (this.gs.sortParams$.value.sortOrder === 'asc') {
         return '&#x25B2;';
