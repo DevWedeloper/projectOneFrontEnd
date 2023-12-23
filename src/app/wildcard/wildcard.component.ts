@@ -13,8 +13,8 @@ import { BehaviorSubject } from 'rxjs';
   imports: [CommonModule]
 })
 export class WildcardComponent {
-  route = inject(ActivatedRoute);
-  url = new BehaviorSubject<string>('');
+  private route = inject(ActivatedRoute);
+  protected url = new BehaviorSubject<string>('');
 
   constructor() {
     this.route.url.pipe(takeUntilDestroyed()).subscribe((segments) => {
