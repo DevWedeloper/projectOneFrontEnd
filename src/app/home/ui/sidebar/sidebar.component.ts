@@ -13,7 +13,7 @@ import { HomeService } from '../../data-access/home.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SidebarComponent {
-  hs = inject(HomeService);
-  mediaMatcher = inject(MediaMatcher);
+  protected hs = inject(HomeService);
+  private mediaMatcher = inject(MediaMatcher);
   mobileQuery = this.mediaMatcher.matchMedia('(max-width: 768px)');
 }
