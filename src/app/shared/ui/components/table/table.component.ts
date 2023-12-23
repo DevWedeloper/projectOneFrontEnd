@@ -6,7 +6,7 @@ import {
   EventEmitter,
   Input,
   Output,
-  TemplateRef
+  TemplateRef,
 } from '@angular/core';
 import { Character } from '../../../interfaces/character.interface';
 import { Guild } from '../../../interfaces/guild.interface';
@@ -31,7 +31,9 @@ export class TableComponent<T extends Character | Guild> {
   @ContentChild('headersTemplate') protected headers:
     | TemplateRef<HTMLElement>
     | undefined;
-  @ContentChild('rowsTemplate') protected rows: TemplateRef<HTMLElement> | undefined;
+  @ContentChild('rowsTemplate') protected rows:
+    | TemplateRef<HTMLElement>
+    | undefined;
   @ContentChild('paginationTemplate') protected pagination:
     | TemplateRef<HTMLElement>
     | undefined;
