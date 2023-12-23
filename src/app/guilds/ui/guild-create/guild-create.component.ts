@@ -42,17 +42,17 @@ import { GuildLoadingService } from '../../data-access/guild-loading.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GuildCreateComponent {
-  gfs = inject(GuildFormService);
-  ls = inject(GuildLoadingService);
-  gas = inject(GuildActionsService);
-  characterApiService = inject(CharacterApiService);
+  private gfs = inject(GuildFormService);
+  protected ls = inject(GuildLoadingService);
+  protected gas = inject(GuildActionsService);
+  private characterApiService = inject(CharacterApiService);
   @Input({ required: true }) searchLeaderResults!: Character[] | null;
   @Output() createGuild = new EventEmitter<{
     guildForm: FormGroup;
   }>();
   @Output() searchLeaderResultsQueryChange = new EventEmitter<string>();
-  guildForm!: FormGroup;
-  toggleSearchContainer = new BehaviorSubject<boolean>(false);
+  protected guildForm!: FormGroup;
+  protected toggleSearchContainer = new BehaviorSubject<boolean>(false);
 
   constructor() {
     this.guildForm = this.gfs.initializeGuildForm();
