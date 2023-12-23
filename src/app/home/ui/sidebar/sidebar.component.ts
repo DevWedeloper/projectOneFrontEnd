@@ -15,6 +15,5 @@ import { HomeService } from '../../data-access/home.service';
 export class SidebarComponent {
   hs = inject(HomeService);
   mediaMatcher = inject(MediaMatcher);
-
   mobileQuery = this.mediaMatcher.matchMedia('(max-width: 768px)');
 }
