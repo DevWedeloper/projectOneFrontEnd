@@ -15,7 +15,6 @@ export class PaginationComponent implements OnChanges {
   @Input() pageSize: number | null = 10;
   @Input() total: number | undefined = 0;
   @Output() changePage = new EventEmitter<number>();
-
   pages: (number | '...')[] = [];
   pagesCount = 1;
   maxVisiblePages = 7;
