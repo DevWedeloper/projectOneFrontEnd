@@ -11,7 +11,6 @@ import { CustomInputComponent } from 'src/app/shared/ui/components/custom-input/
 import { ErrorTextDirective } from 'src/app/shared/ui/directives/error-text.directive';
 import { FocusVisibleDirective } from 'src/app/shared/ui/directives/focus-visible.directive';
 import { CharacterActionsService } from '../../data-access/character-actions-service';
-import { CharacterFormService } from '../../data-access/character-form.service';
 
 @Component({
   selector: 'app-character-form',
@@ -32,5 +31,4 @@ import { CharacterFormService } from '../../data-access/character-form.service';
 export class CharacterFormComponent {
   @Input() characterForm!: FormGroup;
   cas = inject(CharacterActionsService);
-  cfs = inject(CharacterFormService);
 }
