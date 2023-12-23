@@ -97,7 +97,7 @@ export class SearchItemsComponent<T extends Character | Guild>
     }
   }
 
-  trackBy(index: number): number {
+  protected trackBy(index: number): number {
     return index;
   }
 }
