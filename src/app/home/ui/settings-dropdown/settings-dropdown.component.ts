@@ -3,12 +3,10 @@ import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
-  DestroyRef,
   ElementRef,
   HostBinding,
   HostListener,
   QueryList,
-  Renderer2,
   ViewChildren,
   inject
 } from '@angular/core';
@@ -51,9 +49,6 @@ export class SettingsDropdownComponent {
   protected ts = inject(ThemeService);
   protected authService = inject(AuthService);
   private hs = inject(HomeService);
-  private renderer = inject(Renderer2);
-  private elementRef = inject(ElementRef);
-  private destroyRef = inject(DestroyRef);
   @HostBinding('@fadeInOut') animateElement = true;
   @ViewChildren('links') links!: QueryList<ElementRef>;
   private skipInitialCheck = true;
