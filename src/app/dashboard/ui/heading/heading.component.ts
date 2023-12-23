@@ -12,7 +12,7 @@ import { HeadingSkeletonComponent } from '../skeletons/heading-skeleton/heading-
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HeadingComponent {
-  ls = inject(DashboardLoadingService);
+  protected ls = inject(DashboardLoadingService);
   @Input({ required: true }) label!: string;
   @Input({ required: true }) loading!: boolean | null;
 }
