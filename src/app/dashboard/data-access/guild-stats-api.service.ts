@@ -7,7 +7,7 @@ import { AverageGuildStats } from '../interfaces/guild-average-attribute.interfa
 import { WellRoundedGuild } from '../interfaces/well-rounded-guild.interface';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class GuildStatsApiService {
   private http = inject(HttpClient);
@@ -23,7 +23,9 @@ export class GuildStatsApiService {
     return this.http.get<WellRoundedGuild[]>(url);
   }
 
-  getTopGuildsByAverageAttribute(attribute: string): Observable<AverageGuildStats[]> {
+  getTopGuildsByAverageAttribute(
+    attribute: string
+  ): Observable<AverageGuildStats[]> {
     const url = `${this.url}/guildStats/averageAttribute/${attribute}`;
     return this.http.get<AverageGuildStats[]>(url);
   }

@@ -8,7 +8,7 @@ import { AverageCharacterStats } from '../interfaces/character-average-interface
 import { CharacterDistributionByType } from '../interfaces/character-distribution.interface';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CharacterStatsApiService {
   private http = inject(HttpClient);
