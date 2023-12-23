@@ -7,13 +7,9 @@ import {
   OnDestroy,
   OnInit,
   Output,
-  inject
+  inject,
 } from '@angular/core';
-import {
-  FormGroup,
-  FormsModule,
-  ReactiveFormsModule
-} from '@angular/forms';
+import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 import { DynamicValidatorMessageDirective } from 'src/app/shared/form/dynamic-validator-message.directive';
 import { Character } from 'src/app/shared/interfaces/character.interface';
@@ -50,7 +46,7 @@ import { CharacterFormComponent } from '../character-form/character-form.compone
     GreenButtonDirective,
     RedButtonDirective,
     SpinnerComponent,
-    DynamicValidatorMessageDirective
+    DynamicValidatorMessageDirective,
   ],
 })
 export class CharacterEditComponent implements OnInit, OnDestroy {
