@@ -25,14 +25,14 @@ export class TableComponent<T extends Character | Guild> {
   @Input() data: T[] | undefined = [];
   @Output() tableLoaded = new EventEmitter<boolean>();
   @ContentChild('searchTemplate') search: TemplateRef<HTMLElement> | undefined;
-  @ContentChild('pageSizeTemplate') pageSize:
+  @ContentChild('pageSizeTemplate') protected pageSize:
     | TemplateRef<HTMLElement>
     | undefined;
-  @ContentChild('headersTemplate') headers:
+  @ContentChild('headersTemplate') protected headers:
     | TemplateRef<HTMLElement>
     | undefined;
-  @ContentChild('rowsTemplate') rows: TemplateRef<HTMLElement> | undefined;
-  @ContentChild('paginationTemplate') pagination:
+  @ContentChild('rowsTemplate') protected rows: TemplateRef<HTMLElement> | undefined;
+  @ContentChild('paginationTemplate') protected pagination:
     | TemplateRef<HTMLElement>
     | undefined;
 
