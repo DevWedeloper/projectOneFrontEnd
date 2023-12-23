@@ -29,6 +29,6 @@ import { CharacterActionsService } from '../../data-access/character-actions-ser
   ],
 })
 export class CharacterFormComponent {
-  @Input() characterForm!: FormGroup;
   protected cas = inject(CharacterActionsService);
+  @Input() characterForm!: FormGroup;
 }
