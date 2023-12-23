@@ -25,34 +25,34 @@ interface TopCharactersByAttributeOptions {
   providedIn: 'root',
 })
 export class CharacterStatsService {
-  characterStatsApiService = inject(CharacterStatsApiService);
-  ccs = inject(ChartColorService);
-  ls = inject(DashboardLoadingService);
-  topCharactersByHealth$ = this.generateTopCharactersByAttribute({
+  private characterStatsApiService = inject(CharacterStatsApiService);
+  private ccs = inject(ChartColorService);
+  private ls = inject(DashboardLoadingService);
+  readonly topCharactersByHealth$ = this.generateTopCharactersByAttribute({
     attribute: 'health',
     backgroundColor: this.ccs.healthColor,
   });
-  topCharactersByStrength$ = this.generateTopCharactersByAttribute({
+  readonly topCharactersByStrength$ = this.generateTopCharactersByAttribute({
     attribute: 'strength',
     backgroundColor: this.ccs.strengthColor,
   });
-  topCharactersByAgility$ = this.generateTopCharactersByAttribute({
+  readonly topCharactersByAgility$ = this.generateTopCharactersByAttribute({
     attribute: 'agility',
     backgroundColor: this.ccs.agilityColor,
   });
-  topCharactersByIntelligence$ = this.generateTopCharactersByAttribute({
+  readonly topCharactersByIntelligence$ = this.generateTopCharactersByAttribute({
     attribute: 'intelligence',
     backgroundColor: this.ccs.intelligenceColor,
   });
-  topCharactersByArmor$ = this.generateTopCharactersByAttribute({
+  readonly topCharactersByArmor$ = this.generateTopCharactersByAttribute({
     attribute: 'armor',
     backgroundColor: this.ccs.armorColor,
   });
-  topCharactersByCritChance$ = this.generateTopCharactersByAttribute({
+  readonly topCharactersByCritChance$ = this.generateTopCharactersByAttribute({
     attribute: 'critChance',
     backgroundColor: this.ccs.critChanceColor,
   });
-  topWellRoundedCharacters$ = this.characterStatsApiService
+  readonly topWellRoundedCharacters$ = this.characterStatsApiService
     .getTopWellRoundedCharacters()
     .pipe(
       map((characters) => {
@@ -62,10 +62,10 @@ export class CharacterStatsService {
         return characters;
       })
     );
-  averageCharacterStats$ =
+  readonly averageCharacterStats$ =
     this.characterStatsApiService.getAverageCharacterStats();
-  radarChartCharacter$ = new BehaviorSubject<WellRoundedCharacter | null>(null);
-  radarChartDataset$ = combineLatest([
+  readonly radarChartCharacter$ = new BehaviorSubject<WellRoundedCharacter | null>(null);
+  readonly radarChartDataset$ = combineLatest([
     this.radarChartCharacter$,
     this.averageCharacterStats$,
   ]).pipe(
@@ -113,7 +113,7 @@ export class CharacterStatsService {
       return { labels, dataset };
     })
   );
-  characterDistributionByType$ = this.characterStatsApiService
+  readonly characterDistributionByType$ = this.characterStatsApiService
     .getCharacterDistributionByType()
     .pipe(
       map((data) => {
