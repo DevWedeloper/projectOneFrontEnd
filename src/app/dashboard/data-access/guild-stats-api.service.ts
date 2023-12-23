@@ -10,22 +10,22 @@ import { WellRoundedGuild } from '../interfaces/well-rounded-guild.interface';
   providedIn: 'root'
 })
 export class GuildStatsApiService {
-  private baseUrl = environment.baseUrl;
+  private url = environment.baseUrl;
 
   constructor(private http: HttpClient) { }
 
   getTopGuildsByAttribute(attribute: string): Observable<Guild[]> {
-    const url = `${this.baseUrl}/guildStats/topAttribute/${attribute}`;
+    const url = `${this.url}/guildStats/topAttribute/${attribute}`;
     return this.http.get<Guild[]>(url);
   }
 
   getTopWellRoundedGuilds(): Observable<WellRoundedGuild[]> {
-    const url = `${this.baseUrl}/guildStats/topWellRounded`;
+    const url = `${this.url}/guildStats/topWellRounded`;
     return this.http.get<WellRoundedGuild[]>(url);
   }
 
   getTopGuildsByAverageAttribute(attribute: string): Observable<AverageGuildStats[]> {
-    const url = `${this.baseUrl}/guildStats/averageAttribute/${attribute}`;
+    const url = `${this.url}/guildStats/averageAttribute/${attribute}`;
     return this.http.get<AverageGuildStats[]>(url);
   }
 }
