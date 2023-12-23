@@ -61,8 +61,6 @@ export class GuildTableComponent implements AfterViewInit {
   @Output() editGuild = new EventEmitter<Guild>();
   @Output() deleteGuild = new EventEmitter<Guild>();
   @ViewChild('perPage', { static: false }) private pageSizeElement?: ElementRef;
-  @ViewChild('sortBy', { static: false }) sortByElement?: ElementRef;
-  @ViewChild('sortOrder', { static: false }) sortOrderElement?: ElementRef;
 
   ngAfterViewInit(): void {
     this.gs.pageSize$
