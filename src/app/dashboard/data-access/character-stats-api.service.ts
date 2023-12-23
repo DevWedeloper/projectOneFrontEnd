@@ -11,7 +11,7 @@ import { CharacterDistributionByType } from '../interfaces/character-distributio
   providedIn: 'root'
 })
 export class CharacterStatsApiService {
-  http = inject(HttpClient);
+  private http = inject(HttpClient);
   private url = environment.baseUrl;
 
   getTopCharactersByAttribute(attribute: string): Observable<Character[]> {
