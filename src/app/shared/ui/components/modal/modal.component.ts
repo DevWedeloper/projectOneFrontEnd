@@ -5,12 +5,11 @@ import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
-  HostListener,
   Input,
   Renderer2,
   TemplateRef,
   ViewChild,
-  inject,
+  inject
 } from '@angular/core';
 import { ThemeService } from 'src/app/shared/data-access/theme.service';
 import { ModalService } from './modal.service';
@@ -44,9 +43,5 @@ export class ModalComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     this.renderer.selectRootElement(this.modalElement.nativeElement).focus();
-  }
-
-  @HostListener('document:keydown.escape', ['$event']) onEscapeKeydown() {
-    this.ms.close();
   }
 }
