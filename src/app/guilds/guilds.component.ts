@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
+  OnDestroy,
   TemplateRef,
   ViewChild,
   inject,
@@ -41,7 +42,7 @@ import { GuildTableComponent } from './ui/guild-table/guild-table.component';
     GuildEditComponent,
   ],
 })
-export class GuildsComponent {
+export class GuildsComponent implements OnDestroy {
   private characterApiService = inject(CharacterApiService);
   private guildApiService = inject(GuildApiService);
   protected authService = inject(AuthService);
@@ -142,5 +143,9 @@ export class GuildsComponent {
       .subscribe((characters) => {
         this.searchNewMemberResults$.next(characters);
       });
+  }
+
+  ngOnDestroy(): void {
+    this.gs.searchQuery$.next('');
   }
 }

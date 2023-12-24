@@ -1,6 +1,7 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  OnDestroy,
   TemplateRef,
   ViewChild,
   inject,
@@ -42,7 +43,7 @@ import { CharacterTableComponent } from './ui/character-table/character-table.co
     CharacterEditComponent,
   ],
 })
-export class CharactersComponent {
+export class CharactersComponent implements OnDestroy {
   protected authService = inject(AuthService);
   protected cas = inject(CharacterActionsService);
   private route = inject(ActivatedRoute);
@@ -103,5 +104,9 @@ export class CharactersComponent {
       .subscribe((guilds) => {
         this.searchResults$.next(guilds);
       });
+  }
+
+  ngOnDestroy(): void {
+    this.cs.searchQuery$.next('');
   }
 }
