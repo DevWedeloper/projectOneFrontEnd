@@ -1,4 +1,4 @@
-<div *ngIf="!loading">
+<ng-container *ngIf="!loading">
   <div class="options">
     <ng-container *ngTemplateOutlet="pageSize!" />
     <ng-container *ngTemplateOutlet="search!" />
@@ -25,7 +25,7 @@
   <div class="pagination">
     <ng-container *ngTemplateOutlet="pagination!" />
   </div>
-</div>
+</ng-container>
 
 <ng-template #defaultHeaderTemplate let-data>
   <th *ngFor="let header of data[0] | keyvalue">{{ header.key }}</th>

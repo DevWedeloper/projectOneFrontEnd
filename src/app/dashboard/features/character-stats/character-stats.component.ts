@@ -10,9 +10,6 @@ import { HeadingComponent } from '../../ui/heading/heading.component';
 
 @Component({
   selector: 'app-character-stats',
-  templateUrl: './character-stats.component.html',
-  styleUrls: ['./character-stats.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
     CommonModule,
@@ -20,8 +17,14 @@ import { HeadingComponent } from '../../ui/heading/heading.component';
     HorizontalBarChartComponent,
     RadarChartComponent,
     DoughnutChartComponent,
-    HeadingComponent
+    HeadingComponent,
   ],
+  templateUrl: './character-stats.component.html',
+  styleUrls: [
+    './character-stats.component.scss',
+    '../../ui/dashboard-shared.scss',
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CharacterStatsComponent {
   protected css = inject(CharacterStatsService);

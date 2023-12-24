@@ -13,10 +13,10 @@ import { HeadingComponent } from '../../ui/heading/heading.component';
     CommonModule,
     VerticalBarChartComponent,
     HorizontalBarChartComponent,
-    HeadingComponent
+    HeadingComponent,
   ],
   templateUrl: './guild-stats.component.html',
-  styleUrls: ['./guild-stats.component.scss'],
+  styleUrls: ['./guild-stats.component.scss', '../../ui/dashboard-shared.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GuildStatsComponent {

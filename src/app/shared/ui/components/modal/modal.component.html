@@ -9,7 +9,7 @@
         : 'rgba(0, 0, 0, 0.4)'
   }"
   (click)="ms.close()"
-  (keyup.Escape)="ms.close()"
+  (keydown.Escape)="ms.close()"
 ></div>
 <div [@fadeInOut] *ngIf="ms.isOpen$.value" class="modal-container">
   <div class="modal-content">
