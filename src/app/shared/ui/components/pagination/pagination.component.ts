@@ -11,9 +11,9 @@ import { FocusVisibleDirective } from '../../directives/focus-visible.directive'
     imports: [CommonModule, FocusVisibleDirective]
 })
 export class PaginationComponent implements OnChanges {
-  @Input() currentPage: number | null = 1;
-  @Input() pageSize: number | null = 10;
-  @Input() total: number | undefined = 0;
+  @Input({ required: true }) currentPage: number | null = 1;
+  @Input({ required: true }) pageSize: number | null = 10;
+  @Input({ required: true }) total: number | undefined = 0;
   @Output() changePage = new EventEmitter<number>();
   protected pages: (number | '...')[] = [];
   private pagesCount = 1;
