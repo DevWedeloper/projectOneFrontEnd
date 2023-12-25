@@ -1,10 +1,9 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  OnDestroy,
   TemplateRef,
   ViewChild,
-  inject,
+  inject
 } from '@angular/core';
 import { AuthService } from 'src/app/auth/auth.service';
 
@@ -43,7 +42,7 @@ import { CharacterTableComponent } from './ui/character-table/character-table.co
     CharacterEditComponent,
   ],
 })
-export class CharactersComponent implements OnDestroy {
+export class CharactersComponent {
   protected authService = inject(AuthService);
   protected cas = inject(CharacterActionsService);
   private route = inject(ActivatedRoute);
@@ -68,6 +67,7 @@ export class CharactersComponent implements OnDestroy {
           sortOrder: params['sortOrder'] || 'asc',
         });
         this.cs.name$.next(params['name'] || undefined);
+        this.cs.searchQuery$.next('');
 
         const characterName = params['name'];
         if (characterName) {
@@ -104,9 +104,5 @@ export class CharactersComponent implements OnDestroy {
       .subscribe((guilds) => {
         this.searchResults$.next(guilds);
       });
-  }
-
-  ngOnDestroy(): void {
-    this.cs.searchQuery$.next('');
   }
 }

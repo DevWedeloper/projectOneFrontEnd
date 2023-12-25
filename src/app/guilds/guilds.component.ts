@@ -2,10 +2,9 @@ import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
-  OnDestroy,
   TemplateRef,
   ViewChild,
-  inject,
+  inject
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
@@ -42,7 +41,7 @@ import { GuildTableComponent } from './ui/guild-table/guild-table.component';
     GuildEditComponent,
   ],
 })
-export class GuildsComponent implements OnDestroy {
+export class GuildsComponent {
   private characterApiService = inject(CharacterApiService);
   private guildApiService = inject(GuildApiService);
   protected authService = inject(AuthService);
@@ -70,6 +69,7 @@ export class GuildsComponent implements OnDestroy {
           sortOrder: params['sortOrder'] || 'asc',
         });
         this.gs.name$.next(params['name'] || undefined);
+        this.gs.searchQuery$.next('');
 
         const characterName = params['name'];
         if (characterName) {
@@ -143,9 +143,5 @@ export class GuildsComponent implements OnDestroy {
       .subscribe((characters) => {
         this.searchNewMemberResults$.next(characters);
       });
-  }
-
-  ngOnDestroy(): void {
-    this.gs.searchQuery$.next('');
   }
 }
