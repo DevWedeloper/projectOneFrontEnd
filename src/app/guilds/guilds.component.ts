@@ -71,8 +71,7 @@ export class GuildsComponent {
         this.gs.name$.next(params['name'] || undefined);
         this.gs.searchQuery$.next('');
 
-        const characterName = params['name'];
-        if (characterName) {
+        if (params['name']) {
           this.guildApiService
             .getGuildByName(params['name'])
             .pipe(takeUntilDestroyed())

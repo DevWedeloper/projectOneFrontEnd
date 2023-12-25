@@ -69,8 +69,7 @@ export class CharactersComponent {
         this.cs.name$.next(params['name'] || undefined);
         this.cs.searchQuery$.next('');
 
-        const characterName = params['name'];
-        if (characterName) {
+        if (params['name']) {
           this.characterApiService
             .getCharacterByName(params['name'])
             .pipe(takeUntilDestroyed())
