@@ -1,3 +1,8 @@
+:host {
+  display: flex;
+  gap: 0.5rem;
+}
+
 .pagination {
   display: flex;
   gap: 0.5rem;
@@ -41,4 +46,21 @@
 .page-link:focus,
 .page-link:hover {
   background-color: var(--primary-color);
+}
+
+input {
+  width: 3rem;
+  height: 100%;
+  border: 1px solid var(--text-color);
+  border-radius: 0.25rem;
+  background: transparent;
+  font-size: 1rem;
+  color: var(--text-color);
+  padding: 0.5rem;
+  margin-left: 0.25rem;
+  margin-right: 0.25rem;
+}
+
+input[type="number"]::-webkit-inner-spin-button {
+  display: none;
 }
