@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, OnChanges, Output, ViewChild, booleanAttribute } from '@angular/core';
 import { FocusVisibleDirective } from '../../directives/focus-visible.directive';
 
 @Component({
@@ -14,7 +14,9 @@ export class PaginationComponent implements OnChanges {
   @Input({ required: true }) currentPage: number | null = 1;
   @Input({ required: true }) pageSize: number | null = 10;
   @Input({ required: true }) total: number | undefined = 0;
+  @Input({ transform: booleanAttribute }) showGoToPage = false;
   @Output() changePage = new EventEmitter<number>();
+  @ViewChild('searchInput') searchInput!: ElementRef<HTMLInputElement>;
   protected pages: (number | '...')[] = [];
   private pagesCount = 1;
   private maxVisiblePages = 7;
@@ -129,6 +131,25 @@ export class PaginationComponent implements OnChanges {
     }
   }
 
+  protected emitGoToPage(value: string): void {
+    if (value === '') {
+      return;
+    }
+    const index = parseInt(value, 10);
+    switch (true) {
+      case index <= 0:
+        this.changePage.emit(1);
+        break;
+      case index > this.pagesCount:
+        this.changePage.emit(this.pagesCount);
+        break;
+      default:
+        this.changePage.emit(index);
+        break;
+    }
+    this.searchInput.nativeElement.value = '';
+  }
+  
   private showAllPage(): boolean {
     return this.pagesCount <= this.maxVisiblePages;
   }
