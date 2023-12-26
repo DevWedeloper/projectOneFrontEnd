@@ -27,7 +27,8 @@
   padding: 0.5rem;
 }
 
-.radar-chart-buttons.active {
+.radar-chart-buttons.active,
+.radar-chart-buttons:focus-visible {
   background-color: var(--primary-color);
 }
 
