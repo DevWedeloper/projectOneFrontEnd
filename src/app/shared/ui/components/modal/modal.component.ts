@@ -5,6 +5,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
+  HostListener,
   Input,
   Renderer2,
   TemplateRef,
@@ -43,5 +44,9 @@ export class ModalComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     this.renderer.selectRootElement(this.modalElement.nativeElement).focus();
+  }
+
+  @HostListener('document:keydown.escape', ['$event']) onEscapeKeydown() {
+    this.ms.close();
   }
 }
