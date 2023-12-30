@@ -71,10 +71,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "projectOne:build:production"
+              "buildTarget": "projectOne:build:production"
             },
             "development": {
-              "browserTarget": "projectOne:build:development"
+              "buildTarget": "projectOne:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -82,7 +82,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "projectOne:build"
+            "buildTarget": "projectOne:build"
           }
         },
         "test": {
