@@ -1,8 +1,9 @@
 <div class="content-container">
-  <app-character-create
-    *ngIf="authService.isCurrentUserAdmin$ | async"
-    (createCharacter)="cas.characterCreate$.next($event)"
-  />
+  @if (authService.isCurrentUserAdmin$ | async) {
+    <app-character-create
+      (createCharacter)="cas.characterCreate$.next($event)"
+    />
+  }
 
   <app-character-table
     [characterData]="cs.characterData$ | async"

@@ -1,7 +1,4 @@
-<app-table
-  [data]="characterData?.characters"
-  [loading]="ls.loading$ | async"
->
+<app-table [data]="characterData?.characters" [loading]="ls.loading$ | async">
   <ng-template #searchTemplate>
     <div>
       <input
@@ -63,15 +60,17 @@
       <span>Crit Chance</span>
       <span [innerHTML]="getSortArrow('critChance')"></span>
     </th>
-    <th *ngIf="isCurrentUserAdmin">Actions</th>
+    @if (isCurrentUserAdmin) {
+      <th>Actions</th>
+    }
   </ng-template>
 
   <ng-template #rowsTemplate let-character>
-    <td>{{ character.name | truncate : 15 }}</td>
+    <td>{{ character.name | truncate: 15 }}</td>
     <td>
-      <ng-container *ngIf="character.guild">
-        {{ character.guild.name | truncate : 15 }}
-      </ng-container>
+      @if (character.guild) {
+        {{ character.guild.name | truncate: 15 }}
+      }
     </td>
     <td>{{ character.characterType }}</td>
     <td>{{ character.health }}</td>
@@ -80,30 +79,31 @@
     <td>{{ character.intelligence }}</td>
     <td>{{ character.armor }}</td>
     <td>{{ (character.critChance * 100).toFixed(0) }}%</td>
-    <td *ngIf="isCurrentUserAdmin">
-      <div class="btn-container">
-        <button class="edit-btn" (click)="editCharacter.emit(character)">
-          Edit
-        </button>
-        <button
-          class="delete-btn"
-          (click)="deleteCharacter.emit(character)"
-          [disabled]="
-            (cas.deleteLoading$ | async) &&
-            cas.characterToUpdate$.value?._id === character._id
-          "
-        >
-          <app-spinner
-            [size]="20"
-            *ngIf="
+    @if (isCurrentUserAdmin) {
+      <td>
+        <div class="btn-container">
+          <button class="edit-btn" (click)="editCharacter.emit(character)">
+            Edit
+          </button>
+          <button
+            class="delete-btn"
+            (click)="deleteCharacter.emit(character)"
+            [disabled]="
               (cas.deleteLoading$ | async) &&
               cas.characterToUpdate$.value?._id === character._id
             "
-          />
-          Delete
-        </button>
-      </div>
-    </td>
+          >
+            @if (
+              (cas.deleteLoading$ | async) &&
+              cas.characterToUpdate$.value?._id === character._id
+            ) {
+              <app-spinner [size]="20" />
+            }
+            Delete
+          </button>
+        </div>
+      </td>
+    }
   </ng-template>
 
   <ng-template #paginationTemplate>

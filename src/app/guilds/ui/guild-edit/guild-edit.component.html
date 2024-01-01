@@ -1,4 +1,4 @@
-<ng-container *ngIf="updateGuildNameForm.statusChanges | async" />
+@if (updateGuildNameForm.statusChanges | async) {}
 
 <h2>Edit Guild</h2>
 <div class="actions-container">
@@ -10,28 +10,31 @@
         [label]="'Guild Name'"
         formControlName="name"
       />
-      <ng-container *ngIf="updateGuildNameForm.get('name')?.pending">
+      @if (updateGuildNameForm.get("name")?.pending) {
         <p style="color: aqua">Checking if unique..</p>
-      </ng-container>
+      }
     </div>
     <div class="btn-container">
-      <button
-        appGreenButton
-        *ngIf="
-          updateGuildNameForm.get('name')?.value !== guild?.name &&
-          updateGuildNameForm.valid
-        "
-        (click)="
-          updateGuildName.emit({
-            guildId: guild!._id,
-            newGuildNameForm: updateGuildNameForm
-          })
-        "
-        [disabled]="gas.updateNameLoading$ | async"
-      >
-        <app-spinner [size]="20" *ngIf="gas.updateNameLoading$ | async" />
-        Change
-      </button>
+      @if (
+        updateGuildNameForm.get("name")?.value !== guild?.name &&
+        updateGuildNameForm.valid
+      ) {
+        <button
+          appGreenButton
+          (click)="
+            updateGuildName.emit({
+              guildId: guild!._id,
+              newGuildNameForm: updateGuildNameForm
+            })
+          "
+          [disabled]="gas.updateNameLoading$ | async"
+        >
+          @if (gas.updateNameLoading$ | async) {
+            <app-spinner [size]="20" />
+          }
+          Change
+        </button>
+      }
     </div>
   </form>
 
@@ -51,40 +54,44 @@
           (focusEvent)="toggleNewLeaderSearchContainer.next(true)"
           (clickEvent)="toggleNewLeaderSearchContainer.next(true)"
         />
-        <app-search-items
-          *ngIf="toggleNewLeaderSearchContainer | async"
-          [searchResults]="searchNewLeaderResults"
-          (selectedItem)="
-            updateGuildLeaderForm.get('leader')?.setValue($event.name)
-          "
-          (closeComponent)="
-            toggleNewLeaderSearchContainer.next(false);
-            searchNewLeaderResultsQueryChange.emit('')
-          "
-        />
-        <ng-container *ngIf="updateGuildLeaderForm.get('leader')?.pending">
+        @if (toggleNewLeaderSearchContainer | async) {
+          <app-search-items
+            [searchResults]="searchNewLeaderResults"
+            (selectedItem)="
+              updateGuildLeaderForm.get('leader')?.setValue($event.name)
+            "
+            (closeComponent)="
+              toggleNewLeaderSearchContainer.next(false);
+              searchNewLeaderResultsQueryChange.emit('')
+            "
+          />
+        }
+        @if (updateGuildLeaderForm.get("leader")?.pending) {
           <p style="color: aqua">Checking if member..</p>
-        </ng-container>
+        }
       </div>
     </div>
     <div class="btn-container">
-      <button
-        appGreenButton
-        *ngIf="
-          updateGuildLeaderForm.get('leader')?.value !== guild?.leader?.name &&
-          updateGuildLeaderForm.valid
-        "
-        (click)="
-          updateGuildLeader.emit({
-            guildId: guild!._id,
-            newLeaderIdForm: updateGuildLeaderForm,
-          })
-        "
-        [disabled]="gas.updateLeaderLoading$ | async"
-      >
-        <app-spinner [size]="20" *ngIf="gas.updateLeaderLoading$ | async" />
-        Change
-      </button>
+      @if (
+        updateGuildLeaderForm.get("leader")?.value !== guild?.leader?.name &&
+        updateGuildLeaderForm.valid
+      ) {
+        <button
+          appGreenButton
+          (click)="
+            updateGuildLeader.emit({
+              guildId: guild!._id,
+              newLeaderIdForm: updateGuildLeaderForm
+            })
+          "
+          [disabled]="gas.updateLeaderLoading$ | async"
+        >
+          @if (gas.updateLeaderLoading$ | async) {
+            <app-spinner [size]="20" />
+          }
+          Change
+        </button>
+      }
     </div>
   </form>
 
@@ -104,68 +111,71 @@
           (focusEvent)="toggleNewMemberSearchContainer.next(true)"
           (clickEvent)="toggleNewMemberSearchContainer.next(true)"
         />
-        <app-search-items
-          *ngIf="toggleNewMemberSearchContainer | async"
-          [searchResults]="searchNewMemberResults"
-          (selectedItem)="addMemberForm.get('member')?.setValue($event.name)"
-          (closeComponent)="
-            toggleNewMemberSearchContainer.next(false);
-            searchNewMemberResultsQueryChange.emit('')
-          "
-        />
-        <ng-container *ngIf="addMemberForm.get('member')?.pending">
+        @if (toggleNewMemberSearchContainer | async) {
+          <app-search-items
+            [searchResults]="searchNewMemberResults"
+            (selectedItem)="addMemberForm.get('member')?.setValue($event.name)"
+            (closeComponent)="
+              toggleNewMemberSearchContainer.next(false);
+              searchNewMemberResultsQueryChange.emit('')
+            "
+          />
+        }
+        @if (addMemberForm.get("member")?.pending) {
           <p style="color: aqua">Checking if already a member..</p>
-        </ng-container>
+        }
       </div>
     </div>
     <div class="btn-container">
-      <button
-        appGreenButton
-        *ngIf="addMemberForm.get('member')?.value !== '' && addMemberForm.valid"
-        (click)="
-          addMember.emit({
-            guild: guild!,
-            newMemberForm: addMemberForm
-          })
-        "
-        [disabled]="gas.addMemberLoading$ | async"
-      >
-        <app-spinner [size]="20" *ngIf="gas.addMemberLoading$ | async" />
-        Confirm
-      </button>
+      @if (addMemberForm.get("member")?.value !== "" && addMemberForm.valid) {
+        <button
+          appGreenButton
+          (click)="
+            addMember.emit({
+              guild: guild!,
+              newMemberForm: addMemberForm
+            })
+          "
+          [disabled]="gas.addMemberLoading$ | async"
+        >
+          @if (gas.addMemberLoading$ | async) {
+            <app-spinner [size]="20" />
+          }
+          Confirm
+        </button>
+      }
     </div>
   </form>
 </div>
 
 <div class="members-container">
-  <div *ngFor="let member of guild?.members; trackBy: trackBy">
-    <div class="leader-text-container">
-      <p>
-        {{ member.name }}
-      </p>
-      <img
-        *ngIf="member._id === guild?.leader?._id"
-        src="assets/images/icons/crown.svg"
-        alt="Crown Logo"
-      />
-    </div>
-    <button
-      appRedButton
-      (click)="removeMember.emit({ guildId: guild!._id, oldMember: member })"
-      [disabled]="
-        ((gas.removeMemberLoading$ | async) &&
-          gas.memberToRemove$.value?._id === member._id) ||
-        member._id === guild?.leader?._id
-      "
-    >
-      <app-spinner
-        [size]="20"
-        *ngIf="
+  @for (member of guild?.members; track $index) {
+    <div>
+      <div class="leader-text-container">
+        <p>
+          {{ member.name }}
+        </p>
+        @if (member._id === guild?.leader?._id) {
+          <img src="assets/images/icons/crown.svg" alt="Crown Logo" />
+        }
+      </div>
+      <button
+        appRedButton
+        (click)="removeMember.emit({ guildId: guild!._id, oldMember: member })"
+        [disabled]="
+          ((gas.removeMemberLoading$ | async) &&
+            gas.memberToRemove$.value?._id === member._id) ||
+          member._id === guild?.leader?._id
+        "
+      >
+        @if (
           (gas.removeMemberLoading$ | async) &&
           gas.memberToRemove$.value?._id === member._id
-        "
-      />
-      Kick
-    </button>
-  </div>
+        ) {
+          <app-spinner [size]="20" />
+        }
+        Kick
+      </button>
+    </div>
+  }
 </div>

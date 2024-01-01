@@ -1,4 +1,4 @@
-<ng-container *ngIf="guildForm.statusChanges | async" />
+@if (guildForm.statusChanges | async) {}
 <app-divider-dropdown
   [label]="'Create Guild'"
   [loading]="ls.loading$ | async"
@@ -20,9 +20,9 @@
         [label]="'Guild Name'"
         formControlName="name"
       />
-      <ng-container *ngIf="guildForm.get('name')?.pending">
+      @if (guildForm.get("name")?.pending) {
         <p style="color: aqua">Checking if unique..</p>
-      </ng-container>
+      }
     </div>
 
     <div class="form-group">
@@ -40,18 +40,19 @@
           (focusEvent)="toggleSearchContainer.next(true)"
           (clickEvent)="toggleSearchContainer.next(true)"
         />
-        <app-search-items
-          *ngIf="toggleSearchContainer | async"
-          [searchResults]="searchLeaderResults"
-          (selectedItem)="guildForm.get('leader')?.setValue($event.name)"
-          (closeComponent)="
-            toggleSearchContainer.next(false);
-            searchLeaderResultsQueryChange.emit('')
-          "
-        />
-        <ng-container *ngIf="guildForm.get('leader')?.pending">
+        @if (toggleSearchContainer | async) {
+          <app-search-items
+            [searchResults]="searchLeaderResults"
+            (selectedItem)="guildForm.get('leader')?.setValue($event.name)"
+            (closeComponent)="
+              toggleSearchContainer.next(false);
+              searchLeaderResultsQueryChange.emit('')
+            "
+          />
+        }
+        @if (guildForm.get("leader")?.pending) {
           <p style="color: aqua">Checking if leader exists..</p>
-        </ng-container>
+        }
       </div>
     </div>
 
@@ -61,7 +62,9 @@
         type="submit"
         [disabled]="guildForm.invalid || (gas.createLoading$ | async)"
       >
-        <app-spinner [size]="25" *ngIf="gas.createLoading$ | async" />
+        @if (gas.createLoading$ | async) {
+          <app-spinner [size]="25" />
+        }
         Create Guild
       </button>
     </div>

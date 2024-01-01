@@ -1,4 +1,4 @@
-<ng-container *ngIf="!loading">
+@if (!loading) {
   <div class="options">
     <ng-container *ngTemplateOutlet="pageSize!" />
     <ng-container *ngTemplateOutlet="search!" />
@@ -11,28 +11,36 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let row of data; trackBy: trackBy">
-          <ng-container
-            *ngTemplateOutlet="
-              rows || defaultRowTemplate;
-              context: { $implicit: row }
-            "
-          />
-        </tr>
+        @for (row of data; track $index) {
+          <tr>
+            <ng-container
+              *ngTemplateOutlet="
+                rows || defaultRowTemplate;
+                context: { $implicit: row }
+              "
+            />
+          </tr>
+        }
       </tbody>
     </table>
   </div>
   <div class="pagination">
     <ng-container *ngTemplateOutlet="pagination!" />
   </div>
-</ng-container>
+}
 
 <ng-template #defaultHeaderTemplate let-data>
-  <th *ngFor="let header of data[0] | keyvalue">{{ header.key }}</th>
+  @for (header of data[0] | keyvalue; track $index) {
+    <th>{{ header.key }}</th>
+  }
 </ng-template>
 
 <ng-template #defaultRowTemplate let-row>
-  <td *ngFor="let row of row | keyvalue">{{ row.value }}</td>
+  @for (row of row | keyvalue; track $index) {
+    <td>{{ row.value }}</td>
+  }
 </ng-template>
 
-<app-table-skeleton *ngIf="loading" />
+@if (loading) {
+  <app-table-skeleton />
+}

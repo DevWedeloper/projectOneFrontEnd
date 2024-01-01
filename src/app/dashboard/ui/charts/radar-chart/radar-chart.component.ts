@@ -114,7 +114,4 @@ export class RadarChartComponent {
     this.resize$.pipe(takeUntilDestroyed()).subscribe();
   }
 
-  protected trackBy(index: number): number {
-    return index;
-  }
 }

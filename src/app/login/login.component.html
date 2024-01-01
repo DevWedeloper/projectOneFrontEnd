@@ -1,9 +1,5 @@
 <div class="form-container">
-  <form
-    class="form-box"
-    [formGroup]="loginForm"
-    (ngSubmit)="onSubmit()"
-  >
+  <form class="form-box" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
     <h2 class="form-title">Login</h2>
     <div class="form-group-container">
       <div class="form-group">
@@ -43,7 +39,9 @@
       type="submit"
       [disabled]="loginForm.invalid || (loading$ | async)"
     >
-      <app-spinner [size]="25" *ngIf="loading$ | async" />
+      @if (loading$ | async) {
+        <app-spinner [size]="25" />
+      }
       Login
     </button>
   </form>

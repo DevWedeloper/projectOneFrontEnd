@@ -1,3 +1,5 @@
-<div *ngFor="let error of errors | keyvalue; trackBy: trackBy" class="input-error">
-  {{ error.key | errorMessage: error.value }}
-</div>
+@for (error of errors | keyvalue; track error.key) {
+  <div class="input-error">
+    {{ error.key | errorMessage: error.value }}
+  </div>
+}

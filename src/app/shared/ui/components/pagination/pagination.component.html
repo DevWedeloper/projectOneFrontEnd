@@ -1,24 +1,27 @@
 <ul class="pagination">
-  <li
-    appFocusVisible
-    *ngFor="let item of pages; let index = index"
-    [ngClass]="{
-      'page-item': true,
-      active: item !== '...' && currentPage === item
-    }"
-    (click)="handlePageClick(item, index)"
-    (keyup.enter)="handlePageClick(item, index)"
-    tabindex="0"
-  >
-    <span class="page-link">{{ item !== "..." ? item : "..." }}</span>
-  </li>
-  <li *ngIf="showGoToPage">
-    Go to
-    <input
-      #searchInput
-      type="number"
-      (keydown.Enter)="emitGoToPage(searchInput.value)"
-    />
-    page
-  </li>
+  @for (item of pages; track index; let index = $index) {
+    <li
+      appFocusVisible
+      [ngClass]="{
+        'page-item': true,
+        active: item !== '...' && currentPage === item
+      }"
+      (click)="handlePageClick(item, index)"
+      (keyup.enter)="handlePageClick(item, index)"
+      tabindex="0"
+    >
+      <span class="page-link">{{ item !== "..." ? item : "..." }}</span>
+    </li>
+  }
+  @if (showGoToPage) {
+    <li>
+      Go to
+      <input
+        #searchInput
+        type="number"
+        (keydown.Enter)="emitGoToPage(searchInput.value)"
+      />
+      page
+    </li>
+  }
 </ul>

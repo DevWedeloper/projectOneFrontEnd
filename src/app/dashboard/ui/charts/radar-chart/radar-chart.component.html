@@ -1,43 +1,45 @@
-<div
-  class="radar-chart"
-  *ngIf="!loading && topWellRoundedCharacters"
-  [@smoothTransition]
->
-  <div class="radar-chart-text-container">
-    <div class="radar-chart-text">
-      <div
-        *ngFor="
-          let character of topWellRoundedCharacters;
-          let index = index;
-          trackBy: trackBy
-        "
-      >
-        <button
-          class="radar-chart-buttons"
-          [ngClass]="{ active: character._id === selectedCharacter?._id }"
-          (click)="selectedCharacterChange.emit(character)"
-        >
-          <p>{{ index + 1 }}.</p>
+@if (!loading && topWellRoundedCharacters) {
+  <div class="radar-chart" [@smoothTransition]>
+    <div class="radar-chart-text-container">
+      <div class="radar-chart-text">
+        @for (
+          character of topWellRoundedCharacters;
+          track index;
+          let index = $index
+        ) {
           <div>
-            <p>
-              {{ character.name }}
-            </p>
-            <p>({{ character.characterType }})</p>
+            <button
+              class="radar-chart-buttons"
+              [ngClass]="{ active: character._id === selectedCharacter?._id }"
+              (click)="selectedCharacterChange.emit(character)"
+            >
+              <p>{{ index + 1 }}.</p>
+              <div>
+                <p>
+                  {{ character.name }}
+                </p>
+                <p>({{ character.characterType }})</p>
+              </div>
+            </button>
           </div>
-        </button>
+        }
       </div>
     </div>
+    <div class="chart-container">
+      <canvas
+        baseChart
+        [datasets]="radarChartDatasets"
+        [options]="radarChartOptions"
+        [labels]="radarChartLabels"
+        [type]="'radar'"
+      >
+      </canvas>
+    </div>
   </div>
-  <div class="chart-container">
-    <canvas
-      baseChart
-      [datasets]="radarChartDatasets"
-      [options]="radarChartOptions"
-      [labels]="radarChartLabels"
-      [type]="'radar'"
-    >
-    </canvas>
-  </div>
-</div>
-<app-no-data *ngIf="!loading && !topWellRoundedCharacters" />
-<app-radar-chart-skeleton *ngIf="loading" />
+}
+@if (!loading && !topWellRoundedCharacters) {
+  <app-no-data />
+}
+@if (loading) {
+  <app-radar-chart-skeleton />
+}

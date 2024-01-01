@@ -1,12 +1,11 @@
 <div class="content-container">
-  <app-guild-create
-    *ngIf="authService.isCurrentUserAdmin$ | async"
-    [searchLeaderResults]="searchLeaderResults$ | async"
-    (createGuild)="gas.guildCreate$.next($event)"
-    (searchLeaderResultsQueryChange)="
-      searchLeaderResultsQuery$.next($event)
-    "
-  ></app-guild-create>
+  @if (authService.isCurrentUserAdmin$ | async) {
+    <app-guild-create
+      [searchLeaderResults]="searchLeaderResults$ | async"
+      (createGuild)="gas.guildCreate$.next($event)"
+      (searchLeaderResultsQueryChange)="searchLeaderResultsQuery$.next($event)"
+    />
+  }
 
   <app-guild-table
     [guildData]="gs.guildData$ | async"
@@ -23,7 +22,7 @@
       gs.name$.next(gas.guildToUpdate$.value!.name)
     "
     (deleteGuild)="gas.guildDelete$.next($event)"
-  ></app-guild-table>
+  />
 </div>
 
 <ng-template #modalTemplate>
@@ -42,5 +41,5 @@
     (addMember)="gas.guildAddMember$.next($event)"
     (removeMember)="gas.guildRemoveMember$.next($event)"
     (closeEdit)="ms.close(); gs.name$.next(undefined)"
-  ></app-guild-edit>
+  />
 </ng-template>
