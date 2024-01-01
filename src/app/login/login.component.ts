@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   FormBuilder,
   FormGroup,
@@ -7,11 +8,13 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { AuthService } from '../auth/auth.service';
+import { Store } from '@ngrx/store';
+import { authActions } from '../auth/state/auth.actions';
+import { selectHasLoginError, selectIsLoggingIn } from '../auth/state/auth.reducers';
 import { DynamicValidatorMessageDirective } from '../shared/form/dynamic-validator-message.directive';
+import { ValidatorMessageContainerDirective } from '../shared/form/validator-message-container.directive';
 import { SpinnerComponent } from '../shared/ui/components/spinner/spinner.component';
 import { FocusVisibleDirective } from '../shared/ui/directives/focus-visible.directive';
-import { ValidatorMessageContainerDirective } from '../shared/form/validator-message-container.directive';
 
 @Component({
   selector: 'app-login',
@@ -23,21 +26,40 @@ import { ValidatorMessageContainerDirective } from '../shared/form/validator-mes
     FocusVisibleDirective,
     SpinnerComponent,
     DynamicValidatorMessageDirective,
-    ValidatorMessageContainerDirective
+    ValidatorMessageContainerDirective,
   ],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginComponent {
-  protected authService = inject(AuthService);
   private fb = inject(FormBuilder);
   protected loginForm!: FormGroup;
+  private store = inject(Store);
+  private errors$ = this.store.select(selectHasLoginError);
+  protected loading$ = this.store.select(selectIsLoggingIn);
 
   constructor() {
     this.loginForm = this.fb.group({
       username: ['', Validators.required],
       password: ['', Validators.required],
     });
+    this.errors$.pipe(takeUntilDestroyed()).subscribe((error) => {
+      if (error?.error.error === 'Invalid username') {
+        this.loginForm.get('username')?.setErrors({ invalidUsername: true });
+      }
+      if (error?.error.error === 'Invalid password') {
+        this.loginForm.get('password')?.setErrors({ invalidPassword: true });
+      }
+    });
+  }
+
+  onSubmit(): void {
+    this.store.dispatch(
+      authActions.login({
+        username: this.loginForm.value.username,
+        password: this.loginForm.value.password,
+      })
+    );
   }
 }
