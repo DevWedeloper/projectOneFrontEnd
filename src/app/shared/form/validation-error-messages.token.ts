@@ -24,5 +24,5 @@ export const VALIDATION_ERROR_MESSAGES = new InjectionToken(
   {
     providedIn: 'root',
     factory: () => ERROR_MESSAGES,
-  }
+  },
 );

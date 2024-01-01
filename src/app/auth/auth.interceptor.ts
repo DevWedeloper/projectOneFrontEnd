@@ -19,7 +19,7 @@ export class AuthInterceptor implements HttpInterceptor {
 
   intercept<T>(
     request: HttpRequest<T>,
-    next: HttpHandler
+    next: HttpHandler,
   ): Observable<HttpEvent<T>> {
     if (this.authService.isAuthenticated() && request.method !== 'GET') {
       request = this.addAuthToken(request, this.authService.getAccessToken());
@@ -30,19 +30,19 @@ export class AuthInterceptor implements HttpInterceptor {
           this.store.dispatch(authActions.refreshToken());
           request = this.addAuthToken(
             request,
-            this.authService.getAccessToken()
+            this.authService.getAccessToken(),
           );
           return next.handle(request);
         } else {
           return throwError(() => error);
         }
-      })
+      }),
     );
   }
 
   private addAuthToken<T>(
     request: HttpRequest<T>,
-    token: string | null
+    token: string | null,
   ): HttpRequest<T> {
     if (token) {
       return request.clone({

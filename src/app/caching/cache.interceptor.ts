@@ -15,7 +15,7 @@ export class CacheInterceptor implements HttpInterceptor {
 
   intercept<T>(
     request: HttpRequest<T>,
-    next: HttpHandler
+    next: HttpHandler,
   ): Observable<HttpEvent<T>> {
     if (request.method !== 'GET') {
       this.cacheService.clearCache();
@@ -32,8 +32,7 @@ export class CacheInterceptor implements HttpInterceptor {
         if (event instanceof HttpResponse) {
           this.cacheService.cacheResponse(request, event);
         }
-      })
+      }),
     );
   }
-
 }

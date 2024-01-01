@@ -1,13 +1,16 @@
-<div class="container" *ngIf="searchResults && searchResults.length > 0">
-  <ul>
-    <li
-      #searchItems
-      *ngFor="let result of searchResults; trackBy: trackBy"
-      (click)="selectItem(result)"
-      (keydown.enter)="selectItem(result)"
-      [tabindex]="-1"
-    >
-      {{ result.name }}
-    </li>
-  </ul>
-</div>
+@if (searchResults && searchResults.length > 0) {
+  <div class="container">
+    <ul>
+      @for (result of searchResults; track $index) {
+        <li
+          #searchItems
+          (click)="selectItem(result)"
+          (keydown.enter)="selectItem(result)"
+          [tabindex]="-1"
+        >
+          {{ result.name }}
+        </li>
+      }
+    </ul>
+  </div>
+}

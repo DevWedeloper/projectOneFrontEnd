@@ -1,2 +1,6 @@
-<h1 *ngIf="!loading">{{ label }}</h1>
-<app-heading-skeleton *ngIf="loading"/>
+@if (!loading) {
+  <h1>{{ label }}</h1>
+}
+@if (loading) {
+  <app-heading-skeleton />
+}

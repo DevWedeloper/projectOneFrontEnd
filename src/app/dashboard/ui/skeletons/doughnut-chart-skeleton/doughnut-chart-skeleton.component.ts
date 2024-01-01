@@ -7,8 +7,6 @@ import { CommonModule } from '@angular/common';
   imports: [CommonModule],
   templateUrl: './doughnut-chart-skeleton.component.html',
   styleUrls: ['./doughnut-chart-skeleton.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DoughnutChartSkeletonComponent {
-
-}
+export class DoughnutChartSkeletonComponent {}

@@ -37,8 +37,4 @@ export class TableComponent<T extends Character | Guild> {
   @ContentChild('paginationTemplate') protected pagination:
     | TemplateRef<HTMLElement>
     | undefined;
-
-  protected trackBy(index: number): number {
-    return index;
-  }
 }

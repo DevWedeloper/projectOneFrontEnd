@@ -69,7 +69,7 @@ export class GuildStatsService {
           },
         ];
         return { names, dataset };
-      })
+      }),
     );
   readonly averageCharacterStats$ =
     this.characterStatsApiService.getAverageCharacterStats();
@@ -160,7 +160,7 @@ export class GuildStatsService {
           },
         ];
         return { names, dataset };
-      })
+      }),
     );
   }
 
@@ -221,7 +221,7 @@ export class GuildStatsService {
           },
         ];
         return { names, dataset };
-      })
+      }),
     );
   }
 }

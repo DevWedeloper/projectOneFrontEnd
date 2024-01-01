@@ -68,7 +68,7 @@ export class CharacterTableComponent implements AfterViewInit {
           setSelectOption(
             this.renderer,
             this.pageSizeElement?.nativeElement,
-            pageSizeValue.toString()
+            pageSizeValue.toString(),
           );
         }
       });

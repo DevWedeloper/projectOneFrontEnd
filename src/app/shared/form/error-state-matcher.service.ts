@@ -4,7 +4,7 @@ import { AbstractControl, FormGroupDirective, NgForm } from '@angular/forms';
 export interface ErrorStateMatcher {
   isErrorVisible(
     control: AbstractControl | null,
-    form: FormGroupDirective | NgForm | null
+    form: FormGroupDirective | NgForm | null,
   ): boolean;
 }
 
@@ -14,22 +14,22 @@ export interface ErrorStateMatcher {
 export class ErrorStateMatcherService implements ErrorStateMatcher {
   isErrorVisible(
     control: AbstractControl | null,
-    form: FormGroupDirective | NgForm | null
+    form: FormGroupDirective | NgForm | null,
   ) {
     return Boolean(
-      control && control.invalid && (control.dirty || (form && form.submitted))
+      control && control.invalid && (control.dirty || (form && form.submitted)),
     );
   }
 }
 export class OnTouchedErrorStateMatcherService implements ErrorStateMatcher {
   isErrorVisible(
     control: AbstractControl | null,
-    form: FormGroupDirective | NgForm | null
+    form: FormGroupDirective | NgForm | null,
   ) {
     return Boolean(
       control &&
         control.invalid &&
-        (control.touched || (form && form.submitted))
+        (control.touched || (form && form.submitted)),
     );
   }
 }

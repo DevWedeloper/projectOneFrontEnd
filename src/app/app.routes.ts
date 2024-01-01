@@ -24,14 +24,14 @@ export const routes: Route[] = [
         path: 'dashboard',
         loadComponent: () =>
           import('./dashboard/dashboard.component').then(
-            (m) => m.DashboardComponent
+            (m) => m.DashboardComponent,
           ),
       },
       {
         path: 'characters',
         loadComponent: () =>
           import('./characters/characters.component').then(
-            (m) => m.CharactersComponent
+            (m) => m.CharactersComponent,
           ),
       },
       {

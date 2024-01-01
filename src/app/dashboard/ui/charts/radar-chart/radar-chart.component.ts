@@ -6,7 +6,7 @@ import {
   Input,
   Output,
   ViewChild,
-  inject
+  inject,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ChartConfiguration } from 'chart.js';
@@ -88,7 +88,7 @@ export class RadarChartComponent {
         }
       }
       this.chart?.ngOnChanges({});
-    })
+    }),
   );
 
   constructor() {
@@ -112,9 +112,5 @@ export class RadarChartComponent {
       this.tsChartJS.setColorschemesOptions(selectedTheme);
     });
     this.resize$.pipe(takeUntilDestroyed()).subscribe();
-  }
-
-  protected trackBy(index: number): number {
-    return index;
   }
 }

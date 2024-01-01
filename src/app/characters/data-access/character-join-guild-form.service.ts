@@ -37,7 +37,7 @@ export class CharacterJoinGuildFormService {
   }
 
   private validateGuildExisting(
-    control: AbstractControl
+    control: AbstractControl,
   ): Observable<ValidationErrors | null> {
     const nameField = control.getRawValue();
     if (nameField === this.initialName$.value || nameField === '') {
@@ -51,13 +51,13 @@ export class CharacterJoinGuildFormService {
           map((response) =>
             response.message === 'Guild name is unique'
               ? { notFound: true }
-              : null
+              : null,
           ),
           catchError(() => {
             return of(null);
-          })
-        )
-      )
+          }),
+        ),
+      ),
     );
   }
 }

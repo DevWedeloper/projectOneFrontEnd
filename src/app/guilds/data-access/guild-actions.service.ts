@@ -7,7 +7,7 @@ import {
   Subject,
   catchError,
   switchMap,
-  tap
+  tap,
 } from 'rxjs';
 import { CheckGuildRelationStatusServiceApi } from 'src/app/shared/data-access/check-guild-relation-status.service-api';
 import { GuildApiService } from 'src/app/shared/data-access/guild-api.service';
@@ -22,7 +22,7 @@ export class GuildActionsService {
   private gs = inject(GuildService);
   private guildApiService = inject(GuildApiService);
   private checkGuildRelationStatusApiService = inject(
-    CheckGuildRelationStatusServiceApi
+    CheckGuildRelationStatusServiceApi,
   );
   guildCreate$ = new Subject<{ guildForm: FormGroup }>();
   guildUpdateName$ = new Subject<{
@@ -60,7 +60,7 @@ export class GuildActionsService {
                 if (data.memberOfGuild) {
                   if (
                     !confirm(
-                      'This character has a guild, proceeding would remove it from the guild, are you sure?'
+                      'This character has a guild, proceeding would remove it from the guild, are you sure?',
                     )
                   ) {
                     this.createLoading$.next(false);
@@ -70,7 +70,7 @@ export class GuildActionsService {
                 if (data.leaderOfGuild) {
                   if (
                     !confirm(
-                      'This character is a leader of a guild, proceeding would delete its previous guild, are you sure?'
+                      'This character is a leader of a guild, proceeding would delete its previous guild, are you sure?',
                     )
                   ) {
                     this.createLoading$.next(false);
@@ -86,12 +86,12 @@ export class GuildActionsService {
                   catchError(() => {
                     this.createLoading$.next(false);
                     return EMPTY;
-                  })
+                  }),
                 );
-              })
+              }),
             );
         }),
-        takeUntilDestroyed()
+        takeUntilDestroyed(),
       )
       .subscribe(() => {
         this.gs.refetchPage$.next();
@@ -108,13 +108,13 @@ export class GuildActionsService {
               catchError(() => {
                 this.updateNameLoading$.next(false);
                 return EMPTY;
-              })
+              }),
             );
         }),
         tap((data) => {
           this.guildToUpdate$.next(data.guild);
         }),
-        takeUntilDestroyed()
+        takeUntilDestroyed(),
       )
       .subscribe(() => {
         this.gs.refetchPage$.next();
@@ -131,14 +131,14 @@ export class GuildActionsService {
               catchError(() => {
                 this.updateLeaderLoading$.next(false);
                 return EMPTY;
-              })
+              }),
             );
         }),
         tap((data) => {
           this.guildToUpdate$.next(data.guild);
           this.updateLeaderLoading$.next(false);
         }),
-        takeUntilDestroyed()
+        takeUntilDestroyed(),
       )
       .subscribe(() => {
         this.gs.refetchPage$.next();
@@ -161,7 +161,7 @@ export class GuildActionsService {
                 if (data.memberOfGuild) {
                   if (
                     !confirm(
-                      'This character has a guild, proceeding would remove it from the guild, are you sure?'
+                      'This character has a guild, proceeding would remove it from the guild, are you sure?',
                     )
                   ) {
                     this.addMemberLoading$.next(false);
@@ -171,7 +171,7 @@ export class GuildActionsService {
                 if (data.leaderOfGuild) {
                   if (
                     !confirm(
-                      'This character is a leader of a guild, proceeding would delete its previous guild, are you sure?'
+                      'This character is a leader of a guild, proceeding would delete its previous guild, are you sure?',
                     )
                   ) {
                     this.addMemberLoading$.next(false);
@@ -183,15 +183,15 @@ export class GuildActionsService {
                   .pipe(
                     tap(() => {
                       newMemberForm.reset();
-                    })
+                    }),
                   );
-              })
+              }),
             );
         }),
         tap((data) => {
           this.guildToUpdate$.next(data.guild);
         }),
-        takeUntilDestroyed()
+        takeUntilDestroyed(),
       )
       .subscribe(() => {
         this.gs.refetchPage$.next();
@@ -211,13 +211,13 @@ export class GuildActionsService {
           }
           return this.guildApiService.removeMemberFromGuildById(
             guildId,
-            oldMember._id
+            oldMember._id,
           );
         }),
         tap((data) => {
           this.guildToUpdate$.next(data.guild);
         }),
-        takeUntilDestroyed()
+        takeUntilDestroyed(),
       )
       .subscribe(() => {
         this.gs.refetchPage$.next();
@@ -237,7 +237,7 @@ export class GuildActionsService {
           }
           return this.guildApiService.deleteGuildById(guild._id);
         }),
-        takeUntilDestroyed()
+        takeUntilDestroyed(),
       )
       .subscribe(() => {
         this.gs.refetchPage$.next();

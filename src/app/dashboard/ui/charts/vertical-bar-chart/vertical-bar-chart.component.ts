@@ -22,7 +22,7 @@ import { VerticalBarChartSkeletonComponent } from '../../skeletons/vertical-bar-
     TruncatePipe,
     VerticalBarChartSkeletonComponent,
     NgChartsModule,
-    NoDataComponent
+    NoDataComponent,
   ],
   providers: [ThemeService],
   templateUrl: './vertical-bar-chart.component.html',

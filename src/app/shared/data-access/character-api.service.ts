@@ -23,7 +23,7 @@ export class CharacterApiService {
     pageSize: number,
     sortBy?: string,
     sortOrder?: string,
-    searchQuery?: string
+    searchQuery?: string,
   ): Observable<CharacterPagination> {
     let url = `${this.url}/character/?page=${page}&pageSize=${pageSize}`;
     if (sortBy) {
@@ -61,7 +61,7 @@ export class CharacterApiService {
   updateCharacterAttributeById(
     characterId: string,
     newData: string | number,
-    attribute: string
+    attribute: string,
   ): Observable<CharacterUpdateResponse> {
     const url = `${this.url}/character/${attribute}/${characterId}`;
     const requestBody = { [attribute]: newData };
@@ -70,7 +70,7 @@ export class CharacterApiService {
 
   joinGuildById(
     characterId: string,
-    newData: string
+    newData: string,
   ): Observable<CharacterUpdateResponse> {
     const url = `${this.url}/character/join/${characterId}`;
     const reqBody = { guild: newData };

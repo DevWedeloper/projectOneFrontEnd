@@ -3,7 +3,7 @@
   [loading]="ls.loading$ | async"
   (dividerToggled)="resetForm()"
 >
-  <app-character-form [characterForm]="characterForm"/>
+  <app-character-form [characterForm]="characterForm" />
   <div class="btn-container">
     <button
       appCreateButton
@@ -11,7 +11,9 @@
       [disabled]="characterForm.invalid || (cas.createLoading$ | async)"
       (click)="this.createCharacter.emit(this.characterForm)"
     >
-      <app-spinner [size]="25" *ngIf="cas.createLoading$ | async"/>
+      @if (cas.createLoading$ | async) {
+        <app-spinner [size]="25" />
+      }
       Create
     </button>
   </div>

@@ -1,24 +1,28 @@
 <nav class="navbar">
-  <div class="navbar-mobile" *ngIf="isMobile">
-    <a
-      class="menu-icon"
-      (click)="hs.isSidebarOpen$.next(!hs.isSidebarOpen$.value)"
-      (keyup.enter)="hs.isSidebarOpen$.next(!hs.isSidebarOpen$.value)"
-      tabindex="0"
-      [ngStyle]="{
-        filter:
-          (ts.isDarkMode$ | async)
-            ? 'invert(100%) grayscale(100%)'
-            : 'grayscale(100%)'
-      }"
-    >
-      <span class="icon-container">
-        <img src="assets/images/icons/menu.svg" alt="Menu Logo"
-      /></span>
-    </a>
+  @if (isMobile) {
+    <div class="navbar-mobile">
+      <a
+        class="menu-icon"
+        (click)="hs.isSidebarOpen$.next(!hs.isSidebarOpen$.value)"
+        (keyup.enter)="hs.isSidebarOpen$.next(!hs.isSidebarOpen$.value)"
+        tabindex="0"
+        [ngStyle]="{
+          filter:
+            (ts.isDarkMode$ | async)
+              ? 'invert(100%) grayscale(100%)'
+              : 'grayscale(100%)'
+        }"
+      >
+        <span class="icon-container">
+          <img src="assets/images/icons/menu.svg" alt="Menu Logo"
+        /></span>
+      </a>
+      <h1>Project One</h1>
+    </div>
+  }
+  @if (!isMobile) {
     <h1>Project One</h1>
-  </div>
-  <h1 *ngIf="!isMobile">Project One</h1>
+  }
   <div
     (mouseenter)="hs.isSettingsDropdownOpen$.next(true)"
     (mouseleave)="hs.isSettingsDropdownOpen$.next(false)"
@@ -35,8 +39,8 @@
       }"
       ><img src="assets/images/icons/settings.svg" alt="Settings Logo"
     /></a>
-    <app-settings-dropdown
-      *ngIf="hs.isSettingsDropdownOpen$ | async"
-    />
+    @if (hs.isSettingsDropdownOpen$ | async) {
+      <app-settings-dropdown />
+    }
   </div>
 </nav>

@@ -52,9 +52,9 @@ export class CharacterService {
       ({ page, pageSize, sortParams: { sortBy, sortOrder }, searchQuery }) =>
         this.characterApiService
           .getCharacters(page, pageSize, sortBy, sortOrder, searchQuery)
-          .pipe(catchError(() => EMPTY))
+          .pipe(catchError(() => EMPTY)),
     ),
-    shareReplay(1)
+    shareReplay(1),
   );
 
   constructor() {
@@ -87,7 +87,7 @@ export class CharacterService {
             replaceUrl: true,
           });
         }),
-        takeUntilDestroyed()
+        takeUntilDestroyed(),
       )
       .subscribe();
   }

@@ -43,7 +43,7 @@ export class GuildFormService {
   }
 
   private validateGuildNameUniqueness(
-    control: AbstractControl
+    control: AbstractControl,
   ): Observable<ValidationErrors | null> {
     return of(control.value).pipe(
       debounceTime(500),
@@ -52,18 +52,18 @@ export class GuildFormService {
           map((response) =>
             response.message === 'Guild name is unique'
               ? null
-              : { uniqueName: true }
+              : { uniqueName: true },
           ),
           catchError(() => {
             return of(null);
-          })
-        )
-      )
+          }),
+        ),
+      ),
     );
   }
 
   private validateLeaderExisting(
-    control: AbstractControl
+    control: AbstractControl,
   ): Observable<ValidationErrors | null> {
     return of(control.value).pipe(
       debounceTime(500),
@@ -72,13 +72,13 @@ export class GuildFormService {
           map((response) =>
             response.message === 'Character name is unique'
               ? { notFound: true }
-              : null
+              : null,
           ),
           catchError(() => {
             return of(null);
-          })
-        )
-      )
+          }),
+        ),
+      ),
     );
   }
 }

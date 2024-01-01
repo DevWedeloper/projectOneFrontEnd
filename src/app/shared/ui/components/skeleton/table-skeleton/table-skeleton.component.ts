@@ -7,8 +7,6 @@ import { CommonModule } from '@angular/common';
   imports: [CommonModule],
   templateUrl: './table-skeleton.component.html',
   styleUrls: ['./table-skeleton.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TableSkeletonComponent {
-
-}
+export class TableSkeletonComponent {}

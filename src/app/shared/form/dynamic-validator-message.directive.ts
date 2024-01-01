@@ -56,19 +56,19 @@ export class DynamicValidatorMessageDirective implements OnInit {
       merge(
         this.ngControl.control?.statusChanges,
         fromEvent(this.elementRef.nativeElement, 'blur'),
-        iif(() => !!this.form, this.form!.ngSubmit, EMPTY)
+        iif(() => !!this.form, this.form!.ngSubmit, EMPTY),
       )
         .pipe(
           startWith(this.ngControl.control.status),
           skip(this.ngControl instanceof NgModel ? 1 : 0),
           filter((status) => status === 'VALID' || status === 'INVALID'),
-          takeUntilDestroyed(this.destroyRef)
+          takeUntilDestroyed(this.destroyRef),
         )
         .subscribe(() => {
           if (
             this.errorStateMatcher.isErrorVisible(
               this.ngControl.control,
-              this.form
+              this.form,
             )
           ) {
             if (!this.componentRef) {

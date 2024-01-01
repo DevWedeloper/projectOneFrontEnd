@@ -10,7 +10,7 @@ import {
   Renderer2,
   TemplateRef,
   ViewChild,
-  inject
+  inject,
 } from '@angular/core';
 import { ThemeService } from 'src/app/shared/data-access/theme.service';
 import { ModalService } from './modal.service';

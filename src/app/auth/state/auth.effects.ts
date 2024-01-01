@@ -23,9 +23,9 @@ export class AuthEffects {
             this.authService.setCurrentUser(response.userId);
             return authActions.loginSuccess();
           }),
-          catchError((error) => of(authActions.loginFailure({ error })))
+          catchError((error) => of(authActions.loginFailure({ error }))),
         );
-      })
+      }),
     );
   });
 
@@ -35,10 +35,10 @@ export class AuthEffects {
         ofType(authActions.loginSuccess),
         tap(() => {
           this.router.navigate(['/']);
-        })
+        }),
       );
     },
-    { dispatch: false }
+    { dispatch: false },
   );
 
   loginFailure$ = createEffect(
@@ -47,10 +47,10 @@ export class AuthEffects {
         ofType(authActions.loginFailure),
         tap(() => {
           this.router.navigate(['/login']);
-        })
+        }),
       );
     },
-    { dispatch: false }
+    { dispatch: false },
   );
 
   logout$ = createEffect(
@@ -62,10 +62,10 @@ export class AuthEffects {
           this.authService.clearCurrentUser();
           this.router.navigate(['/login']);
           return this.authApiService.logout(this.authService.getCurrentUser());
-        })
+        }),
       );
     },
-    { dispatch: false }
+    { dispatch: false },
   );
 
   refreshToken$ = createEffect(() => {
@@ -81,16 +81,16 @@ export class AuthEffects {
             }),
             catchError((error) => {
               return of(authActions.refreshTokenFailure({ error }));
-            })
+            }),
           );
-      })
+      }),
     );
   });
 
   refreshTokenSuccess$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(authActions.refreshTokenSuccess),
-      map(() => authActions.autoLogout())
+      map(() => authActions.autoLogout()),
     );
   });
 
@@ -102,7 +102,7 @@ export class AuthEffects {
           confirm('Your session has expired, please login again.');
         }
         return authActions.logout();
-      })
+      }),
     );
   });
 
@@ -113,18 +113,22 @@ export class AuthEffects {
         return authActions.setUserId({
           userId: this.authService.decodedToken().userId,
         });
-      })
+      }),
     );
   });
 
   setUserRole$ = createEffect(() => {
     return this.actions$.pipe(
-      ofType(authActions.loginSuccess, authActions.refreshTokenSuccess, authActions.getUserRole),
+      ofType(
+        authActions.loginSuccess,
+        authActions.refreshTokenSuccess,
+        authActions.getUserRole,
+      ),
       map(() => {
         return authActions.setUserRole({
           role: this.authService.decodedToken().role,
         });
-      })
+      }),
     );
   });
 
@@ -138,9 +142,9 @@ export class AuthEffects {
         return timer(timeUntilExpiry * 1000).pipe(
           map(() => {
             return authActions.refreshToken();
-          })
+          }),
         );
-      })
+      }),
     );
   });
 }

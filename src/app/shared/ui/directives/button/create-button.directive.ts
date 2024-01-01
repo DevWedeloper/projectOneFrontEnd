@@ -4,12 +4,12 @@ import { FocusVisibleDirective } from '../focus-visible.directive';
 @Directive({
   selector: '[appCreateButton]',
   standalone: true,
-  hostDirectives: [FocusVisibleDirective]
+  hostDirectives: [FocusVisibleDirective],
 })
-export class CreateButtonDirective { 
+export class CreateButtonDirective {
   elementRef = inject(ElementRef);
   renderer = inject(Renderer2);
-  
+
   constructor() {
     this.renderer.addClass(this.elementRef.nativeElement, 'create-btn');
   }

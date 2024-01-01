@@ -3,7 +3,10 @@
   left: var(--sidebar-closed-width);
   width: calc(100% - var(--sidebar-closed-width));
   color: var(--text-color);
-  transition: all 0.15s ease-in-out, background-color 0s, color 0s;
+  transition:
+    all 0.15s ease-in-out,
+    background-color 0s,
+    color 0s;
 }
 
 .main-container .main-content {

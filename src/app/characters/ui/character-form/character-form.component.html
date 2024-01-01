@@ -1,4 +1,4 @@
-<ng-container *ngIf="characterForm.statusChanges | async" />
+@if (characterForm.statusChanges | async) {}
 
 <form [formGroup]="characterForm" class="form">
   <div class="form-group">
@@ -8,20 +8,19 @@
       [label]="'Name'"
       formControlName="name"
     />
-    <ng-container *ngIf="characterForm.get('name')?.pending">
+    @if (characterForm.get("name")?.pending) {
       <p style="color: aqua">Checking if unique..</p>
-    </ng-container>
+    }
   </div>
 
   <div class="form-group character-type-container">
     <select appFocusVisible id="characterType" formControlName="characterType">
       <option value="" disabled selected>Class</option>
-      <option
-        *ngFor="let type of cas.characterTypes$ | async"
-        [value]="type.typeName"
-      >
-        {{ type.typeName }}
-      </option>
+      @for (type of cas.characterTypes$ | async; track $index) {
+        <option [value]="type.typeName">
+          {{ type.typeName }}
+        </option>
+      }
     </select>
   </div>
 

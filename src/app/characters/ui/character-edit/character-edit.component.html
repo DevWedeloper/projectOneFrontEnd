@@ -1,4 +1,4 @@
-<ng-container *ngIf="joinGuildForm.statusChanges | async" />
+@if (joinGuildForm.statusChanges | async) {}
 
 <h2>Edit Character</h2>
 <app-character-form [characterForm]="characterForm" />
@@ -16,50 +16,52 @@
       (focusEvent)="toggleSearchContainer.next(true)"
       (clickEvent)="toggleSearchContainer.next(true)"
     />
-    <app-search-items
-      *ngIf="toggleSearchContainer | async"
-      [searchResults]="searchResults"
-      (selectedItem)="joinGuildForm.get('guild')?.setValue($event.name)"
-      (closeComponent)="
-        toggleSearchContainer.next(false); searchQueryChange.emit('')
-      "
-    />
-    <ng-container *ngIf="joinGuildForm.get('guild')?.pending">
+    @if (toggleSearchContainer | async) {
+      <app-search-items
+        [searchResults]="searchResults"
+        (selectedItem)="joinGuildForm.get('guild')?.setValue($event.name)"
+        (closeComponent)="
+          toggleSearchContainer.next(false); searchQueryChange.emit('')
+        "
+      />
+    }
+    @if (joinGuildForm.get("guild")?.pending) {
       <p style="color: aqua">Checking if guild exists..</p>
-    </ng-container>
+    }
   </div>
   <div class="btn-container">
-    <button
-      appGreenButton
-      (click)="
-        joinGuild.emit({
-          character: character!,
-          joinGuildForm,
-        })
-      "
-      *ngIf="
-        joinGuildForm.valid &&
-        joinGuildForm.get('guild')?.value !== character?.guild?.name &&
-        joinGuildForm.get('guild')?.value !== ''
-      "
-      [disabled]="cas.joinLoading$ | async"
-    >
-      <app-spinner [size]="20" *ngIf="cas.joinLoading$ | async" />
-      Join
-    </button>
-    <button
-      appRedButton
-      (click)="leaveGuild.emit({ character: character!, joinGuildForm })"
-      *ngIf="
-        character?.guild !== null &&
-        character?.guild?.name === joinGuildForm.get('guild')?.value &&
-        (cas.joinLoading$ | async) === false
-      "
-      [disabled]="cas.leaveLoading$ | async"
-    >
-      <app-spinner [size]="20" *ngIf="cas.leaveLoading$ | async" />
-      Leave
-    </button>
+    @if (
+      joinGuildForm.valid &&
+      joinGuildForm.get("guild")?.value !== character?.guild?.name &&
+      joinGuildForm.get("guild")?.value !== ""
+    ) {
+      <button
+        appGreenButton
+        (click)="joinGuild.emit({ character: character!, joinGuildForm })"
+        [disabled]="cas.joinLoading$ | async"
+      >
+        @if (cas.joinLoading$ | async) {
+          <app-spinner [size]="20" />
+        }
+        Join
+      </button>
+    }
+    @if (
+      character?.guild !== null &&
+      character?.guild?.name === joinGuildForm.get("guild")?.value &&
+      (cas.joinLoading$ | async) === false
+    ) {
+      <button
+        appRedButton
+        (click)="leaveGuild.emit({ character: character!, joinGuildForm })"
+        [disabled]="cas.leaveLoading$ | async"
+      >
+        @if (cas.leaveLoading$ | async) {
+          <app-spinner [size]="20" />
+        }
+        Leave
+      </button>
+    }
   </div>
 </form>
 <div class="edit-btn-container">
@@ -73,7 +75,9 @@
       })
     "
   >
-    <app-spinner [size]="20" *ngIf="cas.updateLoading$ | async" />
+    @if (cas.updateLoading$ | async) {
+      <app-spinner [size]="20" />
+    }
     Save
   </button>
 </div>

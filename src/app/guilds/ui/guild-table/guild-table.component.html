@@ -40,33 +40,36 @@
       <span>Total Member</span>
       <span [innerHTML]="getSortArrow('totalMembers')"></span>
     </th>
-    <th *ngIf="isCurrentUserAdmin">Actions</th>
+    @if (isCurrentUserAdmin) {
+      <th>Actions</th>
+    }
   </ng-template>
 
   <ng-template #rowsTemplate let-guild>
-    <td>{{ guild.name | truncate : 15 }}</td>
-    <td>{{ guild.leader.name | truncate : 15 }}</td>
+    <td>{{ guild.name | truncate: 15 }}</td>
+    <td>{{ guild.leader.name | truncate: 15 }}</td>
     <td>{{ guild.totalMembers }} / {{ guild.maxMembers }}</td>
-    <td class="btn-container" *ngIf="isCurrentUserAdmin">
-      <button class="edit-btn" (click)="editGuild.emit(guild)">Edit</button>
-      <button
-        class="delete-btn"
-        (click)="deleteGuild.emit(guild)"
-        [disabled]="
-          (gas.deleteLoading$ | async) &&
-          gas.guildToUpdate$.value?._id === guild._id
-        "
-      >
-        <app-spinner
-          [size]="20"
-          *ngIf="
+    @if (isCurrentUserAdmin) {
+      <td class="btn-container">
+        <button class="edit-btn" (click)="editGuild.emit(guild)">Edit</button>
+        <button
+          class="delete-btn"
+          (click)="deleteGuild.emit(guild)"
+          [disabled]="
             (gas.deleteLoading$ | async) &&
             gas.guildToUpdate$.value?._id === guild._id
           "
-        />
-        Delete
-      </button>
-    </td>
+        >
+          @if (
+            (gas.deleteLoading$ | async) &&
+            gas.guildToUpdate$.value?._id === guild._id
+          ) {
+            <app-spinner [size]="20" />
+          }
+          Delete
+        </button>
+      </td>
+    }
   </ng-template>
 
   <ng-template #paginationTemplate>

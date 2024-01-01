@@ -27,7 +27,7 @@ export class GuildApiService {
     pageSize: number,
     sortBy?: string,
     sortOrder?: string,
-    searchQuery?: string
+    searchQuery?: string,
   ): Observable<GuildPagination> {
     let url = `${this.url}/guild/?page=${page}&pageSize=${pageSize}`;
     if (sortBy) {
@@ -59,7 +59,7 @@ export class GuildApiService {
 
   searchGuildMemberById(
     searchQuery: string,
-    guildId: string
+    guildId: string,
   ): Observable<Character[]> {
     const url = `${this.url}/guild/${guildId}/searchMember?name=${searchQuery}`;
     return this.http.get<Character[]>(url);
@@ -67,7 +67,7 @@ export class GuildApiService {
 
   updateGuildNameById(
     guildId: string,
-    newData: string
+    newData: string,
   ): Observable<GuildUpdateResponse> {
     const url = `${this.url}/guild/name/${guildId}`;
     return this.http.put<GuildUpdateResponse>(url, newData);
@@ -75,7 +75,7 @@ export class GuildApiService {
 
   updateGuildLeaderById(
     guildId: string,
-    newData: string
+    newData: string,
   ): Observable<GuildUpdateResponse> {
     const url = `${this.url}/guild/leader/${guildId}`;
     const reqBody = { character: newData };
@@ -84,7 +84,7 @@ export class GuildApiService {
 
   addMemberToGuildById(
     guildId: string,
-    newData: string
+    newData: string,
   ): Observable<GuildUpdateResponse> {
     const url = `${this.url}/guild/addMember/${guildId}`;
     const reqBody = { character: newData };
@@ -93,7 +93,7 @@ export class GuildApiService {
 
   removeMemberFromGuildById(
     guildId: string,
-    newData: string
+    newData: string,
   ): Observable<GuildUpdateResponse> {
     const url = `${this.url}/guild/removeMember/${guildId}`;
     const requestBody = { character: newData };

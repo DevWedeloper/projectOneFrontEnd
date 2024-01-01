@@ -43,7 +43,7 @@ export class AuthService {
   getAccessToken(): string {
     const accessToken = localStorage.getItem(this.accessTokenKey);
     if (!accessToken) {
-      throw new Error('Can\'t get access token');
+      throw new Error("Can't get access token");
     }
     return accessToken;
   }
@@ -51,7 +51,7 @@ export class AuthService {
   getCurrentUser(): string {
     const currentUser = localStorage.getItem(this.currentUser);
     if (!currentUser) {
-      throw new Error('Can\'t get current user');
+      throw new Error("Can't get current user");
     }
     return currentUser;
   }
