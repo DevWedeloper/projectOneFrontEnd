@@ -7,8 +7,6 @@ import { CommonModule } from '@angular/common';
   imports: [CommonModule],
   templateUrl: './radar-chart-skeleton.component.html',
   styleUrls: ['./radar-chart-skeleton.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RadarChartSkeletonComponent {
-
-}
+export class RadarChartSkeletonComponent {}

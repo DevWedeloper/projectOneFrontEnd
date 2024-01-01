@@ -1,9 +1,5 @@
 import { CommonModule } from '@angular/common';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  inject
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { authActions } from '../auth/state/auth.actions';
@@ -18,12 +14,7 @@ import { SidebarComponent } from './ui/sidebar/sidebar.component';
   styleUrls: ['./home.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [
-    CommonModule,
-    RouterOutlet,
-    NavbarComponent,
-    SidebarComponent
-  ],
+  imports: [CommonModule, RouterOutlet, NavbarComponent, SidebarComponent],
 })
 export class HomeComponent {
   private ts = inject(ThemeService);

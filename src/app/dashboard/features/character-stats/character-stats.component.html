@@ -10,7 +10,9 @@
       <app-horizontal-bar-chart
         [label]="'Health'"
         [barChartLabels]="(css.topCharactersByHealth$ | async)?.names || null"
-        [barChartDataset]="(css.topCharactersByHealth$ | async)?.dataset || null"
+        [barChartDataset]="
+          (css.topCharactersByHealth$ | async)?.dataset || null
+        "
         [loading]="ls.loading$ | async"
       />
     </div>
@@ -19,7 +21,9 @@
       <app-horizontal-bar-chart
         [label]="'Strength'"
         [barChartLabels]="(css.topCharactersByStrength$ | async)?.names || null"
-        [barChartDataset]="(css.topCharactersByStrength$ | async)?.dataset || null"
+        [barChartDataset]="
+          (css.topCharactersByStrength$ | async)?.dataset || null
+        "
         [loading]="ls.loading$ | async"
       />
     </div>
@@ -28,7 +32,9 @@
       <app-horizontal-bar-chart
         [label]="'Agility'"
         [barChartLabels]="(css.topCharactersByAgility$ | async)?.names || null"
-        [barChartDataset]="(css.topCharactersByAgility$ | async)?.dataset || null"
+        [barChartDataset]="
+          (css.topCharactersByAgility$ | async)?.dataset || null
+        "
         [loading]="ls.loading$ | async"
       />
     </div>
@@ -36,8 +42,12 @@
     <div class="chart-container-item">
       <app-horizontal-bar-chart
         [label]="'Intelligence'"
-        [barChartLabels]="(css.topCharactersByIntelligence$ | async)?.names || null"
-        [barChartDataset]="(css.topCharactersByIntelligence$ | async)?.dataset || null"
+        [barChartLabels]="
+          (css.topCharactersByIntelligence$ | async)?.names || null
+        "
+        [barChartDataset]="
+          (css.topCharactersByIntelligence$ | async)?.dataset || null
+        "
         [loading]="ls.loading$ | async"
       />
     </div>
@@ -54,8 +64,12 @@
     <div class="chart-container-item">
       <app-horizontal-bar-chart
         [label]="'Crit Chance'"
-        [barChartLabels]="(css.topCharactersByCritChance$ | async)?.names || null"
-        [barChartDataset]="(css.topCharactersByCritChance$ | async)?.dataset || null"
+        [barChartLabels]="
+          (css.topCharactersByCritChance$ | async)?.names || null
+        "
+        [barChartDataset]="
+          (css.topCharactersByCritChance$ | async)?.dataset || null
+        "
         [loading]="ls.loading$ | async"
       />
     </div>
@@ -92,7 +106,9 @@
   </div>
   <div class="chart-container-item">
     <app-doughnut-chart
-      [polarAreaChartLabels]="(css.characterDistributionByType$ | async)?.ids || null"
+      [polarAreaChartLabels]="
+        (css.characterDistributionByType$ | async)?.ids || null
+      "
       [polarAreaChartDatasets]="
         (css.characterDistributionByType$ | async)?.dataset || null
       "

@@ -74,7 +74,7 @@ export class GuildEditFormService {
   }
 
   private validateGuildNameUniqueness(
-    control: AbstractControl
+    control: AbstractControl,
   ): Observable<ValidationErrors | null> {
     const nameField = control.getRawValue();
     if (nameField === this.initialName$.value) {
@@ -88,19 +88,19 @@ export class GuildEditFormService {
           map((response) =>
             response.message === 'Guild name is unique'
               ? null
-              : { uniqueName: true }
+              : { uniqueName: true },
           ),
           catchError(() => {
             return of(null);
-          })
-        )
-      )
+          }),
+        ),
+      ),
     );
   }
 
   private checkIfMember(
     control: AbstractControl,
-    guild: string | null
+    guild: string | null,
   ): Observable<ValidationErrors | null> {
     if (!guild) {
       return of(null);
@@ -122,15 +122,15 @@ export class GuildEditFormService {
           }),
           catchError(() => {
             return of(null);
-          })
-        )
-      )
+          }),
+        ),
+      ),
     );
   }
 
   private checkIfNotMember(
     control: AbstractControl,
-    guild: string | null
+    guild: string | null,
   ): Observable<ValidationErrors | null> {
     if (!guild) {
       return of(null);
@@ -152,9 +152,9 @@ export class GuildEditFormService {
           }),
           catchError(() => {
             return of(null);
-          })
-        )
-      )
+          }),
+        ),
+      ),
     );
   }
 }

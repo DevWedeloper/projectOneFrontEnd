@@ -10,7 +10,10 @@ import {
 } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { authActions } from '../auth/state/auth.actions';
-import { selectHasLoginError, selectIsLoggingIn } from '../auth/state/auth.reducers';
+import {
+  selectHasLoginError,
+  selectIsLoggingIn,
+} from '../auth/state/auth.reducers';
 import { DynamicValidatorMessageDirective } from '../shared/form/dynamic-validator-message.directive';
 import { ValidatorMessageContainerDirective } from '../shared/form/validator-message-container.directive';
 import { SpinnerComponent } from '../shared/ui/components/spinner/spinner.component';
@@ -59,7 +62,7 @@ export class LoginComponent {
       authActions.login({
         username: this.loginForm.value.username,
         password: this.loginForm.value.password,
-      })
+      }),
     );
   }
 }

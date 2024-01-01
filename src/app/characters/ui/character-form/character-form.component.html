@@ -8,8 +8,8 @@
       [label]="'Name'"
       formControlName="name"
     />
-    @if (characterForm.get('name')?.pending) {
-    <p style="color: aqua">Checking if unique..</p>
+    @if (characterForm.get("name")?.pending) {
+      <p style="color: aqua">Checking if unique..</p>
     }
   </div>
 
@@ -17,9 +17,9 @@
     <select appFocusVisible id="characterType" formControlName="characterType">
       <option value="" disabled selected>Class</option>
       @for (type of cas.characterTypes$ | async; track $index) {
-      <option [value]="type.typeName">
-        {{ type.typeName }}
-      </option>
+        <option [value]="type.typeName">
+          {{ type.typeName }}
+        </option>
       }
     </select>
   </div>

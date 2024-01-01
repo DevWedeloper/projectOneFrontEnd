@@ -3,13 +3,11 @@ import { GuildStatsComponent } from './features/guild-stats/guild-stats.componen
 import { CharacterStatsComponent } from './features/character-stats/character-stats.component';
 
 @Component({
-    selector: 'app-dashboard',
-    templateUrl: './dashboard.component.html',
-    styleUrls: ['./dashboard.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: true,
-    imports: [CharacterStatsComponent, GuildStatsComponent]
+  selector: 'app-dashboard',
+  templateUrl: './dashboard.component.html',
+  styleUrls: ['./dashboard.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [CharacterStatsComponent, GuildStatsComponent],
 })
-export class DashboardComponent {
-
-}
+export class DashboardComponent {}

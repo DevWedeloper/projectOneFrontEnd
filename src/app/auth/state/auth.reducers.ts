@@ -70,7 +70,7 @@ const authFeature = createFeature({
     })),
     on(authActions.autoLogout, (state) => ({
       ...state,
-    }))
+    })),
   ),
 });
 

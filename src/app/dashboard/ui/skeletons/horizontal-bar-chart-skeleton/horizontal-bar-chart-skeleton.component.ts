@@ -5,8 +5,6 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   standalone: true,
   templateUrl: './horizontal-bar-chart-skeleton.component.html',
   styleUrls: ['./horizontal-bar-chart-skeleton.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HorizontalBarChartSkeletonComponent {
-
-}
+export class HorizontalBarChartSkeletonComponent {}

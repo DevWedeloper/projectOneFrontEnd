@@ -32,7 +32,7 @@ import { GuildLoadingService } from '../../data-access/guild-loading.service';
     CustomInputComponent,
     CreateButtonDirective,
     SpinnerComponent,
-    DynamicValidatorMessageDirective
+    DynamicValidatorMessageDirective,
   ],
   templateUrl: './guild-create.component.html',
   styleUrls: ['./guild-create.component.scss'],

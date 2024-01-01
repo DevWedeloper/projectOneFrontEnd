@@ -7,8 +7,6 @@ import { CommonModule } from '@angular/common';
   imports: [CommonModule],
   templateUrl: './vertical-bar-chart-skeleton.component.html',
   styleUrls: ['./vertical-bar-chart-skeleton.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class VerticalBarChartSkeletonComponent {
-
-}
+export class VerticalBarChartSkeletonComponent {}

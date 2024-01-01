@@ -24,7 +24,7 @@ export class GuildStatsApiService {
   }
 
   getTopGuildsByAverageAttribute(
-    attribute: string
+    attribute: string,
   ): Observable<AverageGuildStats[]> {
     const url = `${this.url}/guildStats/averageAttribute/${attribute}`;
     return this.http.get<AverageGuildStats[]>(url);

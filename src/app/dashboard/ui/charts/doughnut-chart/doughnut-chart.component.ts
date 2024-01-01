@@ -3,7 +3,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   Input,
-  inject
+  inject,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ChartConfiguration } from 'chart.js';
@@ -16,7 +16,12 @@ import { DoughnutChartSkeletonComponent } from '../../skeletons/doughnut-chart-s
 @Component({
   selector: 'app-doughnut-chart',
   standalone: true,
-  imports: [CommonModule, NgChartsModule, DoughnutChartSkeletonComponent, NoDataComponent],
+  imports: [
+    CommonModule,
+    NgChartsModule,
+    DoughnutChartSkeletonComponent,
+    NoDataComponent,
+  ],
   providers: [ThemeService],
   templateUrl: './doughnut-chart.component.html',
   styleUrls: ['./doughnut-chart.component.scss'],
@@ -28,10 +33,12 @@ export class DoughnutChartComponent {
   private ccs = inject(ChartColorService);
   @Input({ required: true }) polarAreaChartLabels!: string[] | null;
   @Input({ required: true })
-  polarAreaChartDatasets!: ChartConfiguration<'polarArea'>['data']['datasets'] | null;
+  polarAreaChartDatasets!:
+    | ChartConfiguration<'polarArea'>['data']['datasets']
+    | null;
   @Input({ required: true }) loading!: boolean | null;
   protected polarAreaOptions: ChartConfiguration<'polarArea'>['options'] = {
-    maintainAspectRatio: false, 
+    maintainAspectRatio: false,
     plugins: {
       legend: {
         display: false,

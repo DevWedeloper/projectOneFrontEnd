@@ -14,13 +14,13 @@ export class ChartColorService {
     map(([styles]) => {
       this.secondaryColor$.next(
         styles?.getPropertyValue('--secondary-color') ||
-          this.style.getPropertyValue('--secondary-color')
+          this.style.getPropertyValue('--secondary-color'),
       );
       this.textColor$.next(
         styles?.getPropertyValue('--text-color') ||
-          this.style.getPropertyValue('--text-color')
+          this.style.getPropertyValue('--text-color'),
       );
-    })
+    }),
   );
   readonly healthColor = 'lightgreen';
   readonly strengthColor = 'lightblue';

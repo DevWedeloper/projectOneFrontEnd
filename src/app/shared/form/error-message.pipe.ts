@@ -3,7 +3,7 @@ import { VALIDATION_ERROR_MESSAGES } from './validation-error-messages.token';
 
 @Pipe({
   name: 'errorMessage',
-  standalone: true
+  standalone: true,
 })
 export class ErrorMessagePipe implements PipeTransform {
   private errorMessages = inject(VALIDATION_ERROR_MESSAGES);
@@ -15,5 +15,4 @@ export class ErrorMessagePipe implements PipeTransform {
     }
     return this.errorMessages[key](errorValue);
   }
-  
 }

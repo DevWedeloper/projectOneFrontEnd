@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CheckIfMemberApiService {
   private http = inject(HttpClient);
@@ -16,7 +16,10 @@ export class CheckIfMemberApiService {
     return this.http.post<{ message: string }>(url, reqBody);
   }
 
-  isNotMember(character: string, guild: string): Observable<{ message: string }> {
+  isNotMember(
+    character: string,
+    guild: string,
+  ): Observable<{ message: string }> {
     const url = `${this.url}/guild/isNotMember`;
     const reqBody = { character: character, guild: guild };
     return this.http.post<{ message: string }>(url, reqBody);

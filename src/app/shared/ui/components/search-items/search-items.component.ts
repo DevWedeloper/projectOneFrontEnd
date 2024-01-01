@@ -96,5 +96,4 @@ export class SearchItemsComponent<T extends Character | Guild>
       });
     }
   }
-
 }

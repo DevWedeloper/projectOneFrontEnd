@@ -7,8 +7,6 @@ import { CommonModule } from '@angular/common';
   imports: [CommonModule],
   templateUrl: './divider-dropdown-skeleton.component.html',
   styleUrls: ['./divider-dropdown-skeleton.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DividerDropdownSkeletonComponent {
-
-}
+export class DividerDropdownSkeletonComponent {}

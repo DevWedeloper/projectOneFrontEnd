@@ -71,10 +71,10 @@ export class GuildEditComponent implements OnInit, OnDestroy {
   protected updateGuildLeaderForm!: FormGroup;
   protected addMemberForm!: FormGroup;
   protected toggleNewLeaderSearchContainer = new BehaviorSubject<boolean>(
-    false
+    false,
   );
   protected toggleNewMemberSearchContainer = new BehaviorSubject<boolean>(
-    false
+    false,
   );
 
   constructor() {
@@ -83,10 +83,10 @@ export class GuildEditComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.addMemberForm = this.gefs.initializeAddMemberForm(
-      this.guild?._id || null
+      this.guild?._id || null,
     );
     this.updateGuildLeaderForm = this.gefs.initializeUpdateLeaderForm(
-      this.guild?._id || null
+      this.guild?._id || null,
     );
     this.updateGuildNameForm.patchValue({
       name: this.guild?.name,
@@ -96,12 +96,11 @@ export class GuildEditComponent implements OnInit, OnDestroy {
     });
     this.gefs.initialName$.next(this.updateGuildNameForm.get('name')?.value);
     this.gefs.initialLeader$.next(
-      this.updateGuildLeaderForm.get('leader')?.value
+      this.updateGuildLeaderForm.get('leader')?.value,
     );
   }
 
   ngOnDestroy(): void {
     this.closeEdit.emit();
   }
-
 }

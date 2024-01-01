@@ -57,7 +57,7 @@
 .icon-container svg {
   width: 2rem;
   user-select: none;
-  fill: var(--text-color)
+  fill: var(--text-color);
 }
 
 .link-text {
@@ -67,7 +67,9 @@
   color: var(--text-color);
   opacity: 0;
   pointer-events: none;
-  transition: opacity 750ms ease-in-out, width 750ms ease-in-out;
+  transition:
+    opacity 750ms ease-in-out,
+    width 750ms ease-in-out;
   width: 0;
   overflow: hidden;
 }
@@ -106,4 +108,3 @@
     display: none;
   }
 }
-

@@ -7,7 +7,7 @@ import {
   Input,
   Output,
   forwardRef,
-  inject
+  inject,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
@@ -19,8 +19,8 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => CustomInputComponent),
-      multi: true
-    }
+      multi: true,
+    },
   ],
   templateUrl: './custom-input.component.html',
   styleUrls: ['./custom-input.component.scss'],
@@ -42,7 +42,7 @@ export class CustomInputComponent implements ControlValueAccessor {
   registerOnChange(fn: any): void {
     this.onChange = fn;
   }
-  
+
   registerOnTouched(fn: any): void {
     this.onTouch = fn;
   }

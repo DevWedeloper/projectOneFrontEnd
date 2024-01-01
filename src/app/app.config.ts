@@ -40,7 +40,7 @@ export const appConfig: ApplicationConfig = {
       logOnly: !isDevMode(),
       autoPause: true,
       trace: false,
-      traceLimit: 75
+      traceLimit: 75,
     }),
   ],
 };

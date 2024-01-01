@@ -12,7 +12,7 @@ import {
   shareReplay,
   startWith,
   switchMap,
-  take
+  take,
 } from 'rxjs';
 import { GuildApiService } from 'src/app/shared/data-access/guild-api.service';
 import { QueryParams } from 'src/app/shared/interfaces/query-params.interface';
@@ -52,9 +52,9 @@ export class GuildService {
       ({ page, pageSize, sortParams: { sortBy, sortOrder }, searchQuery }) =>
         this.guildApiService
           .getGuilds(page, pageSize, sortBy, sortOrder, searchQuery)
-          .pipe(catchError(() => EMPTY))
+          .pipe(catchError(() => EMPTY)),
     ),
-    shareReplay(1)
+    shareReplay(1),
   );
 
   constructor() {
@@ -63,7 +63,12 @@ export class GuildService {
     ];
     this.ls.waitForObservables(observables);
 
-    combineLatest([this.currentPage$, this.pageSize$, this.sortParams$, this.name$])
+    combineLatest([
+      this.currentPage$,
+      this.pageSize$,
+      this.sortParams$,
+      this.name$,
+    ])
       .pipe(
         distinctUntilChanged(),
         switchMap(([currentPage, pageSize, sortParams, name]) => {
@@ -73,7 +78,7 @@ export class GuildService {
             pageSize: pageSize,
             sortBy: sortBy,
             sortOrder: sortOrder,
-            name: name
+            name: name,
           };
           return this.router.navigate([], {
             relativeTo: this.route,
@@ -82,7 +87,7 @@ export class GuildService {
             replaceUrl: true,
           });
         }),
-        takeUntilDestroyed()
+        takeUntilDestroyed(),
       )
       .subscribe();
   }

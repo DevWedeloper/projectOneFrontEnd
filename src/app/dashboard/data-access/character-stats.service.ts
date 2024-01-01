@@ -44,7 +44,7 @@ export class CharacterStatsService {
     {
       attribute: 'intelligence',
       backgroundColor: this.ccs.intelligenceColor,
-    }
+    },
   );
   readonly topCharactersByArmor$ = this.generateTopCharactersByAttribute({
     attribute: 'armor',
@@ -62,7 +62,7 @@ export class CharacterStatsService {
           return null;
         }
         return characters;
-      })
+      }),
     );
   readonly averageCharacterStats$ =
     this.characterStatsApiService.getAverageCharacterStats();
@@ -114,7 +114,7 @@ export class CharacterStatsService {
         },
       ];
       return { labels, dataset };
-    })
+    }),
   );
   readonly characterDistributionByType$ = this.characterStatsApiService
     .getCharacterDistributionByType()
@@ -129,7 +129,7 @@ export class CharacterStatsService {
           { data: counts || [] },
         ];
         return { ids, dataset };
-      })
+      }),
     );
 
   constructor() {
@@ -168,7 +168,7 @@ export class CharacterStatsService {
         takeUntilDestroyed(),
         tap((characters) => {
           this.radarChartCharacter$.next(characters?.[0] || null);
-        })
+        }),
       )
       .subscribe();
   }
@@ -189,7 +189,7 @@ export class CharacterStatsService {
           }
           const names = characters.map((characters) => characters.name);
           const combinedAttributes = characters.map(
-            (character) => character[attribute as keyof Character] as number
+            (character) => character[attribute as keyof Character] as number,
           );
           const dataset: ChartConfiguration<'bar'>['data']['datasets'] = [
             {
@@ -198,7 +198,7 @@ export class CharacterStatsService {
             },
           ];
           return { names, dataset };
-        })
+        }),
       );
   }
 }

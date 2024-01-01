@@ -69,7 +69,7 @@ export class CharacterFormService {
   }
 
   private validateCharacterNameUniqueness(
-    control: AbstractControl
+    control: AbstractControl,
   ): Observable<ValidationErrors | null> {
     const nameField = control.getRawValue();
     if (nameField === this.initialName$.value) {
@@ -83,13 +83,13 @@ export class CharacterFormService {
           map((response) =>
             response.message === 'Character name is unique'
               ? null
-              : { uniqueName: true }
+              : { uniqueName: true },
           ),
           catchError(() => {
             return of(null);
-          })
-        )
-      )
+          }),
+        ),
+      ),
     );
   }
 }

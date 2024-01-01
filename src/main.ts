@@ -8,6 +8,6 @@ import { appConfig } from './app/app.config';
 
 bootstrapApplication(AppComponent, appConfig)
   .then((module) =>
-    enableDebugTools(module.injector.get(ApplicationRef).components[0])
+    enableDebugTools(module.injector.get(ApplicationRef).components[0]),
   )
   .catch((err) => console.log(err));

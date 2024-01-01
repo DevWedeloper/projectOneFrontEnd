@@ -98,7 +98,7 @@ export class CharactersComponent {
             return of([]);
           }
         }),
-        takeUntilDestroyed()
+        takeUntilDestroyed(),
       )
       .subscribe((guilds) => {
         this.searchResults$.next(guilds);

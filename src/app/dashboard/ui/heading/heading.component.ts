@@ -1,5 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Input, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  inject,
+} from '@angular/core';
 import { DashboardLoadingService } from '../../data-access/dashboard-loading.service';
 import { HeadingSkeletonComponent } from '../skeletons/heading-skeleton/heading-skeleton.component';
 
@@ -9,7 +14,7 @@ import { HeadingSkeletonComponent } from '../skeletons/heading-skeleton/heading-
   imports: [CommonModule, HeadingSkeletonComponent],
   templateUrl: './heading.component.html',
   styleUrls: ['./heading.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeadingComponent {
   protected ls = inject(DashboardLoadingService);

@@ -8,7 +8,9 @@ import { Observable, of } from 'rxjs';
 export class CacheService {
   private cache = new Map<string, HttpResponse<unknown>>();
 
-  getCacheResponse<T>(request: HttpRequest<T>): Observable<HttpResponse<T>> | null {
+  getCacheResponse<T>(
+    request: HttpRequest<T>,
+  ): Observable<HttpResponse<T>> | null {
     const cachedResponse = this.cache.get(request.urlWithParams);
     return cachedResponse ? of(cachedResponse as HttpResponse<T>) : null;
   }

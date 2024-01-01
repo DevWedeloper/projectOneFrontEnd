@@ -20,7 +20,9 @@
 }
 
 ::ng-deep .page-size-container select:focus-visible {
-  box-shadow: 0 0 0 3px var(--primary-color), 0 0 0 4px var(--text-color);
+  box-shadow:
+    0 0 0 3px var(--primary-color),
+    0 0 0 4px var(--text-color);
 }
 
 ::ng-deep .page-size-container option {
@@ -43,7 +45,7 @@
   border: 1px solid var(--text-color);
 }
 
-.table-container {  
+.table-container {
   overflow-y: auto;
 }
 
@@ -107,7 +109,9 @@
 
 ::ng-deep .edit-btn:focus-visible,
 ::ng-deep .delete-btn:focus-visible {
-  box-shadow: 0 0 0 3px var(--primary-color), 0 0 0 4px var(--text-color);
+  box-shadow:
+    0 0 0 3px var(--primary-color),
+    0 0 0 4px var(--text-color);
 }
 
 .pagination {

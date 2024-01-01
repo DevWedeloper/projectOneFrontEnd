@@ -8,7 +8,7 @@ import {
   HostListener,
   QueryList,
   ViewChildren,
-  inject
+  inject,
 } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { authActions } from 'src/app/auth/state/auth.actions';
@@ -40,7 +40,7 @@ import { HomeService } from '../../data-access/home.service';
             opacity: 0,
             transform: 'translateY(-10px)',
             pointerEvents: 'none',
-          })
+          }),
         ),
       ]),
     ]),
@@ -62,7 +62,7 @@ export class SettingsDropdownComponent {
     }
     if (
       !this.links.some((child) =>
-        child.nativeElement.contains(event.target as Node)
+        child.nativeElement.contains(event.target as Node),
       )
     ) {
       this.hs.isSettingsDropdownOpen$.next(false);

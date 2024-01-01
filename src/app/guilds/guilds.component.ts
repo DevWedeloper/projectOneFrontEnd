@@ -100,7 +100,7 @@ export class GuildsComponent {
             return of([]);
           }
         }),
-        takeUntilDestroyed()
+        takeUntilDestroyed(),
       )
       .subscribe((characters) => {
         this.searchLeaderResults$.next(characters);
@@ -114,13 +114,13 @@ export class GuildsComponent {
           if (query.trim() !== '') {
             return this.guildApiService.searchGuildMemberById(
               query,
-              this.gas.guildToUpdate$.value?._id || ''
+              this.gas.guildToUpdate$.value?._id || '',
             );
           } else {
             return of([]);
           }
         }),
-        takeUntilDestroyed()
+        takeUntilDestroyed(),
       )
       .subscribe((characters) => {
         this.searchNewLeaderResults$.next(characters);
@@ -137,7 +137,7 @@ export class GuildsComponent {
             return of([]);
           }
         }),
-        takeUntilDestroyed()
+        takeUntilDestroyed(),
       )
       .subscribe((characters) => {
         this.searchNewMemberResults$.next(characters);
