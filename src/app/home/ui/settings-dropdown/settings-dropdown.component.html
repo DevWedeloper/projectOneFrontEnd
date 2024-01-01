@@ -32,8 +32,8 @@
   <li
     #links
     class="dropdown-item"
-    (click)="authService.logout()"
-    (keyup.enter)="authService.logout()"
+    (click)="onLogout()"
+    (keyup.enter)="onLogout()"
     tabindex="0"
     [ngStyle]="{
       filter: (ts.isDarkMode$ | async) ? 'brightness(1.2)' : 'brightness(0.8)'

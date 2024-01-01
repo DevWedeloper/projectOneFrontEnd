@@ -6,13 +6,16 @@ import {
   HttpRequest,
 } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { Observable, throwError } from 'rxjs';
-import { catchError, switchMap } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 import { AuthService } from './auth.service';
+import { authActions } from './state/auth.actions';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
   private authService = inject(AuthService);
+  private store = inject(Store);
 
   intercept<T>(
     request: HttpRequest<T>,
@@ -24,15 +27,12 @@ export class AuthInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
         if (error.status === 401 && this.authService.isAuthenticated()) {
-          return this.authService.refreshToken().pipe(
-            switchMap(() => {
-              request = this.addAuthToken(
-                request,
-                this.authService.getAccessToken()
-              );
-              return next.handle(request);
-            })
+          this.store.dispatch(authActions.refreshToken());
+          request = this.addAuthToken(
+            request,
+            this.authService.getAccessToken()
           );
+          return next.handle(request);
         } else {
           return throwError(() => error);
         }
