@@ -70,7 +70,7 @@
     [disabled]="characterForm.invalid || (cas.updateLoading$ | async)"
     (click)="
       updateCharacter.emit({
-        characterForm: characterForm,
+        character: characterForm.value,
         previousCharacterData: character!
       })
     "

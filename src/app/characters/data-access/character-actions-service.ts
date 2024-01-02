@@ -36,7 +36,7 @@ export class CharacterActionsService {
   readonly characterTypes$ = this.characterTypeService.getCharacterTypes();
   characterCreate$ = new Subject<FormGroup>();
   characterUpdate$ = new Subject<{
-    characterForm: FormGroup;
+    character: Character;
     previousCharacterData: Character;
   }>();
   characterJoinGuild$ = new Subject<{
@@ -83,12 +83,8 @@ export class CharacterActionsService {
     this.characterUpdate$
       .pipe(
         tap(() => this.updateLoading$.next(true)),
-        switchMap(({ characterForm, previousCharacterData }) => {
-          if (!characterForm.valid) {
-            return EMPTY;
-          }
-
-          const updatedCharacterData = characterForm.value;
+        switchMap(({ character, previousCharacterData }) => {
+          const updatedCharacterData = character;
           const attributesToUpdate: {
             attribute: string;
             attributeValue: string | number;
@@ -96,7 +92,10 @@ export class CharacterActionsService {
 
           for (const attribute in updatedCharacterData) {
             if (attribute in updatedCharacterData) {
-              const attributeValue = updatedCharacterData[attribute];
+              const attributeValue =
+                updatedCharacterData[
+                  attribute as keyof Omit<Character, 'guild'>
+                ];
               const originalAttributeValue =
                 previousCharacterData[attribute as keyof Character];
 

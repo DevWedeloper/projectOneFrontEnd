@@ -55,7 +55,7 @@ export class CharacterEditComponent implements OnInit, OnDestroy {
   @Input({ required: true }) searchResults!: Guild[] | null;
   @Output() searchQueryChange = new EventEmitter<string>();
   @Output() updateCharacter = new EventEmitter<{
-    characterForm: FormGroup;
+    character: Character;
     previousCharacterData: Character;
   }>();
   @Output() joinGuild = new EventEmitter<{
