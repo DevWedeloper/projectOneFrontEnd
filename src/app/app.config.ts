@@ -15,6 +15,21 @@ import { AuthEffects } from './auth/state/auth.effects';
 import { authFeatureKey, authReducer } from './auth/state/auth.reducers';
 import { CacheInterceptor } from './caching/cache.interceptor';
 import { CacheService } from './caching/cache.service';
+import { CharacterStatsEffects } from './dashboard/state/character-stats.effects';
+import {
+  characterStatsFeatureKey,
+  characterStatsReducer,
+} from './dashboard/state/character-stats.reducers';
+import { DashboardEffects } from './dashboard/state/dashboard.effects';
+import {
+  dashboardFeatureKey,
+  dashboardReducer,
+} from './dashboard/state/dashboard.reducers';
+import { GuildStatsEffects } from './dashboard/state/guild-stats.effects';
+import {
+  guildStatsFeatureKey,
+  guildStatsReducer,
+} from './dashboard/state/guild-stats.reducers';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -34,7 +49,15 @@ export const appConfig: ApplicationConfig = {
     provideAnimations(),
     provideStore(),
     provideState(authFeatureKey, authReducer),
-    provideEffects(AuthEffects),
+    provideState(characterStatsFeatureKey, characterStatsReducer),
+    provideState(guildStatsFeatureKey, guildStatsReducer),
+    provideState(dashboardFeatureKey, dashboardReducer),
+    provideEffects(
+      AuthEffects,
+      CharacterStatsEffects,
+      GuildStatsEffects,
+      DashboardEffects,
+    ),
     provideStoreDevtools({
       maxAge: 25,
       logOnly: !isDevMode(),

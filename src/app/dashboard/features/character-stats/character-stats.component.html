@@ -2,40 +2,40 @@
   <div class="chart-container-heading">
     <app-heading
       [label]="'Top Characters By Attribute'"
-      [loading]="ls.loading$ | async"
+      [loading]="loading$ | async"
     />
   </div>
   <div class="chart-container">
     <div class="chart-container-item">
       <app-horizontal-bar-chart
         [label]="'Health'"
-        [barChartLabels]="(css.topCharactersByHealth$ | async)?.names || null"
+        [barChartLabels]="(topCharactersByHealth$ | async)?.names || null"
         [barChartDataset]="
-          (css.topCharactersByHealth$ | async)?.dataset || null
+          (topCharactersByHealth$ | async)?.dataset || null
         "
-        [loading]="ls.loading$ | async"
+        [loading]="loading$ | async"
       />
     </div>
 
     <div class="chart-container-item">
       <app-horizontal-bar-chart
         [label]="'Strength'"
-        [barChartLabels]="(css.topCharactersByStrength$ | async)?.names || null"
+        [barChartLabels]="(topCharactersByStrength$ | async)?.names || null"
         [barChartDataset]="
-          (css.topCharactersByStrength$ | async)?.dataset || null
+          (topCharactersByStrength$ | async)?.dataset || null
         "
-        [loading]="ls.loading$ | async"
+        [loading]="loading$ | async"
       />
     </div>
 
     <div class="chart-container-item">
       <app-horizontal-bar-chart
         [label]="'Agility'"
-        [barChartLabels]="(css.topCharactersByAgility$ | async)?.names || null"
+        [barChartLabels]="(topCharactersByAgility$ | async)?.names || null"
         [barChartDataset]="
-          (css.topCharactersByAgility$ | async)?.dataset || null
+          (topCharactersByAgility$ | async)?.dataset || null
         "
-        [loading]="ls.loading$ | async"
+        [loading]="loading$ | async"
       />
     </div>
 
@@ -43,21 +43,21 @@
       <app-horizontal-bar-chart
         [label]="'Intelligence'"
         [barChartLabels]="
-          (css.topCharactersByIntelligence$ | async)?.names || null
+          (topCharactersByIntelligence$ | async)?.names || null
         "
         [barChartDataset]="
-          (css.topCharactersByIntelligence$ | async)?.dataset || null
+          (topCharactersByIntelligence$ | async)?.dataset || null
         "
-        [loading]="ls.loading$ | async"
+        [loading]="loading$ | async"
       />
     </div>
 
     <div class="chart-container-item">
       <app-horizontal-bar-chart
         [label]="'Armor'"
-        [barChartLabels]="(css.topCharactersByArmor$ | async)?.names || null"
-        [barChartDataset]="(css.topCharactersByArmor$ | async)?.dataset || null"
-        [loading]="ls.loading$ | async"
+        [barChartLabels]="(topCharactersByArmor$ | async)?.names || null"
+        [barChartDataset]="(topCharactersByArmor$ | async)?.dataset || null"
+        [loading]="loading$ | async"
       />
     </div>
 
@@ -65,12 +65,12 @@
       <app-horizontal-bar-chart
         [label]="'Crit Chance'"
         [barChartLabels]="
-          (css.topCharactersByCritChance$ | async)?.names || null
+          (topCharactersByCritChance$ | async)?.names || null
         "
         [barChartDataset]="
-          (css.topCharactersByCritChance$ | async)?.dataset || null
+          (topCharactersByCritChance$ | async)?.dataset || null
         "
-        [loading]="ls.loading$ | async"
+        [loading]="loading$ | async"
       />
     </div>
   </div>
@@ -80,18 +80,18 @@
   <div class="chart-container-heading">
     <app-heading
       [label]="'Top Overall Characters'"
-      [loading]="ls.loading$ | async"
+      [loading]="loading$ | async"
     />
   </div>
   <div class="chart-group-container">
     <div class="chart-container-item">
       <app-radar-chart
-        [selectedCharacter]="css.radarChartCharacter$ | async"
-        [topWellRoundedCharacters]="css.topWellRoundedCharacters$ | async"
-        [radarChartLabels]="(css.radarChartDataset$ | async)?.labels"
-        [radarChartDatasets]="(css.radarChartDataset$ | async)?.dataset"
-        [loading]="ls.loading$ | async"
-        (selectedCharacterChange)="css.radarChartCharacter$.next($event)"
+        [selectedCharacter]="radarChartCharacter$ | async"
+        [topWellRoundedCharacters]="topWellRoundedCharacters$ | async"
+        [radarChartLabels]="(radarChartDataset$ | async)?.labels"
+        [radarChartDatasets]="(radarChartDataset$ | async)?.dataset"
+        [loading]="loading$ | async"
+        (selectedCharacterChange)="selectCharacter($event)"
       />
     </div>
   </div>
@@ -101,18 +101,18 @@
   <div class="chart-container-heading">
     <app-heading
       [label]="'Class Distribution'"
-      [loading]="ls.loading$ | async"
+      [loading]="loading$ | async"
     />
   </div>
   <div class="chart-container-item">
     <app-doughnut-chart
       [polarAreaChartLabels]="
-        (css.characterDistributionByType$ | async)?.ids || null
+        (characterDistributionByType$ | async)?.ids || null
       "
       [polarAreaChartDatasets]="
-        (css.characterDistributionByType$ | async)?.dataset || null
+        (characterDistributionByType$ | async)?.dataset || null
       "
-      [loading]="ls.loading$ | async"
+      [loading]="loading$ | async"
     />
   </div>
 </div>
