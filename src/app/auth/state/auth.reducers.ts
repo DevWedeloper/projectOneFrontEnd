@@ -45,9 +45,6 @@ const authFeature = createFeature({
     on(authActions.logout, () => ({
       ...initialState,
     })),
-    on(authActions.refreshToken, (state) => ({
-      ...state,
-    })),
     on(authActions.refreshTokenSuccess, (state) => ({
       ...state,
       hasRefreshTokenError: null,
@@ -67,9 +64,6 @@ const authFeature = createFeature({
     on(authActions.setUserRole, (state, action) => ({
       ...state,
       userRole: action.role,
-    })),
-    on(authActions.autoLogout, (state) => ({
-      ...state,
     })),
   ),
   extraSelectors: ({ selectUserRole }) => ({
