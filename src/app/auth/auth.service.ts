@@ -1,9 +1,8 @@
 import { Injectable, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import jwt_decode from 'jwt-decode';
-import { map } from 'rxjs/operators';
 import { DecodedToken } from './interface/decoded-token.interface';
-import { selectUserRole } from './state/auth.reducers';
+import { selectIsCurrentUserAdmin } from './state/auth.reducers';
 
 @Injectable({
   providedIn: 'root',
@@ -12,9 +11,7 @@ export class AuthService {
   private store = inject(Store);
   private accessTokenKey = 'access_token';
   private currentUser = 'current_user';
-  isCurrentUserAdmin$ = this.store
-    .select(selectUserRole)
-    .pipe(map((userRole) => userRole === 'admin'));
+  isCurrentUserAdmin$ = this.store.select(selectIsCurrentUserAdmin);
 
   isAuthenticated(): boolean {
     const accessToken = this.isAccessTokenExisting();
