@@ -60,8 +60,7 @@ export class LoginComponent {
   onSubmit(): void {
     this.store.dispatch(
       authActions.login({
-        username: this.loginForm.value.username,
-        password: this.loginForm.value.password,
+        user: this.loginForm.value,
       }),
     );
   }
