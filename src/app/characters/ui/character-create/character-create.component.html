@@ -1,6 +1,6 @@
 <app-divider-dropdown
   [label]="'Create Character'"
-  [loading]="ls.loading$ | async"
+  [loading]="loading$ | async"
   (dividerToggled)="resetForm()"
 >
   <app-character-form [characterForm]="characterForm" />
@@ -8,10 +8,10 @@
     <button
       appCreateButton
       type="submit"
-      [disabled]="characterForm.invalid || (cas.createLoading$ | async)"
-      (click)="this.createCharacter.emit(this.characterForm)"
+      [disabled]="characterForm.invalid || (createLoading$ | async)"
+      (click)="this.createCharacter.emit(this.characterForm.value)"
     >
-      @if (cas.createLoading$ | async) {
+      @if (createLoading$ | async) {
         <app-spinner [size]="25" />
       }
       Create

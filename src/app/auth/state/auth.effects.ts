@@ -16,8 +16,8 @@ export class AuthEffects {
   login$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(authActions.login),
-      switchMap((user) => {
-        return this.authApiService.login(user).pipe(
+      switchMap((action) => {
+        return this.authApiService.login(action.user).pipe(
           map((response) => {
             this.authService.setAccessToken(response.accessToken);
             this.authService.setCurrentUser(response.userId);

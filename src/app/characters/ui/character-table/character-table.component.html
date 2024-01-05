@@ -1,4 +1,4 @@
-<app-table [data]="characterData?.characters" [loading]="ls.loading$ | async">
+<app-table [data]="characterData?.characters" [loading]="loading$ | async">
   <ng-template #searchTemplate>
     <div>
       <input
@@ -89,13 +89,13 @@
             class="delete-btn"
             (click)="deleteCharacter.emit(character)"
             [disabled]="
-              (cas.deleteLoading$ | async) &&
-              cas.characterToUpdate$.value?._id === character._id
+              (deleteLoading$ | async) &&
+              (selectedCharacter$ | async)?._id === character._id
             "
           >
             @if (
-              (cas.deleteLoading$ | async) &&
-              cas.characterToUpdate$.value?._id === character._id
+              (deleteLoading$ | async) &&
+              (selectedCharacter$ | async)?._id === character._id
             ) {
               <app-spinner [size]="20" />
             }

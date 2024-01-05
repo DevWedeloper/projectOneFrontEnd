@@ -7,13 +7,19 @@ import {
   inject,
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { Store } from '@ngrx/store';
+import { Character } from 'src/app/shared/interfaces/character.interface';
 import { DividerDropdownComponent } from 'src/app/shared/ui/components/divider-dropdown/divider-dropdown.component';
 import { SpinnerComponent } from 'src/app/shared/ui/components/spinner/spinner.component';
 import { CreateButtonDirective } from 'src/app/shared/ui/directives/button/create-button.directive';
-import { CharacterActionsService } from '../../data-access/character-actions-service';
 import { CharacterFormService } from '../../data-access/character-form.service';
-import { CharacterLoadingService } from '../../data-access/character-loading.service';
+import {
+  selectCreateSuccess,
+  selectIsCreating,
+} from '../../state/character-actions.reducers';
+import { selectInitialLoading } from '../../state/character-table.reducers';
 import { CharacterFormComponent } from '../character-form/character-form.component';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-character-create',
@@ -32,13 +38,19 @@ import { CharacterFormComponent } from '../character-form/character-form.compone
 })
 export class CharacterCreateComponent {
   private cfs = inject(CharacterFormService);
-  protected ls = inject(CharacterLoadingService);
-  protected cas = inject(CharacterActionsService);
-  @Output() createCharacter = new EventEmitter<FormGroup>();
+  private store = inject(Store);
+  @Output() createCharacter = new EventEmitter<Character>();
   protected characterForm!: FormGroup;
+  protected loading$ = this.store.select(selectInitialLoading);
+  protected createLoading$ = this.store.select(selectIsCreating);
+  private createSuccess$ = this.store.select(selectCreateSuccess);
 
   constructor() {
     this.characterForm = this.cfs.initializeCharacterForm();
+    this.createSuccess$.pipe(takeUntilDestroyed()).subscribe(() => {
+      this.characterForm.reset();
+      this.characterForm.get('characterType')?.setValue('');
+    });
   }
 
   protected resetForm(): void {

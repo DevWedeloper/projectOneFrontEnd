@@ -37,10 +37,12 @@
     ) {
       <button
         appGreenButton
-        (click)="joinGuild.emit({ character: character!, joinGuildForm })"
-        [disabled]="cas.joinLoading$ | async"
+        (click)="
+          joinGuild.emit({ character: character!, guildName: joinGuildForm.value })
+        "
+        [disabled]="joinGuildLoading$ | async"
       >
-        @if (cas.joinLoading$ | async) {
+        @if (joinGuildLoading$ | async) {
           <app-spinner [size]="20" />
         }
         Join
@@ -49,14 +51,14 @@
     @if (
       character?.guild !== null &&
       character?.guild?.name === joinGuildForm.get("guild")?.value &&
-      (cas.joinLoading$ | async) === false
+      (joinGuildLoading$ | async) === false
     ) {
       <button
         appRedButton
-        (click)="leaveGuild.emit({ character: character!, joinGuildForm })"
-        [disabled]="cas.leaveLoading$ | async"
+        (click)="leaveGuild.emit(character!)"
+        [disabled]="leaveGuildLoading$ | async"
       >
-        @if (cas.leaveLoading$ | async) {
+        @if (leaveGuildLoading$ | async) {
           <app-spinner [size]="20" />
         }
         Leave
@@ -67,7 +69,7 @@
 <div class="edit-btn-container">
   <button
     class="edit-btn"
-    [disabled]="characterForm.invalid || (cas.updateLoading$ | async)"
+    [disabled]="characterForm.invalid || (updateLoading$ | async)"
     (click)="
       updateCharacter.emit({
         character: characterForm.value,
@@ -75,7 +77,7 @@
       })
     "
   >
-    @if (cas.updateLoading$ | async) {
+    @if (updateLoading$ | async) {
       <app-spinner [size]="20" />
     }
     Save

@@ -1,4 +1,4 @@
-import { createFeature, createReducer, on } from '@ngrx/store';
+import { createFeature, createReducer, createSelector, on } from '@ngrx/store';
 import { authActions } from './auth.actions';
 import { HttpErrorResponse } from '@angular/common/http';
 
@@ -45,9 +45,6 @@ const authFeature = createFeature({
     on(authActions.logout, () => ({
       ...initialState,
     })),
-    on(authActions.refreshToken, (state) => ({
-      ...state,
-    })),
     on(authActions.refreshTokenSuccess, (state) => ({
       ...state,
       hasRefreshTokenError: null,
@@ -68,10 +65,13 @@ const authFeature = createFeature({
       ...state,
       userRole: action.role,
     })),
-    on(authActions.autoLogout, (state) => ({
-      ...state,
-    })),
   ),
+  extraSelectors: ({ selectUserRole }) => ({
+    selectIsCurrentUserAdmin: createSelector(
+      selectUserRole,
+      (userRole) => userRole === 'admin',
+    ),
+  }),
 });
 
 export const {
@@ -79,6 +79,6 @@ export const {
   reducer: authReducer,
   selectIsLoggingIn,
   selectHasLoginError,
-  selectUserRole,
+  selectIsCurrentUserAdmin,
   selectLoginStatus,
 } = authFeature;

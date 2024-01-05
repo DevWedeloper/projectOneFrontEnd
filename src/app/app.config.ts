@@ -15,6 +15,10 @@ import { AuthEffects } from './auth/state/auth.effects';
 import { authFeatureKey, authReducer } from './auth/state/auth.reducers';
 import { CacheInterceptor } from './caching/cache.interceptor';
 import { CacheService } from './caching/cache.service';
+import { CharacterActionsEffects } from './characters/state/character-actions.effects';
+import { characterActionsFeatureKey, characterActionsReducer } from './characters/state/character-actions.reducers';
+import { CharacterTableEffects } from './characters/state/character-table.effects';
+import { characterTableFeatureKey, characterTableReducer } from './characters/state/character-table.reducers';
 import { CharacterStatsEffects } from './dashboard/state/character-stats.effects';
 import {
   characterStatsFeatureKey,
@@ -52,11 +56,15 @@ export const appConfig: ApplicationConfig = {
     provideState(characterStatsFeatureKey, characterStatsReducer),
     provideState(guildStatsFeatureKey, guildStatsReducer),
     provideState(dashboardFeatureKey, dashboardReducer),
+    provideState(characterTableFeatureKey, characterTableReducer),
+    provideState(characterActionsFeatureKey, characterActionsReducer),
     provideEffects(
       AuthEffects,
       CharacterStatsEffects,
       GuildStatsEffects,
       DashboardEffects,
+      CharacterTableEffects,
+      CharacterActionsEffects
     ),
     provideStoreDevtools({
       maxAge: 25,

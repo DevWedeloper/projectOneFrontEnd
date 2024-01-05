@@ -9,7 +9,9 @@ import {
   Output,
   inject,
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Store } from '@ngrx/store';
 import { BehaviorSubject } from 'rxjs';
 import { DynamicValidatorMessageDirective } from 'src/app/shared/form/dynamic-validator-message.directive';
 import { Character } from 'src/app/shared/interfaces/character.interface';
@@ -20,9 +22,14 @@ import { SearchItemsComponent } from 'src/app/shared/ui/components/search-items/
 import { SpinnerComponent } from 'src/app/shared/ui/components/spinner/spinner.component';
 import { GreenButtonDirective } from 'src/app/shared/ui/directives/button/green-button.directive';
 import { RedButtonDirective } from 'src/app/shared/ui/directives/button/red-button.directive';
-import { CharacterActionsService } from '../../data-access/character-actions-service';
 import { CharacterFormService } from '../../data-access/character-form.service';
 import { CharacterJoinGuildFormService } from '../../data-access/character-join-guild-form.service';
+import {
+  selectIsJoiningGuild,
+  selectIsLeavingGuild,
+  selectIsUpdating,
+  selectLeaveGuildSuccess,
+} from '../../state/character-actions.reducers';
 import { CharacterFormComponent } from '../character-form/character-form.component';
 
 @Component({
@@ -49,8 +56,8 @@ import { CharacterFormComponent } from '../character-form/character-form.compone
 })
 export class CharacterEditComponent implements OnInit, OnDestroy {
   private cfs = inject(CharacterFormService);
-  protected cas = inject(CharacterActionsService);
   private cjgfs = inject(CharacterJoinGuildFormService);
+  private store = inject(Store);
   @Input({ required: true }) character: Character | null = null;
   @Input({ required: true }) searchResults!: Guild[] | null;
   @Output() searchQueryChange = new EventEmitter<string>();
@@ -60,20 +67,24 @@ export class CharacterEditComponent implements OnInit, OnDestroy {
   }>();
   @Output() joinGuild = new EventEmitter<{
     character: Character;
-    joinGuildForm: FormGroup;
+    guildName: string;
   }>();
-  @Output() leaveGuild = new EventEmitter<{
-    character: Character;
-    joinGuildForm: FormGroup;
-  }>();
+  @Output() leaveGuild = new EventEmitter<Character>();
   @Output() closeModal = new EventEmitter<void>();
   protected characterForm!: FormGroup;
   protected joinGuildForm!: FormGroup;
   protected toggleSearchContainer = new BehaviorSubject<boolean>(false);
+  protected updateLoading$ = this.store.select(selectIsUpdating);
+  protected joinGuildLoading$ = this.store.select(selectIsJoiningGuild);
+  protected leaveGuildLoading$ = this.store.select(selectIsLeavingGuild);
+  private leaveGuildSuccess$ = this.store.select(selectLeaveGuildSuccess);
 
   constructor() {
     this.characterForm = this.cfs.initializeCharacterForm();
     this.joinGuildForm = this.cjgfs.initializeJoinGuildForm();
+    this.leaveGuildSuccess$.pipe(takeUntilDestroyed()).subscribe(() => {
+      this.joinGuildForm.reset();
+    });
   }
 
   ngOnInit(): void {

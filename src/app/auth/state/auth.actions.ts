@@ -5,7 +5,7 @@ import { User } from '../interface/user.interface';
 export const authActions = createActionGroup({
   source: 'Auth',
   events: {
-    Login: props<User>(),
+    Login: props<{ user: User }>(),
     'Login Success': emptyProps(),
     'Login Failure': props<{ error: HttpErrorResponse }>(),
     Logout: emptyProps(),
