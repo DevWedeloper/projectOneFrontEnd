@@ -1,36 +1,36 @@
 <div class="content-container">
   @if (authService.isCurrentUserAdmin$ | async) {
-    <app-character-create
-      (createCharacter)="cas.characterCreate$.next($event)"
-    />
+    <app-character-create (createCharacter)="createCharacter($event)" />
   }
 
   <app-character-table
-    [characterData]="cs.characterData$ | async"
+    [characterData]="characterData$ | async"
     [isCurrentUserAdmin]="authService.isCurrentUserAdmin$ | async"
-    [currentPage]="cs.currentPage$ | async"
-    [pageSize]="cs.pageSize$ | async"
+    [currentPage]="currentPage$ | async"
+    [pageSize]="pageSize$ | async"
     (searchQueryChange)="tableSearchQuery$.next($event)"
-    (pageSizeChange)="cs.pageSize$.next($event)"
-    (sortParamsChange)="cs.sortParams$.next($event)"
-    (changePage)="cs.currentPage$.next($event)"
+    (pageSizeChange)="setPageSize($event)"
+    (sortParamsChange)="setSortParams($event)"
+    (changePage)="setCurrentPage($event)"
     (editCharacter)="
-      cas.characterToUpdate$.next($event);
+      updateSelectedCharacter($event);
       ms.open(modalTemplate);
-      cs.name$.next(cas.characterToUpdate$.value!.name)
+      setName($event.name)
     "
-    (deleteCharacter)="cas.characterDelete$.next($event)"
+    (deleteCharacter)="deleteCharacter($event)"
   />
 </div>
 
 <ng-template #modalTemplate>
   <app-character-edit
-    [character]="cas.characterToUpdate$ | async"
+    [character]="selectedCharacter$ | async"
     [searchResults]="searchResults$ | async"
     (searchQueryChange)="guildSearchQuery$.next($event)"
-    (joinGuild)="cas.characterJoinGuild$.next($event)"
-    (leaveGuild)="cas.characterLeaveGuild$.next($event)"
-    (updateCharacter)="cas.characterUpdate$.next($event)"
-    (closeModal)="ms.close(); cs.name$.next(undefined)"
+    (joinGuild)="joinGuild($event.character, $event.guildName)"
+    (leaveGuild)="leaveGuild($event)"
+    (updateCharacter)="
+      updateCharacter($event.character, $event.previousCharacterData)
+    "
+    (closeModal)="ms.close(); setName(undefined); updateSelectedCharacter(null)"
   />
 </ng-template>

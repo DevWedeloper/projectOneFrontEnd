@@ -16,7 +16,7 @@
   <div class="form-group character-type-container">
     <select appFocusVisible id="characterType" formControlName="characterType">
       <option value="" disabled selected>Class</option>
-      @for (type of cas.characterTypes$ | async; track $index) {
+      @for (type of characterTypes$ | async; track $index) {
         <option [value]="type.typeName">
           {{ type.typeName }}
         </option>

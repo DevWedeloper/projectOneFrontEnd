@@ -6,13 +6,12 @@ import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root',
 })
-export class isGuildFullApiService {
+export class IsGuildFullApiService {
   private http = inject(HttpClient);
   private url = environment.baseUrl;
 
   isGuildFull(guild: string): Observable<{ isFull: boolean }> {
     const url = `${this.url}/guild/isFull`;
-    const reqBody = { guild };
-    return this.http.post<{ isFull: boolean }>(url, reqBody);
+    return this.http.post<{ isFull: boolean }>(url, guild);
   }
 }
