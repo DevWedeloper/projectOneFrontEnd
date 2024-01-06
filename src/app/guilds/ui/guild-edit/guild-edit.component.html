@@ -24,12 +24,12 @@
           (click)="
             updateGuildName.emit({
               guildId: guild!._id,
-              newGuildNameForm: updateGuildNameForm
+              name: updateGuildNameForm.value.name
             })
           "
-          [disabled]="gas.updateNameLoading$ | async"
+          [disabled]="nameLoading$ | async"
         >
-          @if (gas.updateNameLoading$ | async) {
+          @if (nameLoading$ | async) {
             <app-spinner [size]="20" />
           }
           Change
@@ -81,12 +81,12 @@
           (click)="
             updateGuildLeader.emit({
               guildId: guild!._id,
-              newLeaderIdForm: updateGuildLeaderForm
+              leaderId: updateGuildLeaderForm.value.leader
             })
           "
-          [disabled]="gas.updateLeaderLoading$ | async"
+          [disabled]="leaderLoading$ | async"
         >
-          @if (gas.updateLeaderLoading$ | async) {
+          @if (leaderLoading$ | async) {
             <app-spinner [size]="20" />
           }
           Change
@@ -133,12 +133,12 @@
           (click)="
             addMember.emit({
               guild: guild!,
-              newMemberForm: addMemberForm
+              member: addMemberForm.value.member
             })
           "
-          [disabled]="gas.addMemberLoading$ | async"
+          [disabled]="addMemberLoading$ | async"
         >
-          @if (gas.addMemberLoading$ | async) {
+          @if (addMemberLoading$ | async) {
             <app-spinner [size]="20" />
           }
           Confirm
@@ -161,16 +161,16 @@
       </div>
       <button
         appRedButton
-        (click)="removeMember.emit({ guildId: guild!._id, oldMember: member })"
+        (click)="removeMember.emit({ guildId: guild!._id, member })"
         [disabled]="
-          ((gas.removeMemberLoading$ | async) &&
-            gas.memberToRemove$.value?._id === member._id) ||
+          ((removeMemberLoading$ | async) &&
+            (memberToRemove$ | async)?._id === member._id) ||
           member._id === guild?.leader?._id
         "
       >
         @if (
-          (gas.removeMemberLoading$ | async) &&
-          gas.memberToRemove$.value?._id === member._id
+          (removeMemberLoading$ | async) &&
+          (memberToRemove$ | async)?._id === member._id
         ) {
           <app-spinner [size]="20" />
         }

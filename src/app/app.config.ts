@@ -34,6 +34,10 @@ import {
   guildStatsFeatureKey,
   guildStatsReducer,
 } from './dashboard/state/guild-stats.reducers';
+import { GuildActionsEffects } from './guilds/state/guild-actions.effects';
+import { guildActionsFeatureKey, guildActionsReducer } from './guilds/state/guild-actions.reducers';
+import { GuildTableEffects } from './guilds/state/guild-table.effects';
+import { guildTableFeatureKey, guildTableReducer } from './guilds/state/guild-table.reducers';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -58,13 +62,17 @@ export const appConfig: ApplicationConfig = {
     provideState(dashboardFeatureKey, dashboardReducer),
     provideState(characterTableFeatureKey, characterTableReducer),
     provideState(characterActionsFeatureKey, characterActionsReducer),
+    provideState(guildTableFeatureKey, guildTableReducer),
+    provideState(guildActionsFeatureKey, guildActionsReducer),
     provideEffects(
       AuthEffects,
       CharacterStatsEffects,
       GuildStatsEffects,
       DashboardEffects,
       CharacterTableEffects,
-      CharacterActionsEffects
+      CharacterActionsEffects,
+      GuildTableEffects,
+      GuildActionsEffects
     ),
     provideStoreDevtools({
       maxAge: 25,
