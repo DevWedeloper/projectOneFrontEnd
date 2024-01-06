@@ -29,16 +29,13 @@
 
   <ng-template #headersTemplate>
     <th (click)="toggleSort('name')">
-      <span>Name</span>
-      <span [innerHTML]="getSortArrow('name')"></span>
+      <span>Name{{ getSortArrow("name") }}</span>
     </th>
     <th (click)="toggleSort('leader')">
-      <span>Leader</span>
-      <span [innerHTML]="getSortArrow('leader')"></span>
+      <span>Leader{{ getSortArrow("leader") }}</span>
     </th>
     <th (click)="toggleSort('totalMembers')">
-      <span>Total Member</span>
-      <span [innerHTML]="getSortArrow('totalMembers')"></span>
+      <span>Total Member{{ getSortArrow("totalMembers") }}</span>
     </th>
     @if (isCurrentUserAdmin) {
       <th>Actions</th>

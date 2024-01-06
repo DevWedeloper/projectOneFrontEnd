@@ -25,40 +25,31 @@
 
   <ng-template #headersTemplate>
     <th (click)="toggleSort('name')">
-      <span>Name</span>
-      <span [innerHTML]="getSortArrow('name')"></span>
+      <span>Name{{ getSortArrow("name") }}</span>
     </th>
     <th (click)="toggleSort('guild')">
-      <span>Guild</span>
-      <span [innerHTML]="getSortArrow('guild')"></span>
+      <span>Guild{{ getSortArrow("guild") }}</span>
     </th>
     <th (click)="toggleSort('characterType')">
-      <span>Class</span>
-      <span [innerHTML]="getSortArrow('characterType')"></span>
+      <span>Class{{ getSortArrow("characterType") }}</span>
     </th>
     <th (click)="toggleSort('health')">
-      <span>Health</span>
-      <span [innerHTML]="getSortArrow('health')"></span>
+      <span>Health{{ getSortArrow("health") }}</span>
     </th>
     <th (click)="toggleSort('strength')">
-      <span>Strength</span>
-      <span [innerHTML]="getSortArrow('strength')"></span>
+      <span>Strength{{ getSortArrow("strength") }}</span>
     </th>
     <th (click)="toggleSort('agility')">
-      <span>Agility</span>
-      <span [innerHTML]="getSortArrow('agility')"></span>
+      <span>Agility{{ getSortArrow("agility") }}</span>
     </th>
     <th (click)="toggleSort('intelligence')">
-      <span>Intelligence</span>
-      <span [innerHTML]="getSortArrow('intelligence')"></span>
+      <span>Intelligence{{ getSortArrow("intelligence") }}</span>
     </th>
     <th (click)="toggleSort('armor')">
-      <span>Armor</span>
-      <span [innerHTML]="getSortArrow('armor')"></span>
+      <span>Armor{{ getSortArrow("armor") }}</span>
     </th>
     <th (click)="toggleSort('critChance')">
-      <span>Crit Chance</span>
-      <span [innerHTML]="getSortArrow('critChance')"></span>
+      <span>Crit Chance{{ getSortArrow("critChance") }}</span>
     </th>
     @if (isCurrentUserAdmin) {
       <th>Actions</th>
