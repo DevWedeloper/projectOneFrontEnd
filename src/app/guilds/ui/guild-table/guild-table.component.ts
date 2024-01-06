@@ -106,9 +106,9 @@ export class GuildTableComponent implements AfterViewInit {
     this.sortParams$.pipe(take(1)).subscribe((sortParams) => {
       if (sortParams.sortBy === header) {
         if (sortParams.sortOrder === 'asc') {
-          sortArrow = '&#x25B2;';
+          sortArrow = '\u25B2';
         } else if (sortParams.sortOrder === 'desc') {
-          sortArrow = '&#x25BC;';
+          sortArrow = '\u25BC';
         }
       }
     });
