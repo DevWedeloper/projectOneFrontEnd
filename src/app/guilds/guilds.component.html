@@ -2,32 +2,30 @@
   @if (authService.isCurrentUserAdmin$ | async) {
     <app-guild-create
       [searchLeaderResults]="searchLeaderResults$ | async"
-      (createGuild)="gas.guildCreate$.next($event)"
+      (createGuild)="createGuild($event.name, $event.leader)"
       (searchLeaderResultsQueryChange)="searchLeaderResultsQuery$.next($event)"
     />
   }
 
   <app-guild-table
-    [guildData]="gs.guildData$ | async"
+    [guildData]="guildData$ | async"
     [isCurrentUserAdmin]="authService.isCurrentUserAdmin$ | async"
-    [currentPage]="gs.currentPage$ | async"
-    [pageSize]="gs.pageSize$ | async"
+    [currentPage]="currentPage$ | async"
+    [pageSize]="pageSize$ | async"
     (searchQueryChange)="tableSearchQuery$.next($event)"
-    (pageSizeChange)="gs.pageSize$.next($event)"
-    (sortParamsChange)="gs.sortParams$.next($event)"
-    (changePage)="gs.currentPage$.next($event)"
+    (pageSizeChange)="setPageSize($event)"
+    (sortParamsChange)="setSortParams($event)"
+    (changePage)="setCurrentPage($event)"
     (editGuild)="
-      gas.guildToUpdate$.next($event);
-      ms.open(modalTemplate);
-      gs.name$.next(gas.guildToUpdate$.value!.name)
+      updateSelectedGuild($event); ms.open(modalTemplate); setName($event.name)
     "
-    (deleteGuild)="gas.guildDelete$.next($event)"
+    (deleteGuild)="deleteGuild($event)"
   />
 </div>
 
 <ng-template #modalTemplate>
   <app-guild-edit
-    [guild]="gas.guildToUpdate$ | async"
+    [guild]="selectedGuild$ | async"
     [searchNewLeaderResults]="searchNewLeaderResults$ | async"
     [searchNewMemberResults]="searchNewMemberResults$ | async"
     (searchNewLeaderResultsQueryChange)="
@@ -36,10 +34,10 @@
     (searchNewMemberResultsQueryChange)="
       searchNewMemberResultsQuery$.next($event)
     "
-    (updateGuildName)="gas.guildUpdateName$.next($event)"
-    (updateGuildLeader)="gas.guildUpdateLeader$.next($event)"
-    (addMember)="gas.guildAddMember$.next($event)"
-    (removeMember)="gas.guildRemoveMember$.next($event)"
-    (closeEdit)="ms.close(); gs.name$.next(undefined)"
+    (updateGuildName)="updateName($event.guildId, $event.name)"
+    (updateGuildLeader)="updateLeader($event.guildId, $event.leaderId)"
+    (addMember)="addMember($event.guild, $event.member)"
+    (removeMember)="removeMember($event.guildId, $event.member)"
+    (closeEdit)="ms.close(); setName(undefined); updateSelectedGuild(null)"
   />
 </ng-template>

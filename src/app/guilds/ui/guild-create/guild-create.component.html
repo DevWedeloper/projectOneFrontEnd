@@ -1,18 +1,10 @@
 @if (guildForm.statusChanges | async) {}
 <app-divider-dropdown
   [label]="'Create Guild'"
-  [loading]="ls.loading$ | async"
-  (dividerToggled)="guildForm.reset()"
+  [loading]="loading$ | async"
+  (dividerToggled)="resetForm()"
 >
-  <form
-    [formGroup]="guildForm"
-    class="form"
-    (ngSubmit)="
-      createGuild.emit({
-        guildForm: guildForm
-      })
-    "
-  >
+  <form [formGroup]="guildForm" class="form">
     <div class="form-group">
       <app-custom-input
         [type]="'text'"
@@ -60,9 +52,15 @@
       <button
         appCreateButton
         type="submit"
-        [disabled]="guildForm.invalid || (gas.createLoading$ | async)"
+        (click)="
+          createGuild.emit({
+            name: guildForm.value.name,
+            leader: guildForm.value.leader
+          })
+        "
+        [disabled]="guildForm.invalid || (createLoading$ | async)"
       >
-        @if (gas.createLoading$ | async) {
+        @if (createLoading$ | async) {
           <app-spinner [size]="25" />
         }
         Create Guild

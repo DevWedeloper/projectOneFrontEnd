@@ -9,7 +9,9 @@ import {
   Output,
   inject,
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Store } from '@ngrx/store';
 import { BehaviorSubject } from 'rxjs';
 import { DynamicValidatorMessageDirective } from 'src/app/shared/form/dynamic-validator-message.directive';
 import { Character } from 'src/app/shared/interfaces/character.interface';
@@ -20,8 +22,15 @@ import { SearchItemsComponent } from 'src/app/shared/ui/components/search-items/
 import { SpinnerComponent } from 'src/app/shared/ui/components/spinner/spinner.component';
 import { GreenButtonDirective } from 'src/app/shared/ui/directives/button/green-button.directive';
 import { RedButtonDirective } from 'src/app/shared/ui/directives/button/red-button.directive';
-import { GuildActionsService } from '../../data-access/guild-actions.service';
 import { GuildEditFormService } from '../../data-access/guild-edit-form.service';
+import {
+  selectAddMemberSuccess,
+  selectIsAddingMember,
+  selectIsRemovingMember,
+  selectIsUpdatingLeader,
+  selectIsUpdatingName,
+  selectMemberToRemove,
+} from '../../state/guild-actions.reducers';
 
 @Component({
   selector: 'app-guild-edit',
@@ -43,8 +52,8 @@ import { GuildEditFormService } from '../../data-access/guild-edit-form.service'
   ],
 })
 export class GuildEditComponent implements OnInit, OnDestroy {
-  protected gas = inject(GuildActionsService);
   private gefs = inject(GuildEditFormService);
+  private store = inject(Store);
   @Input({ required: true }) guild!: Guild | null;
   @Input({ required: true }) searchNewLeaderResults!: Character[] | null;
   @Input({ required: true }) searchNewMemberResults!: Character[] | null;
@@ -52,19 +61,19 @@ export class GuildEditComponent implements OnInit, OnDestroy {
   @Output() searchNewMemberResultsQueryChange = new EventEmitter<string>();
   @Output() updateGuildName = new EventEmitter<{
     guildId: string;
-    newGuildNameForm: FormGroup;
+    name: string;
   }>();
   @Output() updateGuildLeader = new EventEmitter<{
     guildId: string;
-    newLeaderIdForm: FormGroup;
+    leaderId: string;
   }>();
   @Output() addMember = new EventEmitter<{
     guild: Guild;
-    newMemberForm: FormGroup;
+    member: string;
   }>();
   @Output() removeMember = new EventEmitter<{
     guildId: string;
-    oldMember: Character;
+    member: Character;
   }>();
   @Output() closeEdit = new EventEmitter<void>();
   protected updateGuildNameForm!: FormGroup;
@@ -76,9 +85,20 @@ export class GuildEditComponent implements OnInit, OnDestroy {
   protected toggleNewMemberSearchContainer = new BehaviorSubject<boolean>(
     false,
   );
+  protected nameLoading$ = this.store.select(selectIsUpdatingName);
+  protected leaderLoading$ = this.store.select(selectIsUpdatingLeader);
+  protected addMemberLoading$ = this.store.select(selectIsAddingMember);
+  protected addMemberSuccess$ = this.store.select(selectAddMemberSuccess);
+  protected removeMemberLoading$ = this.store.select(selectIsRemovingMember);
+  protected memberToRemove$ = this.store.select(selectMemberToRemove);
 
   constructor() {
     this.updateGuildNameForm = this.gefs.initializeUpdateNameForm();
+    this.addMemberSuccess$.pipe(takeUntilDestroyed()).subscribe((value) => {
+      if (value === true) {
+        this.addMemberForm.reset();
+      }
+    });
   }
 
   ngOnInit(): void {

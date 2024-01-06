@@ -1,4 +1,4 @@
-<app-table [data]="guildData?.guilds" [loading]="ls.loading$ | async">
+<app-table [data]="guildData?.guilds" [loading]="loading$ | async">
   <ng-template #searchTemplate>
     <div>
       <input
@@ -56,13 +56,13 @@
           class="delete-btn"
           (click)="deleteGuild.emit(guild)"
           [disabled]="
-            (gas.deleteLoading$ | async) &&
-            gas.guildToUpdate$.value?._id === guild._id
+            (deleteLoading$ | async) &&
+            (selectedGuild$ | async)?._id === guild._id
           "
         >
           @if (
-            (gas.deleteLoading$ | async) &&
-            gas.guildToUpdate$.value?._id === guild._id
+            (deleteLoading$ | async) &&
+            (selectedGuild$ | async)?._id === guild._id
           ) {
             <app-spinner [size]="20" />
           }

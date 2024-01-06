@@ -61,7 +61,7 @@ export class GuildEditFormService {
   }
 
   initializeAddMemberForm(guild: string | null): FormGroup {
-    return this.fb.group({
+    return this.fb.nonNullable.group({
       member: [
         '',
         {
