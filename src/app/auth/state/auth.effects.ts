@@ -59,13 +59,13 @@ export class AuthEffects {
       return this.actions$.pipe(
         ofType(authActions.logout),
         switchMap(() => {
-          this.router.navigate(['/login']);
           return this.authApiService
             .logout(this.authService.getRefreshToken())
             .pipe(
               finalize(() => {
                 this.authService.clearTokens();
                 this.authService.clearCurrentUser();
+                this.router.navigate(['/login']);
               }),
             );
         }),
