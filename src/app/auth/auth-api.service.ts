@@ -16,15 +16,15 @@ export class AuthApiService {
     return this.http.post<AuthResponse>(`${this.url}/login`, user);
   }
 
-  logout(userId: string): Observable<{ message: string }> {
+  logout(refreshToken: string): Observable<{ message: string }> {
     return this.http.post<{ message: string }>(`${this.url}/logout`, {
-      userId,
+      refreshToken,
     });
   }
 
-  refreshToken(userId: string): Observable<AuthResponse> {
+  refreshToken(refreshToken: string): Observable<AuthResponse> {
     return this.http.post<AuthResponse>(`${this.url}/refresh`, {
-      userId,
+      refreshToken,
     });
   }
 }
