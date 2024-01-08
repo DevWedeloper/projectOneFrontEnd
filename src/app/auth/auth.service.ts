@@ -10,6 +10,7 @@ import { selectIsCurrentUserAdmin } from './state/auth.reducers';
 export class AuthService {
   private store = inject(Store);
   private accessTokenKey = 'access_token';
+  private refreshTokenKey = 'refresh_token';
   private currentUser = 'current_user';
   isCurrentUserAdmin$ = this.store.select(selectIsCurrentUserAdmin);
 
@@ -40,15 +41,23 @@ export class AuthService {
   getAccessToken(): string {
     const accessToken = localStorage.getItem(this.accessTokenKey);
     if (!accessToken) {
-      throw new Error("Can't get access token");
+      throw new Error('Can not get access token');
     }
     return accessToken;
+  }
+
+  getRefreshToken(): string {
+    const refreshToken = localStorage.getItem(this.refreshTokenKey);
+    if (!refreshToken) {
+      throw new Error('Can not get access token');
+    }
+    return refreshToken;
   }
 
   getCurrentUser(): string {
     const currentUser = localStorage.getItem(this.currentUser);
     if (!currentUser) {
-      throw new Error("Can't get current user");
+      throw new Error('Can not get current user');
     }
     return currentUser;
   }
@@ -57,12 +66,25 @@ export class AuthService {
     localStorage.setItem(this.accessTokenKey, accessToken);
   }
 
+  setRefreshToken(refreshToken: string): void {
+    localStorage.setItem(this.refreshTokenKey, refreshToken);
+  }
+
   setCurrentUser(userId: string): void {
     localStorage.setItem(this.currentUser, userId);
   }
 
   clearAccessToken(): void {
     localStorage.removeItem(this.accessTokenKey);
+  }
+
+  clearRefreshToken(): void {
+    localStorage.removeItem(this.refreshTokenKey);
+  }
+
+  clearTokens(): void {
+    localStorage.removeItem(this.accessTokenKey);
+    localStorage.removeItem(this.refreshTokenKey);
   }
 
   clearCurrentUser(): void {

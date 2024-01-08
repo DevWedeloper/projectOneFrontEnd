@@ -20,6 +20,7 @@ export class AuthEffects {
         return this.authApiService.login(action.user).pipe(
           map((response) => {
             this.authService.setAccessToken(response.accessToken);
+            this.authService.setRefreshToken(response.refreshToken);
             this.authService.setCurrentUser(response.userId);
             return authActions.loginSuccess();
           }),
@@ -58,10 +59,10 @@ export class AuthEffects {
       return this.actions$.pipe(
         ofType(authActions.logout),
         switchMap(() => {
-          this.authService.clearAccessToken();
+          this.authService.clearTokens();
           this.authService.clearCurrentUser();
           this.router.navigate(['/login']);
-          return this.authApiService.logout(this.authService.getCurrentUser());
+          return this.authApiService.logout(this.authService.getRefreshToken());
         }),
       );
     },
@@ -73,7 +74,7 @@ export class AuthEffects {
       ofType(authActions.refreshToken),
       switchMap(() => {
         return this.authApiService
-          .refreshToken(this.authService.getCurrentUser())
+          .refreshToken(this.authService.getRefreshToken())
           .pipe(
             map((response) => {
               this.authService.setAccessToken(response.accessToken);
