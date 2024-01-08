@@ -49,7 +49,7 @@ export class AuthService {
   getRefreshToken(): string {
     const refreshToken = localStorage.getItem(this.refreshTokenKey);
     if (!refreshToken) {
-      throw new Error('Can not get access token');
+      throw new Error('Can not get refresh token');
     }
     return refreshToken;
   }
