@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { AuthApiService } from '../auth-api.service';
 import { authActions } from './auth.actions';
-import { catchError, map, of, switchMap, tap, timer } from 'rxjs';
+import { catchError, finalize, map, of, switchMap, tap, timer } from 'rxjs';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
 
@@ -59,10 +59,15 @@ export class AuthEffects {
       return this.actions$.pipe(
         ofType(authActions.logout),
         switchMap(() => {
-          this.authService.clearTokens();
-          this.authService.clearCurrentUser();
           this.router.navigate(['/login']);
-          return this.authApiService.logout(this.authService.getRefreshToken());
+          return this.authApiService
+            .logout(this.authService.getRefreshToken())
+            .pipe(
+              finalize(() => {
+                this.authService.clearTokens();
+                this.authService.clearCurrentUser();
+              }),
+            );
         }),
       );
     },
