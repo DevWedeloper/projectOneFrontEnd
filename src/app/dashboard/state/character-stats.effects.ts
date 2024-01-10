@@ -1,13 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { ChartConfiguration } from 'chart.js';
-import {
-  catchError,
-  combineLatest,
-  map,
-  of,
-  switchMap
-} from 'rxjs';
+import { catchError, combineLatest, map, of, switchMap } from 'rxjs';
 import { CharacterStatsApiService } from '../data-access/character-stats-api.service';
 import { CharacterStatsService } from '../data-access/character-stats.service';
 import { ChartColorService } from '../data-access/chart-color.service';
@@ -20,11 +14,11 @@ export class CharacterStatsEffects {
   private characterStatsService = inject(CharacterStatsService);
   private ccs = inject(ChartColorService);
 
-  topCharactersByHealth$ = createEffect(() => {
-    return this.actions$.pipe(
+  topCharactersByHealth$ = createEffect(() =>
+    this.actions$.pipe(
       ofType(characterStatsActions.loadTopCharactersByHealth),
-      switchMap(() => {
-        return this.characterStatsService
+      switchMap(() =>
+        this.characterStatsService
           .generateTopCharactersByAttribute({
             attribute: 'health',
             backgroundColor: this.ccs.healthColor,
@@ -36,16 +30,16 @@ export class CharacterStatsEffects {
             catchError(() =>
               of(characterStatsActions.loadTopCharactersByHealthFailure()),
             ),
-          );
-      }),
-    );
-  });
+          ),
+      ),
+    ),
+  );
 
-  topCharactersByStrength$ = createEffect(() => {
-    return this.actions$.pipe(
+  topCharactersByStrength$ = createEffect(() =>
+    this.actions$.pipe(
       ofType(characterStatsActions.loadTopCharactersByStrength),
-      switchMap(() => {
-        return this.characterStatsService
+      switchMap(() =>
+        this.characterStatsService
           .generateTopCharactersByAttribute({
             attribute: 'strength',
             backgroundColor: this.ccs.strengthColor,
@@ -59,16 +53,16 @@ export class CharacterStatsEffects {
             catchError(() =>
               of(characterStatsActions.loadTopCharactersByStrengthFailure()),
             ),
-          );
-      }),
-    );
-  });
+          ),
+      ),
+    ),
+  );
 
-  topCharactersByAgility$ = createEffect(() => {
-    return this.actions$.pipe(
+  topCharactersByAgility$ = createEffect(() =>
+    this.actions$.pipe(
       ofType(characterStatsActions.loadTopCharactersByAgility),
-      switchMap(() => {
-        return this.characterStatsService
+      switchMap(() =>
+        this.characterStatsService
           .generateTopCharactersByAttribute({
             attribute: 'agility',
             backgroundColor: this.ccs.agilityColor,
@@ -80,16 +74,16 @@ export class CharacterStatsEffects {
             catchError(() =>
               of(characterStatsActions.loadTopCharactersByAgilityFailure()),
             ),
-          );
-      }),
-    );
-  });
+          ),
+      ),
+    ),
+  );
 
-  topCharactersByIntelligence$ = createEffect(() => {
-    return this.actions$.pipe(
+  topCharactersByIntelligence$ = createEffect(() =>
+    this.actions$.pipe(
       ofType(characterStatsActions.loadTopCharactersByIntelligence),
-      switchMap(() => {
-        return this.characterStatsService
+      switchMap(() =>
+        this.characterStatsService
           .generateTopCharactersByAttribute({
             attribute: 'intelligence',
             backgroundColor: this.ccs.intelligenceColor,
@@ -105,16 +99,16 @@ export class CharacterStatsEffects {
                 characterStatsActions.loadTopCharactersByIntelligenceFailure(),
               ),
             ),
-          );
-      }),
-    );
-  });
+          ),
+      ),
+    ),
+  );
 
-  topCharactersByArmor$ = createEffect(() => {
-    return this.actions$.pipe(
+  topCharactersByArmor$ = createEffect(() =>
+    this.actions$.pipe(
       ofType(characterStatsActions.loadTopCharactersByArmor),
-      switchMap(() => {
-        return this.characterStatsService
+      switchMap(() =>
+        this.characterStatsService
           .generateTopCharactersByAttribute({
             attribute: 'armor',
             backgroundColor: this.ccs.armorColor,
@@ -126,16 +120,16 @@ export class CharacterStatsEffects {
             catchError(() =>
               of(characterStatsActions.loadTopCharactersByArmorFailure()),
             ),
-          );
-      }),
-    );
-  });
+          ),
+      ),
+    ),
+  );
 
-  topCharactersByCritChance$ = createEffect(() => {
-    return this.actions$.pipe(
+  topCharactersByCritChance$ = createEffect(() =>
+    this.actions$.pipe(
       ofType(characterStatsActions.loadTopCharactersByCritChance),
-      switchMap(() => {
-        return this.characterStatsService
+      switchMap(() =>
+        this.characterStatsService
           .generateTopCharactersByAttribute({
             attribute: 'critChance',
             backgroundColor: this.ccs.critChanceColor,
@@ -149,13 +143,13 @@ export class CharacterStatsEffects {
             catchError(() =>
               of(characterStatsActions.loadTopCharactersByCritChanceFailure()),
             ),
-          );
-      }),
-    );
-  });
+          ),
+      ),
+    ),
+  );
 
-  topWellRoundedCharacters$ = createEffect(() => {
-    return this.actions$.pipe(
+  topWellRoundedCharacters$ = createEffect(() =>
+    this.actions$.pipe(
       ofType(characterStatsActions.loadTopWellRoundedCharacters),
       switchMap(() =>
         this.characterStatsApiService.getTopWellRoundedCharacters().pipe(
@@ -173,20 +167,20 @@ export class CharacterStatsEffects {
           ),
         ),
       ),
-    );
-  });
+    ),
+  );
 
-  radarChartCharacter$ = createEffect(() => {
-    return this.actions$.pipe(
+  radarChartCharacter$ = createEffect(() =>
+    this.actions$.pipe(
       ofType(characterStatsActions.selectTopWellRoundedCharacter),
       map((character) =>
         characterStatsActions.loadRadarChartDataSet(character),
       ),
-    );
-  });
+    ),
+  );
 
-  radarChartDataset$ = createEffect(() => {
-    return combineLatest([
+  radarChartDataset$ = createEffect(() =>
+    combineLatest([
       this.actions$.pipe(ofType(characterStatsActions.loadRadarChartDataSet)),
       this.characterStatsApiService.getAverageCharacterStats(),
     ]).pipe(
@@ -241,38 +235,34 @@ export class CharacterStatsEffects {
       catchError(() =>
         of(characterStatsActions.loadRadarChartDataSetFailure()),
       ),
-    );
-  });
+    ),
+  );
 
-  characterDistributionByType$ = createEffect(() => {
-    return this.actions$.pipe(
+  characterDistributionByType$ = createEffect(() =>
+    this.actions$.pipe(
       ofType(characterStatsActions.loadCharacterDistributionByType),
-      switchMap(() => {
-        return this.characterStatsApiService
-          .getCharacterDistributionByType()
-          .pipe(
-            map((data) => {
-              if (data.length === 0) {
-                return null;
-              }
-              const ids = data.map((item) => item._id);
-              const counts = data.map((item) => item.count);
-              const dataset: ChartConfiguration<'polarArea'>['data']['datasets'] =
-                [{ data: counts || [] }];
-              return { ids, dataset };
+      switchMap(() =>
+        this.characterStatsApiService.getCharacterDistributionByType().pipe(
+          map((data) => {
+            if (data.length === 0) {
+              return null;
+            }
+            const ids = data.map((item) => item._id);
+            const counts = data.map((item) => item.count);
+            const dataset: ChartConfiguration<'polarArea'>['data']['datasets'] =
+              [{ data: counts || [] }];
+            return { ids, dataset };
+          }),
+          map((data) =>
+            characterStatsActions.loadCharacterDistributionByTypeSuccess({
+              data,
             }),
-            map((data) =>
-              characterStatsActions.loadCharacterDistributionByTypeSuccess({
-                data,
-              }),
-            ),
-            catchError(() =>
-              of(
-                characterStatsActions.loadCharacterDistributionByTypeFailure(),
-              ),
-            ),
-          );
-      }),
-    );
-  });
+          ),
+          catchError(() =>
+            of(characterStatsActions.loadCharacterDistributionByTypeFailure()),
+          ),
+        ),
+      ),
+    ),
+  );
 }

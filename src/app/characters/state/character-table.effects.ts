@@ -32,8 +32,8 @@ export class CharacterTableEffects {
   private route = inject(ActivatedRoute);
   private characterApiService = inject(CharacterApiService);
 
-  loadCharacters$ = createEffect(() => {
-    return this.actions$.pipe(
+  loadCharacters$ = createEffect(() =>
+    this.actions$.pipe(
       ofType(
         characterTableActions.loadCharacters,
         characterTableActions.setCurrentPage,
@@ -59,11 +59,11 @@ export class CharacterTableEffects {
             catchError(() => of(characterTableActions.loadCharactersFailure())),
           ),
       ),
-    );
-  });
+    ),
+  );
 
-  redirectUser$ = createEffect(() => {
-    return this.actions$.pipe(
+  redirectUser$ = createEffect(() =>
+    this.actions$.pipe(
       ofType(
         characterTableActions.setCurrentPage,
         characterTableActions.setPageSize,
@@ -91,12 +91,12 @@ export class CharacterTableEffects {
         return characterTableActions.redirectUserSuccess({ queryParams });
       }),
       catchError(() => of(characterTableActions.redirectUserFailure())),
-    );
-  });
+    ),
+  );
 
   redirectUserSuccess$ = createEffect(
-    () => {
-      return this.actions$.pipe(
+    () =>
+      this.actions$.pipe(
         ofType(characterTableActions.redirectUserSuccess),
         tap((action) =>
           this.router.navigate([], {
@@ -106,13 +106,12 @@ export class CharacterTableEffects {
             replaceUrl: true,
           }),
         ),
-      );
-    },
+      ),
     { dispatch: false },
   );
 
-  waitForObservables$ = createEffect(() => {
-    return forkJoin([
+  waitForObservables$ = createEffect(() =>
+    forkJoin([
       this.actions$.pipe(
         ofType(
           characterTableActions.loadCharactersSuccess,
@@ -123,6 +122,6 @@ export class CharacterTableEffects {
     ]).pipe(
       map(() => characterTableActions.allObservablesLoaded()),
       catchError(() => of(characterTableActions.allObservablesLoaded())),
-    );
-  });
+    ),
+  );
 }

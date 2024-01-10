@@ -24,22 +24,22 @@ export class CharacterActionsEffects {
   );
   private characterTypeService = inject(CharacterTypeApiService);
 
-  createCharacter$ = createEffect(() => {
-    return this.actions$.pipe(
+  createCharacter$ = createEffect(() =>
+    this.actions$.pipe(
       ofType(characterActionsActions.createCharacter),
-      switchMap((action) => {
-        return this.characterApiService.createCharacter(action.character).pipe(
+      switchMap((action) =>
+        this.characterApiService.createCharacter(action.character).pipe(
           map(() => characterActionsActions.createCharacterSuccess()),
           catchError(() =>
             of(characterActionsActions.createCharacterFailure()),
           ),
-        );
-      }),
-    );
-  });
+        ),
+      ),
+    ),
+  );
 
-  updateCharacter$ = createEffect(() => {
-    return this.actions$.pipe(
+  updateCharacter$ = createEffect(() =>
+    this.actions$.pipe(
       ofType(characterActionsActions.updateCharacter),
       switchMap((action) => {
         const updatedCharacterData = action.character;
@@ -62,13 +62,12 @@ export class CharacterActionsEffects {
         }
 
         const observables = attributesToUpdate.map(
-          ({ attribute, attributeValue }) => {
-            return this.characterApiService.updateCharacterAttributeById(
+          ({ attribute, attributeValue }) =>
+            this.characterApiService.updateCharacterAttributeById(
               previousCharacterData._id,
               attributeValue,
               attribute,
-            );
-          },
+            ),
         );
 
         return forkJoin(observables);
@@ -79,11 +78,11 @@ export class CharacterActionsEffects {
         }),
       ),
       catchError(() => of(characterActionsActions.updateCharacterFailure())),
-    );
-  });
+    ),
+  );
 
-  joinGuild$ = createEffect(() => {
-    return this.actions$.pipe(
+  joinGuild$ = createEffect(() =>
+    this.actions$.pipe(
       ofType(characterActionsActions.joinGuild),
       switchMap((action) => {
         const character = action.character;
@@ -129,11 +128,11 @@ export class CharacterActionsEffects {
         );
       }),
       catchError(() => of(characterActionsActions.joinGuildFailure())),
-    );
-  });
+    ),
+  );
 
-  leaveGuild$ = createEffect(() => {
-    return this.actions$.pipe(
+  leaveGuild$ = createEffect(() =>
+    this.actions$.pipe(
       ofType(characterActionsActions.leaveGuild),
       switchMap((action) => {
         const character = action.character;
@@ -155,11 +154,11 @@ export class CharacterActionsEffects {
         );
       }),
       catchError(() => of(characterActionsActions.leaveGuildFailure())),
-    );
-  });
+    ),
+  );
 
-  deleteCharacter$ = createEffect(() => {
-    return this.actions$.pipe(
+  deleteCharacter$ = createEffect(() =>
+    this.actions$.pipe(
       ofType(characterActionsActions.deleteCharacter),
       switchMap((action) => {
         const character = action.character;
@@ -191,22 +190,22 @@ export class CharacterActionsEffects {
           .pipe(map(() => characterActionsActions.deleteCharacterSuccess()));
       }),
       catchError(() => of(characterActionsActions.deleteCharacterFailure())),
-    );
-  });
+    ),
+  );
 
-  loadCharacterTypes$ = createEffect(() => {
-    return this.actions$.pipe(
+  loadCharacterTypes$ = createEffect(() =>
+    this.actions$.pipe(
       ofType(characterActionsActions.loadCharacterTypes),
       switchMap(() => this.characterTypeService.getCharacterTypes()),
       map((characterTypes) =>
         characterActionsActions.loadCharacterTypesSuccess({ characterTypes }),
       ),
       catchError(() => of(characterActionsActions.loadCharacterTypesFailure())),
-    );
-  });
+    ),
+  );
 
-  refetchPage$ = createEffect(() => {
-    return this.actions$.pipe(
+  refetchPage$ = createEffect(() =>
+    this.actions$.pipe(
       ofType(
         characterActionsActions.createCharacterSuccess,
         characterActionsActions.updateCharacterSuccess,
@@ -215,6 +214,6 @@ export class CharacterActionsEffects {
         characterActionsActions.deleteCharacterSuccess,
       ),
       map(() => characterTableActions.loadCharacters()),
-    );
-  });
+    ),
+  );
 }

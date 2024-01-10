@@ -13,8 +13,8 @@ export class GuildStatsEffects {
   private guildStatsService = inject(GuildStatsService);
   private ccs = inject(ChartColorService);
 
-  topGuildsByHealth$ = createEffect(() => {
-    return this.actions$.pipe(
+  topGuildsByHealth$ = createEffect(() =>
+    this.actions$.pipe(
       ofType(guildStatsActions.loadTopGuildsByHealth),
       switchMap(() => {
         return this.guildStatsService
@@ -31,14 +31,14 @@ export class GuildStatsEffects {
             ),
           );
       }),
-    );
-  });
+    ),
+  );
 
-  topGuildsByStrength$ = createEffect(() => {
-    return this.actions$.pipe(
+  topGuildsByStrength$ = createEffect(() =>
+    this.actions$.pipe(
       ofType(guildStatsActions.loadTopGuildsByStrength),
-      switchMap(() => {
-        return this.guildStatsService
+      switchMap(() =>
+        this.guildStatsService
           .generateTopGuildsByAttribute({
             attribute: 'strength',
             backgroundColor: this.ccs.strengthColor,
@@ -50,16 +50,16 @@ export class GuildStatsEffects {
             catchError(() =>
               of(guildStatsActions.loadTopGuildsByStrengthFailure()),
             ),
-          );
-      }),
-    );
-  });
+          ),
+      ),
+    ),
+  );
 
-  topGuildsByAgility$ = createEffect(() => {
-    return this.actions$.pipe(
+  topGuildsByAgility$ = createEffect(() =>
+    this.actions$.pipe(
       ofType(guildStatsActions.loadTopGuildsByAgility),
-      switchMap(() => {
-        return this.guildStatsService
+      switchMap(() =>
+        this.guildStatsService
           .generateTopGuildsByAttribute({
             attribute: 'agility',
             backgroundColor: this.ccs.agilityColor,
@@ -71,16 +71,16 @@ export class GuildStatsEffects {
             catchError(() =>
               of(guildStatsActions.loadTopGuildsByAgilityFailure()),
             ),
-          );
-      }),
-    );
-  });
+          ),
+      ),
+    ),
+  );
 
-  topGuildsByIntelligence$ = createEffect(() => {
-    return this.actions$.pipe(
+  topGuildsByIntelligence$ = createEffect(() =>
+    this.actions$.pipe(
       ofType(guildStatsActions.loadTopGuildsByIntelligence),
-      switchMap(() => {
-        return this.guildStatsService
+      switchMap(() =>
+        this.guildStatsService
           .generateTopGuildsByAttribute({
             attribute: 'intelligence',
             backgroundColor: this.ccs.intelligenceColor,
@@ -92,16 +92,16 @@ export class GuildStatsEffects {
             catchError(() =>
               of(guildStatsActions.loadTopGuildsByIntelligenceFailure()),
             ),
-          );
-      }),
-    );
-  });
+          ),
+      ),
+    ),
+  );
 
-  topGuildsByArmor$ = createEffect(() => {
-    return this.actions$.pipe(
+  topGuildsByArmor$ = createEffect(() =>
+    this.actions$.pipe(
       ofType(guildStatsActions.loadTopGuildsByArmor),
-      switchMap(() => {
-        return this.guildStatsService
+      switchMap(() =>
+        this.guildStatsService
           .generateTopGuildsByAttribute({
             attribute: 'armor',
             backgroundColor: this.ccs.armorColor,
@@ -113,16 +113,16 @@ export class GuildStatsEffects {
             catchError(() =>
               of(guildStatsActions.loadTopGuildsByArmorFailure()),
             ),
-          );
-      }),
-    );
-  });
+          ),
+      ),
+    ),
+  );
 
-  topGuildsByCritChance$ = createEffect(() => {
-    return this.actions$.pipe(
+  topGuildsByCritChance$ = createEffect(() =>
+    this.actions$.pipe(
       ofType(guildStatsActions.loadTopGuildsByCritChance),
-      switchMap(() => {
-        return this.guildStatsService
+      switchMap(() =>
+        this.guildStatsService
           .generateTopGuildsByAttribute({
             attribute: 'critChance',
             backgroundColor: this.ccs.critChanceColor,
@@ -134,16 +134,16 @@ export class GuildStatsEffects {
             catchError(() =>
               of(guildStatsActions.loadTopGuildsByCritChanceFailure()),
             ),
-          );
-      }),
-    );
-  });
+          ),
+      ),
+    ),
+  );
 
-  topGuildsByAverageHealth$ = createEffect(() => {
-    return this.actions$.pipe(
+  topGuildsByAverageHealth$ = createEffect(() =>
+    this.actions$.pipe(
       ofType(guildStatsActions.loadTopGuildsByAverageHealth),
-      switchMap(() => {
-        return this.guildStatsService
+      switchMap(() =>
+        this.guildStatsService
           .generateTopGuildsByAverageAttribute({
             attribute: 'health',
             label: 'Health',
@@ -156,16 +156,16 @@ export class GuildStatsEffects {
             catchError(() =>
               of(guildStatsActions.loadTopGuildsByAverageHealthFailure()),
             ),
-          );
-      }),
-    );
-  });
+          ),
+      ),
+    ),
+  );
 
-  topGuildsByAverageStrength$ = createEffect(() => {
-    return this.actions$.pipe(
+  topGuildsByAverageStrength$ = createEffect(() =>
+    this.actions$.pipe(
       ofType(guildStatsActions.loadTopGuildsByAverageStrength),
-      switchMap(() => {
-        return this.guildStatsService
+      switchMap(() =>
+        this.guildStatsService
           .generateTopGuildsByAverageAttribute({
             attribute: 'strength',
             label: 'Strength',
@@ -178,16 +178,16 @@ export class GuildStatsEffects {
             catchError(() =>
               of(guildStatsActions.loadTopGuildsByAverageStrengthFailure()),
             ),
-          );
-      }),
-    );
-  });
+          ),
+      ),
+    ),
+  );
 
-  topGuildsByAverageAgility$ = createEffect(() => {
-    return this.actions$.pipe(
+  topGuildsByAverageAgility$ = createEffect(() =>
+    this.actions$.pipe(
       ofType(guildStatsActions.loadTopGuildsByAverageAgility),
-      switchMap(() => {
-        return this.guildStatsService
+      switchMap(() =>
+        this.guildStatsService
           .generateTopGuildsByAverageAttribute({
             attribute: 'agility',
             label: 'Agility',
@@ -200,16 +200,16 @@ export class GuildStatsEffects {
             catchError(() =>
               of(guildStatsActions.loadTopGuildsByAverageAgilityFailure()),
             ),
-          );
-      }),
-    );
-  });
+          ),
+      ),
+    ),
+  );
 
-  topGuildsByAverageIntelligence$ = createEffect(() => {
-    return this.actions$.pipe(
+  topGuildsByAverageIntelligence$ = createEffect(() =>
+    this.actions$.pipe(
       ofType(guildStatsActions.loadTopGuildsByAverageIntelligence),
-      switchMap(() => {
-        return this.guildStatsService
+      switchMap(() =>
+        this.guildStatsService
           .generateTopGuildsByAverageAttribute({
             attribute: 'intelligence',
             label: 'Intelligence',
@@ -224,16 +224,16 @@ export class GuildStatsEffects {
             catchError(() =>
               of(guildStatsActions.loadTopGuildsByAverageIntelligenceFailure()),
             ),
-          );
-      }),
-    );
-  });
+          ),
+      ),
+    ),
+  );
 
-  topGuildsByAverageArmor$ = createEffect(() => {
-    return this.actions$.pipe(
+  topGuildsByAverageArmor$ = createEffect(() =>
+    this.actions$.pipe(
       ofType(guildStatsActions.loadTopGuildsByAverageArmor),
-      switchMap(() => {
-        return this.guildStatsService
+      switchMap(() =>
+        this.guildStatsService
           .generateTopGuildsByAverageAttribute({
             attribute: 'armor',
             label: 'Armor',
@@ -246,16 +246,16 @@ export class GuildStatsEffects {
             catchError(() =>
               of(guildStatsActions.loadTopGuildsByAverageArmorFailure()),
             ),
-          );
-      }),
-    );
-  });
+          ),
+      ),
+    ),
+  );
 
-  topGuildsByAverageCritChance$ = createEffect(() => {
-    return this.actions$.pipe(
+  topGuildsByAverageCritChance$ = createEffect(() =>
+    this.actions$.pipe(
       ofType(guildStatsActions.loadTopGuildsByAverageCritChance),
-      switchMap(() => {
-        return this.guildStatsService
+      switchMap(() =>
+        this.guildStatsService
           .generateTopGuildsByAverageAttribute({
             attribute: 'critChance',
             label: 'CritChance',
@@ -270,16 +270,16 @@ export class GuildStatsEffects {
             catchError(() =>
               of(guildStatsActions.loadTopGuildsByAverageCritChanceFailure()),
             ),
-          );
-      }),
-    );
-  });
+          ),
+      ),
+    ),
+  );
 
-  topWellRoundedGuilds$ = createEffect(() => {
-    return this.actions$.pipe(
+  topWellRoundedGuilds$ = createEffect(() =>
+    this.actions$.pipe(
       ofType(guildStatsActions.loadTopWellRoundedGuilds),
-      switchMap(() => {
-        return this.guildStatsApiService.getTopWellRoundedGuilds().pipe(
+      switchMap(() =>
+        this.guildStatsApiService.getTopWellRoundedGuilds().pipe(
           map((guilds) => {
             if (guilds.length === 0) {
               return null;
@@ -302,8 +302,8 @@ export class GuildStatsEffects {
           catchError(() =>
             of(guildStatsActions.loadTopWellRoundedGuildsFailure()),
           ),
-        );
-      }),
-    );
-  });
+        ),
+      ),
+    ),
+  );
 }

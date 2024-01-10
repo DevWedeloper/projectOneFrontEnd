@@ -14,8 +14,8 @@ export class GuildActionsEffects {
     CheckGuildRelationStatusServiceApi,
   );
 
-  createGuild$ = createEffect(() => {
-    return this.actions$.pipe(
+  createGuild$ = createEffect(() =>
+    this.actions$.pipe(
       ofType(guildActionsActions.createGuild),
       switchMap((action) => {
         const name = action.name;
@@ -53,11 +53,11 @@ export class GuildActionsEffects {
           );
       }),
       catchError(() => of(guildActionsActions.createGuildFailure())),
-    );
-  });
+    ),
+  );
 
-  updateGuildName$ = createEffect(() => {
-    return this.actions$.pipe(
+  updateGuildName$ = createEffect(() =>
+    this.actions$.pipe(
       ofType(guildActionsActions.updateGuildName),
       switchMap((action) =>
         this.guildApiService.updateGuildNameById(action.guildId, action.name),
@@ -68,11 +68,11 @@ export class GuildActionsEffects {
         }),
       ),
       catchError(() => of(guildActionsActions.updateGuildNameFailure())),
-    );
-  });
+    ),
+  );
 
-  updateGuildLeader$ = createEffect(() => {
-    return this.actions$.pipe(
+  updateGuildLeader$ = createEffect(() =>
+    this.actions$.pipe(
       ofType(guildActionsActions.updateGuildLeader),
       switchMap((action) =>
         this.guildApiService.updateGuildLeaderById(
@@ -86,11 +86,11 @@ export class GuildActionsEffects {
         }),
       ),
       catchError(() => of(guildActionsActions.updateGuildLeaderFailure())),
-    );
-  });
+    ),
+  );
 
-  addMember$ = createEffect(() => {
-    return this.actions$.pipe(
+  addMember$ = createEffect(() =>
+    this.actions$.pipe(
       ofType(guildActionsActions.addMember),
       switchMap((action) => {
         const guild = action.guild;
@@ -134,11 +134,11 @@ export class GuildActionsEffects {
           );
       }),
       catchError(() => of(guildActionsActions.addMemberFailure())),
-    );
-  });
+    ),
+  );
 
-  removeMember$ = createEffect(() => {
-    return this.actions$.pipe(
+  removeMember$ = createEffect(() =>
+    this.actions$.pipe(
       ofType(guildActionsActions.removeMember),
       switchMap((action) => {
         if (!confirm('Are you sure you want to kick this member?')) {
@@ -155,11 +155,11 @@ export class GuildActionsEffects {
           );
       }),
       catchError(() => of(guildActionsActions.removeMemberFailure())),
-    );
-  });
+    ),
+  );
 
-  deleteGuild$ = createEffect(() => {
-    return this.actions$.pipe(
+  deleteGuild$ = createEffect(() =>
+    this.actions$.pipe(
       ofType(guildActionsActions.deleteGuild),
       switchMap((action) => {
         if (!confirm('Are you sure you want to delete this guild?')) {
@@ -170,11 +170,11 @@ export class GuildActionsEffects {
           .pipe(map(() => guildActionsActions.deleteGuildSuccess()));
       }),
       catchError(() => of(guildActionsActions.deleteGuildFailure())),
-    );
-  });
+    ),
+  );
 
-  refetchPage$ = createEffect(() => {
-    return this.actions$.pipe(
+  refetchPage$ = createEffect(() =>
+    this.actions$.pipe(
       ofType(
         guildActionsActions.createGuildSuccess,
         guildActionsActions.updateGuildNameSuccess,
@@ -184,6 +184,6 @@ export class GuildActionsEffects {
         guildActionsActions.deleteGuildSuccess,
       ),
       map(() => guildTableActions.loadGuilds()),
-    );
-  });
+    ),
+  );
 }
