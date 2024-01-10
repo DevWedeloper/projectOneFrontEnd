@@ -15,7 +15,9 @@ export class CharacterApiService {
 
   createCharacter(characterData: Character): Observable<Character> {
     const url = `${this.url}/character`;
-    return this.http.post<Character>(url, characterData);
+    return this.http.post<Character>(url, characterData, {
+      withCredentials: true,
+    });
   }
 
   getCharacters(
@@ -65,7 +67,9 @@ export class CharacterApiService {
   ): Observable<CharacterUpdateResponse> {
     const url = `${this.url}/character/${attribute}/${characterId}`;
     const requestBody = { [attribute]: newData };
-    return this.http.put<CharacterUpdateResponse>(url, requestBody);
+    return this.http.put<CharacterUpdateResponse>(url, requestBody, {
+      withCredentials: true,
+    });
   }
 
   joinGuildById(
@@ -74,16 +78,26 @@ export class CharacterApiService {
   ): Observable<CharacterUpdateResponse> {
     const url = `${this.url}/character/join/${characterId}`;
     const guild = guildName;
-    return this.http.put<CharacterUpdateResponse>(url, guild);
+    return this.http.put<CharacterUpdateResponse>(url, guild, {
+      withCredentials: true,
+    });
   }
 
   leaveGuildById(characterId: string): Observable<CharacterUpdateResponse> {
     const url = `${this.url}/character/leave/${characterId}`;
-    return this.http.put<CharacterUpdateResponse>(url, {});
+    return this.http.put<CharacterUpdateResponse>(
+      url,
+      {},
+      {
+        withCredentials: true,
+      },
+    );
   }
 
   deleteCharacterById(characterId: string): Observable<Character> {
     const url = `${this.url}/character/${characterId}`;
-    return this.http.delete<Character>(url);
+    return this.http.delete<Character>(url, {
+      withCredentials: true,
+    });
   }
 }

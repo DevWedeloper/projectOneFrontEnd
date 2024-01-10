@@ -12,9 +12,8 @@ export const authActions = createActionGroup({
     'Refresh Token': emptyProps(),
     'Refresh Token Success': emptyProps(),
     'Refresh Token Failure': props<{ error: HttpErrorResponse }>(),
-    'Set UserId': props<{ userId: string }>(),
-    'Get User Role': emptyProps(),
-    'Set User Role': props<{ role: string }>(),
-    'Auto Logout': emptyProps(),
+    'Load User Role': emptyProps(),
+    'Load User Role Success': props<{ role: string }>(),
+    'Load User Role Failure': emptyProps(),
   },
 });

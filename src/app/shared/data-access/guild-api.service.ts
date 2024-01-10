@@ -19,7 +19,9 @@ export class GuildApiService {
     character: string;
   }): Observable<Guild> {
     const url = `${this.url}/guild`;
-    return this.http.post<Guild>(url, guildData);
+    return this.http.post<Guild>(url, guildData, {
+      withCredentials: true,
+    });
   }
 
   getGuilds(
@@ -71,7 +73,9 @@ export class GuildApiService {
   ): Observable<GuildUpdateResponse> {
     const url = `${this.url}/guild/name/${guildId}`;
     const reqBody = { name: newData };
-    return this.http.put<GuildUpdateResponse>(url, reqBody);
+    return this.http.put<GuildUpdateResponse>(url, reqBody, {
+      withCredentials: true,
+    });
   }
 
   updateGuildLeaderById(
@@ -80,7 +84,9 @@ export class GuildApiService {
   ): Observable<GuildUpdateResponse> {
     const url = `${this.url}/guild/leader/${guildId}`;
     const reqBody = { character: newData };
-    return this.http.put<GuildUpdateResponse>(url, reqBody);
+    return this.http.put<GuildUpdateResponse>(url, reqBody, {
+      withCredentials: true,
+    });
   }
 
   addMemberToGuildById(
@@ -89,7 +95,9 @@ export class GuildApiService {
   ): Observable<GuildUpdateResponse> {
     const url = `${this.url}/guild/addMember/${guildId}`;
     const reqBody = { character: newData };
-    return this.http.put<GuildUpdateResponse>(url, reqBody);
+    return this.http.put<GuildUpdateResponse>(url, reqBody, {
+      withCredentials: true,
+    });
   }
 
   removeMemberFromGuildById(
@@ -98,11 +106,15 @@ export class GuildApiService {
   ): Observable<GuildUpdateResponse> {
     const url = `${this.url}/guild/removeMember/${guildId}`;
     const requestBody = { character: newData };
-    return this.http.put<GuildUpdateResponse>(url, requestBody);
+    return this.http.put<GuildUpdateResponse>(url, requestBody, {
+      withCredentials: true,
+    });
   }
 
   deleteGuildById(guildId: string): Observable<GuildUpdateResponse> {
     const url = `${this.url}/guild/${guildId}`;
-    return this.http.delete<GuildUpdateResponse>(url);
+    return this.http.delete<GuildUpdateResponse>(url, {
+      withCredentials: true,
+    });
   }
 }
