@@ -9,9 +9,14 @@ import {
   inject,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { FormGroup, FormGroupDirective, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormGroup,
+  FormGroupDirective,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, filter } from 'rxjs';
 import { DynamicValidatorMessageDirective } from 'src/app/shared/form/dynamic-validator-message.directive';
 import { Character } from 'src/app/shared/interfaces/character.interface';
 import { CustomInputComponent } from 'src/app/shared/ui/components/custom-input/custom-input.component';
@@ -20,7 +25,10 @@ import { SearchItemsComponent } from 'src/app/shared/ui/components/search-items/
 import { SpinnerComponent } from 'src/app/shared/ui/components/spinner/spinner.component';
 import { CreateButtonDirective } from 'src/app/shared/ui/directives/button/create-button.directive';
 import { GuildFormService } from '../../data-access/guild-form.service';
-import { selectCreateSuccess, selectIsCreating } from '../../state/guild-actions.reducers';
+import {
+  selectCreateSuccess,
+  selectIsCreating,
+} from '../../state/guild-actions.reducers';
 import { selectInitialLoading } from '../../state/guild-table.reducers';
 
 @Component({
@@ -46,8 +54,8 @@ export class GuildCreateComponent {
   private store = inject(Store);
   @Input({ required: true }) searchLeaderResults!: Character[] | null;
   @Output() createGuild = new EventEmitter<{
-    name: string,
-    leader: string
+    name: string;
+    leader: string;
   }>();
   @Output() searchLeaderResultsQueryChange = new EventEmitter<string>();
   @ViewChild(FormGroupDirective) protected formDirective!: FormGroupDirective;
@@ -59,9 +67,14 @@ export class GuildCreateComponent {
 
   constructor() {
     this.guildForm = this.gfs.initializeGuildForm();
-    this.createSuccess$.pipe(takeUntilDestroyed()).subscribe(() => {
-      this.guildForm.reset();
-    });
+    this.createSuccess$
+      .pipe(
+        filter((value) => !!value),
+        takeUntilDestroyed(),
+      )
+      .subscribe(() => {
+        this.guildForm.reset();
+      });
   }
 
   resetForm(): void {

@@ -40,7 +40,10 @@ const authFeature = createFeature({
       hasLoginError: action.error,
       loginStatus: 'error' as const,
     })),
-    on(authActions.logout, () => ({
+    on(authActions.logoutSuccess, () => ({
+      ...initialState,
+    })),
+    on(authActions.logoutFailure, () => ({
       ...initialState,
     })),
     on(authActions.refreshTokenSuccess, (state) => ({

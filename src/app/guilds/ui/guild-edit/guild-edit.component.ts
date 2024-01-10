@@ -12,7 +12,7 @@ import {
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, filter } from 'rxjs';
 import { DynamicValidatorMessageDirective } from 'src/app/shared/form/dynamic-validator-message.directive';
 import { Character } from 'src/app/shared/interfaces/character.interface';
 import { Guild } from 'src/app/shared/interfaces/guild.interface';
@@ -94,11 +94,14 @@ export class GuildEditComponent implements OnInit, OnDestroy {
 
   constructor() {
     this.updateGuildNameForm = this.gefs.initializeUpdateNameForm();
-    this.addMemberSuccess$.pipe(takeUntilDestroyed()).subscribe((value) => {
-      if (value === true) {
+    this.addMemberSuccess$
+      .pipe(
+        filter((value) => !!value),
+        takeUntilDestroyed(),
+      )
+      .subscribe(() => {
         this.addMemberForm.reset();
-      }
-    });
+      });
   }
 
   ngOnInit(): void {

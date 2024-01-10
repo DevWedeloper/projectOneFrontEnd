@@ -9,8 +9,8 @@ import { guildStatsActions } from './guild-stats.actions';
 export class DashboardEffects {
   private actions$ = inject(Actions);
 
-  waitForObservables$ = createEffect(() => {
-    return forkJoin([
+  waitForObservables$ = createEffect(() =>
+    forkJoin([
       this.actions$.pipe(
         ofType(
           characterStatsActions.loadTopCharactersByHealthSuccess,
@@ -168,6 +168,6 @@ export class DashboardEffects {
     ]).pipe(
       map(() => dashboardActions.allObservablesLoaded()),
       catchError(() => of(dashboardActions.allObservablesLoaded())),
-    );
-  });
+    ),
+  );
 }

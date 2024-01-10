@@ -31,9 +31,9 @@ export class GuildTableEffects {
   private router = inject(Router);
   private route = inject(ActivatedRoute);
   private guildApiService = inject(GuildApiService);
-  
-  loadGuilds$ = createEffect(() => {
-    return this.actions$.pipe(
+
+  loadGuilds$ = createEffect(() =>
+    this.actions$.pipe(
       ofType(
         guildTableActions.loadGuilds,
         guildTableActions.setCurrentPage,
@@ -59,11 +59,11 @@ export class GuildTableEffects {
             catchError(() => of(guildTableActions.loadGuildsFailure())),
           ),
       ),
-    );
-  });
+    ),
+  );
 
-  redirectUser$ = createEffect(() => {
-    return this.actions$.pipe(
+  redirectUser$ = createEffect(() =>
+    this.actions$.pipe(
       ofType(
         guildTableActions.setCurrentPage,
         guildTableActions.setPageSize,
@@ -91,12 +91,12 @@ export class GuildTableEffects {
         return guildTableActions.redirectUserSuccess({ queryParams });
       }),
       catchError(() => of(guildTableActions.redirectUserFailure())),
-    );
-  });
+    ),
+  );
 
   redirectUserSuccess$ = createEffect(
-    () => {
-      return this.actions$.pipe(
+    () =>
+      this.actions$.pipe(
         ofType(guildTableActions.redirectUserSuccess),
         tap((action) =>
           this.router.navigate([], {
@@ -106,13 +106,12 @@ export class GuildTableEffects {
             replaceUrl: true,
           }),
         ),
-      );
-    },
+      ),
     { dispatch: false },
   );
 
-  waitForObservables$ = createEffect(() => {
-    return forkJoin([
+  waitForObservables$ = createEffect(() =>
+    forkJoin([
       this.actions$.pipe(
         ofType(
           guildTableActions.loadGuildsSuccess,
@@ -123,6 +122,6 @@ export class GuildTableEffects {
     ]).pipe(
       map(() => guildTableActions.allObservablesLoaded()),
       catchError(() => of(guildTableActions.allObservablesLoaded())),
-    );
-  });
+    ),
+  );
 }
