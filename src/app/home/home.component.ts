@@ -23,7 +23,6 @@ export class HomeComponent {
 
   constructor() {
     this.ts.checkPreferredTheme();
-    this.store.dispatch(authActions.autoLogout());
-    this.store.dispatch(authActions.getUserRole());
+    this.store.dispatch(authActions.loadUserRole());
   }
 }

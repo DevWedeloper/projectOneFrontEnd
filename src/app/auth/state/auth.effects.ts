@@ -1,29 +1,22 @@
 import { Injectable, inject } from '@angular/core';
+import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { catchError, finalize, map, of, switchMap, tap } from 'rxjs';
 import { AuthApiService } from '../auth-api.service';
 import { authActions } from './auth.actions';
-import { catchError, map, of, switchMap, tap, timer } from 'rxjs';
-import { AuthService } from '../auth.service';
-import { Router } from '@angular/router';
 
 @Injectable()
 export class AuthEffects {
   private actions$ = inject(Actions);
   private router = inject(Router);
   private authApiService = inject(AuthApiService);
-  private authService = inject(AuthService);
 
   login$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(authActions.login),
       switchMap((action) => {
         return this.authApiService.login(action.user).pipe(
-          map((response) => {
-            this.authService.setAccessToken(response.accessToken);
-            this.authService.setRefreshToken(response.refreshToken);
-            this.authService.setCurrentUser(response.userId);
-            return authActions.loginSuccess();
-          }),
+          map(() => authActions.loginSuccess()),
           catchError((error) => of(authActions.loginFailure({ error }))),
         );
       }),
@@ -59,10 +52,11 @@ export class AuthEffects {
       return this.actions$.pipe(
         ofType(authActions.logout),
         switchMap(() => {
-          this.authService.clearTokens();
-          this.authService.clearCurrentUser();
-          this.router.navigate(['/login']);
-          return this.authApiService.logout(this.authService.getRefreshToken());
+          return this.authApiService.logout().pipe(
+            finalize(() => {
+              this.router.navigate(['/login']);
+            }),
+          );
         }),
       );
     },
@@ -73,25 +67,13 @@ export class AuthEffects {
     return this.actions$.pipe(
       ofType(authActions.refreshToken),
       switchMap(() => {
-        return this.authApiService
-          .refreshToken(this.authService.getRefreshToken())
-          .pipe(
-            map((response) => {
-              this.authService.setAccessToken(response.accessToken);
-              return authActions.refreshTokenSuccess();
-            }),
-            catchError((error) => {
-              return of(authActions.refreshTokenFailure({ error }));
-            }),
-          );
+        return this.authApiService.refreshToken().pipe(
+          map(() => authActions.refreshTokenSuccess()),
+          catchError((error) => {
+            return of(authActions.refreshTokenFailure({ error }));
+          }),
+        );
       }),
-    );
-  });
-
-  refreshTokenSuccess$ = createEffect(() => {
-    return this.actions$.pipe(
-      ofType(authActions.refreshTokenSuccess),
-      map(() => authActions.autoLogout()),
     );
   });
 
@@ -107,45 +89,12 @@ export class AuthEffects {
     );
   });
 
-  setUserId$ = createEffect(() => {
+  getUserRole$ = createEffect(() => {
     return this.actions$.pipe(
-      ofType(authActions.loginSuccess, authActions.refreshTokenSuccess),
-      map(() => {
-        return authActions.setUserId({
-          userId: this.authService.decodedToken().userId,
-        });
-      }),
-    );
-  });
-
-  setUserRole$ = createEffect(() => {
-    return this.actions$.pipe(
-      ofType(
-        authActions.loginSuccess,
-        authActions.refreshTokenSuccess,
-        authActions.getUserRole,
-      ),
-      map(() => {
-        return authActions.setUserRole({
-          role: this.authService.decodedToken().role,
-        });
-      }),
-    );
-  });
-
-  autoLogout$ = createEffect(() => {
-    return this.actions$.pipe(
-      ofType(authActions.autoLogout),
-      switchMap(() => {
-        const currentTime = Math.floor(Date.now() / 1000);
-        const timeUntilExpiry =
-          this.authService.decodedToken().exp - currentTime;
-        return timer(timeUntilExpiry * 1000).pipe(
-          map(() => {
-            return authActions.refreshToken();
-          }),
-        );
-      }),
+      ofType(authActions.loadUserRole),
+      switchMap(() => this.authApiService.getRole()),
+      map((role) => authActions.loadUserRoleSuccess(role)),
+      catchError(() => of(authActions.loadUserRoleFailure())),
     );
   });
 }

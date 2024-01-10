@@ -6,7 +6,6 @@ type AuthState = {
   isLoggingIn: boolean;
   hasLoginError: HttpErrorResponse | null;
   hasRefreshTokenError: HttpErrorResponse | null;
-  userId: string | null;
   userRole: string | null;
   loginStatus: 'pending' | 'loading' | 'error' | 'success';
 };
@@ -15,7 +14,6 @@ const initialState: AuthState = {
   isLoggingIn: false,
   hasLoginError: null,
   hasRefreshTokenError: null,
-  userId: null,
   userRole: null,
   loginStatus: 'pending',
 };
@@ -53,17 +51,16 @@ const authFeature = createFeature({
     on(authActions.refreshTokenFailure, (state, action) => ({
       ...state,
       hasRefreshTokenError: action.error,
-      userId: null,
       userRole: null,
       loginStatus: 'error' as const,
     })),
-    on(authActions.setUserId, (state, action) => ({
-      ...state,
-      userId: action.userId,
-    })),
-    on(authActions.setUserRole, (state, action) => ({
+    on(authActions.loadUserRoleSuccess, (state, action) => ({
       ...state,
       userRole: action.role,
+    })),
+    on(authActions.loadUserRoleFailure, (state) => ({
+      ...state,
+      userRole: null,
     })),
   ),
   extraSelectors: ({ selectUserRole }) => ({
