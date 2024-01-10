@@ -6,8 +6,10 @@ import {
   Output,
   inject,
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
+import { filter } from 'rxjs';
 import { Character } from 'src/app/shared/interfaces/character.interface';
 import { DividerDropdownComponent } from 'src/app/shared/ui/components/divider-dropdown/divider-dropdown.component';
 import { SpinnerComponent } from 'src/app/shared/ui/components/spinner/spinner.component';
@@ -19,7 +21,6 @@ import {
 } from '../../state/character-actions.reducers';
 import { selectInitialLoading } from '../../state/character-table.reducers';
 import { CharacterFormComponent } from '../character-form/character-form.component';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-character-create',
@@ -47,10 +48,15 @@ export class CharacterCreateComponent {
 
   constructor() {
     this.characterForm = this.cfs.initializeCharacterForm();
-    this.createSuccess$.pipe(takeUntilDestroyed()).subscribe(() => {
-      this.characterForm.reset();
-      this.characterForm.get('characterType')?.setValue('');
-    });
+    this.createSuccess$
+      .pipe(
+        filter((value) => !!value),
+        takeUntilDestroyed(),
+      )
+      .subscribe(() => {
+        this.characterForm.reset();
+        this.characterForm.get('characterType')?.setValue('');
+      });
   }
 
   protected resetForm(): void {

@@ -9,6 +9,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Store } from '@ngrx/store';
+import { filter } from 'rxjs';
 import { authActions } from '../auth/state/auth.actions';
 import {
   selectHasLoginError,
@@ -47,14 +48,19 @@ export class LoginComponent {
       username: ['', Validators.required],
       password: ['', Validators.required],
     });
-    this.errors$.pipe(takeUntilDestroyed()).subscribe((error) => {
-      if (error?.error.error === 'Invalid username') {
-        this.loginForm.get('username')?.setErrors({ invalidUsername: true });
-      }
-      if (error?.error.error === 'Invalid password') {
-        this.loginForm.get('password')?.setErrors({ invalidPassword: true });
-      }
-    });
+    this.errors$
+      .pipe(
+        filter((value) => !!value),
+        takeUntilDestroyed(),
+      )
+      .subscribe((error) => {
+        if (error?.error.error === 'Invalid username') {
+          this.loginForm.get('username')?.setErrors({ invalidUsername: true });
+        }
+        if (error?.error.error === 'Invalid password') {
+          this.loginForm.get('password')?.setErrors({ invalidPassword: true });
+        }
+      });
   }
 
   onSubmit(): void {
