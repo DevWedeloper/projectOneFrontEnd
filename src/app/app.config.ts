@@ -15,9 +15,15 @@ import { authFeatureKey, authReducer } from './auth/state/auth.reducers';
 import { CacheInterceptor } from './caching/cache.interceptor';
 import { CacheService } from './caching/cache.service';
 import { CharacterActionsEffects } from './characters/state/character-actions.effects';
-import { characterActionsFeatureKey, characterActionsReducer } from './characters/state/character-actions.reducers';
+import {
+  characterActionsFeatureKey,
+  characterActionsReducer,
+} from './characters/state/character-actions.reducers';
 import { CharacterTableEffects } from './characters/state/character-table.effects';
-import { characterTableFeatureKey, characterTableReducer } from './characters/state/character-table.reducers';
+import {
+  characterTableFeatureKey,
+  characterTableReducer,
+} from './characters/state/character-table.reducers';
 import { CharacterStatsEffects } from './dashboard/state/character-stats.effects';
 import {
   characterStatsFeatureKey,
@@ -34,9 +40,15 @@ import {
   guildStatsReducer,
 } from './dashboard/state/guild-stats.reducers';
 import { GuildActionsEffects } from './guilds/state/guild-actions.effects';
-import { guildActionsFeatureKey, guildActionsReducer } from './guilds/state/guild-actions.reducers';
+import {
+  guildActionsFeatureKey,
+  guildActionsReducer,
+} from './guilds/state/guild-actions.reducers';
 import { GuildTableEffects } from './guilds/state/guild-table.effects';
-import { guildTableFeatureKey, guildTableReducer } from './guilds/state/guild-table.reducers';
+import {
+  guildTableFeatureKey,
+  guildTableReducer,
+} from './guilds/state/guild-table.reducers';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -66,7 +78,7 @@ export const appConfig: ApplicationConfig = {
       CharacterTableEffects,
       CharacterActionsEffects,
       GuildTableEffects,
-      GuildActionsEffects
+      GuildActionsEffects,
     ),
     provideStoreDevtools({
       maxAge: 25,
