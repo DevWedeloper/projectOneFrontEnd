@@ -3,7 +3,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   OnInit,
-  inject
+  inject,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
@@ -14,14 +14,13 @@ import {
   Validators,
 } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { filter, take } from 'rxjs';
+import { filter } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { authActions } from '../auth/state/auth.actions';
 import {
   selectHasLoginError,
   selectIsLoggingIn,
 } from '../auth/state/auth.reducers';
-import { ThemeService } from '../shared/data-access/theme.service';
 import { DynamicValidatorMessageDirective } from '../shared/form/dynamic-validator-message.directive';
 import { ValidatorMessageContainerDirective } from '../shared/form/validator-message-container.directive';
 import { SpinnerComponent } from '../shared/ui/components/spinner/spinner.component';
@@ -47,7 +46,6 @@ declare let google: any;
 })
 export class LoginComponent implements OnInit {
   private fb = inject(FormBuilder);
-  private ts = inject(ThemeService);
   protected loginForm!: FormGroup;
   private store = inject(Store);
   private errors$ = this.store.select(selectHasLoginError);
@@ -82,21 +80,13 @@ export class LoginComponent implements OnInit {
       login_uri: `${this.loginUri}?redirect_uri=${redirectUri}`,
       ux_mode: 'redirect',
     });
-    this.ts.isDarkMode$
-      .pipe(take(1))
-      .subscribe((value) => {
-        if (value === false) {
-          google.accounts.id.renderButton(document.getElementById('google-btn'), {
-            theme: 'outline',
-            size: 'large',
-          });
-        } else {
-          google.accounts.id.renderButton(document.getElementById('google-btn'), {
-            theme: 'filled_black',
-            size: 'large',
-          });
-        }
-      });
+    const theme = window.matchMedia('(prefers-color-scheme: dark)').matches
+      ? 'filled_black'
+      : 'outline';
+    google.accounts.id.renderButton(document.getElementById('google-btn'), {
+      theme,
+      size: 'large',
+    });
     google.accounts.id.prompt();
   }
 
