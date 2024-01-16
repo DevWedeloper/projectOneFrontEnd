@@ -79,6 +79,7 @@ export class LoginComponent implements OnInit {
       client_id: this.clientId,
       login_uri: `${this.loginUri}?redirect_uri=${redirectUri}`,
       ux_mode: 'redirect',
+      use_fedcm_for_prompt: true,
     });
     const theme = window.matchMedia('(prefers-color-scheme: dark)').matches
       ? 'filled_black'
