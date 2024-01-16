@@ -9,6 +9,7 @@ import {
 import { BehaviorSubject } from 'rxjs';
 import { formDropdownAnimation } from '../../animations/form-dropdown-transition.animations';
 import { FocusVisibleDirective } from '../../directives/focus-visible.directive';
+import { DividerComponent } from '../divider/divider.component';
 import { DividerDropdownSkeletonComponent } from '../skeleton/divider-dropdown-skeleton/divider-dropdown-skeleton.component';
 
 @Component({
@@ -18,6 +19,7 @@ import { DividerDropdownSkeletonComponent } from '../skeleton/divider-dropdown-s
     CommonModule,
     FocusVisibleDirective,
     DividerDropdownSkeletonComponent,
+    DividerComponent
   ],
   templateUrl: './divider-dropdown.component.html',
   styleUrls: ['./divider-dropdown.component.scss'],

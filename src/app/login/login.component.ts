@@ -23,10 +23,9 @@ import {
 } from '../auth/state/auth.reducers';
 import { DynamicValidatorMessageDirective } from '../shared/form/dynamic-validator-message.directive';
 import { ValidatorMessageContainerDirective } from '../shared/form/validator-message-container.directive';
+import { DividerComponent } from '../shared/ui/components/divider/divider.component';
 import { SpinnerComponent } from '../shared/ui/components/spinner/spinner.component';
 import { FocusVisibleDirective } from '../shared/ui/directives/focus-visible.directive';
-
-declare let google: any;
 
 @Component({
   selector: 'app-login',
@@ -39,6 +38,7 @@ declare let google: any;
     SpinnerComponent,
     DynamicValidatorMessageDirective,
     ValidatorMessageContainerDirective,
+    DividerComponent,
   ],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
@@ -83,9 +83,10 @@ export class LoginComponent implements OnInit {
     const theme = window.matchMedia('(prefers-color-scheme: dark)').matches
       ? 'filled_black'
       : 'outline';
-    google.accounts.id.renderButton(document.getElementById('google-btn'), {
+    google.accounts.id.renderButton(document.getElementById('google-btn')!, {
       theme,
       size: 'large',
+      type: 'standard',
     });
     google.accounts.id.prompt();
   }
