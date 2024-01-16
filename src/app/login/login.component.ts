@@ -23,6 +23,7 @@ import {
 } from '../auth/state/auth.reducers';
 import { DynamicValidatorMessageDirective } from '../shared/form/dynamic-validator-message.directive';
 import { ValidatorMessageContainerDirective } from '../shared/form/validator-message-container.directive';
+import { DividerComponent } from '../shared/ui/components/divider/divider.component';
 import { SpinnerComponent } from '../shared/ui/components/spinner/spinner.component';
 import { FocusVisibleDirective } from '../shared/ui/directives/focus-visible.directive';
 
@@ -39,6 +40,7 @@ declare let google: any;
     SpinnerComponent,
     DynamicValidatorMessageDirective,
     ValidatorMessageContainerDirective,
+    DividerComponent,
   ],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],

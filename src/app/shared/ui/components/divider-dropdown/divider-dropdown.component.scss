@@ -6,41 +6,9 @@
 }
 
 .divider {
-  display: flex;
-  justify-content: center;
-  background: none;
   font-size: 1.5rem;
   font-weight: 700;
   cursor: pointer;
-  padding: 0.5rem;
-  color: var(--text-color);
   width: 100%;
-  overflow: hidden;
   margin-bottom: 0.5rem;
-}
-
-.divider span {
-  position: relative;
-}
-
-.divider span::before {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 100%;
-  height: 3px;
-  background-color: var(--text-color);
-  width: 700px;
-  margin-left: 10px;
-}
-
-.divider span::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  right: 100%;
-  height: 3px;
-  background-color: var(--text-color);
-  width: 700px;
-  margin-right: 10px;
 }
