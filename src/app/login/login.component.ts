@@ -27,8 +27,6 @@ import { DividerComponent } from '../shared/ui/components/divider/divider.compon
 import { SpinnerComponent } from '../shared/ui/components/spinner/spinner.component';
 import { FocusVisibleDirective } from '../shared/ui/directives/focus-visible.directive';
 
-declare let google: any;
-
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -85,9 +83,10 @@ export class LoginComponent implements OnInit {
     const theme = window.matchMedia('(prefers-color-scheme: dark)').matches
       ? 'filled_black'
       : 'outline';
-    google.accounts.id.renderButton(document.getElementById('google-btn'), {
+    google.accounts.id.renderButton(document.getElementById('google-btn')!, {
       theme,
       size: 'large',
+      type: 'standard',
     });
     google.accounts.id.prompt();
   }
