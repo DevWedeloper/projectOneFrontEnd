@@ -71,24 +71,34 @@ export class AuthEffects {
     ),
   );
 
-  refreshTokenFailure$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(authActions.refreshTokenFailure),
-      map((error) => {
-        if (error.error.error.error === 'Token expired') {
-          confirm('Your session has expired, please login again.');
-        }
-        return authActions.logout();
-      }),
-    ),
-  );
-
   getUserRole$ = createEffect(() =>
     this.actions$.pipe(
       ofType(authActions.loadUserRole),
       switchMap(() => this.authApiService.getRole()),
       map((role) => authActions.loadUserRoleSuccess(role)),
       catchError(() => of(authActions.loadUserRoleFailure())),
+    ),
+  );
+
+  getAutoLogoutAt$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(authActions.getAutoLogoutAt),
+      switchMap(() => this.authApiService.getAutoLogoutAt()),
+      map(() => authActions.getAutoLogoutAtSuccess()),
+      catchError(() => of(authActions.getAutoLogoutAtFailure())),
+    ),
+  );
+
+  sessionExpired$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(
+        authActions.refreshTokenFailure,
+        authActions.getAutoLogoutAtFailure,
+      ),
+      map(() => {
+        confirm('Your session has expired, please login again.');
+        return authActions.logout();
+      }),
     ),
   );
 }

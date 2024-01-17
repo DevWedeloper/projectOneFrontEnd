@@ -17,5 +17,8 @@ export const authActions = createActionGroup({
     'Load User Role': emptyProps(),
     'Load User Role Success': props<{ role: string }>(),
     'Load User Role Failure': emptyProps(),
+    'Get Auto Logout At': emptyProps(),
+    'Get Auto Logout At Success': emptyProps(),
+    'Get Auto Logout At Failure': emptyProps(),
   },
 });

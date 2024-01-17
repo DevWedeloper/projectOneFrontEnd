@@ -21,5 +21,6 @@ export class HomeComponent {
 
   constructor() {
     this.store.dispatch(authActions.loadUserRole());
+    this.store.dispatch(authActions.getAutoLogoutAt());
   }
 }
