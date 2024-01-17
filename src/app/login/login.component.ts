@@ -15,7 +15,7 @@ import {
 } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { filter } from 'rxjs';
-import { environment } from 'src/environments/environment';
+import { AuthService } from '../auth/auth.service';
 import { authActions } from '../auth/state/auth.actions';
 import {
   selectHasLoginError,
@@ -46,12 +46,11 @@ import { FocusVisibleDirective } from '../shared/ui/directives/focus-visible.dir
 })
 export class LoginComponent implements OnInit {
   private fb = inject(FormBuilder);
+  private authService = inject(AuthService);
   protected loginForm!: FormGroup;
   private store = inject(Store);
   private errors$ = this.store.select(selectHasLoginError);
   protected loading$ = this.store.select(selectIsLoggingIn);
-  protected clientId = environment.googleClientId;
-  protected loginUri = environment.googleOAuthRedirectUrl;
 
   constructor() {
     this.loginForm = this.fb.group({
@@ -74,21 +73,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const redirectUri = encodeURIComponent(window.location.origin);
-    google.accounts.id.initialize({
-      client_id: this.clientId,
-      login_uri: `${this.loginUri}?redirect_uri=${redirectUri}`,
-      ux_mode: 'redirect',
-    });
-    const theme = window.matchMedia('(prefers-color-scheme: dark)').matches
-      ? 'filled_black'
-      : 'outline';
-    google.accounts.id.renderButton(document.getElementById('google-btn')!, {
-      theme,
-      size: 'large',
-      type: 'standard',
-    });
-    google.accounts.id.prompt();
+    this.authService.initializeGoogleOAuth();
   }
 
   onSubmit(): void {

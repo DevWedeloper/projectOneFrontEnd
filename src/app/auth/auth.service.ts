@@ -1,6 +1,9 @@
-import { Injectable, inject } from '@angular/core';
+import { DestroyRef, Injectable, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable, catchError, map, of } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { AuthApiService } from './auth-api.service';
 import { selectIsCurrentUserAdmin } from './state/auth.reducers';
 
@@ -10,6 +13,10 @@ import { selectIsCurrentUserAdmin } from './state/auth.reducers';
 export class AuthService {
   private store = inject(Store);
   private authApiService = inject(AuthApiService);
+  private destroyRef = inject(DestroyRef);
+  private route = inject(Router);
+  protected clientId = environment.googleClientId;
+  protected loginUri = environment.googleOAuthRedirectUrl;
   isCurrentUserAdmin$ = this.store.select(selectIsCurrentUserAdmin);
 
   isAuthenticated(): Observable<boolean> {
@@ -22,5 +29,30 @@ export class AuthService {
         ),
       ),
     );
+  }
+
+  initializeGoogleOAuth(): void {
+    const redirectUri = encodeURIComponent(window.location.origin);
+    google.accounts.id.initialize({
+      client_id: this.clientId,
+      login_uri: `${this.loginUri}?redirect_uri=${redirectUri}`,
+      ux_mode: 'redirect',
+      use_fedcm_for_prompt: true,
+      callback: (data) => {
+        this.authApiService
+          .googleOAuthHandler(data.credential)
+          .pipe(takeUntilDestroyed(this.destroyRef))
+          .subscribe(() => this.route.navigate(['/']));
+      },
+    });
+    const theme = window.matchMedia('(prefers-color-scheme: dark)').matches
+      ? 'filled_black'
+      : 'outline';
+    google.accounts.id.renderButton(document.getElementById('google-btn')!, {
+      theme,
+      size: 'large',
+      type: 'standard',
+    });
+    google.accounts.id.prompt();
   }
 }

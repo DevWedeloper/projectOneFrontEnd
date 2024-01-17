@@ -48,4 +48,16 @@ export class AuthApiService {
       withCredentials: true,
     });
   }
+
+  googleOAuthHandler(credential: string): Observable<string> {
+    const redirectUri = encodeURIComponent(window.location.origin);
+    return this.http.post(
+      `${this.url}/sessions/oauth/google?redirect_uri=${redirectUri}`,
+      { credential },
+      {
+        withCredentials: true,
+        responseType: 'text',
+      },
+    );
+  }
 }
