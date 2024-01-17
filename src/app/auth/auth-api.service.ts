@@ -60,4 +60,10 @@ export class AuthApiService {
       },
     );
   }
+
+  getAutoLogoutAt(): Observable<void> {
+    return this.http.get<void>(`${this.url}/autoLogoutAt`, {
+      withCredentials: true,
+    });
+  }
 }
