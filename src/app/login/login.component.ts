@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
-  DestroyRef,
   OnInit,
   inject,
 } from '@angular/core';
@@ -16,8 +15,7 @@ import {
 } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { filter } from 'rxjs';
-import { environment } from 'src/environments/environment';
-import { AuthApiService } from '../auth/auth-api.service';
+import { AuthService } from '../auth/auth.service';
 import { authActions } from '../auth/state/auth.actions';
 import {
   selectHasLoginError,
@@ -28,7 +26,6 @@ import { ValidatorMessageContainerDirective } from '../shared/form/validator-mes
 import { DividerComponent } from '../shared/ui/components/divider/divider.component';
 import { SpinnerComponent } from '../shared/ui/components/spinner/spinner.component';
 import { FocusVisibleDirective } from '../shared/ui/directives/focus-visible.directive';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -49,15 +46,11 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
   private fb = inject(FormBuilder);
-  private authApiService = inject(AuthApiService);
-  private destroyRef = inject(DestroyRef);
-  private route = inject(Router);
+  private authService = inject(AuthService);
   protected loginForm!: FormGroup;
   private store = inject(Store);
   private errors$ = this.store.select(selectHasLoginError);
   protected loading$ = this.store.select(selectIsLoggingIn);
-  protected clientId = environment.googleClientId;
-  protected loginUri = environment.googleOAuthRedirectUrl;
 
   constructor() {
     this.loginForm = this.fb.group({
@@ -80,28 +73,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const redirectUri = encodeURIComponent(window.location.origin);
-    google.accounts.id.initialize({
-      client_id: this.clientId,
-      login_uri: `${this.loginUri}?redirect_uri=${redirectUri}`,
-      ux_mode: 'redirect',
-      use_fedcm_for_prompt: true,
-      callback: (data) => {
-        this.authApiService
-          .googleOAuthHandler(data.credential)
-          .pipe(takeUntilDestroyed(this.destroyRef))
-          .subscribe(() => this.route.navigate(['/']));
-      },
-    });
-    const theme = window.matchMedia('(prefers-color-scheme: dark)').matches
-      ? 'filled_black'
-      : 'outline';
-    google.accounts.id.renderButton(document.getElementById('google-btn')!, {
-      theme,
-      size: 'large',
-      type: 'standard',
-    });
-    google.accounts.id.prompt();
+    this.authService.initializeGoogleOAuth();
   }
 
   onSubmit(): void {
