@@ -107,7 +107,7 @@ export class GuildEditFormService {
     }
 
     const nameField = control.getRawValue();
-    if (nameField === this.initialLeader$.value) {
+    if (nameField === this.initialLeader$.value || nameField === '') {
       return of(null);
     }
 
