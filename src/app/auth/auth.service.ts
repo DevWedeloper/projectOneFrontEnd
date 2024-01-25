@@ -33,7 +33,7 @@ export class AuthService {
     );
   }
 
-  initializeGoogleOAuth(): void {
+  initializeGoogleOAuth(text: 'signup_with' | 'signin_with'): void {
     const redirectUri = encodeURIComponent(window.location.origin);
     google.accounts.id.initialize({
       client_id: this.clientId,
@@ -57,6 +57,7 @@ export class AuthService {
             theme,
             size: 'large',
             type: 'standard',
+            text,
           },
         );
       });

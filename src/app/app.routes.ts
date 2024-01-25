@@ -8,9 +8,16 @@ export const routes: Route[] = [
   {
     path: 'login',
     loadComponent: () =>
-      import('./login/login.component').then((m) => m.LoginComponent),
+      import('./auth/login/login.component').then((m) => m.LoginComponent),
     canActivate: [LoginGuard],
     title: `${mainTitle} | Login`
+  },
+  {
+    path: 'sign-up',
+    loadComponent: () =>
+      import('./auth/sign-up/sign-up.component').then((m) => m.SignUpComponent),
+    canActivate: [LoginGuard],
+    title: `${mainTitle} | Sign-Up`
   },
   {
     path: '',

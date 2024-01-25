@@ -41,7 +41,7 @@ import { FocusVisibleDirective } from '../../shared/ui/directives/focus-visible.
     DividerComponent,
   ],
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
+  styleUrls: ['./login.component.scss', '../ui/auth-shared.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginComponent implements OnInit {
@@ -73,7 +73,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.authService.initializeGoogleOAuth();
+    this.authService.initializeGoogleOAuth('signin_with');
   }
 
   onSubmit(): void {
