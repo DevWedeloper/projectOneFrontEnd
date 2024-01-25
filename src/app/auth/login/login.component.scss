@@ -1,0 +1,123 @@
+:host {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100vh;
+  background-color: var(--primary-color);
+  color: var(--text-color);
+}
+
+.main-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.main-container > p {
+  align-self: end;
+}
+
+.main-container > p > a {
+  text-decoration: none;
+}
+
+.form-box {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 400px;
+  max-width: 90vw;
+  padding: 20px;
+  border-radius: 1rem;
+  background-color: var(--primary-color);
+  border: 1px solid #ccc; 
+}
+
+.form-title {
+  margin: 0 auto;
+  margin-bottom: 1rem;
+}
+
+.form-group {
+  position: relative;
+  height: 48px;
+}
+
+.form-group-container {
+  margin-bottom: 1.5rem;
+}
+
+.form-input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  font-size: 1rem;
+  color: var(--text-color);
+  border: 1px solid #dadce0;
+  border-radius: 0.5rem;
+  outline: none;
+  padding: 1rem;
+  background: none;
+  z-index: 1;
+}
+
+.form-label {
+  position: absolute;
+  left: 1rem;
+  top: 1rem;
+  padding: 0 0.25rem;
+  background-color: var(--primary-color);
+  color: var(--text-color);
+  font-size: 1rem;
+  transition: 0.3s;
+}
+
+.btn {
+  display: block;
+  margin: 0 auto;
+  background-color: var(--secondary-color);
+  color: var(--text-color);
+  padding: 8px 16px;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+
+.btn:not([disabled]):active {
+  transform: scale(0.9);
+}
+
+.btn:focus-visible {
+  transform: scale(0.9);
+}
+
+.form-input:focus + .form-label {
+  top: -0.5rem;
+  left: 0.8rem;
+  color: var(--text-color);
+  font-size: 0.75rem;
+  font-weight: 500;
+  z-index: 10;
+}
+
+.form-input:not(:placeholder-shown).form-input:not(:focus) + .form-label {
+  top: -0.5rem;
+  left: 0.8rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  z-index: 10;
+}
+
+.form-input:focus {
+  border: 1.5px solid var(--text-color);
+}
+
+#google-btn {
+  align-self: center;
+}
+
+.divider {
+  padding: 0.5rem;
+}
