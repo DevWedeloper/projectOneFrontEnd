@@ -24,7 +24,6 @@ export class SignUpFormService {
           {
             validators: [Validators.required, Validators.email],
             asyncValidators: [this.uniqueEmail.bind(this)],
-            updateOn: 'blur',
           },
         ],
         username: [
@@ -37,11 +36,11 @@ export class SignUpFormService {
               Validators.pattern(/^[a-zA-Z0-9_]+$/),
             ],
             asyncValidators: [this.uniqueUsername.bind(this)],
-            updateOn: 'blur',
           },
         ],
         password: ['', [Validators.required, this.customPassword]],
         confirmPassword: ['', [Validators.required]],
+        verificationCode: ['', [Validators.required]],
       },
       { validators: this.passwordShouldMatch },
     );

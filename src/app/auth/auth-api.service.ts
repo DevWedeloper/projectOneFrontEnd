@@ -66,4 +66,8 @@ export class AuthApiService {
       withCredentials: true,
     });
   }
+
+  requestEmailVerificationCode(email: string): Observable<void> {
+    return this.http.post<void>(`${this.url}/requestCode`, { email });
+  }
 }

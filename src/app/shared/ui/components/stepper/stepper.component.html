@@ -1,0 +1,11 @@
+<div class="step-container">
+  <div [@slideAnimation]="stepperService.index$.value">
+    @for (step of stepper; track i; let i = $index) {
+      <ng-container>
+        @if (i === stepperService.index$.value) {
+          <ng-container [ngTemplateOutlet]="step"></ng-container>
+        }
+      </ng-container>
+    }
+  </div>
+</div>

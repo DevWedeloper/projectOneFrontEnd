@@ -1,0 +1,22 @@
+.stepper-button-container {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.stepper-button-container > button {
+  border-radius: 0.25rem;
+  padding: 0.5rem;
+  color: white;
+  background-color: #007bff;
+  cursor: pointer;
+}
+
+.verification-messages {
+  text-align: center;
+  padding-bottom: 1.5rem;
+}
+
+.resend {
+  color: #007BFF;
+  cursor: pointer; 
+}
