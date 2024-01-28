@@ -17,7 +17,7 @@ export class AuthEffects {
       switchMap((action) =>
         this.authApiService.login(action.user).pipe(
           map(() => authActions.loginSuccess()),
-          catchError((error) => of(authActions.loginFailure({ error }))),
+          catchError((error) => of(authActions.loginFailure(error))),
         ),
       ),
     ),
@@ -65,7 +65,7 @@ export class AuthEffects {
       switchMap(() =>
         this.authApiService.refreshToken().pipe(
           map(() => authActions.refreshTokenSuccess()),
-          catchError((error) => of(authActions.refreshTokenFailure({ error }))),
+          catchError((error) => of(authActions.refreshTokenFailure(error))),
         ),
       ),
     ),
