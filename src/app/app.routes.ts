@@ -3,6 +3,8 @@ import { provideEffects } from '@ngrx/effects';
 import { provideState } from '@ngrx/store';
 import { AuthGuard } from './auth/auth.guard';
 import { LoginGuard } from './auth/login.guard';
+import { SignUpEffects } from './auth/state/sign-up.effects';
+import { signUpFeatureKey, signUpReducer } from './auth/state/sign-up.reducers';
 import { CharacterActionsEffects } from './characters/state/character-actions.effects';
 import {
   characterActionsFeatureKey,
@@ -53,6 +55,10 @@ export const routes: Route[] = [
     path: 'sign-up',
     loadComponent: () =>
       import('./auth/sign-up/sign-up.component').then((m) => m.SignUpComponent),
+    providers: [
+      provideState(signUpFeatureKey, signUpReducer),
+      provideEffects(SignUpEffects),
+    ],
     canActivate: [LoginGuard],
     title: `${mainTitle} | Sign-Up`,
   },
