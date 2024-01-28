@@ -63,10 +63,10 @@ export class LoginComponent implements OnInit {
         takeUntilDestroyed(),
       )
       .subscribe((error) => {
-        if (error?.error.error === 'Invalid username') {
+        if (error?.error.error === 'Invalid username.') {
           this.loginForm.get('username')?.setErrors({ invalidUsername: true });
         }
-        if (error?.error.error === 'Invalid password') {
+        if (error?.error.error === 'Invalid password.') {
           this.loginForm.get('password')?.setErrors({ invalidPassword: true });
         }
       });
