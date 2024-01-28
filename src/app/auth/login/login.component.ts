@@ -17,10 +17,7 @@ import { Store } from '@ngrx/store';
 import { filter } from 'rxjs';
 import { AuthService } from '../data-access/auth.service';
 import { authActions } from '../state/auth.actions';
-import {
-  selectHasLoginError,
-  selectIsLoggingIn,
-} from '../state/auth.reducers';
+import { selectHasLoginError, selectIsLoggingIn } from '../state/auth.reducers';
 import { DynamicValidatorMessageDirective } from '../../shared/form/dynamic-validator-message.directive';
 import { ValidatorMessageContainerDirective } from '../../shared/form/validator-message-container.directive';
 import { DividerComponent } from '../../shared/ui/components/divider/divider.component';
@@ -63,10 +60,10 @@ export class LoginComponent implements OnInit {
         takeUntilDestroyed(),
       )
       .subscribe((error) => {
-        if (error?.error.error === 'Invalid username') {
+        if (error?.error === 'Invalid username.') {
           this.loginForm.get('username')?.setErrors({ invalidUsername: true });
         }
-        if (error?.error.error === 'Invalid password') {
+        if (error?.error === 'Invalid password.') {
           this.loginForm.get('password')?.setErrors({ invalidPassword: true });
         }
       });
