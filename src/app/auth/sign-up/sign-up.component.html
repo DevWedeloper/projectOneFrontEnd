@@ -98,18 +98,11 @@
           />
         </div>
         <div class="stepper-button-container">
-          <!-- <button
-            appFocusVisible
-            appStepperNext
-            [disabled]="signupForm.get('confirmPassword')?.invalid"
-            (click)="getCode()"
-          >
-            Next
-          </button> -->
           <button
             appFocusVisible
             appStepperNext
             [disabled]="signupForm.get('confirmPassword')?.invalid"
+            (click)="getCode()"
           >
             Next
           </button>
@@ -142,14 +135,14 @@
         <div class="verification-messages">
           <p>
             Didn't get the code?
-            <a
-              class="resend"
+            <app-countdown-timer
               appFocusVisible
+              class="resend"
+              label="Resend Code"
+              [timeInSeconds]="60"
+              autoStart
               (click)="getCode()"
-              (keydown.Enter)="getCode()"
-              tabindex="0"
-              >Resend</a
-            >
+            />
           </p>
         </div>
         <button

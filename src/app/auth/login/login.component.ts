@@ -15,7 +15,7 @@ import {
 } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { filter } from 'rxjs';
-import { AuthService } from '../auth.service';
+import { AuthService } from '../data-access/auth.service';
 import { authActions } from '../state/auth.actions';
 import {
   selectHasLoginError,
