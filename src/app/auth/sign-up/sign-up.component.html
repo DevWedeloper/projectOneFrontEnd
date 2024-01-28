@@ -1,0 +1,170 @@
+<div class="main-container">
+  <form class="form-box" [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+    <h2 class="form-title">Sign-Up</h2>
+    <app-stepper>
+      <ng-template #stepperTemplate>
+        <div class="form-group-container">
+          <div class="form-group">
+            <input
+              id="email"
+              type="text"
+              formControlName="email"
+              class="form-input"
+              placeholder=""
+              [container]="emailContainerDir.container"
+            />
+            <label for="email" class="form-label">Email</label>
+          </div>
+          <ng-container
+            appValidatorMessageContainer
+            #emailContainerDir="validatorMessageContainer"
+          />
+        </div>
+        <div class="stepper-button-container">
+          <button
+            appFocusVisible
+            appStepperNext
+            [disabled]="signupForm.get('email')?.invalid"
+          >
+            Next
+          </button>
+        </div>
+      </ng-template>
+
+      <ng-template #stepperTemplate>
+        <div class="form-group-container">
+          <div class="form-group">
+            <input
+              id="username"
+              type="text"
+              formControlName="username"
+              class="form-input"
+              placeholder=""
+              [container]="usernameContainerDir.container"
+            />
+            <label for="username" class="form-label">Username</label>
+          </div>
+          <ng-container
+            appValidatorMessageContainer
+            #usernameContainerDir="validatorMessageContainer"
+          />
+        </div>
+        <div class="stepper-button-container">
+          <button
+            appFocusVisible
+            appStepperNext
+            [disabled]="signupForm.get('username')?.invalid"
+          >
+            Next
+          </button>
+        </div>
+      </ng-template>
+
+      <ng-template #stepperTemplate>
+        <div class="form-group-container">
+          <div class="form-group">
+            <input
+              id="password"
+              type="password"
+              formControlName="password"
+              class="form-input"
+              placeholder=""
+              [container]="passwordContainerDir.container"
+            />
+            <label for="password" class="form-label">Password</label>
+          </div>
+          <ng-container
+            appValidatorMessageContainer
+            #passwordContainerDir="validatorMessageContainer"
+          />
+        </div>
+        <div class="form-group-container">
+          <div class="form-group">
+            <input
+              id="confirm-password"
+              type="password"
+              formControlName="confirmPassword"
+              class="form-input"
+              placeholder=""
+              [container]="confirmPasswordContainerDir.container"
+            />
+            <label for="confirm-password" class="form-label"
+              >Confirm Password</label
+            >
+          </div>
+          <ng-container
+            appValidatorMessageContainer
+            #confirmPasswordContainerDir="validatorMessageContainer"
+          />
+        </div>
+        <div class="stepper-button-container">
+          <!-- <button
+            appFocusVisible
+            appStepperNext
+            [disabled]="signupForm.get('confirmPassword')?.invalid"
+            (click)="getCode()"
+          >
+            Next
+          </button> -->
+          <button
+            appFocusVisible
+            appStepperNext
+            [disabled]="signupForm.get('confirmPassword')?.invalid"
+          >
+            Next
+          </button>
+        </div>
+      </ng-template>
+
+      <ng-template #stepperTemplate>
+        <div class="form-group-container">
+          <div class="verification-messages">
+            <p>Check your email for the verification code.</p>
+          </div>
+          <div class="form-group">
+            <input
+              id="verification-code"
+              type="text"
+              formControlName="verificationCode"
+              class="form-input"
+              placeholder=""
+              [container]="verificationCodeContainerDir.container"
+            />
+            <label for="verification-code" class="form-label"
+              >Verification Code</label
+            >
+          </div>
+          <ng-container
+            appValidatorMessageContainer
+            #verificationCodeContainerDir="validatorMessageContainer"
+          />
+        </div>
+        <div class="verification-messages">
+          <p>
+            Didn't get the code?
+            <a
+              class="resend"
+              appFocusVisible
+              (click)="getCode()"
+              (keydown.Enter)="getCode()"
+              tabindex="0"
+              >Resend</a
+            >
+          </p>
+        </div>
+        <button
+          appFocusVisible
+          class="btn"
+          type="submit"
+          [disabled]="signupForm.invalid || (loading$ | async)"
+        >
+          @if (loading$ | async) {
+            <app-spinner [size]="25" />
+          }
+          Verify
+        </button>
+      </ng-template>
+    </app-stepper>
+  </form>
+  <p>Have an account? <a appFocusVisible href="/login">Login</a></p>
+</div>

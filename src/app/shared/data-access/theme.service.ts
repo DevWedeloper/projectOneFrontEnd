@@ -7,7 +7,9 @@ import { BehaviorSubject, Observable } from 'rxjs';
 export class ThemeService {
   private renderer: Renderer2;
   private rendererFactory = inject(RendererFactory2);
-  private darkThemeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+  private darkThemeMediaQuery = window.matchMedia(
+    '(prefers-color-scheme: dark)',
+  );
   darkMode$ = new BehaviorSubject<boolean>(this.darkThemeMediaQuery.matches);
   isDarkMode$: Observable<boolean> = this.darkMode$.asObservable();
   styles$ = new BehaviorSubject<CSSStyleDeclaration | null>(null);
@@ -29,7 +31,11 @@ export class ThemeService {
   }
 
   checkPreferredTheme(): void {
-    if (this.darkThemeMediaQuery.matches) {
+    const preferredTheme = localStorage.getItem('preferredTheme');
+    if (
+      preferredTheme === 'dark' ||
+      (preferredTheme === null && this.darkThemeMediaQuery.matches)
+    ) {
       this.darkMode$.next(true);
       this.renderer.addClass(document.body, 'dark-theme');
     } else {

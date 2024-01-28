@@ -1,10 +1,25 @@
-.form-container {
+:host {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
   height: 100vh;
   background-color: var(--primary-color);
   color: var(--text-color);
+}
+
+.main-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.main-container > p {
+  align-self: end;
+}
+
+.main-container > p > a {
+  text-decoration: none;
 }
 
 .form-box {

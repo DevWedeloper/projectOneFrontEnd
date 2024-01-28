@@ -1,4 +1,4 @@
-<div class="form-container">
+<div class="main-container">
   <form class="form-box" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
     <h2 class="form-title">Login</h2>
     <div class="form-group-container">
@@ -49,4 +49,5 @@
     <app-divider class="divider" text="Or" [size]="1" />
     <div id="google-btn"></div>
   </form>
+  <p>Don't have an account? <a appFocusVisible href="/sign-up">Sign up</a></p>
 </div>

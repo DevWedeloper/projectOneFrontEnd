@@ -1,6 +1,43 @@
 import { Route } from '@angular/router';
+import { provideEffects } from '@ngrx/effects';
+import { provideState } from '@ngrx/store';
 import { AuthGuard } from './auth/auth.guard';
 import { LoginGuard } from './auth/login.guard';
+import { CharacterActionsEffects } from './characters/state/character-actions.effects';
+import {
+  characterActionsFeatureKey,
+  characterActionsReducer,
+} from './characters/state/character-actions.reducers';
+import { CharacterTableEffects } from './characters/state/character-table.effects';
+import {
+  characterTableFeatureKey,
+  characterTableReducer,
+} from './characters/state/character-table.reducers';
+import { CharacterStatsEffects } from './dashboard/state/character-stats.effects';
+import {
+  characterStatsFeatureKey,
+  characterStatsReducer,
+} from './dashboard/state/character-stats.reducers';
+import { DashboardEffects } from './dashboard/state/dashboard.effects';
+import {
+  dashboardFeatureKey,
+  dashboardReducer,
+} from './dashboard/state/dashboard.reducers';
+import { GuildStatsEffects } from './dashboard/state/guild-stats.effects';
+import {
+  guildStatsFeatureKey,
+  guildStatsReducer,
+} from './dashboard/state/guild-stats.reducers';
+import { GuildActionsEffects } from './guilds/state/guild-actions.effects';
+import {
+  guildActionsFeatureKey,
+  guildActionsReducer,
+} from './guilds/state/guild-actions.reducers';
+import { GuildTableEffects } from './guilds/state/guild-table.effects';
+import {
+  guildTableFeatureKey,
+  guildTableReducer,
+} from './guilds/state/guild-table.reducers';
 
 const mainTitle = 'ProjectOne';
 
@@ -8,9 +45,16 @@ export const routes: Route[] = [
   {
     path: 'login',
     loadComponent: () =>
-      import('./login/login.component').then((m) => m.LoginComponent),
+      import('./auth/login/login.component').then((m) => m.LoginComponent),
     canActivate: [LoginGuard],
-    title: `${mainTitle} | Login`
+    title: `${mainTitle} | Login`,
+  },
+  {
+    path: 'sign-up',
+    loadComponent: () =>
+      import('./auth/sign-up/sign-up.component').then((m) => m.SignUpComponent),
+    canActivate: [LoginGuard],
+    title: `${mainTitle} | Sign-Up`,
   },
   {
     path: '',
@@ -29,7 +73,17 @@ export const routes: Route[] = [
           import('./dashboard/dashboard.component').then(
             (m) => m.DashboardComponent,
           ),
-        title: `${mainTitle} | Dashboard`
+        providers: [
+          provideState(dashboardFeatureKey, dashboardReducer),
+          provideState(characterStatsFeatureKey, characterStatsReducer),
+          provideState(guildStatsFeatureKey, guildStatsReducer),
+          provideEffects(
+            CharacterStatsEffects,
+            GuildStatsEffects,
+            DashboardEffects,
+          ),
+        ],
+        title: `${mainTitle} | Dashboard`,
       },
       {
         path: 'characters',
@@ -37,13 +91,23 @@ export const routes: Route[] = [
           import('./characters/characters.component').then(
             (m) => m.CharactersComponent,
           ),
-        title: `${mainTitle} | Characters`
+        providers: [
+          provideState(characterTableFeatureKey, characterTableReducer),
+          provideState(characterActionsFeatureKey, characterActionsReducer),
+          provideEffects(CharacterTableEffects, CharacterActionsEffects),
+        ],
+        title: `${mainTitle} | Characters`,
       },
       {
         path: 'guilds',
         loadComponent: () =>
           import('./guilds/guilds.component').then((m) => m.GuildsComponent),
-        title: `${mainTitle} | Guilds`
+        providers: [
+          provideState(guildTableFeatureKey, guildTableReducer),
+          provideState(guildActionsFeatureKey, guildActionsReducer),
+          provideEffects(GuildTableEffects, GuildActionsEffects),
+        ],
+        title: `${mainTitle} | Guilds`,
       },
     ],
   },

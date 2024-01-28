@@ -14,41 +14,6 @@ import { AuthEffects } from './auth/state/auth.effects';
 import { authFeatureKey, authReducer } from './auth/state/auth.reducers';
 import { CacheInterceptor } from './caching/cache.interceptor';
 import { CacheService } from './caching/cache.service';
-import { CharacterActionsEffects } from './characters/state/character-actions.effects';
-import {
-  characterActionsFeatureKey,
-  characterActionsReducer,
-} from './characters/state/character-actions.reducers';
-import { CharacterTableEffects } from './characters/state/character-table.effects';
-import {
-  characterTableFeatureKey,
-  characterTableReducer,
-} from './characters/state/character-table.reducers';
-import { CharacterStatsEffects } from './dashboard/state/character-stats.effects';
-import {
-  characterStatsFeatureKey,
-  characterStatsReducer,
-} from './dashboard/state/character-stats.reducers';
-import { DashboardEffects } from './dashboard/state/dashboard.effects';
-import {
-  dashboardFeatureKey,
-  dashboardReducer,
-} from './dashboard/state/dashboard.reducers';
-import { GuildStatsEffects } from './dashboard/state/guild-stats.effects';
-import {
-  guildStatsFeatureKey,
-  guildStatsReducer,
-} from './dashboard/state/guild-stats.reducers';
-import { GuildActionsEffects } from './guilds/state/guild-actions.effects';
-import {
-  guildActionsFeatureKey,
-  guildActionsReducer,
-} from './guilds/state/guild-actions.reducers';
-import { GuildTableEffects } from './guilds/state/guild-table.effects';
-import {
-  guildTableFeatureKey,
-  guildTableReducer,
-} from './guilds/state/guild-table.reducers';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -63,23 +28,7 @@ export const appConfig: ApplicationConfig = {
     provideAnimations(),
     provideStore(),
     provideState(authFeatureKey, authReducer),
-    provideState(characterStatsFeatureKey, characterStatsReducer),
-    provideState(guildStatsFeatureKey, guildStatsReducer),
-    provideState(dashboardFeatureKey, dashboardReducer),
-    provideState(characterTableFeatureKey, characterTableReducer),
-    provideState(characterActionsFeatureKey, characterActionsReducer),
-    provideState(guildTableFeatureKey, guildTableReducer),
-    provideState(guildActionsFeatureKey, guildActionsReducer),
-    provideEffects(
-      AuthEffects,
-      CharacterStatsEffects,
-      GuildStatsEffects,
-      DashboardEffects,
-      CharacterTableEffects,
-      CharacterActionsEffects,
-      GuildTableEffects,
-      GuildActionsEffects,
-    ),
+    provideEffects(AuthEffects),
     provideStoreDevtools({
       maxAge: 25,
       logOnly: !isDevMode(),

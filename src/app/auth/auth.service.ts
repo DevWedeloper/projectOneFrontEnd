@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable, catchError, map, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { ThemeService } from '../shared/data-access/theme.service';
 import { AuthApiService } from './auth-api.service';
 import { selectIsCurrentUserAdmin } from './state/auth.reducers';
 
@@ -15,6 +16,7 @@ export class AuthService {
   private authApiService = inject(AuthApiService);
   private destroyRef = inject(DestroyRef);
   private route = inject(Router);
+  private themeService = inject(ThemeService);
   protected clientId = environment.googleClientId;
   protected loginUri = environment.googleOAuthRedirectUrl;
   isCurrentUserAdmin$ = this.store.select(selectIsCurrentUserAdmin);
@@ -31,7 +33,7 @@ export class AuthService {
     );
   }
 
-  initializeGoogleOAuth(): void {
+  initializeGoogleOAuth(text: 'signup_with' | 'signin_with'): void {
     const redirectUri = encodeURIComponent(window.location.origin);
     google.accounts.id.initialize({
       client_id: this.clientId,
@@ -45,14 +47,20 @@ export class AuthService {
           .subscribe(() => this.route.navigate(['/']));
       },
     });
-    const theme = window.matchMedia('(prefers-color-scheme: dark)').matches
-      ? 'filled_black'
-      : 'outline';
-    google.accounts.id.renderButton(document.getElementById('google-btn')!, {
-      theme,
-      size: 'large',
-      type: 'standard',
-    });
+    this.themeService.isDarkMode$
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((value) => {
+        const theme = value ? 'filled_black' : 'outline';
+        google.accounts.id.renderButton(
+          document.getElementById('google-btn')!,
+          {
+            theme,
+            size: 'large',
+            type: 'standard',
+            text,
+          },
+        );
+      });
     google.accounts.id.prompt();
   }
 }

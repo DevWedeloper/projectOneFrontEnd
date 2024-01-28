@@ -17,6 +17,9 @@ export const ERROR_MESSAGES: { [key: string]: (args?: any) => string } = {
   notMember: () => 'Not a member or not found',
   invalidUsername: () => 'Invalid username',
   invalidPassword: () => 'Invalid password',
+  passwordShouldMatch: () => 'Password should match',
+  customPassword: () =>
+    'Password must be at least 8 characters long and include at least one lowercase letter, one uppercase letter, and one digit',
 };
 
 export const VALIDATION_ERROR_MESSAGES = new InjectionToken(

@@ -15,17 +15,17 @@ import {
 } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { filter } from 'rxjs';
-import { AuthService } from '../auth/auth.service';
-import { authActions } from '../auth/state/auth.actions';
+import { AuthService } from '../auth.service';
+import { authActions } from '../state/auth.actions';
 import {
   selectHasLoginError,
   selectIsLoggingIn,
-} from '../auth/state/auth.reducers';
-import { DynamicValidatorMessageDirective } from '../shared/form/dynamic-validator-message.directive';
-import { ValidatorMessageContainerDirective } from '../shared/form/validator-message-container.directive';
-import { DividerComponent } from '../shared/ui/components/divider/divider.component';
-import { SpinnerComponent } from '../shared/ui/components/spinner/spinner.component';
-import { FocusVisibleDirective } from '../shared/ui/directives/focus-visible.directive';
+} from '../state/auth.reducers';
+import { DynamicValidatorMessageDirective } from '../../shared/form/dynamic-validator-message.directive';
+import { ValidatorMessageContainerDirective } from '../../shared/form/validator-message-container.directive';
+import { DividerComponent } from '../../shared/ui/components/divider/divider.component';
+import { SpinnerComponent } from '../../shared/ui/components/spinner/spinner.component';
+import { FocusVisibleDirective } from '../../shared/ui/directives/focus-visible.directive';
 
 @Component({
   selector: 'app-login',
@@ -41,7 +41,7 @@ import { FocusVisibleDirective } from '../shared/ui/directives/focus-visible.dir
     DividerComponent,
   ],
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
+  styleUrls: ['./login.component.scss', '../ui/auth-shared.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginComponent implements OnInit {
@@ -73,7 +73,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.authService.initializeGoogleOAuth();
+    this.authService.initializeGoogleOAuth('signin_with');
   }
 
   onSubmit(): void {
