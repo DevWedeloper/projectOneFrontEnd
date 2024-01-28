@@ -1,0 +1,10 @@
+:host {
+  width: fit-content;
+}
+
+:host.disabled {
+  color: black;
+  background-color: #ccc;
+  cursor: not-allowed;
+  pointer-events: none;
+}

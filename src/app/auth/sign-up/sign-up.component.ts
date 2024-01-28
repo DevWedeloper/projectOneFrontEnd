@@ -4,6 +4,7 @@ import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BehaviorSubject, take } from 'rxjs';
 import { DynamicValidatorMessageDirective } from 'src/app/shared/form/dynamic-validator-message.directive';
 import { ValidatorMessageContainerDirective } from 'src/app/shared/form/validator-message-container.directive';
+import { CountdownTimerComponent } from 'src/app/shared/ui/components/countdown-timer/countdown-timer.component';
 import { DividerComponent } from 'src/app/shared/ui/components/divider/divider.component';
 import { SpinnerComponent } from 'src/app/shared/ui/components/spinner/spinner.component';
 import { StepperNextDirective } from 'src/app/shared/ui/components/stepper/stepper-buttons/stepper-buttons.directive';
@@ -27,6 +28,7 @@ import { SignUpFormService } from '../data-access/sign-up-form.service';
     StepperComponent,
     StepperNextDirective,
     FocusVisibleDirective,
+    CountdownTimerComponent,
   ],
   templateUrl: './sign-up.component.html',
   styleUrls: ['./sign-up.component.scss', '../ui/auth-shared.scss'],
