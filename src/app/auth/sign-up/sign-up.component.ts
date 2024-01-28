@@ -10,7 +10,7 @@ import { SpinnerComponent } from 'src/app/shared/ui/components/spinner/spinner.c
 import { StepperNextDirective } from 'src/app/shared/ui/components/stepper/stepper-buttons/stepper-buttons.directive';
 import { StepperComponent } from 'src/app/shared/ui/components/stepper/stepper.component';
 import { FocusVisibleDirective } from 'src/app/shared/ui/directives/focus-visible.directive';
-import { AuthApiService } from '../auth-api.service';
+import { AuthApiService } from '../data-access/auth-api.service';
 import { SignUpFormService } from '../data-access/sign-up-form.service';
 
 @Component({

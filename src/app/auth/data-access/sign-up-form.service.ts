@@ -7,7 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Observable, catchError, debounceTime, map, of, switchMap } from 'rxjs';
-import { UserApiService } from '../user-api.service';
+import { UserApiService } from './user-api.service';
 
 @Injectable({
   providedIn: 'root',

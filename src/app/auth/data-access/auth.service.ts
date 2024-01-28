@@ -4,9 +4,9 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable, catchError, map, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { ThemeService } from '../shared/data-access/theme.service';
+import { ThemeService } from '../../shared/data-access/theme.service';
 import { AuthApiService } from './auth-api.service';
-import { selectIsCurrentUserAdmin } from './state/auth.reducers';
+import { selectIsCurrentUserAdmin } from '../state/auth.reducers';
 
 @Injectable({
   providedIn: 'root',
