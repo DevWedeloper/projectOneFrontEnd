@@ -7,6 +7,8 @@ import {
   Validators,
 } from '@angular/forms';
 import { Observable, catchError, debounceTime, map, of, switchMap } from 'rxjs';
+import { customPassword } from '../validators/custom-password.validator';
+import { passwordShouldMatch } from '../validators/password-should-match.validator';
 import { UserApiService } from './user-api.service';
 
 @Injectable({
@@ -38,37 +40,12 @@ export class SignUpFormService {
             asyncValidators: [this.uniqueUsername.bind(this)],
           },
         ],
-        password: ['', [Validators.required, this.customPassword]],
+        password: ['', [Validators.required, customPassword]],
         confirmPassword: ['', [Validators.required]],
         verificationCode: ['', [Validators.required]],
       },
-      { validators: this.passwordShouldMatch },
+      { validators: passwordShouldMatch },
     );
-  }
-
-  private customPassword(control: AbstractControl): ValidationErrors | null {
-    const passwordPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
-    if (control.value && !passwordPattern.test(control.value)) {
-      return { customPassword: true };
-    }
-
-    return null;
-  }
-
-  private passwordShouldMatch(
-    control: AbstractControl,
-  ): ValidationErrors | null {
-    const password = control.get('password');
-    const confirmPassword = control.get('confirmPassword');
-    const errors = { passwordShouldMatch: { mismatch: true } };
-
-    if (password?.value === confirmPassword?.value) {
-      return null;
-    }
-
-    confirmPassword?.setErrors(errors);
-
-    return errors;
   }
 
   private uniqueEmail = (

@@ -45,6 +45,7 @@ import {
   guildTableFeatureKey,
   guildTableReducer,
 } from './guilds/state/guild-table.reducers';
+import { ResetPasswordGuard } from './auth/reset-password.guard';
 
 const mainTitle = 'ProjectOne';
 
@@ -79,6 +80,19 @@ export const routes: Route[] = [
     ],
     canActivate: [LoginGuard],
     title: `${mainTitle} | Forgot Password`,
+  },
+  {
+    path: 'reset-password',
+    loadComponent: () =>
+      import('./auth/reset-password/reset-password.component').then(
+        (m) => m.ResetPasswordComponent,
+      ),
+    providers: [
+      provideState(passwordRecoveryFeatureKey, passwordRecoveryReducer),
+      provideEffects(PasswordRecoveryEffects),
+    ],
+    canActivate: [ResetPasswordGuard],
+    title: `${mainTitle} | Reset Password`,
   },
   {
     path: '',
