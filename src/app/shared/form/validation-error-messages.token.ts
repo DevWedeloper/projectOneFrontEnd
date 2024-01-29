@@ -21,6 +21,7 @@ export const ERROR_MESSAGES: { [key: string]: (args?: any) => string } = {
   customPassword: () =>
     'Password must be at least 8 characters long and include at least one lowercase letter, one uppercase letter, and one digit',
   codeMismatch: () => 'Entered code does not match',
+  noEmailRegistered: () => 'No account is registered with the provided email address'
 };
 
 export const VALIDATION_ERROR_MESSAGES = new InjectionToken(

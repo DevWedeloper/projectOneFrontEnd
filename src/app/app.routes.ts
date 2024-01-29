@@ -3,6 +3,11 @@ import { provideEffects } from '@ngrx/effects';
 import { provideState } from '@ngrx/store';
 import { AuthGuard } from './auth/auth.guard';
 import { LoginGuard } from './auth/login.guard';
+import { PasswordRecoveryEffects } from './auth/state/password-recovery.effects';
+import {
+  passwordRecoveryFeatureKey,
+  passwordRecoveryReducer,
+} from './auth/state/password-recovery.reducers';
 import { SignUpEffects } from './auth/state/sign-up.effects';
 import { signUpFeatureKey, signUpReducer } from './auth/state/sign-up.reducers';
 import { CharacterActionsEffects } from './characters/state/character-actions.effects';
@@ -61,6 +66,19 @@ export const routes: Route[] = [
     ],
     canActivate: [LoginGuard],
     title: `${mainTitle} | Sign-Up`,
+  },
+  {
+    path: 'forgot-password',
+    loadComponent: () =>
+      import('./auth/forgot-password/forgot-password.component').then(
+        (m) => m.ForgotPasswordComponent,
+      ),
+    providers: [
+      provideState(passwordRecoveryFeatureKey, passwordRecoveryReducer),
+      provideEffects(PasswordRecoveryEffects),
+    ],
+    canActivate: [LoginGuard],
+    title: `${mainTitle} | Forgot Password`,
   },
   {
     path: '',

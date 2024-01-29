@@ -31,4 +31,12 @@ export class UserApiService {
       `${this.url}/user/unique/username/${username}`,
     );
   }
+
+  forgotPassword(email: string): Observable<void> {
+    const redirectUri = encodeURIComponent(window.location.origin);
+    return this.http.post<void>(
+      `${this.url}/user/forgotPassword/?reset_password_url=${redirectUri}/reset-password`,
+      { email },
+    );
+  }
 }
