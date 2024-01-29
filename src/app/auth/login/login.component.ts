@@ -13,16 +13,17 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { filter } from 'rxjs';
-import { AuthService } from '../data-access/auth.service';
-import { authActions } from '../state/auth.actions';
-import { selectHasLoginError, selectIsLoggingIn } from '../state/auth.reducers';
 import { DynamicValidatorMessageDirective } from '../../shared/form/dynamic-validator-message.directive';
 import { ValidatorMessageContainerDirective } from '../../shared/form/validator-message-container.directive';
 import { DividerComponent } from '../../shared/ui/components/divider/divider.component';
 import { SpinnerComponent } from '../../shared/ui/components/spinner/spinner.component';
 import { FocusVisibleDirective } from '../../shared/ui/directives/focus-visible.directive';
+import { AuthService } from '../data-access/auth.service';
+import { authActions } from '../state/auth.actions';
+import { selectHasLoginError, selectIsLoggingIn } from '../state/auth.reducers';
 
 @Component({
   selector: 'app-login',
@@ -31,6 +32,7 @@ import { FocusVisibleDirective } from '../../shared/ui/directives/focus-visible.
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    RouterLink,
     FocusVisibleDirective,
     SpinnerComponent,
     DynamicValidatorMessageDirective,

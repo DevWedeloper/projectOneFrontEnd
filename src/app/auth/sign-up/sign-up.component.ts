@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { filter, take } from 'rxjs';
 import { DynamicValidatorMessageDirective } from 'src/app/shared/form/dynamic-validator-message.directive';
@@ -27,6 +28,7 @@ import {
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    RouterLink,
     FocusVisibleDirective,
     SpinnerComponent,
     DynamicValidatorMessageDirective,
@@ -58,7 +60,9 @@ export class SignUpComponent {
       )
       .subscribe((error) => {
         if (error?.error === 'Entered code does not match.') {
-          this.signupForm.get('verificationCode')?.setErrors({ codeMismatch: true });
+          this.signupForm
+            .get('verificationCode')
+            ?.setErrors({ codeMismatch: true });
         }
       });
   }

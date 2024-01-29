@@ -35,6 +35,11 @@
         #passwordContainerDir="validatorMessageContainer"
       />
     </div>
+    <p class="link-container">
+      <a class="links" appFocusVisible routerLink="/forgot-password"
+        >Forgot Password?</a
+      >
+    </p>
     <button
       appFocusVisible
       class="btn"
@@ -49,5 +54,8 @@
     <app-divider class="divider" text="Or" [size]="1" />
     <div id="google-btn"></div>
   </form>
-  <p>Don't have an account? <a appFocusVisible href="/sign-up">Sign up</a></p>
+  <p class="link-container">
+    Don't have an account?
+    <a appFocusVisible routerLink="/sign-up">Sign up</a>
+  </p>
 </div>
