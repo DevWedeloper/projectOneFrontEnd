@@ -1,15 +1,21 @@
-import { createFeature, createReducer, createSelector, on } from '@ngrx/store';
 import { HttpErrorResponse } from '@angular/common/http';
+import { createFeature, createReducer, createSelector, on } from '@ngrx/store';
 import { passwordRecoveryActions } from './password-recovery.actions';
 
+type Status = 'pending' | 'loading' | 'error' | 'success';
+
 type PasswordRecoveryState = {
-  forgotPasswordStatus: 'pending' | 'loading' | 'error' | 'success';
+  forgotPasswordStatus: Status;
   hasForgotPasswordError: HttpErrorResponse | null;
+  resetPasswordStatus: Status;
+  hasResetPasswordError: HttpErrorResponse | null;
 };
 
 const initialState: PasswordRecoveryState = {
   forgotPasswordStatus: 'pending',
   hasForgotPasswordError: null,
+  resetPasswordStatus: 'pending',
+  hasResetPasswordError: null,
 };
 
 const passwordRecoveryFeature = createFeature({
@@ -30,11 +36,32 @@ const passwordRecoveryFeature = createFeature({
       forgotPasswordStatus: 'error' as const,
       hasForgotPasswordError: action.error,
     })),
+    on(passwordRecoveryActions.resetPassword, (state) => ({
+      ...state,
+      resetPasswordStatus: 'loading' as const,
+    })),
+    on(passwordRecoveryActions.resetPasswordSuccess, (state) => ({
+      ...state,
+      resetPasswordStatus: 'success' as const,
+      hasResetPasswordError: null,
+    })),
+    on(passwordRecoveryActions.resetPasswordFailure, (state, action) => ({
+      ...state,
+      resetPasswordStatus: 'error' as const,
+      hasResetPasswordError: action.error,
+    })),
   ),
-  extraSelectors: ({ selectForgotPasswordStatus }) => ({
+  extraSelectors: ({
+    selectForgotPasswordStatus,
+    selectResetPasswordStatus,
+  }) => ({
     selectForgetPasswordLoading: createSelector(
       selectForgotPasswordStatus,
       (forgotPasswordStatus) => forgotPasswordStatus === 'loading',
+    ),
+    selectIsResettingPassword: createSelector(
+      selectResetPasswordStatus,
+      (resetPasswordStatus) => resetPasswordStatus === 'loading',
     ),
   }),
 });
@@ -43,5 +70,7 @@ export const {
   name: passwordRecoveryFeatureKey,
   reducer: passwordRecoveryReducer,
   selectHasForgotPasswordError,
+  selectHasResetPasswordError,
   selectForgetPasswordLoading,
+  selectIsResettingPassword,
 } = passwordRecoveryFeature;
