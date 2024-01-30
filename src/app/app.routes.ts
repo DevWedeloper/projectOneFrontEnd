@@ -95,6 +95,15 @@ export const routes: Route[] = [
     title: `${mainTitle} | Reset Password`,
   },
   {
+    path: 'account',
+    loadComponent: () =>
+      import('./auth/account/account.component').then(
+        (m) => m.AccountComponent,
+      ),
+    canActivate: [AuthGuard],
+    title: `${mainTitle} | Account`,
+  },
+  {
     path: '',
     loadComponent: () =>
       import('./home/home.component').then((m) => m.HomeComponent),

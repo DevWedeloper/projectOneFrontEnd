@@ -10,6 +10,7 @@ import {
   ViewChildren,
   inject,
 } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { authActions } from 'src/app/auth/state/auth.actions';
 import { ThemeService } from 'src/app/shared/data-access/theme.service';
@@ -18,7 +19,7 @@ import { HomeService } from '../../data-access/home.service';
 @Component({
   selector: 'app-settings-dropdown',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './settings-dropdown.component.html',
   styleUrls: ['./settings-dropdown.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

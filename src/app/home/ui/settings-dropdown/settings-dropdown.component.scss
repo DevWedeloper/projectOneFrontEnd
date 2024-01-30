@@ -63,6 +63,10 @@
 }
 
 .icon-container svg {
+  fill: var(--text-color);
+}
+
+.logout svg {
   fill: var(--main-color);
 }
 
