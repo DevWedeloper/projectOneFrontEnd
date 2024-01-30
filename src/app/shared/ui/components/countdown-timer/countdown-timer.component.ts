@@ -26,6 +26,7 @@ export class CountdownTimerComponent implements OnInit {
   @HostListener('click') onClick(): void {
     this.startCountdown();
   }
+  @HostBinding('tabindex') tabIndex = 0;
   countdown$ = new BehaviorSubject<number>(0);
 
   ngOnInit(): void {
