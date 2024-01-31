@@ -1,0 +1,17 @@
+:host {
+  display: flex;
+  justify-content: center;
+  color: var(--text-color);
+}
+
+.main-content {
+  width: 900px;
+}
+
+button, app-countdown-timer {
+  border-radius: 0.25rem;
+  padding: 0.5rem;
+  color: white;
+  background-color: #007bff;
+  cursor: pointer;
+}

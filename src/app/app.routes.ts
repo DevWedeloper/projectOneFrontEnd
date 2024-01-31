@@ -3,6 +3,12 @@ import { provideEffects } from '@ngrx/effects';
 import { provideState } from '@ngrx/store';
 import { AuthGuard } from './auth/auth.guard';
 import { LoginGuard } from './auth/login.guard';
+import { ResetPasswordGuard } from './auth/reset-password.guard';
+import { AccountSettingsEffects } from './auth/state/account-settings.effects';
+import {
+  accountSettingsFeatureKey,
+  accountSettingsReducer,
+} from './auth/state/account-settings.reducers';
 import { PasswordRecoveryEffects } from './auth/state/password-recovery.effects';
 import {
   passwordRecoveryFeatureKey,
@@ -45,7 +51,6 @@ import {
   guildTableFeatureKey,
   guildTableReducer,
 } from './guilds/state/guild-table.reducers';
-import { ResetPasswordGuard } from './auth/reset-password.guard';
 
 const mainTitle = 'ProjectOne';
 
@@ -100,6 +105,10 @@ export const routes: Route[] = [
       import('./auth/account/account.component').then(
         (m) => m.AccountComponent,
       ),
+    providers: [
+      provideState(accountSettingsFeatureKey, accountSettingsReducer),
+      provideEffects(AccountSettingsEffects),
+    ],
     canActivate: [AuthGuard],
     title: `${mainTitle} | Account`,
   },

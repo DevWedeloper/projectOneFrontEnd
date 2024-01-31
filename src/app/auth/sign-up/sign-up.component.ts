@@ -73,7 +73,7 @@ export class SignUpComponent {
 
   getCode(): void {
     this.authApiService
-      .requestEmailVerificationCode(this.signupForm.get('email')?.value)
+      .requestEmailVerificationCodeForNewEmail(this.signupForm.get('email')?.value)
       .pipe(take(1))
       .subscribe();
   }

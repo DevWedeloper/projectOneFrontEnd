@@ -1,1 +1,165 @@
-<p>account works!</p>
+<div class="main-content">
+  <h2>Account Settings</h2>
+  <div>
+    <div>
+      <h3>Update Email</h3>
+      <p>
+        To update your email, please enter the new email address in the field
+        below and click the "Save" button. A confirmation email will be sent to
+        the new address for verification.
+      </p>
+    </div>
+    <div>
+      <form [formGroup]="updateEmailForm" (ngSubmit)="onUpdateEmailSubmit()">
+        <app-custom-input
+          type="string"
+          id="new-email"
+          label="New Email"
+          formControlName="newEmail"
+        />
+        <div>
+          <app-custom-input
+            type="string"
+            id="verification-code"
+            label="Verification Code"
+            formControlName="verificationCode"
+          />
+          <app-countdown-timer
+            appFocusVisible
+            label="Send Code"
+            [timeInSeconds]="60"
+            (click)="getCodeFromNewEmail()"
+          />
+        </div>
+        <button
+          [disabled]="updateEmailForm.invalid || (updateEmailLoading$ | async)"
+          appFocusVisible
+        >
+          Confirm
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <div>
+    <div>
+      <h3>Update Username</h3>
+      <p>
+        Change your username by entering a new one in the provided field.
+        Remember that your username should be unique and adhere to our community
+        guidelines.
+      </p>
+    </div>
+    <div>
+      <form
+        [formGroup]="updateUsernameForm"
+        (ngSubmit)="onUpdateUsernameSubmit()"
+      >
+        <app-custom-input
+          type="string"
+          id="username"
+          label="Username"
+          formControlName="username"
+        />
+        <div>
+          <app-custom-input
+            type="string"
+            id="verification-code"
+            label="Verification Code"
+            formControlName="verificationCode"
+          />
+          <app-countdown-timer
+            appFocusVisible
+            label="Send Code"
+            [timeInSeconds]="60"
+            (click)="getCodeFromCurrentEmail()"
+          />
+        </div>
+        <button
+          [disabled]="
+            updateUsernameForm.invalid || (updateUsernameLoading$ | async)
+          "
+          appFocusVisible
+        >
+          Confirm
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <div>
+    <div>
+      <h3>Update Password</h3>
+      <p>
+        Enhance your account security by updating your password. Choose a
+        strong, unique password that includes a mix of letters, numbers, and
+        special characters.
+      </p>
+    </div>
+    <div>
+      <form
+        [formGroup]="updatePasswordForm"
+        (ngSubmit)="onUpdatePasswordSubmit()"
+      >
+        <app-custom-input
+          type="password"
+          id="current-password"
+          label="Current Password"
+          formControlName="currentPassword"
+        />
+        <app-custom-input
+          type="password"
+          id="password"
+          label="New Password"
+          formControlName="password"
+        />
+        <app-custom-input
+          type="password"
+          id="confirm-password"
+          label="Confirm Password"
+          formControlName="confirmPassword"
+        />
+        <button
+          [disabled]="
+            updatePasswordForm.invalid || (updatePasswordLoading$ | async)
+          "
+          appFocusVisible
+        >
+          Confirm
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <div>
+    <div>
+      <h3>Delete Account</h3>
+      <p>
+        If you no longer wish to use our services, you can delete your account.
+        Please note that this action is irreversible and will permanently remove
+        all your data from our platform.
+      </p>
+    </div>
+    <div>
+      <form
+        [formGroup]="deleteAccountForm"
+        (ngSubmit)="onDeleteAccountSubmit()"
+      >
+        <app-custom-input
+          type="password"
+          id="password"
+          label="Password"
+          formControlName="password"
+        />
+        <button
+          [disabled]="
+            deleteAccountForm.invalid || (deleteAccountLoading$ | async)
+          "
+          appFocusVisible
+        >
+          Confirm
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
