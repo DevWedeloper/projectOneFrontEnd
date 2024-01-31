@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { createFeature, createReducer, createSelector, on } from '@ngrx/store';
 import { accountSettingsActions } from './account-settings.actions';
 
@@ -5,16 +6,24 @@ type Status = 'pending' | 'loading' | 'error' | 'success';
 
 type AccountSettingsState = {
   updateEmailStatus: Status;
+  hasUpdateEmailError: HttpErrorResponse | null;
   updateUsernameStatus: Status;
+  hasUpdateUsernameError: HttpErrorResponse | null;
   updatePasswordStatus: Status;
+  hasUpdatePasswordError: HttpErrorResponse | null;
   deleteAccountStatus: Status;
+  hasDeleteAccountError: HttpErrorResponse | null;
 };
 
 const initialState: AccountSettingsState = {
   updateEmailStatus: 'pending',
+  hasUpdateEmailError: null,
   updateUsernameStatus: 'pending',
+  hasUpdateUsernameError: null,
   updatePasswordStatus: 'pending',
+  hasUpdatePasswordError: null,
   deleteAccountStatus: 'pending',
+  hasDeleteAccountError: null,
 };
 
 const accountSettingsFeature = createFeature({
@@ -28,10 +37,12 @@ const accountSettingsFeature = createFeature({
     on(accountSettingsActions.updateUserEmailSuccess, (state) => ({
       ...state,
       updateEmailStatus: 'success' as const,
+      hasUpdateEmailError: null,
     })),
-    on(accountSettingsActions.updateUserEmailFailure, (state) => ({
+    on(accountSettingsActions.updateUserEmailFailure, (state, action) => ({
       ...state,
       updateEmailStatus: 'error' as const,
+      hasUpdateEmailError: action.error,
     })),
     on(accountSettingsActions.updateUserUsername, (state) => ({
       ...state,
@@ -40,10 +51,12 @@ const accountSettingsFeature = createFeature({
     on(accountSettingsActions.updateUserUsernameSuccess, (state) => ({
       ...state,
       updateUsernameStatus: 'success' as const,
+      hasUpdateUsernameError: null,
     })),
-    on(accountSettingsActions.updateUserUsernameFailure, (state) => ({
+    on(accountSettingsActions.updateUserUsernameFailure, (state, action) => ({
       ...state,
       updateUsernameStatus: 'error' as const,
+      hasUpdateUsernameError: action.error,
     })),
     on(accountSettingsActions.updateUserPassword, (state) => ({
       ...state,
@@ -52,10 +65,12 @@ const accountSettingsFeature = createFeature({
     on(accountSettingsActions.updateUserPasswordSuccess, (state) => ({
       ...state,
       updatePasswordStatus: 'success' as const,
+      hasUpdatePasswordError: null,
     })),
-    on(accountSettingsActions.updateUserPasswordFailure, (state) => ({
+    on(accountSettingsActions.updateUserPasswordFailure, (state, action) => ({
       ...state,
       updatePasswordStatus: 'error' as const,
+      hasUpdatePasswordError: action.error,
     })),
     on(accountSettingsActions.deleteAccount, (state) => ({
       ...state,
@@ -64,10 +79,12 @@ const accountSettingsFeature = createFeature({
     on(accountSettingsActions.deleteAccountSuccess, (state) => ({
       ...state,
       deleteUserStatus: 'success' as const,
+      hasDeleteAccountError: null,
     })),
-    on(accountSettingsActions.deleteAccountFailure, (state) => ({
+    on(accountSettingsActions.deleteAccountFailure, (state, action) => ({
       ...state,
       deleteUserStatus: 'error' as const,
+      hasDeleteAccountError: action.error,
     })),
   ),
   extraSelectors: ({
@@ -112,9 +129,13 @@ export const {
   reducer: accountSettingsReducer,
   selectIsUpdatingEmail,
   selectUpdateEmailSuccess,
+  selectHasUpdateEmailError,
   selectIsUpdatingUsername,
   selectUpdateUsernameSuccess,
+  selectHasUpdateUsernameError,
   selectIsUpdatingPassword,
   selectUpdatePasswordSuccess,
+  selectHasUpdatePasswordError,
   selectIsDeletingAccount,
+  selectHasDeleteAccountError,
 } = accountSettingsFeature;
