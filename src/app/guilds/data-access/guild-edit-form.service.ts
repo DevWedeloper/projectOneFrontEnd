@@ -17,6 +17,7 @@ import {
 } from 'rxjs';
 import { CheckIfMemberApiService } from 'src/app/guilds/data-access/check-if-member-api.service';
 import { CheckUniquenessService } from 'src/app/shared/data-access/check-uniqueness-api.service';
+import { alphanumericUnderscore } from 'src/app/shared/validators/alphanumeric-underscore.validator';
 
 @Injectable({
   providedIn: 'root',
@@ -38,7 +39,7 @@ export class GuildEditFormService {
             Validators.required,
             Validators.minLength(6),
             Validators.maxLength(20),
-            Validators.pattern(/^[a-zA-Z0-9_]+$/),
+            alphanumericUnderscore,
           ],
           asyncValidators: [this.validateGuildNameUniqueness.bind(this)],
           updateOn: 'blur',

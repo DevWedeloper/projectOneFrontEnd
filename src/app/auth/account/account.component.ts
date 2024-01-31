@@ -14,6 +14,7 @@ import { DynamicValidatorMessageDirective } from 'src/app/shared/form/dynamic-va
 import { CountdownTimerComponent } from 'src/app/shared/ui/components/countdown-timer/countdown-timer.component';
 import { CustomInputComponent } from 'src/app/shared/ui/components/custom-input/custom-input.component';
 import { FocusVisibleDirective } from 'src/app/shared/ui/directives/focus-visible.directive';
+import { alphanumericUnderscore } from 'src/app/shared/validators/alphanumeric-underscore.validator';
 import { AuthApiService } from '../data-access/auth-api.service';
 import { accountSettingsActions } from '../state/account-settings.actions';
 import {
@@ -83,7 +84,7 @@ export class AccountComponent {
             Validators.required,
             Validators.minLength(6),
             Validators.maxLength(20),
-            Validators.pattern(/^[a-zA-Z0-9_]+$/),
+            alphanumericUnderscore,
           ],
           asyncValidators: [
             this.uniqueUsername.validate.bind(this.uniqueUsername),

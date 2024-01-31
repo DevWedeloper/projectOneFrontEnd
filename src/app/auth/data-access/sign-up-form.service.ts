@@ -1,5 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { alphanumericUnderscore } from 'src/app/shared/validators/alphanumeric-underscore.validator';
 import { customPassword } from '../validators/custom-password.validator';
 import { passwordShouldMatch } from '../validators/password-should-match.validator';
 import { UniqueEmailValidator } from '../validators/unique-email.validator';
@@ -30,7 +31,7 @@ export class SignUpFormService {
               Validators.required,
               Validators.minLength(6),
               Validators.maxLength(20),
-              Validators.pattern(/^[a-zA-Z0-9_]+$/),
+              alphanumericUnderscore,
             ],
             asyncValidators: [
               this.uniqueUsername.validate.bind(this.uniqueUsername),
