@@ -1,6 +1,19 @@
 <div class="main-content">
-  <h2>Account Settings</h2>
-  <div>
+  <div class="header-container">
+    <h2 class="header">Account Settings</h2>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      height="48"
+      viewBox="0 -960 960 960"
+      width="48"
+    >
+      <title>Close Icon</title>
+      <path
+        d="m249-207-42-42 231-231-231-231 42-42 231 231 231-231 42 42-231 231 231 231-42 42-231-231-231 231Z"
+      />
+    </svg>
+  </div>
+  <div class="action-container">
     <div>
       <h3>Update Email</h3>
       <p>
@@ -17,13 +30,15 @@
           label="New Email"
           formControlName="newEmail"
         />
-        <div>
-          <app-custom-input
-            type="string"
-            id="update-email-verification-code"
-            label="Verification Code"
-            formControlName="verificationCode"
-          />
+        <div class="verification-container">
+          <div>
+            <app-custom-input
+              type="string"
+              id="update-email-verification-code"
+              label="Verification Code"
+              formControlName="verificationCode"
+            />
+          </div>
           <app-countdown-timer
             appFocusVisible
             label="Send Code"
@@ -41,7 +56,7 @@
     </div>
   </div>
 
-  <div>
+  <div class="action-container">
     <div>
       <h3>Update Username</h3>
       <p>
@@ -61,13 +76,15 @@
           label="Username"
           formControlName="username"
         />
-        <div>
-          <app-custom-input
-            type="string"
-            id="update-username-verification-code" 
-            label="Verification Code"
-            formControlName="verificationCode"
-          />
+        <div class="verification-container">
+          <div>
+            <app-custom-input
+              type="string"
+              id="update-username-verification-code"
+              label="Verification Code"
+              formControlName="verificationCode"
+            />
+          </div>
           <app-countdown-timer
             appFocusVisible
             label="Send Code"
@@ -87,7 +104,7 @@
     </div>
   </div>
 
-  <div>
+  <div class="action-container">
     <div>
       <h3>Update Password</h3>
       <p>
@@ -131,7 +148,7 @@
     </div>
   </div>
 
-  <div>
+  <div class="action-container">
     <div>
       <h3>Delete Account</h3>
       <p>
