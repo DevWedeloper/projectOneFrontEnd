@@ -11,6 +11,7 @@
   background-color: var(--secondary-color);
   border-radius: 0.5rem;
   z-index: 3;
+  padding: 0.5rem;
 }
 
 .dropdown-content::before {
@@ -25,16 +26,7 @@
   cursor: pointer;
   padding: 8px 16px;
   overflow: hidden;
-}
-
-.dropdown-item:first-child {
-  border-top-left-radius: 0.5rem;
-  border-top-right-radius: 0.5rem;
-}
-
-.dropdown-item:last-child {
-  border-bottom-left-radius: 0.5rem;
-  border-bottom-right-radius: 0.5rem;
+  border-radius: 0.5rem;
 }
 
 .dropdown-item:hover,
@@ -63,9 +55,19 @@
 }
 
 .icon-container svg {
+  fill: var(--text-color);
+}
+
+.logout svg {
   fill: var(--main-color);
 }
 
 .logout-text {
   color: var(--main-color);
+}
+
+.divider {
+  height: 1px;
+  background-color: var(--text-color);
+  margin: 5px 0;
 }

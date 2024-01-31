@@ -1,0 +1,184 @@
+<div class="main-content">
+  <div class="header-container">
+    <h2 class="header">Account Settings</h2>
+    <span
+      routerLink="/"
+      tabindex="0"
+      appFocusVisible
+      (keydown.Enter)="navigateToHome()"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        height="48"
+        viewBox="0 -960 960 960"
+        width="48"
+      >
+        <title>Close Icon</title>
+        <path
+          d="m249-207-42-42 231-231-231-231 42-42 231 231 231-231 42 42-231 231 231 231-42 42-231-231-231 231Z"
+        />
+      </svg>
+    </span>
+  </div>
+  <div class="action-container">
+    <div>
+      <h3>Update Email</h3>
+      <p>
+        To update your email, please enter the new email address in the field
+        below and click the "Save" button. A confirmation email will be sent to
+        the new address for verification.
+      </p>
+    </div>
+    <div>
+      <form [formGroup]="updateEmailForm">
+        <app-custom-input
+          type="string"
+          id="new-email"
+          label="New Email"
+          formControlName="newEmail"
+        />
+        <div class="verification-container">
+          <div>
+            <app-custom-input
+              type="string"
+              id="update-email-verification-code"
+              label="Verification Code"
+              formControlName="verificationCode"
+            />
+          </div>
+          <app-countdown-timer
+            appFocusVisible
+            label="Send Code"
+            [timeInSeconds]="60"
+            (click)="getCodeFromNewEmail()"
+          />
+        </div>
+        <button
+          [disabled]="updateEmailForm.invalid || (updateEmailLoading$ | async)"
+          appFocusVisible
+          (click)="onUpdateEmailSubmit()"
+        >
+          Confirm
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <div class="action-container">
+    <div>
+      <h3>Update Username</h3>
+      <p>
+        Change your username by entering a new one in the provided field.
+        Remember that your username should be unique and adhere to our community
+        guidelines.
+      </p>
+    </div>
+    <div>
+      <form [formGroup]="updateUsernameForm">
+        <app-custom-input
+          type="string"
+          id="username"
+          label="Username"
+          formControlName="username"
+        />
+        <div class="verification-container">
+          <div>
+            <app-custom-input
+              type="string"
+              id="update-username-verification-code"
+              label="Verification Code"
+              formControlName="verificationCode"
+            />
+          </div>
+          <app-countdown-timer
+            appFocusVisible
+            label="Send Code"
+            [timeInSeconds]="60"
+            (click)="getCodeFromCurrentEmail()"
+          />
+        </div>
+        <button
+          [disabled]="
+            updateUsernameForm.invalid || (updateUsernameLoading$ | async)
+          "
+          appFocusVisible
+          (click)="onUpdateUsernameSubmit()"
+        >
+          Confirm
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <div class="action-container">
+    <div>
+      <h3>Update Password</h3>
+      <p>
+        Enhance your account security by updating your password. Choose a
+        strong, unique password that includes a mix of letters, numbers, and
+        special characters.
+      </p>
+    </div>
+    <div>
+      <form [formGroup]="updatePasswordForm">
+        <app-custom-input
+          type="password"
+          id="current-password"
+          label="Current Password"
+          formControlName="currentPassword"
+        />
+        <app-custom-input
+          type="password"
+          id="update-password"
+          label="New Password"
+          formControlName="password"
+        />
+        <app-custom-input
+          type="password"
+          id="confirm-password"
+          label="Confirm Password"
+          formControlName="confirmPassword"
+        />
+        <button
+          [disabled]="
+            updatePasswordForm.invalid || (updatePasswordLoading$ | async)
+          "
+          appFocusVisible
+          (click)="onUpdatePasswordSubmit()"
+        >
+          Confirm 
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <div class="action-container">
+    <div>
+      <h3>Delete Account</h3>
+      <p>
+        If you no longer wish to use our services, you can delete your account.
+        Please note that this action is irreversible and will permanently remove
+        all your data from our platform.
+      </p>
+    </div>
+    <div>
+      <form [formGroup]="deleteAccountForm">
+        <app-custom-input
+          type="password"
+          id="password"
+          label="Password"
+          formControlName="password"
+        />
+        <button
+          [disabled]="
+            deleteAccountForm.invalid || (deleteAccountLoading$ | async)
+          "
+          appFocusVisible
+          (click)="onDeleteAccountSubmit()"
+        >
+          Confirm
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

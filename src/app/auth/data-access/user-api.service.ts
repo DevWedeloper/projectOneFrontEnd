@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { UserSignUp } from '../interface/user-sign-up.type';
@@ -10,7 +9,6 @@ import { UserSignUp } from '../interface/user-sign-up.type';
 })
 export class UserApiService {
   private http = inject(HttpClient);
-  private route = inject(ActivatedRoute);
   private url = environment.authUrl;
 
   createUser(user: UserSignUp): Observable<void> {
@@ -32,6 +30,61 @@ export class UserApiService {
     return this.http.get<{ message: string }>(
       `${this.url}/user/unique/username/${username}`,
     );
+  }
+
+  updateEmailByEmail(
+    newEmail: string,
+    verificationCode: string,
+  ): Observable<void> {
+    return this.http.put<void>(
+      `${this.url}/user/updateEmail`,
+      {
+        newEmail,
+        verificationCode,
+      },
+      {
+        withCredentials: true,
+      },
+    );
+  }
+
+  updateUsernameByEmail(
+    username: string,
+    verificationCode: string,
+  ): Observable<void> {
+    return this.http.put<void>(
+      `${this.url}/user/updateUsername`,
+      {
+        username,
+        verificationCode,
+      },
+      {
+        withCredentials: true,
+      },
+    );
+  }
+
+  updatePasswordByEmail(
+    password: string,
+    newPassword: string,
+  ): Observable<void> {
+    return this.http.put<void>(
+      `${this.url}/user/updatePassword`,
+      {
+        password,
+        newPassword,
+      },
+      {
+        withCredentials: true,
+      },
+    );
+  }
+
+  deleteUserByEmail(password: string): Observable<void> {
+    return this.http.delete<void>(`${this.url}/user/deleteUser`, {
+      withCredentials: true,
+      body: { password },
+    });
   }
 
   forgotPassword(email: string): Observable<void> {

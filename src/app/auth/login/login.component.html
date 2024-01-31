@@ -6,6 +6,7 @@
         <input
           id="username"
           type="text"
+          tabindex="1"
           formControlName="username"
           class="form-input"
           placeholder=""
@@ -23,6 +24,7 @@
         <input
           id="password"
           type="password"
+          tabindex="2"
           formControlName="password"
           class="form-input"
           placeholder=""
@@ -42,6 +44,7 @@
     </p>
     <button
       appFocusVisible
+      tabindex="3"
       class="btn"
       type="submit"
       [disabled]="loginForm.invalid || (loading$ | async)"

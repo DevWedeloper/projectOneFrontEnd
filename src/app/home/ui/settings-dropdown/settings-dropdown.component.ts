@@ -6,10 +6,12 @@ import {
   ElementRef,
   HostBinding,
   HostListener,
+  OnDestroy,
   QueryList,
   ViewChildren,
   inject,
 } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { authActions } from 'src/app/auth/state/auth.actions';
 import { ThemeService } from 'src/app/shared/data-access/theme.service';
@@ -18,7 +20,7 @@ import { HomeService } from '../../data-access/home.service';
 @Component({
   selector: 'app-settings-dropdown',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './settings-dropdown.component.html',
   styleUrls: ['./settings-dropdown.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -46,13 +48,18 @@ import { HomeService } from '../../data-access/home.service';
     ]),
   ],
 })
-export class SettingsDropdownComponent {
+export class SettingsDropdownComponent implements OnDestroy {
   protected ts = inject(ThemeService);
   private hs = inject(HomeService);
   private store = inject(Store);
+  private router = inject(Router);
   @HostBinding('@fadeInOut') animateElement = true;
   @ViewChildren('links') links!: QueryList<ElementRef>;
   private skipInitialCheck = true;
+
+  ngOnDestroy(): void {
+    this.hs.isSettingsDropdownOpen$.next(false);
+  }
 
   @HostListener('document:focusin', ['$event'])
   onDocumentFocusIn(event: Event) {
@@ -67,6 +74,10 @@ export class SettingsDropdownComponent {
     ) {
       this.hs.isSettingsDropdownOpen$.next(false);
     }
+  }
+
+  navigateToAccount() {
+    this.router.navigate(['/account']);
   }
 
   onLogout(): void {

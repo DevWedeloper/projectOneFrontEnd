@@ -1,0 +1,87 @@
+:host {
+  display: flex;
+  justify-content: center;
+  color: var(--text-color);
+}
+
+.main-content {
+  width: 900px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin: 1.5rem;
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.header {
+  font-weight: 900;
+  font-size: 2rem;
+}
+
+.header-container svg {
+  fill: var(--text-color);
+  cursor: pointer;
+}
+
+.action-container {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.action-container > :first-child {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.action-container > :last-child {
+  flex: 2;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--secondary-color);
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  gap: 1.25rem;
+}
+
+form button {
+  width: fit-content;
+  align-self: flex-end;
+}
+
+.verification-container {
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+}
+
+.verification-container div {
+  width: 100%;
+}
+
+button,
+app-countdown-timer {
+  border-radius: 0.25rem;
+  padding: 0.5rem;
+  color: white;
+  background-color: #007bff;
+  cursor: pointer;
+}
+
+app-countdown-timer {
+  align-self: flex-end;
+}
+
+@media (max-width: 768px) {
+  .action-container {
+    flex-direction: column;
+  }
+}

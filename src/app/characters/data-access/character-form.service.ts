@@ -16,6 +16,7 @@ import {
   switchMap,
 } from 'rxjs';
 import { CheckUniquenessService } from 'src/app/shared/data-access/check-uniqueness-api.service';
+import { alphanumericUnderscore } from 'src/app/shared/validators/alphanumeric-underscore.validator';
 
 @Injectable({
   providedIn: 'root',
@@ -34,7 +35,7 @@ export class CharacterFormService {
             Validators.required,
             Validators.minLength(6),
             Validators.maxLength(20),
-            Validators.pattern(/^[a-zA-Z0-9_]+$/),
+            alphanumericUnderscore,
           ],
           asyncValidators: [this.validateCharacterNameUniqueness.bind(this)],
           updateOn: 'blur',
