@@ -23,7 +23,9 @@ export class CountdownTimerComponent implements OnInit {
   @Input({ required: true }) timeInSeconds!: number;
   @Input({ transform: booleanAttribute }) autoStart = false;
   @HostBinding('class.disabled') countdownActive: boolean = false;
-  @HostBinding('tabindex') tabIndex = 0;
+  @HostBinding('tabindex') get tabIndex(): number {
+    return this.countdownActive ? -1 : 0;
+  }
   countdown$ = new BehaviorSubject<number>(0);
 
   ngOnInit(): void {
