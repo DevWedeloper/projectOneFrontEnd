@@ -6,6 +6,7 @@ import {
   ElementRef,
   HostBinding,
   HostListener,
+  OnDestroy,
   QueryList,
   ViewChildren,
   inject,
@@ -47,7 +48,7 @@ import { HomeService } from '../../data-access/home.service';
     ]),
   ],
 })
-export class SettingsDropdownComponent {
+export class SettingsDropdownComponent implements OnDestroy {
   protected ts = inject(ThemeService);
   private hs = inject(HomeService);
   private store = inject(Store);
@@ -55,6 +56,10 @@ export class SettingsDropdownComponent {
   @HostBinding('@fadeInOut') animateElement = true;
   @ViewChildren('links') links!: QueryList<ElementRef>;
   private skipInitialCheck = true;
+
+  ngOnDestroy(): void {
+    this.hs.isSettingsDropdownOpen$.next(false);
+  }
 
   @HostListener('document:focusin', ['$event'])
   onDocumentFocusIn(event: Event) {
