@@ -22,7 +22,7 @@ export class AccountSettingsEffects {
       ),
       map(() => accountSettingsActions.updateUserEmailSuccess()),
       catchError((error) =>
-        of(accountSettingsActions.updateUserEmailFailure()),
+        of(accountSettingsActions.updateUserEmailFailure(error)),
       ),
     ),
   );
@@ -37,7 +37,9 @@ export class AccountSettingsEffects {
         ),
       ),
       map(() => accountSettingsActions.updateUserUsernameSuccess()),
-      catchError(() => of(accountSettingsActions.updateUserUsernameFailure())),
+      catchError((error) =>
+        of(accountSettingsActions.updateUserUsernameFailure(error)),
+      ),
     ),
   );
 
@@ -51,7 +53,9 @@ export class AccountSettingsEffects {
         ),
       ),
       map(() => accountSettingsActions.updateUserPasswordSuccess()),
-      catchError(() => of(accountSettingsActions.updateUserPasswordFailure())),
+      catchError((error) =>
+        of(accountSettingsActions.updateUserPasswordFailure(error)),
+      ),
     ),
   );
 
@@ -62,7 +66,9 @@ export class AccountSettingsEffects {
         this.userApiService.deleteUserByEmail(action.password),
       ),
       map(() => accountSettingsActions.deleteAccountSuccess()),
-      catchError(() => of(accountSettingsActions.deleteAccountFailure())),
+      catchError((error) =>
+        of(accountSettingsActions.deleteAccountFailure(error)),
+      ),
     ),
   );
 
