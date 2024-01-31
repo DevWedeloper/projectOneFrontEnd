@@ -30,7 +30,7 @@
       </p>
     </div>
     <div>
-      <form [formGroup]="updateEmailForm" (ngSubmit)="onUpdateEmailSubmit()">
+      <form [formGroup]="updateEmailForm">
         <app-custom-input
           type="string"
           id="new-email"
@@ -56,6 +56,7 @@
         <button
           [disabled]="updateEmailForm.invalid || (updateEmailLoading$ | async)"
           appFocusVisible
+          (click)="onUpdateEmailSubmit()"
         >
           Confirm
         </button>
@@ -73,10 +74,7 @@
       </p>
     </div>
     <div>
-      <form
-        [formGroup]="updateUsernameForm"
-        (ngSubmit)="onUpdateUsernameSubmit()"
-      >
+      <form [formGroup]="updateUsernameForm">
         <app-custom-input
           type="string"
           id="username"
@@ -104,6 +102,7 @@
             updateUsernameForm.invalid || (updateUsernameLoading$ | async)
           "
           appFocusVisible
+          (click)="onUpdateUsernameSubmit()"
         >
           Confirm
         </button>
@@ -121,10 +120,7 @@
       </p>
     </div>
     <div>
-      <form
-        [formGroup]="updatePasswordForm"
-        (ngSubmit)="onUpdatePasswordSubmit()"
-      >
+      <form [formGroup]="updatePasswordForm">
         <app-custom-input
           type="password"
           id="current-password"
@@ -149,7 +145,7 @@
           "
           appFocusVisible
         >
-          Confirm
+          Confirm (click)="onUpdatePasswordSubmit()"
         </button>
       </form>
     </div>
@@ -165,10 +161,7 @@
       </p>
     </div>
     <div>
-      <form
-        [formGroup]="deleteAccountForm"
-        (ngSubmit)="onDeleteAccountSubmit()"
-      >
+      <form [formGroup]="deleteAccountForm">
         <app-custom-input
           type="password"
           id="password"
@@ -180,6 +173,7 @@
             deleteAccountForm.invalid || (deleteAccountLoading$ | async)
           "
           appFocusVisible
+          (click)="onDeleteAccountSubmit()"
         >
           Confirm
         </button>
