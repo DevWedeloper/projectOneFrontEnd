@@ -9,7 +9,7 @@ import {
 } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { take } from 'rxjs';
+import { filter, take } from 'rxjs';
 import { DynamicValidatorMessageDirective } from 'src/app/shared/form/dynamic-validator-message.directive';
 import { CountdownTimerComponent } from 'src/app/shared/ui/components/countdown-timer/countdown-timer.component';
 import { CustomInputComponent } from 'src/app/shared/ui/components/custom-input/custom-input.component';
@@ -22,11 +22,15 @@ import {
   selectIsUpdatingEmail,
   selectIsUpdatingPassword,
   selectIsUpdatingUsername,
+  selectUpdateEmailSuccess,
+  selectUpdatePasswordSuccess,
+  selectUpdateUsernameSuccess,
 } from '../state/account-settings.reducers';
 import { customPassword } from '../validators/custom-password.validator';
 import { passwordShouldMatch } from '../validators/password-should-match.validator';
 import { UniqueEmailValidator } from '../validators/unique-email.validator';
 import { UniqueUsernameValidator } from '../validators/unique-username.validator';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-account',
@@ -64,6 +68,13 @@ export class AccountComponent {
     selectIsUpdatingPassword,
   );
   protected deleteAccountLoading$ = this.store.select(selectIsDeletingAccount);
+  private updateEmailSuccess$ = this.store.select(selectUpdateEmailSuccess);
+  private updateUsernameSuccess$ = this.store.select(
+    selectUpdateUsernameSuccess,
+  );
+  private updatePasswordSuccess$ = this.store.select(
+    selectUpdatePasswordSuccess,
+  );
 
   constructor() {
     this.updateEmailForm = this.fb.group({
@@ -104,6 +115,24 @@ export class AccountComponent {
     this.deleteAccountForm = this.fb.group({
       password: ['', [Validators.required]],
     });
+    this.updateEmailSuccess$
+      .pipe(
+        filter((value) => !!value),
+        takeUntilDestroyed(),
+      )
+      .subscribe(() => this.updateEmailForm.reset());
+    this.updateUsernameSuccess$
+      .pipe(
+        filter((value) => !!value),
+        takeUntilDestroyed(),
+      )
+      .subscribe(() => this.updateUsernameForm.reset());
+    this.updatePasswordSuccess$
+      .pipe(
+        filter((value) => !!value),
+        takeUntilDestroyed(),
+      )
+      .subscribe(() => this.updatePasswordForm.reset());
   }
 
   getCodeFromCurrentEmail(): void {

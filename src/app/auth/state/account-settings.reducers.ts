@@ -80,13 +80,25 @@ const accountSettingsFeature = createFeature({
       selectUpdateEmailStatus,
       (updateEmailStatus) => updateEmailStatus === 'loading',
     ),
+    selectUpdateEmailSuccess: createSelector(
+      selectUpdateEmailStatus,
+      (updateEmailStatus) => updateEmailStatus === 'success',
+    ),
     selectIsUpdatingUsername: createSelector(
       selectUpdateUsernameStatus,
       (updateUsernameStatus) => updateUsernameStatus === 'loading',
     ),
+    selectUpdateUsernameSuccess: createSelector(
+      selectUpdateUsernameStatus,
+      (updateUsernameStatus) => updateUsernameStatus === 'success',
+    ),
     selectIsUpdatingPassword: createSelector(
       selectUpdatePasswordStatus,
       (updatePasswordStatus) => updatePasswordStatus === 'loading',
+    ),
+    selectUpdatePasswordSuccess: createSelector(
+      selectUpdatePasswordStatus,
+      (updatePasswordStatus) => updatePasswordStatus === 'success',
     ),
     selectIsDeletingAccount: createSelector(
       selectDeleteAccountStatus,
@@ -99,7 +111,10 @@ export const {
   name: accountSettingsFeatureKey,
   reducer: accountSettingsReducer,
   selectIsUpdatingEmail,
+  selectUpdateEmailSuccess,
   selectIsUpdatingUsername,
+  selectUpdateUsernameSuccess,
   selectIsUpdatingPassword,
+  selectUpdatePasswordSuccess,
   selectIsDeletingAccount,
 } = accountSettingsFeature;
