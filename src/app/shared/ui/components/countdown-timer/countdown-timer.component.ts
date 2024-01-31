@@ -23,9 +23,6 @@ export class CountdownTimerComponent implements OnInit {
   @Input({ required: true }) timeInSeconds!: number;
   @Input({ transform: booleanAttribute }) autoStart = false;
   @HostBinding('class.disabled') countdownActive: boolean = false;
-  @HostListener('click') onClick(): void {
-    this.startCountdown();
-  }
   @HostBinding('tabindex') tabIndex = 0;
   countdown$ = new BehaviorSubject<number>(0);
 
@@ -36,6 +33,12 @@ export class CountdownTimerComponent implements OnInit {
     }
   }
 
+  @HostListener('click')
+  @HostListener('keydown.Enter', ['$event'])
+  onTrigger(): void {
+    this.startCountdown();
+  }
+  
   startCountdown(): void {
     if (!this.countdownActive) {
       this.countdownActive = true;
