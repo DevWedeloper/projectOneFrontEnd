@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   FormBuilder,
   FormGroup,
@@ -18,6 +19,10 @@ import { alphanumericUnderscore } from 'src/app/shared/validators/alphanumeric-u
 import { AuthApiService } from '../data-access/auth-api.service';
 import { accountSettingsActions } from '../state/account-settings.actions';
 import {
+  selectHasDeleteAccountError,
+  selectHasUpdateEmailError,
+  selectHasUpdatePasswordError,
+  selectHasUpdateUsernameError,
   selectIsDeletingAccount,
   selectIsUpdatingEmail,
   selectIsUpdatingPassword,
@@ -30,7 +35,6 @@ import { customPassword } from '../validators/custom-password.validator';
 import { passwordShouldMatch } from '../validators/password-should-match.validator';
 import { UniqueEmailValidator } from '../validators/unique-email.validator';
 import { UniqueUsernameValidator } from '../validators/unique-username.validator';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-account',
@@ -75,6 +79,14 @@ export class AccountComponent {
   private updatePasswordSuccess$ = this.store.select(
     selectUpdatePasswordSuccess,
   );
+  private updateEmailError$ = this.store.select(selectHasUpdateEmailError);
+  private updateUsernameError$ = this.store.select(
+    selectHasUpdateUsernameError,
+  );
+  private updatePasswordError$ = this.store.select(
+    selectHasUpdatePasswordError,
+  );
+  private deleteAccountError$ = this.store.select(selectHasDeleteAccountError);
 
   constructor() {
     this.updateEmailForm = this.fb.group({
@@ -107,7 +119,7 @@ export class AccountComponent {
     this.updatePasswordForm = this.fb.group(
       {
         currentPassword: ['', [Validators.required]],
-        password: ['', Validators.required, customPassword],
+        password: ['', [Validators.required, customPassword]],
         confirmPassword: ['', [Validators.required]],
       },
       { validators: passwordShouldMatch },
@@ -133,6 +145,54 @@ export class AccountComponent {
         takeUntilDestroyed(),
       )
       .subscribe(() => this.updatePasswordForm.reset());
+    this.updateEmailError$
+      .pipe(
+        filter((value) => !!value),
+        takeUntilDestroyed(),
+      )
+      .subscribe((error) => {
+        if (error?.error === 'Entered code does not match.') {
+          this.updateEmailForm
+            .get('verificationCode')
+            ?.setErrors({ codeMismatch: true });
+        }
+      });
+    this.updateUsernameError$
+      .pipe(
+        filter((value) => !!value),
+        takeUntilDestroyed(),
+      )
+      .subscribe((error) => {
+        if (error?.error === 'Entered code does not match.') {
+          this.updateUsernameForm
+            .get('verificationCode')
+            ?.setErrors({ codeMismatch: true });
+        }
+      });
+    this.updatePasswordError$
+      .pipe(
+        filter((value) => !!value),
+        takeUntilDestroyed(),
+      )
+      .subscribe((error) => {
+        if (error?.error === 'Invalid password.') {
+          this.updatePasswordForm
+            .get('currentPassword')
+            ?.setErrors({ invalidPassword: true });
+        }
+      });
+    this.deleteAccountError$
+      .pipe(
+        filter((value) => !!value),
+        takeUntilDestroyed(),
+      )
+      .subscribe((error) => {
+        if (error?.error === 'Invalid password.') {
+          this.deleteAccountForm
+            .get('password')
+            ?.setErrors({ invalidPassword: true });
+        }
+      });
   }
 
   getCodeFromCurrentEmail(): void {
