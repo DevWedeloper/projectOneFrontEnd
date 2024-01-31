@@ -7,6 +7,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { take } from 'rxjs';
 import { DynamicValidatorMessageDirective } from 'src/app/shared/form/dynamic-validator-message.directive';
@@ -33,6 +34,7 @@ import { UniqueUsernameValidator } from '../validators/unique-username.validator
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    RouterLink,
     CustomInputComponent,
     CountdownTimerComponent,
     DynamicValidatorMessageDirective,
