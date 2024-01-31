@@ -21,10 +21,9 @@ export class AccountSettingsEffects {
         ),
       ),
       map(() => accountSettingsActions.updateUserEmailSuccess()),
-      catchError((error) => {
-        console.log(error);
-        return of(accountSettingsActions.updateUserEmailFailure());
-      }),
+      catchError((error) =>
+        of(accountSettingsActions.updateUserEmailFailure()),
+      ),
     ),
   );
 
