@@ -1,7 +1,12 @@
 <div class="main-content">
   <div class="header-container">
     <h2 class="header">Account Settings</h2>
-    <span routerLink="/">
+    <span
+      routerLink="/"
+      tabindex="0"
+      appFocusVisible
+      (keydown.Enter)="navigateToHome()"
+    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         height="48"

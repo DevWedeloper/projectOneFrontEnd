@@ -7,7 +7,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { take } from 'rxjs';
 import { DynamicValidatorMessageDirective } from 'src/app/shared/form/dynamic-validator-message.directive';
@@ -47,6 +47,7 @@ import { UniqueUsernameValidator } from '../validators/unique-username.validator
 export class AccountComponent {
   private fb = inject(FormBuilder);
   private store = inject(Store);
+  private router = inject(Router);
   private authApiService = inject(AuthApiService);
   private uniqueEmail = inject(UniqueEmailValidator);
   private uniqueUsername = inject(UniqueUsernameValidator);
@@ -154,5 +155,9 @@ export class AccountComponent {
         password: this.deleteAccountForm.get('password')?.value,
       }),
     );
+  }
+
+  navigateToHome() {
+    this.router.navigate(['/']);
   }
 }
