@@ -144,8 +144,9 @@
             updatePasswordForm.invalid || (updatePasswordLoading$ | async)
           "
           appFocusVisible
+          (click)="onUpdatePasswordSubmit()"
         >
-          Confirm (click)="onUpdatePasswordSubmit()"
+          Confirm 
         </button>
       </form>
     </div>
