@@ -37,6 +37,7 @@
     [ngStyle]="{
       filter: (ts.isDarkMode$ | async) ? 'brightness(1.2)' : 'brightness(0.8)'
     }"
+    (keyup.enter)="navigateToAccount()"
   >
     <a>
       <span class="icon-container">

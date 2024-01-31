@@ -10,7 +10,7 @@ import {
   ViewChildren,
   inject,
 } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { authActions } from 'src/app/auth/state/auth.actions';
 import { ThemeService } from 'src/app/shared/data-access/theme.service';
@@ -51,6 +51,7 @@ export class SettingsDropdownComponent {
   protected ts = inject(ThemeService);
   private hs = inject(HomeService);
   private store = inject(Store);
+  private router = inject(Router);
   @HostBinding('@fadeInOut') animateElement = true;
   @ViewChildren('links') links!: QueryList<ElementRef>;
   private skipInitialCheck = true;
@@ -68,6 +69,10 @@ export class SettingsDropdownComponent {
     ) {
       this.hs.isSettingsDropdownOpen$.next(false);
     }
+  }
+
+  navigateToAccount() {
+    this.router.navigate(['/account']);
   }
 
   onLogout(): void {
