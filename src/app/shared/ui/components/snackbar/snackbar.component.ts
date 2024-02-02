@@ -26,9 +26,7 @@ import { SnackbarService } from './snackbar.service';
   styleUrl: './snackbar.component.scss',
   animations: [
     trigger('hostAnimation', [
-      transition(':leave', [
-        query('@fadeInOut', animateChild()),
-      ]),
+      transition(':leave', [query('@fadeInOut', animateChild())]),
     ]),
     trigger('fadeInOut', [
       state(
