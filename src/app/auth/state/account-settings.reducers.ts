@@ -119,11 +119,11 @@ const accountSettingsFeature = createFeature({
     ),
     selectIsDeletingAccount: createSelector(
       selectDeleteAccountStatus,
-      (deleteUserStatus) => deleteUserStatus === 'loading',
+      (deleteAccountStatus) => deleteAccountStatus === 'loading',
     ),
     selectDeleteAccountSuccess: createSelector(
       selectDeleteAccountStatus,
-      (deleteUserStatus) => deleteUserStatus === 'success',
+      (deleteAccountStatus) => deleteAccountStatus === 'success',
     ),
   }),
 });
