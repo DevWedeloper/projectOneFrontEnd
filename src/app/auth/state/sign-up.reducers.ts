@@ -1,5 +1,5 @@
-import { createFeature, createReducer, createSelector, on } from '@ngrx/store';
 import { HttpErrorResponse } from '@angular/common/http';
+import { createFeature, createReducer, createSelector, on } from '@ngrx/store';
 import { signUpActions } from './sign-up.actions';
 
 type SignUpState = {
@@ -36,6 +36,10 @@ const signUpFeature = createFeature({
       selectSignUpStatus,
       (signUpStatus) => signUpStatus === 'loading',
     ),
+    selectSignUpSuccess: createSelector(
+      selectSignUpStatus,
+      (signUpStatus) => signUpStatus === 'success',
+    ),
   }),
 });
 
@@ -44,4 +48,5 @@ export const {
   reducer: signUpReducer,
   selectHasSignUpError,
   selectIsSigningUp,
+  selectSignUpSuccess,
 } = signUpFeature;
