@@ -63,6 +63,10 @@ const passwordRecoveryFeature = createFeature({
       selectResetPasswordStatus,
       (resetPasswordStatus) => resetPasswordStatus === 'loading',
     ),
+    selectResetPasswordSuccess: createSelector(
+      selectResetPasswordStatus,
+      (resetPasswordStatus) => resetPasswordStatus === 'success',
+    ),
   }),
 });
 
@@ -73,4 +77,5 @@ export const {
   selectHasResetPasswordError,
   selectForgetPasswordLoading,
   selectIsResettingPassword,
+  selectResetPasswordSuccess,
 } = passwordRecoveryFeature;
