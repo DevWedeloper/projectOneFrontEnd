@@ -18,11 +18,16 @@ export class SnackbarService<T> {
   private appRef = inject(ApplicationRef);
   private injector = inject(Injector);
   private snackbarComponentRef?: ComponentRef<SnackbarComponent>;
+  private timeoutHandle?: ReturnType<typeof setTimeout>;
 
   open(message: string, config?: SnackbarConfig): void {
     if (this.snackbarComponentRef) {
       this.appRef.detachView(this.snackbarComponentRef.hostView);
       this.snackbarComponentRef?.destroy();
+    }
+
+    if (this.timeoutHandle) {
+      clearTimeout(this.timeoutHandle);
     }
 
     const factory =
@@ -40,7 +45,7 @@ export class SnackbarService<T> {
 
     document.body.appendChild(domElem);
 
-    setTimeout(() => {
+    this.timeoutHandle = setTimeout(() => {
       if (this.snackbarComponentRef) {
         this.appRef.detachView(this.snackbarComponentRef.hostView);
         this.snackbarComponentRef?.destroy();
