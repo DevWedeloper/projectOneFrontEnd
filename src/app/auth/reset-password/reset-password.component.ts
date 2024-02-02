@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   FormBuilder,
   FormGroup,
@@ -18,10 +19,11 @@ import { passwordRecoveryActions } from '../state/password-recovery.actions';
 import {
   selectHasResetPasswordError,
   selectIsResettingPassword,
+  selectResetPasswordSuccess,
 } from '../state/password-recovery.reducers';
 import { customPassword } from '../validators/custom-password.validator';
 import { passwordShouldMatch } from '../validators/password-should-match.validator';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { SnackbarService } from 'src/app/shared/ui/components/snackbar/snackbar.service';
 
 @Component({
   selector: 'app-reset-password',
@@ -44,9 +46,11 @@ export class ResetPasswordComponent {
   private fb = inject(FormBuilder);
   private route = inject(ActivatedRoute);
   private store = inject(Store);
+  private snackbarService = inject(SnackbarService);
   protected resetPasswordForm!: FormGroup;
   protected loading$ = this.store.select(selectIsResettingPassword);
   private error$ = this.store.select(selectHasResetPasswordError);
+  private success$ = this.store.select(selectResetPasswordSuccess);
 
   constructor() {
     this.resetPasswordForm = this.fb.group(
@@ -68,6 +72,16 @@ export class ResetPasswordComponent {
             ?.setErrors({ resetPasswordTokenExpired: true });
         }
       });
+    this.success$
+      .pipe(
+        filter((value) => !!value),
+        takeUntilDestroyed(),
+      )
+      .subscribe(() =>
+        this.snackbarService.open('Password successfully reset!', {
+          messageType: 'success',
+        }),
+      );
   }
 
   onSubmit(): void {
