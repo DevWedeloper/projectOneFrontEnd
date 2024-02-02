@@ -121,6 +121,10 @@ const accountSettingsFeature = createFeature({
       selectDeleteAccountStatus,
       (deleteUserStatus) => deleteUserStatus === 'loading',
     ),
+    selectDeleteAccountSuccess: createSelector(
+      selectDeleteAccountStatus,
+      (deleteUserStatus) => deleteUserStatus === 'success',
+    ),
   }),
 });
 
@@ -137,5 +141,6 @@ export const {
   selectUpdatePasswordSuccess,
   selectHasUpdatePasswordError,
   selectIsDeletingAccount,
+  selectDeleteAccountSuccess,
   selectHasDeleteAccountError,
 } = accountSettingsFeature;

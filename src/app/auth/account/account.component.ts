@@ -14,11 +14,13 @@ import { filter, take } from 'rxjs';
 import { DynamicValidatorMessageDirective } from 'src/app/shared/form/dynamic-validator-message.directive';
 import { CountdownTimerComponent } from 'src/app/shared/ui/components/countdown-timer/countdown-timer.component';
 import { CustomInputComponent } from 'src/app/shared/ui/components/custom-input/custom-input.component';
+import { SnackbarService } from 'src/app/shared/ui/components/snackbar/snackbar.service';
 import { FocusVisibleDirective } from 'src/app/shared/ui/directives/focus-visible.directive';
 import { alphanumericUnderscore } from 'src/app/shared/validators/alphanumeric-underscore.validator';
 import { AuthApiService } from '../data-access/auth-api.service';
 import { accountSettingsActions } from '../state/account-settings.actions';
 import {
+  selectDeleteAccountSuccess,
   selectHasDeleteAccountError,
   selectHasUpdateEmailError,
   selectHasUpdatePasswordError,
@@ -58,6 +60,7 @@ export class AccountComponent {
   private store = inject(Store);
   private router = inject(Router);
   private authApiService = inject(AuthApiService);
+  private snackbarService = inject(SnackbarService);
   private uniqueEmail = inject(UniqueEmailValidator);
   private uniqueUsername = inject(UniqueUsernameValidator);
   protected updateEmailForm!: FormGroup;
@@ -79,6 +82,7 @@ export class AccountComponent {
   private updatePasswordSuccess$ = this.store.select(
     selectUpdatePasswordSuccess,
   );
+  private deleteAccountSuccess$ = this.store.select(selectDeleteAccountSuccess);
   private updateEmailError$ = this.store.select(selectHasUpdateEmailError);
   private updateUsernameError$ = this.store.select(
     selectHasUpdateUsernameError,
@@ -132,19 +136,44 @@ export class AccountComponent {
         filter((value) => !!value),
         takeUntilDestroyed(),
       )
-      .subscribe(() => this.updateEmailForm.reset());
+      .subscribe(() => {
+        this.updateEmailForm.reset();
+        this.snackbarService.open('Email successfully changed!', {
+          messageType: 'success',
+        });
+      });
     this.updateUsernameSuccess$
       .pipe(
         filter((value) => !!value),
         takeUntilDestroyed(),
       )
-      .subscribe(() => this.updateUsernameForm.reset());
+      .subscribe(() => {
+        this.updateUsernameForm.reset();
+        this.snackbarService.open('Username successfully changed!', {
+          messageType: 'success',
+        });
+      });
     this.updatePasswordSuccess$
       .pipe(
         filter((value) => !!value),
         takeUntilDestroyed(),
       )
-      .subscribe(() => this.updatePasswordForm.reset());
+      .subscribe(() => {
+        this.updatePasswordForm.reset();
+        this.snackbarService.open('Password successfully changed!', {
+          messageType: 'success',
+        });
+      });
+    this.deleteAccountSuccess$
+      .pipe(
+        filter((value) => !!value),
+        takeUntilDestroyed(),
+      )
+      .subscribe(() =>
+        this.snackbarService.open('Thanks for using my app!', {
+          messageType: 'success',
+        }),
+      );
     this.updateEmailError$
       .pipe(
         filter((value) => !!value),
