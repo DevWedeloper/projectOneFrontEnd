@@ -7,7 +7,6 @@ import {
   Injector,
   inject,
 } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
 import { SnackbarConfig } from './snackbar-config.type';
 import { SnackbarComponent } from './snackbar.component';
 
@@ -19,7 +18,6 @@ export class SnackbarService<T> {
   private appRef = inject(ApplicationRef);
   private injector = inject(Injector);
   private snackbarComponentRef?: ComponentRef<SnackbarComponent>;
-  isOpen$ = new BehaviorSubject<boolean>(false);
 
   open(message: string, config?: SnackbarConfig): void {
     if (this.snackbarComponentRef) {
@@ -42,16 +40,11 @@ export class SnackbarService<T> {
 
     document.body.appendChild(domElem);
 
-    this.isOpen$.next(true);
-
     setTimeout(() => {
-      this.isOpen$.next(false);
-      setTimeout(() => {
-        if (this.snackbarComponentRef) {
-          this.appRef.detachView(this.snackbarComponentRef.hostView);
-          this.snackbarComponentRef?.destroy();
-        }
-      }, 100);
+      if (this.snackbarComponentRef) {
+        this.appRef.detachView(this.snackbarComponentRef.hostView);
+        this.snackbarComponentRef?.destroy();
+      }
     }, 3000);
   }
 }

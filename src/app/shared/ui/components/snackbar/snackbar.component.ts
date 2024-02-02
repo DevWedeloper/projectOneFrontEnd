@@ -1,5 +1,7 @@
 import {
   animate,
+  animateChild,
+  query,
   state,
   style,
   transition,
@@ -23,6 +25,11 @@ import { SnackbarService } from './snackbar.service';
   templateUrl: './snackbar.component.html',
   styleUrl: './snackbar.component.scss',
   animations: [
+    trigger('hostAnimation', [
+      transition(':leave', [
+        query('@fadeInOut', animateChild()),
+      ]),
+    ]),
     trigger('fadeInOut', [
       state(
         'void',
@@ -48,6 +55,7 @@ export class SnackbarComponent {
   protected snackbarService = inject(SnackbarService);
   @Input({ required: true }) message!: string;
   @Input() config?: SnackbarConfig;
+  @HostBinding('@hostAnimation') animate = true;
 
   @HostBinding('style.align-items') get justifyContent() {
     switch (this.config?.verticalPosition) {
