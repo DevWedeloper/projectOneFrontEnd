@@ -74,16 +74,16 @@ const accountSettingsFeature = createFeature({
     })),
     on(accountSettingsActions.deleteAccount, (state) => ({
       ...state,
-      deleteUserStatus: 'loading' as const,
+      deleteAccountStatus: 'loading' as const,
     })),
     on(accountSettingsActions.deleteAccountSuccess, (state) => ({
       ...state,
-      deleteUserStatus: 'success' as const,
+      deleteAccountStatus: 'success' as const,
       hasDeleteAccountError: null,
     })),
     on(accountSettingsActions.deleteAccountFailure, (state, action) => ({
       ...state,
-      deleteUserStatus: 'error' as const,
+      deleteAccountStatus: 'error' as const,
       hasDeleteAccountError: action.error,
     })),
   ),
