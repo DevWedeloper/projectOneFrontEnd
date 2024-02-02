@@ -1,0 +1,9 @@
+@if (snackbarService.isOpen$ | async) {
+  <div
+    [@fadeInOut]
+    class="container"
+    [style.background-color]="getBackgroundColor()"
+  >
+    <span class="message">{{ message }}</span>
+  </div>
+}
