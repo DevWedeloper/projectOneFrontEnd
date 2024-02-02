@@ -24,9 +24,6 @@ export class GuildStatsService {
   private guildStatsApiService = inject(GuildStatsApiService);
   private characterStatsApiService = inject(CharacterStatsApiService);
 
-  readonly averageCharacterStats$ =
-    this.characterStatsApiService.getAverageCharacterStats();
-
   generateTopGuildsByAttribute({
     attribute,
     backgroundColor,
@@ -82,7 +79,7 @@ export class GuildStatsService {
     dataset: ChartConfiguration<'bar'>['data']['datasets'];
   } | null> {
     return combineLatest([
-      this.averageCharacterStats$,
+      this.characterStatsApiService.getAverageCharacterStats(),
       this.guildStatsApiService.getTopGuildsByAverageAttribute(attribute),
     ]).pipe(
       map(([averageCharacterStats, guilds]) => {
