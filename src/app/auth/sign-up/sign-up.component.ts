@@ -9,6 +9,7 @@ import { DynamicValidatorMessageDirective } from 'src/app/shared/form/dynamic-va
 import { ValidatorMessageContainerDirective } from 'src/app/shared/form/validator-message-container.directive';
 import { CountdownTimerComponent } from 'src/app/shared/ui/components/countdown-timer/countdown-timer.component';
 import { DividerComponent } from 'src/app/shared/ui/components/divider/divider.component';
+import { SnackbarService } from 'src/app/shared/ui/components/snackbar/snackbar.service';
 import { SpinnerComponent } from 'src/app/shared/ui/components/spinner/spinner.component';
 import { StepperNextDirective } from 'src/app/shared/ui/components/stepper/stepper-buttons/stepper-buttons.directive';
 import { StepperComponent } from 'src/app/shared/ui/components/stepper/stepper.component';
@@ -19,6 +20,7 @@ import { signUpActions } from '../state/sign-up.actions';
 import {
   selectHasSignUpError,
   selectIsSigningUp,
+  selectSignUpSuccess,
 } from '../state/sign-up.reducers';
 
 @Component({
@@ -46,10 +48,12 @@ import {
 export class SignUpComponent {
   private authApiService = inject(AuthApiService);
   private signupFormService = inject(SignUpFormService);
+  private snackbarService = inject(SnackbarService);
   private store = inject(Store);
   protected signupForm!: FormGroup;
   protected loading$ = this.store.select(selectIsSigningUp);
   private error$ = this.store.select(selectHasSignUpError);
+  private success$ = this.store.select(selectSignUpSuccess);
 
   constructor() {
     this.signupForm = this.signupFormService.initializeSignupForm();
@@ -65,6 +69,16 @@ export class SignUpComponent {
             ?.setErrors({ codeMismatch: true });
         }
       });
+    this.success$
+      .pipe(
+        filter((value) => !!value),
+        takeUntilDestroyed(),
+      )
+      .subscribe(() =>
+        this.snackbarService.open('Successfully created an account!', {
+          messageType: 'success',
+        }),
+      );
   }
 
   onSubmit(): void {
@@ -73,7 +87,9 @@ export class SignUpComponent {
 
   getCode(): void {
     this.authApiService
-      .requestEmailVerificationCodeForNewEmail(this.signupForm.get('email')?.value)
+      .requestEmailVerificationCodeForNewEmail(
+        this.signupForm.get('email')?.value,
+      )
       .pipe(take(1))
       .subscribe();
   }
