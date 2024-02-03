@@ -18,16 +18,11 @@ export class ModalService<T> {
   private appRef = inject(ApplicationRef);
   private injector = inject(Injector);
   private modalComponentRef?: ComponentRef<ModalComponent>;
-  private timeoutHandle?: ReturnType<typeof setTimeout>;
 
   open(contentTemplate: TemplateRef<HTMLElement>): void {
     if (this.modalComponentRef) {
       this.appRef.detachView(this.modalComponentRef.hostView);
       this.modalComponentRef?.destroy();
-    }
-
-    if (this.timeoutHandle) {
-      clearTimeout(this.timeoutHandle);
     }
 
     const factory =
@@ -43,13 +38,6 @@ export class ModalService<T> {
     document.body.appendChild(domElem);
 
     this.modalComponentRef.instance.contentTemplate = contentTemplate;
-
-    this.timeoutHandle = setTimeout(() => {
-      if (this.modalComponentRef) {
-        this.appRef.detachView(this.modalComponentRef.hostView);
-        this.modalComponentRef?.destroy();
-      }
-    }, 3000);
   }
 
   close(): void {
