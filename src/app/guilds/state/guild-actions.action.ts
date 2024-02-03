@@ -38,5 +38,6 @@ export const guildActionsActions = createActionGroup({
     'Update Selected Guild': props<{
       selectedGuild: Guild | null;
     }>(),
+    'Reset State On Destroy': emptyProps(),
   },
 });

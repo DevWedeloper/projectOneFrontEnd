@@ -34,5 +34,6 @@ export const characterActionsActions = createActionGroup({
       characterTypes: CharacterType[];
     }>(),
     'Load Character Types Failure': emptyProps(),
+    'Reset State On Destroy': emptyProps(),
   },
 });

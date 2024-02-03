@@ -1,5 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnDestroy,
+  inject,
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
@@ -45,7 +50,7 @@ import {
   styleUrls: ['./sign-up.component.scss', '../ui/auth-shared.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SignUpComponent {
+export class SignUpComponent implements OnDestroy {
   private authApiService = inject(AuthApiService);
   private signupFormService = inject(SignUpFormService);
   private snackbarService = inject(SnackbarService);
@@ -79,6 +84,10 @@ export class SignUpComponent {
           messageType: 'success',
         }),
       );
+  }
+
+  ngOnDestroy(): void {
+    this.store.dispatch(signUpActions.resetStateOnDestroy());
   }
 
   onSubmit(): void {

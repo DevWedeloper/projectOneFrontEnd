@@ -1,5 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnDestroy,
+  inject,
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   FormBuilder,
@@ -55,7 +60,7 @@ import { UniqueUsernameValidator } from '../validators/unique-username.validator
   styleUrl: './account.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AccountComponent {
+export class AccountComponent implements OnDestroy {
   private fb = inject(FormBuilder);
   private store = inject(Store);
   private router = inject(Router);
@@ -222,6 +227,10 @@ export class AccountComponent {
             ?.setErrors({ invalidPassword: true });
         }
       });
+  }
+
+  ngOnDestroy(): void {
+    this.store.dispatch(accountSettingsActions.resetStateOnDestroy());
   }
 
   getCodeFromCurrentEmail(): void {

@@ -80,6 +80,9 @@ const characterTableFeature = createFeature({
       ...state,
       initialLoading: false,
     })),
+    on(characterTableActions.resetStateOnDestroy, () => ({
+      ...initialState,
+    })),
   ),
 });
 

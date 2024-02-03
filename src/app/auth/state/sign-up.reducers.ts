@@ -30,6 +30,9 @@ const signUpFeature = createFeature({
       signUpStatus: 'error' as const,
       hasSignUpError: action.error,
     })),
+    on(signUpActions.resetStateOnDestroy, () => ({
+      ...initialState,
+    })),
   ),
   extraSelectors: ({ selectSignUpStatus }) => ({
     selectIsSigningUp: createSelector(
