@@ -11,7 +11,7 @@ import { ThemeService } from './shared/data-access/theme.service';
 })
 export class AppComponent {
   title = 'projectOne';
-  ts = inject(ThemeService);
+  private ts = inject(ThemeService);
 
   constructor() {
     this.ts.checkPreferredTheme();
