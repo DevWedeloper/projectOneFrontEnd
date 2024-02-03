@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
+  OnDestroy,
   TemplateRef,
   ViewChild,
   inject,
@@ -50,7 +51,7 @@ import { CharacterTableComponent } from './ui/character-table/character-table.co
     CharacterEditComponent,
   ],
 })
-export class CharactersComponent {
+export class CharactersComponent implements OnDestroy {
   protected authService = inject(AuthService);
   private route = inject(ActivatedRoute);
   protected ms = inject(ModalService);
@@ -126,6 +127,11 @@ export class CharactersComponent {
       });
 
     this.store.dispatch(characterActionsActions.loadCharacterTypes());
+  }
+
+  ngOnDestroy(): void {
+    this.store.dispatch(characterActionsActions.resetStateOnDestroy());
+    this.store.dispatch(characterTableActions.resetStateOnDestroy());
   }
 
   setCurrentPage(page: number): void {

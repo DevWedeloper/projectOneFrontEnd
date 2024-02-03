@@ -86,6 +86,9 @@ const accountSettingsFeature = createFeature({
       deleteAccountStatus: 'error' as const,
       hasDeleteAccountError: action.error,
     })),
+    on(accountSettingsActions.resetStateOnDestroy, () => ({
+      ...initialState,
+    })),
   ),
   extraSelectors: ({
     selectUpdateEmailStatus,

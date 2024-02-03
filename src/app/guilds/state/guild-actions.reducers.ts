@@ -133,6 +133,9 @@ const guildActionsFeature = createFeature({
       ...state,
       selectedGuild: action.selectedGuild,
     })),
+    on(guildActionsActions.resetStateOnDestroy, () => ({
+      ...initialState,
+    })),
   ),
   extraSelectors: ({
     selectCreateStatus,

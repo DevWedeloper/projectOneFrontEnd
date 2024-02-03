@@ -27,5 +27,6 @@ export const accountSettingsActions = createActionGroup({
     }>(),
     'Delete Account Success': emptyProps(),
     'Delete Account Failure': props<{ error: HttpErrorResponse }>(),
+    'Reset State On Destroy': emptyProps(),
   },
 });

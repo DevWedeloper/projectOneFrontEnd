@@ -28,5 +28,6 @@ export const characterTableActions = createActionGroup({
     'Redirect User Success': props<{ queryParams: QueryParams }>(),
     'Redirect User Failure': emptyProps(),
     'All Observables Loaded': emptyProps(),
+    'Reset State On Destroy': emptyProps(),
   },
 });

@@ -1,5 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnDestroy,
+  inject,
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   FormBuilder,
@@ -38,7 +43,7 @@ import {
   styleUrls: ['./forgot-password.component.scss', '../ui/auth-shared.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ForgotPasswordComponent {
+export class ForgotPasswordComponent implements OnDestroy {
   private fb = inject(FormBuilder);
   private store = inject(Store);
   protected forgotPasswordForm!: FormGroup;
@@ -61,6 +66,10 @@ export class ForgotPasswordComponent {
             ?.setErrors({ noEmailRegistered: true });
         }
       });
+  }
+
+  ngOnDestroy(): void {
+    this.store.dispatch(passwordRecoveryActions.resetStateOnDestroy());
   }
 
   onSubmit(): void {

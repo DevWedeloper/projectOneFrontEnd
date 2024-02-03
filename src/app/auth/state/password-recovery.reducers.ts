@@ -50,6 +50,9 @@ const passwordRecoveryFeature = createFeature({
       resetPasswordStatus: 'error' as const,
       hasResetPasswordError: action.error,
     })),
+    on(passwordRecoveryActions.resetStateOnDestroy, () => ({
+      ...initialState,
+    })),
   ),
   extraSelectors: ({
     selectForgotPasswordStatus,

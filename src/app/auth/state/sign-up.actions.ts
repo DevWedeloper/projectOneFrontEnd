@@ -8,5 +8,6 @@ export const signUpActions = createActionGroup({
     'Sign Up': props<{ user: UserSignUp }>(),
     'Sign Up Success': emptyProps(),
     'Sign Up Failure': props<{ error: HttpErrorResponse }>(),
+    'Reset State On Destroy': emptyProps(),
   },
 });

@@ -118,6 +118,9 @@ const characterActionsFeature = createFeature({
       ...state,
       characterTypes: null,
     })),
+    on(characterActionsActions.resetStateOnDestroy, () => ({
+      ...initialState,
+    })),
   ),
   extraSelectors: ({
     selectCreateStatus,

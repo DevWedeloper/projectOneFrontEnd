@@ -1,5 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnDestroy,
+  inject,
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   FormBuilder,
@@ -13,6 +18,7 @@ import { Store } from '@ngrx/store';
 import { filter, take } from 'rxjs';
 import { DynamicValidatorMessageDirective } from 'src/app/shared/form/dynamic-validator-message.directive';
 import { ValidatorMessageContainerDirective } from 'src/app/shared/form/validator-message-container.directive';
+import { SnackbarService } from 'src/app/shared/ui/components/snackbar/snackbar.service';
 import { SpinnerComponent } from 'src/app/shared/ui/components/spinner/spinner.component';
 import { FocusVisibleDirective } from 'src/app/shared/ui/directives/focus-visible.directive';
 import { passwordRecoveryActions } from '../state/password-recovery.actions';
@@ -23,7 +29,6 @@ import {
 } from '../state/password-recovery.reducers';
 import { customPassword } from '../validators/custom-password.validator';
 import { passwordShouldMatch } from '../validators/password-should-match.validator';
-import { SnackbarService } from 'src/app/shared/ui/components/snackbar/snackbar.service';
 
 @Component({
   selector: 'app-reset-password',
@@ -42,7 +47,7 @@ import { SnackbarService } from 'src/app/shared/ui/components/snackbar/snackbar.
   styleUrls: ['./reset-password.component.scss', '../ui/auth-shared.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ResetPasswordComponent {
+export class ResetPasswordComponent implements OnDestroy {
   private fb = inject(FormBuilder);
   private route = inject(ActivatedRoute);
   private store = inject(Store);
@@ -82,6 +87,10 @@ export class ResetPasswordComponent {
           messageType: 'success',
         }),
       );
+  }
+
+  ngOnDestroy(): void {
+    this.store.dispatch(passwordRecoveryActions.resetStateOnDestroy());
   }
 
   onSubmit(): void {

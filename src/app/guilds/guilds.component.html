@@ -38,6 +38,6 @@
     (updateGuildLeader)="updateLeader($event.guildId, $event.leaderId)"
     (addMember)="addMember($event.guild, $event.member)"
     (removeMember)="removeMember($event.guildId, $event.member)"
-    (closeEdit)="ms.close(); setName(undefined); updateSelectedGuild(null)"
+    (closeEdit)="setName(undefined); updateSelectedGuild(null)"
   />
 </ng-template>

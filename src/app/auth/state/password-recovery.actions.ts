@@ -10,5 +10,6 @@ export const passwordRecoveryActions = createActionGroup({
     'Reset Password': props<{ password: string, token: string }>(),
     'Reset Password Success': emptyProps(),
     'Reset Password Failure': props<{ error: HttpErrorResponse }>(),
+    'Reset State On Destroy': emptyProps(),
   },
 });
