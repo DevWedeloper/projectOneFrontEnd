@@ -31,6 +31,6 @@
     (updateCharacter)="
       updateCharacter($event.character, $event.previousCharacterData)
     "
-    (closeModal)="ms.close(); setName(undefined); updateSelectedCharacter(null)"
+    (closeModal)="setName(undefined); updateSelectedCharacter(null)"
   />
 </ng-template>
