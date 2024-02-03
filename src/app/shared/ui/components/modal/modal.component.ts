@@ -1,10 +1,18 @@
-import { animate, style, transition, trigger } from '@angular/animations';
+import {
+  animate,
+  animateChild,
+  query,
+  style,
+  transition,
+  trigger,
+} from '@angular/animations';
 import { CommonModule } from '@angular/common';
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
   Component,
   ElementRef,
+  HostBinding,
   HostListener,
   Input,
   Renderer2,
@@ -23,6 +31,11 @@ import { ModalService } from './modal.service';
   standalone: true,
   imports: [CommonModule],
   animations: [
+    trigger('hostAnimation', [
+      transition(':leave', [
+        query('@fadeInOut', animateChild()),
+      ]),
+    ]),
     trigger('fadeInOut', [
       transition(':enter', [
         style({ opacity: 0, transform: 'scale(0.1)' }),
@@ -40,6 +53,7 @@ export class ModalComponent implements AfterViewInit {
   protected ts = inject(ThemeService);
   private renderer = inject(Renderer2);
   @Input() contentTemplate!: TemplateRef<HTMLElement>;
+  @HostBinding('@hostAnimation') animate = true;
   @ViewChild('modalElement') private modalElement!: ElementRef;
 
   ngAfterViewInit(): void {

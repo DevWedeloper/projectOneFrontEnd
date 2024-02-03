@@ -9,7 +9,6 @@ import {
   inject,
 } from '@angular/core';
 import { ModalComponent } from './modal.component';
-import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -19,12 +18,16 @@ export class ModalService<T> {
   private appRef = inject(ApplicationRef);
   private injector = inject(Injector);
   private modalComponentRef?: ComponentRef<ModalComponent>;
-  isOpen$ = new BehaviorSubject<boolean>(false);
+  private timeoutHandle?: ReturnType<typeof setTimeout>;
 
   open(contentTemplate: TemplateRef<HTMLElement>): void {
     if (this.modalComponentRef) {
       this.appRef.detachView(this.modalComponentRef.hostView);
       this.modalComponentRef?.destroy();
+    }
+
+    if (this.timeoutHandle) {
+      clearTimeout(this.timeoutHandle);
     }
 
     const factory =
@@ -41,18 +44,18 @@ export class ModalService<T> {
 
     this.modalComponentRef.instance.contentTemplate = contentTemplate;
 
-    this.isOpen$.next(true);
+    this.timeoutHandle = setTimeout(() => {
+      if (this.modalComponentRef) {
+        this.appRef.detachView(this.modalComponentRef.hostView);
+        this.modalComponentRef?.destroy();
+      }
+    }, 3000);
   }
 
   close(): void {
     if (this.modalComponentRef) {
-      this.isOpen$.next(false);
-      setTimeout(() => {
-        if (this.modalComponentRef) {
-          this.appRef.detachView(this.modalComponentRef.hostView);
-          this.modalComponentRef?.destroy();
-        }
-      }, 200);
+      this.appRef.detachView(this.modalComponentRef.hostView);
+      this.modalComponentRef?.destroy();
     }
   }
 }
