@@ -10,6 +10,7 @@ import { provideEffects } from '@ngrx/effects';
 import { provideState, provideStore } from '@ngrx/store';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { routes } from './app.routes';
+import { AuthInterceptor } from './auth/auth.interceptor';
 import { AuthEffects } from './auth/state/auth.effects';
 import { authFeatureKey, authReducer } from './auth/state/auth.reducers';
 import { CacheInterceptor } from './caching/cache.interceptor';
@@ -19,6 +20,11 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
     provideHttpClient(withInterceptorsFromDi()),
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true,
+    },
     CacheService,
     {
       provide: HTTP_INTERCEPTORS,
