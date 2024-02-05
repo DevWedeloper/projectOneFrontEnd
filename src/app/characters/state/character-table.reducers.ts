@@ -82,6 +82,7 @@ const characterTableFeature = createFeature({
     })),
     on(characterTableActions.resetStateOnDestroy, () => ({
       ...initialState,
+      initialLoading: false,
     })),
   ),
 });
