@@ -82,6 +82,7 @@ const guildTableFeature = createFeature({
     })),
     on(guildTableActions.resetStateOnDestroy, () => ({
       ...initialState,
+      initialLoading: false,
     })),
   ),
 });
