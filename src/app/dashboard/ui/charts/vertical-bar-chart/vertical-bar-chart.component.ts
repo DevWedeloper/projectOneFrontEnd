@@ -2,15 +2,15 @@ import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
-  Input,
   inject,
+  input,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ChartConfiguration } from 'chart.js';
 import { NgChartsModule, ThemeService } from 'ng2-charts';
 import { ChartColorService } from 'src/app/dashboard/data-access/chart-color.service';
-import { smoothTransitionAnimation } from 'src/app/shared/ui/animations/smooth-transition.animations';
 import { NoDataComponent } from 'src/app/dashboard/ui/no-data/no-data.component';
+import { smoothTransitionAnimation } from 'src/app/shared/ui/animations/smooth-transition.animations';
 import { TruncatePipe } from 'src/app/shared/ui/pipes/truncate.pipe';
 import { VerticalBarChartSkeletonComponent } from '../../skeletons/vertical-bar-chart-skeleton/vertical-bar-chart-skeleton.component';
 
@@ -33,12 +33,12 @@ import { VerticalBarChartSkeletonComponent } from '../../skeletons/vertical-bar-
 export class VerticalBarChartComponent {
   private ccs = inject(ChartColorService);
   private tsChartJS = inject(ThemeService);
-  @Input() label!: string;
-  @Input({ required: true }) barChartLabels!: string[] | null;
-  @Input({ required: true }) barChartDataset!:
-    | ChartConfiguration<'bar'>['data']['datasets']
-    | null;
-  @Input({ required: true }) loading!: boolean | null;
+  label = input.required<string>();
+  barChartLabels = input.required<string[] | undefined>();
+  barChartDataset = input.required<
+    ChartConfiguration<'bar'>['data']['datasets'] | undefined
+  >();
+  loading = input.required<boolean | null>();
   protected barChartOptions: ChartConfiguration<'bar'>['options'] = {
     maintainAspectRatio: false,
     plugins: {

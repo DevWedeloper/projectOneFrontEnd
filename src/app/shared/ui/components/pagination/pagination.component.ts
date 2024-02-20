@@ -4,11 +4,11 @@ import {
   Component,
   ElementRef,
   EventEmitter,
-  Input,
   OnChanges,
   Output,
   ViewChild,
   booleanAttribute,
+  input
 } from '@angular/core';
 import { FocusVisibleDirective } from '../../directives/focus-visible.directive';
 
@@ -21,10 +21,12 @@ import { FocusVisibleDirective } from '../../directives/focus-visible.directive'
   imports: [CommonModule, FocusVisibleDirective],
 })
 export class PaginationComponent implements OnChanges {
-  @Input({ required: true }) currentPage: number | null = 1;
-  @Input({ required: true }) pageSize: number | null = 10;
-  @Input({ required: true }) total: number | undefined = 0;
-  @Input({ transform: booleanAttribute }) showGoToPage = false;
+  currentPage = input.required<number>();
+  pageSize = input.required<number>();
+  total = input.required<number>();
+  showGoToPage = input(false, {
+    transform: booleanAttribute,
+  });
   @Output() changePage = new EventEmitter<number>();
   @ViewChild('searchInput') searchInput!: ElementRef<HTMLInputElement>;
   protected pages: (number | '...')[] = [];
@@ -36,7 +38,7 @@ export class PaginationComponent implements OnChanges {
   }
 
   private updatePagesCountAndGeneratePages(): void {
-    this.pagesCount = Math.ceil((this.total || 1) / (this.pageSize || 1));
+    this.pagesCount = Math.ceil((this.total() || 1) / (this.pageSize() || 1));
     this.generatePages();
   }
 
@@ -44,22 +46,22 @@ export class PaginationComponent implements OnChanges {
     if (this.showAllPage()) {
       this.pages = this.range(1, this.pagesCount);
     } else {
-      if (this.currentPage) {
+      if (this.currentPage()) {
         switch (true) {
-          case this.currentPage < 3:
+          case this.currentPage() < 3:
             this.pages = [...this.range(1, 3), '...', this.pagesCount];
             break;
-          case this.currentPage === 3:
+          case this.currentPage() === 3:
             this.pages = [...this.range(1, 4), '...', this.pagesCount];
             break;
-          case this.currentPage > this.pagesCount - 2:
+          case this.currentPage() > this.pagesCount - 2:
             this.pages = [
               1,
               '...',
               ...this.range(this.pagesCount - 2, this.pagesCount),
             ];
             break;
-          case this.currentPage === this.pagesCount - 2:
+          case this.currentPage() === this.pagesCount - 2:
             this.pages = [
               1,
               '...',
@@ -70,9 +72,9 @@ export class PaginationComponent implements OnChanges {
             this.pages = [
               1,
               '...',
-              this.currentPage - 1,
-              this.currentPage,
-              this.currentPage + 1,
+              this.currentPage() - 1,
+              this.currentPage(),
+              this.currentPage() + 1,
               '...',
               this.pagesCount,
             ];
@@ -141,12 +143,12 @@ export class PaginationComponent implements OnChanges {
   }
 
   private handlePageClickForEllipsis(item: '...', index: number): void {
-    if (!this.showAllPage() && this.currentPage) {
+    if (!this.showAllPage() && this.currentPage()) {
       if (index === 3 || index === 4) {
         this.pages = [
           1,
           '...',
-          ...this.range(this.currentPage + 2, this.currentPage + 4),
+          ...this.range(this.currentPage() + 2, this.currentPage() + 4),
           '...',
           this.pagesCount,
         ];
@@ -155,54 +157,54 @@ export class PaginationComponent implements OnChanges {
         this.pages = [
           1,
           '...',
-          ...this.range(this.currentPage - 4, this.currentPage - 2),
+          ...this.range(this.currentPage() - 4, this.currentPage() - 2),
           '...',
           this.pagesCount,
         ];
         this.emitPageNumber(3);
       } else if (this.pages[1] && this.pages[5] === item) {
-        if (index === 1 && this.currentPage > 6) {
+        if (index === 1 && this.currentPage() > 6) {
           this.pages = [
             1,
             '...',
-            ...this.range(this.currentPage - 4, this.currentPage - 2),
+            ...this.range(this.currentPage() - 4, this.currentPage() - 2),
             '...',
             this.pagesCount,
           ];
           this.emitPageNumber(3);
-        } else if (index === 1 && this.currentPage === 4) {
+        } else if (index === 1 && this.currentPage() === 4) {
           this.pages = [...this.range(1, 3), '...', this.pagesCount];
           this.emitPageNumber(0);
-        } else if (index === 1 && this.currentPage === 5) {
+        } else if (index === 1 && this.currentPage() === 5) {
           this.pages = [...this.range(1, 4), '...', this.pagesCount];
           this.emitPageNumber(1);
-        } else if (index === 1 && this.currentPage === 6) {
+        } else if (index === 1 && this.currentPage() === 6) {
           this.pages = [...this.range(1, 4), '...', this.pagesCount];
           this.emitPageNumber(2);
-        } else if (index === 5 && this.currentPage < this.pagesCount - 5) {
+        } else if (index === 5 && this.currentPage() < this.pagesCount - 5) {
           this.pages = [
             1,
             '...',
-            ...this.range(this.currentPage + 2, this.currentPage + 4),
+            ...this.range(this.currentPage() + 2, this.currentPage() + 4),
             '...',
             this.pagesCount,
           ];
           this.emitPageNumber(3);
-        } else if (index === 5 && this.currentPage === this.pagesCount - 5) {
+        } else if (index === 5 && this.currentPage() === this.pagesCount - 5) {
           this.pages = [
             1,
             '...',
             ...this.range(this.pagesCount - 3, this.pagesCount),
           ];
           this.emitPageNumber(3);
-        } else if (index === 5 && this.currentPage === this.pagesCount - 4) {
+        } else if (index === 5 && this.currentPage() === this.pagesCount - 4) {
           this.pages = [
             1,
             '...',
             ...this.range(this.pagesCount - 3, this.pagesCount),
           ];
           this.emitPageNumber(4);
-        } else if (index === 5 && this.currentPage === this.pagesCount - 3) {
+        } else if (index === 5 && this.currentPage() === this.pagesCount - 3) {
           this.pages = [
             1,
             '...',

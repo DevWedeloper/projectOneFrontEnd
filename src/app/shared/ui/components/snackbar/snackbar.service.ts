@@ -35,8 +35,8 @@ export class SnackbarService<T> {
 
     this.snackbarComponentRef = factory.create(this.injector);
 
-    this.snackbarComponentRef.instance.message = message;
-    this.snackbarComponentRef.instance.config = config;
+    this.snackbarComponentRef.setInput('message', message);
+    this.snackbarComponentRef.setInput('config', config);
 
     this.appRef.attachView(this.snackbarComponentRef.hostView);
 

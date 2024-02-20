@@ -5,12 +5,12 @@ import {
   ElementRef,
   EventEmitter,
   HostListener,
-  Input,
   OnDestroy,
   Output,
   QueryList,
   ViewChildren,
   inject,
+  input,
 } from '@angular/core';
 import { Character } from '../../../interfaces/character.interface';
 import { Guild } from '../../../interfaces/guild.interface';
@@ -27,7 +27,7 @@ export class SearchItemsComponent<T extends Character | Guild>
   implements OnDestroy
 {
   private elementRef = inject(ElementRef);
-  @Input({ required: true }) searchResults: T[] | null = [];
+  searchResults = input.required<T[] | null>();
   @Output() selectedItem = new EventEmitter<Character | Guild>();
   @Output() closeComponent = new EventEmitter<void>();
   @ViewChildren('searchItems') searchItems!: QueryList<ElementRef>;
@@ -85,7 +85,7 @@ export class SearchItemsComponent<T extends Character | Guild>
   }
 
   focusItem(index: number) {
-    if (this.searchResults) {
+    if (this.searchResults()) {
       const elementToFocus = this.searchItems.toArray()[index];
       setTimeout(() => {
         elementToFocus.nativeElement.focus();

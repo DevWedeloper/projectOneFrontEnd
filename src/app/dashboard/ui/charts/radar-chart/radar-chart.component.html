@@ -1,16 +1,16 @@
-@if (!loading && topWellRoundedCharacters) {
+@if (!loading() && topWellRoundedCharacters()) {
   <div class="radar-chart" [@smoothTransition]>
     <div class="radar-chart-text-container">
       <div class="radar-chart-text">
         @for (
-          character of topWellRoundedCharacters;
+          character of topWellRoundedCharacters();
           track index;
           let index = $index
         ) {
           <div>
             <button
               class="radar-chart-buttons"
-              [ngClass]="{ active: character._id === selectedCharacter?._id }"
+              [ngClass]="{ active: character._id === selectedCharacter()?._id }"
               (click)="selectedCharacterChange.emit(character)"
             >
               <p>{{ index + 1 }}.</p>
@@ -28,18 +28,18 @@
     <div class="chart-container">
       <canvas
         baseChart
-        [datasets]="radarChartDatasets"
+        [datasets]="radarChartDatasets()"
         [options]="radarChartOptions"
-        [labels]="radarChartLabels"
+        [labels]="radarChartLabels()"
         [type]="'radar'"
       >
       </canvas>
     </div>
   </div>
 }
-@if (!loading && !topWellRoundedCharacters) {
+@if (!loading() && !topWellRoundedCharacters()) {
   <app-no-data />
 }
-@if (loading) {
+@if (loading()) {
   <app-radar-chart-skeleton />
 }

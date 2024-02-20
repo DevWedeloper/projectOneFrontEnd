@@ -3,7 +3,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   HostBinding,
-  Input,
+  input,
 } from '@angular/core';
 
 @Component({
@@ -15,5 +15,5 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SpinnerComponent {
-  @HostBinding('style.width.px') @Input({ required: true }) size!: number;
+  @HostBinding('style.width.px') size = input.required<number>();
 }

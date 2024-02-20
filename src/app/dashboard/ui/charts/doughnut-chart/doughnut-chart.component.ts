@@ -2,15 +2,15 @@ import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
-  Input,
   inject,
+  input,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ChartConfiguration } from 'chart.js';
 import { NgChartsModule, ThemeService } from 'ng2-charts';
 import { ChartColorService } from 'src/app/dashboard/data-access/chart-color.service';
-import { smoothTransitionAnimation } from 'src/app/shared/ui/animations/smooth-transition.animations';
 import { NoDataComponent } from 'src/app/dashboard/ui/no-data/no-data.component';
+import { smoothTransitionAnimation } from 'src/app/shared/ui/animations/smooth-transition.animations';
 import { DoughnutChartSkeletonComponent } from '../../skeletons/doughnut-chart-skeleton/doughnut-chart-skeleton.component';
 
 @Component({
@@ -31,12 +31,11 @@ import { DoughnutChartSkeletonComponent } from '../../skeletons/doughnut-chart-s
 export class DoughnutChartComponent {
   private tsChartJS = inject(ThemeService);
   private ccs = inject(ChartColorService);
-  @Input({ required: true }) polarAreaChartLabels!: string[] | null;
-  @Input({ required: true })
-  polarAreaChartDatasets!:
-    | ChartConfiguration<'polarArea'>['data']['datasets']
-    | null;
-  @Input({ required: true }) loading!: boolean | null;
+  polarAreaChartLabels = input.required<string[] | undefined>();
+  polarAreaChartDatasets = input.required<
+    ChartConfiguration<'polarArea'>['data']['datasets'] | undefined
+  >();
+  loading = input.required<boolean | null>();
   protected polarAreaOptions: ChartConfiguration<'polarArea'>['options'] = {
     maintainAspectRatio: false,
     plugins: {

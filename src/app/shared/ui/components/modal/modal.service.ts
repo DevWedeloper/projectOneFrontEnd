@@ -37,7 +37,7 @@ export class ModalService<T> {
 
     document.body.appendChild(domElem);
 
-    this.modalComponentRef.instance.contentTemplate = contentTemplate;
+    this.modalComponentRef.setInput('contentTemplate', contentTemplate);
   }
 
   close(): void {

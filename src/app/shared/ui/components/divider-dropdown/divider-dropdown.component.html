@@ -1,4 +1,4 @@
-@if (!loading) {
+@if (!loading()) {
   <div class="divider-content-container">
     <div
       appFocusVisible
@@ -7,7 +7,7 @@
       (keydown.Enter)="toggleDivider()"
       tabindex="0"
     >
-      <app-divider [text]="label" [size]="3" />
+      <app-divider [text]="label()" [size]="3" />
     </div>
     @if (showContent | async) {
       <div [@slide]>
@@ -16,6 +16,6 @@
     }
   </div>
 }
-@if (loading) {
+@if (loading()) {
   <app-divider-dropdown-skeleton />
 }

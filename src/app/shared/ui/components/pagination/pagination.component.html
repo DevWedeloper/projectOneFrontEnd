@@ -4,7 +4,7 @@
       appFocusVisible
       [ngClass]="{
         'page-item': true,
-        active: item !== '...' && currentPage === item
+        active: item !== '...' && currentPage() === item
       }"
       (click)="handlePageClick(item, index)"
       (keyup.enter)="handlePageClick(item, index)"
@@ -13,7 +13,7 @@
       <span class="page-link">{{ item !== "..." ? item : "..." }}</span>
     </li>
   }
-  @if (showGoToPage) {
+  @if (showGoToPage()) {
     <li>
       Go to
       <input

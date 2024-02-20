@@ -14,11 +14,11 @@ import {
   ElementRef,
   HostBinding,
   HostListener,
-  Input,
   Renderer2,
   TemplateRef,
   ViewChild,
   inject,
+  input,
 } from '@angular/core';
 import { ThemeService } from 'src/app/shared/data-access/theme.service';
 import { ModalService } from './modal.service';
@@ -32,9 +32,7 @@ import { ModalService } from './modal.service';
   imports: [CommonModule],
   animations: [
     trigger('hostAnimation', [
-      transition(':leave', [
-        query('@fadeInOut', animateChild()),
-      ]),
+      transition(':leave', [query('@fadeInOut', animateChild())]),
     ]),
     trigger('fadeInOut', [
       transition(':enter', [
@@ -52,7 +50,7 @@ export class ModalComponent implements AfterViewInit {
   protected ms = inject(ModalService);
   protected ts = inject(ThemeService);
   private renderer = inject(Renderer2);
-  @Input() contentTemplate!: TemplateRef<HTMLElement>;
+  contentTemplate = input.required<TemplateRef<HTMLElement>>();
   @HostBinding('@hostAnimation') animate = true;
   @ViewChild('modalElement') private modalElement!: ElementRef;
 

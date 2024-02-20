@@ -3,8 +3,8 @@ import {
   ChangeDetectionStrategy,
   Component,
   EventEmitter,
-  Input,
   Output,
+  input
 } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { formDropdownAnimation } from '../../animations/form-dropdown-transition.animations';
@@ -27,8 +27,8 @@ import { DividerDropdownSkeletonComponent } from '../skeleton/divider-dropdown-s
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DividerDropdownComponent {
-  @Input({ required: true }) label!: string;
-  @Input({ required: true }) loading!: boolean | null;
+  label = input.required<string>();
+  loading = input.required<boolean | null>();
   @Output() dividerToggled = new EventEmitter<void>();
   protected showContent = new BehaviorSubject<boolean>(false);
 

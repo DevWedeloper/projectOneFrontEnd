@@ -3,10 +3,10 @@ import {
   DestroyRef,
   Directive,
   ElementRef,
-  Input,
   OnInit,
   ViewContainerRef,
   inject,
+  input,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
@@ -38,10 +38,10 @@ export class DynamicValidatorMessageDirective implements OnInit {
   private destroyRef = inject(DestroyRef);
   private elementRef = inject(ElementRef);
   private parentContainer = inject(ControlContainer, { optional: true });
-  @Input()
-  errorStateMatcher = inject(ErrorStateMatcherService);
-  @Input()
-  container = inject(ViewContainerRef);
+  errorStateMatcher = input<ErrorStateMatcherService>(
+    inject(ErrorStateMatcherService),
+  );
+  container = input<ViewContainerRef>(inject(ViewContainerRef));
   private get form() {
     return this.parentContainer?.formDirective as
       | NgForm
@@ -66,14 +66,14 @@ export class DynamicValidatorMessageDirective implements OnInit {
         )
         .subscribe(() => {
           if (
-            this.errorStateMatcher.isErrorVisible(
+            this.errorStateMatcher().isErrorVisible(
               this.ngControl.control,
               this.form,
             )
           ) {
             if (!this.componentRef) {
               this.componentRef =
-                this.container.createComponent(InputErrorComponent);
+                this.container().createComponent(InputErrorComponent);
               this.componentRef.changeDetectorRef.markForCheck();
             }
             this.componentRef.setInput('errors', this.ngControl.errors);

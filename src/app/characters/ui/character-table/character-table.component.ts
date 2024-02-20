@@ -6,11 +6,11 @@ import {
   DestroyRef,
   ElementRef,
   EventEmitter,
-  Input,
   Output,
   Renderer2,
   ViewChild,
   inject,
+  input
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
@@ -50,10 +50,10 @@ export class CharacterTableComponent implements AfterViewInit {
   private renderer = inject(Renderer2);
   private destroyRef = inject(DestroyRef);
   private store = inject(Store);
-  @Input({ required: true }) characterData!: CharacterPagination | null;
-  @Input({ required: true }) isCurrentUserAdmin!: boolean | null;
-  @Input({ required: true }) currentPage!: number | null;
-  @Input({ required: true }) pageSize!: number | null;
+  characterData = input.required<CharacterPagination | null>();
+  isCurrentUserAdmin = input.required<boolean | null>();
+  currentPage = input.required<number | null>();
+  pageSize = input.required<number | null>();
   @Output() searchQueryChange = new EventEmitter<string>();
   @Output() pageSizeChange = new EventEmitter<number>();
   @Output() sortParamsChange = new EventEmitter<CharacterSortParams>();

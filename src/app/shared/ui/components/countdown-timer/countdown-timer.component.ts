@@ -4,9 +4,9 @@ import {
   Component,
   HostBinding,
   HostListener,
-  Input,
   OnInit,
   booleanAttribute,
+  input,
 } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
@@ -19,9 +19,12 @@ import { BehaviorSubject } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CountdownTimerComponent implements OnInit {
-  @Input({ required: true }) label!: string;
-  @Input({ required: true }) timeInSeconds!: number;
-  @Input({ transform: booleanAttribute }) autoStart = false;
+  label = input.required<string>();
+  timeInSeconds = input.required<number>();
+  autoStart = input(false, {
+    transform: booleanAttribute,
+  });
+
   @HostBinding('class.disabled') countdownActive: boolean = false;
   @HostBinding('tabindex') get tabIndex(): number {
     return this.countdownActive ? -1 : 0;
@@ -29,8 +32,8 @@ export class CountdownTimerComponent implements OnInit {
   countdown$ = new BehaviorSubject<number>(0);
 
   ngOnInit(): void {
-    this.countdown$.next(this.timeInSeconds);
-    if (this.autoStart) {
+    this.countdown$.next(this.timeInSeconds());
+    if (this.autoStart()) {
       this.startCountdown();
     }
   }
@@ -40,7 +43,7 @@ export class CountdownTimerComponent implements OnInit {
   onTrigger(): void {
     this.startCountdown();
   }
-  
+
   startCountdown(): void {
     if (!this.countdownActive) {
       this.countdownActive = true;
@@ -56,7 +59,7 @@ export class CountdownTimerComponent implements OnInit {
       }, 1000);
     } else {
       this.countdownActive = false;
-      this.countdown$.next(this.timeInSeconds);
+      this.countdown$.next(this.timeInSeconds());
     }
   }
 }

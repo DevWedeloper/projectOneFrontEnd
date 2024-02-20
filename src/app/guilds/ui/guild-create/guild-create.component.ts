@@ -3,10 +3,10 @@ import {
   ChangeDetectionStrategy,
   Component,
   EventEmitter,
-  Input,
   Output,
   ViewChild,
   inject,
+  input,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
@@ -52,7 +52,7 @@ import { selectInitialLoading } from '../../state/guild-table.reducers';
 export class GuildCreateComponent {
   private gfs = inject(GuildFormService);
   private store = inject(Store);
-  @Input({ required: true }) searchLeaderResults!: Character[] | null;
+  searchLeaderResults = input.required<Character[] | null>();
   @Output() createGuild = new EventEmitter<{
     name: string;
     leader: string;

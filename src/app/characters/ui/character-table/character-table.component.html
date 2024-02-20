@@ -1,4 +1,4 @@
-<app-table [data]="characterData?.characters" [loading]="loading$ | async">
+<app-table [data]="characterData()?.characters" [loading]="loading$ | async">
   <ng-template #searchTemplate>
     <div>
       <input
@@ -51,7 +51,7 @@
     <th (click)="toggleSort('critChance')">
       <span>Crit Chance{{ getSortArrow("critChance") }}</span>
     </th>
-    @if (isCurrentUserAdmin) {
+    @if (isCurrentUserAdmin()) {
       <th>Actions</th>
     }
   </ng-template>
@@ -70,7 +70,7 @@
     <td>{{ character.intelligence }}</td>
     <td>{{ character.armor }}</td>
     <td>{{ (character.critChance * 100).toFixed(0) }}%</td>
-    @if (isCurrentUserAdmin) {
+    @if (isCurrentUserAdmin()) {
       <td>
         <div class="btn-container">
           <button class="edit-btn" (click)="editCharacter.emit(character)">
@@ -99,9 +99,9 @@
 
   <ng-template #paginationTemplate>
     <app-pagination
-      [currentPage]="currentPage"
-      [pageSize]="pageSize"
-      [total]="characterData?.totalCharacters"
+      [currentPage]="currentPage() || 1"
+      [pageSize]="pageSize() || 10"
+      [total]="characterData()?.totalCharacters || 0"
       (changePage)="changePage.emit($event)"
       showGoToPage
     />

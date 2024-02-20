@@ -4,9 +4,9 @@ import {
   Component,
   ContentChild,
   EventEmitter,
-  Input,
   Output,
   TemplateRef,
+  input
 } from '@angular/core';
 import { Character } from '../../../interfaces/character.interface';
 import { Guild } from '../../../interfaces/guild.interface';
@@ -21,8 +21,8 @@ import { TableSkeletonComponent } from '../skeleton/table-skeleton/table-skeleto
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TableComponent<T extends Character | Guild> {
-  @Input({ required: true }) loading!: boolean | null;
-  @Input() data: T[] | undefined = [];
+  loading = input.required<boolean | null>();
+  data = input.required<T[] | undefined>();
   @Output() tableLoaded = new EventEmitter<boolean>();
   @ContentChild('searchTemplate') search: TemplateRef<HTMLElement> | undefined;
   @ContentChild('pageSizeTemplate') protected pageSize:

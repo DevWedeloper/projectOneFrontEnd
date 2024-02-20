@@ -1,9 +1,5 @@
 import { CommonModule } from '@angular/common';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  Input,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { HeadingSkeletonComponent } from '../skeletons/heading-skeleton/heading-skeleton.component';
 
 @Component({
@@ -15,6 +11,6 @@ import { HeadingSkeletonComponent } from '../skeletons/heading-skeleton/heading-
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeadingComponent {
-  @Input({ required: true }) label!: string;
-  @Input({ required: true }) loading!: boolean | null;
+  label = input.required<string>();
+  loading = input.required<boolean | null>();
 }

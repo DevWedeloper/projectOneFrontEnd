@@ -1,7 +1,7 @@
-@if (searchResults && searchResults.length > 0) {
+@if (searchResults() && searchResults()!.length > 0) {
   <div class="container">
     <ul>
-      @for (result of searchResults; track $index) {
+      @for (result of searchResults(); track $index) {
         <li
           #searchItems
           (click)="selectItem(result)"
