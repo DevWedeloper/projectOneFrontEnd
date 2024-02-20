@@ -4,16 +4,14 @@ import {
   Component,
   EventEmitter,
   Output,
-  ViewChild,
   inject,
-  input,
+  input
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   FormGroup,
-  FormGroupDirective,
   FormsModule,
-  ReactiveFormsModule,
+  ReactiveFormsModule
 } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { BehaviorSubject, filter } from 'rxjs';
@@ -58,7 +56,6 @@ export class GuildCreateComponent {
     leader: string;
   }>();
   @Output() searchLeaderResultsQueryChange = new EventEmitter<string>();
-  @ViewChild(FormGroupDirective) protected formDirective!: FormGroupDirective;
   protected guildForm!: FormGroup;
   protected toggleSearchContainer = new BehaviorSubject<boolean>(false);
   protected loading$ = this.store.select(selectInitialLoading);
