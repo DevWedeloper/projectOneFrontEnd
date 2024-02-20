@@ -1,4 +1,4 @@
-@if (!loading) {
+@if (!loading()) {
   <div class="options">
     <ng-container *ngTemplateOutlet="pageSize!" />
     <ng-container *ngTemplateOutlet="search!" />
@@ -11,7 +11,7 @@
         </tr>
       </thead>
       <tbody>
-        @for (row of data; track $index) {
+        @for (row of data(); track $index) {
           <tr>
             <ng-container
               *ngTemplateOutlet="
@@ -41,6 +41,6 @@
   }
 </ng-template>
 
-@if (loading) {
+@if (loading()) {
   <app-table-skeleton />
 }

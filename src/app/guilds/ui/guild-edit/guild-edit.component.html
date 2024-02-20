@@ -16,14 +16,14 @@
     </div>
     <div class="btn-container">
       @if (
-        updateGuildNameForm.get("name")?.value !== guild?.name &&
+        updateGuildNameForm.get("name")?.value !== guild()?.name &&
         updateGuildNameForm.valid
       ) {
         <button
           appGreenButton
           (click)="
             updateGuildName.emit({
-              guildId: guild!._id,
+              guildId: guild()!._id,
               name: updateGuildNameForm.value.name
             })
           "
@@ -56,7 +56,7 @@
         />
         @if (toggleNewLeaderSearchContainer | async) {
           <app-search-items
-            [searchResults]="searchNewLeaderResults"
+            [searchResults]="searchNewLeaderResults()"
             (selectedItem)="
               updateGuildLeaderForm.get('leader')?.setValue($event.name)
             "
@@ -73,14 +73,14 @@
     </div>
     <div class="btn-container">
       @if (
-        updateGuildLeaderForm.get("leader")?.value !== guild?.leader?.name &&
+        updateGuildLeaderForm.get("leader")?.value !== guild()?.leader?.name &&
         updateGuildLeaderForm.valid
       ) {
         <button
           appGreenButton
           (click)="
             updateGuildLeader.emit({
-              guildId: guild!._id,
+              guildId: guild()!._id,
               leaderId: updateGuildLeaderForm.value.leader
             })
           "
@@ -113,7 +113,7 @@
         />
         @if (toggleNewMemberSearchContainer | async) {
           <app-search-items
-            [searchResults]="searchNewMemberResults"
+            [searchResults]="searchNewMemberResults()"
             (selectedItem)="addMemberForm.get('member')?.setValue($event.name)"
             (closeComponent)="
               toggleNewMemberSearchContainer.next(false);
@@ -132,7 +132,7 @@
           appGreenButton
           (click)="
             addMember.emit({
-              guild: guild!,
+              guild: guild()!,
               member: addMemberForm.value.member
             })
           "
@@ -149,23 +149,23 @@
 </div>
 
 <div class="members-container">
-  @for (member of guild?.members; track $index) {
+  @for (member of guild()?.members; track $index) {
     <div>
       <div class="leader-text-container">
         <p>
           {{ member.name }}
         </p>
-        @if (member._id === guild?.leader?._id) {
+        @if (member._id === guild()?.leader?._id) {
           <img src="assets/images/icons/crown.svg" alt="Crown Logo" />
         }
       </div>
       <button
         appRedButton
-        (click)="removeMember.emit({ guildId: guild!._id, member })"
+        (click)="removeMember.emit({ guildId: guild()!._id, member })"
         [disabled]="
           ((removeMemberLoading$ | async) &&
             (memberToRemove$ | async)?._id === member._id) ||
-          member._id === guild?.leader?._id
+          member._id === guild()?.leader?._id
         "
       >
         @if (

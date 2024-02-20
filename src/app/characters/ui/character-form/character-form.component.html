@@ -1,6 +1,6 @@
-@if (characterForm.statusChanges | async) {}
+@if (characterForm().statusChanges | async) {}
 
-<form [formGroup]="characterForm" class="form">
+<form [formGroup]="characterForm()" class="form">
   <div class="form-group">
     <app-custom-input
       [type]="'text'"
@@ -8,7 +8,7 @@
       [label]="'Name'"
       formControlName="name"
     />
-    @if (characterForm.get("name")?.pending) {
+    @if (characterForm().get("name")?.pending) {
       <p style="color: aqua">Checking if unique..</p>
     }
   </div>

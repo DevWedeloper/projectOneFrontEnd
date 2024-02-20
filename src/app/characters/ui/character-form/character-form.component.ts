@@ -2,8 +2,8 @@ import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
-  Input,
   inject,
+  input,
 } from '@angular/core';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Store } from '@ngrx/store';
@@ -30,5 +30,5 @@ import { selectCharacterTypes } from '../../state/character-actions.reducers';
 export class CharacterFormComponent {
   private store = inject(Store);
   protected characterTypes$ = this.store.select(selectCharacterTypes);
-  @Input() characterForm!: FormGroup;
+  characterForm = input.required<FormGroup>();
 }

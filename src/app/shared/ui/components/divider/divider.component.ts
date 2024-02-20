@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 
 @Component({
   selector: 'app-divider',
@@ -10,6 +10,6 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DividerComponent {
-  @Input({ required: true }) text!: string;
-  @Input({ required: true }) size!: number;
+  text = input.required<string>();
+  size = input.required<number>();
 }

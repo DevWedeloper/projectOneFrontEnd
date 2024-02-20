@@ -4,10 +4,10 @@ import {
   ChangeDetectorRef,
   Component,
   EventEmitter,
-  Input,
   Output,
   forwardRef,
   inject,
+  input
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
@@ -28,11 +28,11 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 })
 export class CustomInputComponent implements ControlValueAccessor {
   private cdr = inject(ChangeDetectorRef);
-  @Input({ required: true }) type!: string;
-  @Input({ required: true }) id!: string;
-  @Input({ required: true }) label!: string;
-  @Input() value!: string;
-  @Input() step!: number;
+  type = input.required<string>();
+  id = input.required<string>();
+  label = input.required<string>();
+  step = input<number>();
+  value!: string;
   @Output() focusEvent = new EventEmitter<void>();
   @Output() clickEvent = new EventEmitter<void>();
 

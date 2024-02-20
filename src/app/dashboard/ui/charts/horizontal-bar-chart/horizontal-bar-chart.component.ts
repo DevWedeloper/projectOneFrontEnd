@@ -2,8 +2,8 @@ import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
-  Input,
   inject,
+  input,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ChartConfiguration } from 'chart.js';
@@ -31,12 +31,12 @@ import { HorizontalBarChartSkeletonComponent } from '../../skeletons/horizontal-
 export class HorizontalBarChartComponent {
   private tsChartJS = inject(ThemeService);
   private ccs = inject(ChartColorService);
-  @Input() label!: string;
-  @Input({ required: true }) barChartLabels!: string[] | null;
-  @Input({ required: true }) barChartDataset!:
-    | ChartConfiguration<'bar'>['data']['datasets']
-    | null;
-  @Input({ required: true }) loading!: boolean | null;
+  label = input<string>();
+  barChartLabels = input.required<string[] | undefined>();
+  barChartDataset = input.required<
+    ChartConfiguration<'bar'>['data']['datasets'] | undefined
+  >();
+  loading = input.required<boolean | null>();
   protected barChartOptions: ChartConfiguration<'bar'>['options'] = {
     indexAxis: 'y',
     maintainAspectRatio: false,

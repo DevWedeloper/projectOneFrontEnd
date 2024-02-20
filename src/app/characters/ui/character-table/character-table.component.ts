@@ -6,11 +6,11 @@ import {
   DestroyRef,
   ElementRef,
   EventEmitter,
-  Input,
   Output,
   Renderer2,
-  ViewChild,
   inject,
+  input,
+  viewChild,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
@@ -24,7 +24,10 @@ import { TableComponent } from 'src/app/shared/ui/components/table/table.compone
 import { TruncatePipe } from 'src/app/shared/ui/pipes/truncate.pipe';
 import { setSelectOption } from 'src/app/shared/utils/set-select-option.utils';
 import { CharacterPagination } from '../../interfaces/character-pagination.interface';
-import { selectIsDeleting, selectSelectedCharacter } from '../../state/character-actions.reducers';
+import {
+  selectIsDeleting,
+  selectSelectedCharacter,
+} from '../../state/character-actions.reducers';
 import {
   selectInitialLoading,
   selectPageSize,
@@ -50,17 +53,17 @@ export class CharacterTableComponent implements AfterViewInit {
   private renderer = inject(Renderer2);
   private destroyRef = inject(DestroyRef);
   private store = inject(Store);
-  @Input({ required: true }) characterData!: CharacterPagination | null;
-  @Input({ required: true }) isCurrentUserAdmin!: boolean | null;
-  @Input({ required: true }) currentPage!: number | null;
-  @Input({ required: true }) pageSize!: number | null;
+  characterData = input.required<CharacterPagination | null>();
+  isCurrentUserAdmin = input.required<boolean | null>();
+  currentPage = input.required<number | null>();
+  pageSize = input.required<number | null>();
   @Output() searchQueryChange = new EventEmitter<string>();
   @Output() pageSizeChange = new EventEmitter<number>();
   @Output() sortParamsChange = new EventEmitter<CharacterSortParams>();
   @Output() changePage = new EventEmitter<number>();
   @Output() editCharacter = new EventEmitter<Character>();
   @Output() deleteCharacter = new EventEmitter<Character>();
-  @ViewChild('perPage', { static: false }) private pageSizeElement?: ElementRef;
+  private pageSizeElement = viewChild<ElementRef>('perPage');
   protected loading$ = this.store.select(selectInitialLoading);
   protected deleteLoading$ = this.store.select(selectIsDeleting);
   protected selectedCharacter$ = this.store.select(selectSelectedCharacter);
@@ -78,7 +81,7 @@ export class CharacterTableComponent implements AfterViewInit {
               if (loadingValue === false) {
                 setSelectOption(
                   this.renderer,
-                  this.pageSizeElement?.nativeElement,
+                  this.pageSizeElement()?.nativeElement,
                   pageSizeValue.toString(),
                 );
               }

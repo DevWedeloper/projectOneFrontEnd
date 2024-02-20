@@ -1,24 +1,24 @@
-@if (!loading && barChartDataset && barChartLabels) {
-  @if (label) {
+@if (!loading() && barChartDataset() && barChartLabels()) {
+  @if (label()) {
     <h2 class="chart-item-heading" [@smoothTransition]>
-      {{ label }}
+      {{ label() }}
     </h2>
   }
   <div>
     <canvas
       baseChart
-      [datasets]="barChartDataset"
+      [datasets]="barChartDataset()"
       [options]="barChartOptions"
-      [labels]="barChartLabels"
+      [labels]="barChartLabels()"
       [type]="'bar'"
       [@smoothTransition]
     >
     </canvas>
   </div>
 }
-@if (!loading && !barChartDataset && !barChartLabels) {
+@if (!loading() && !barChartDataset() && !barChartLabels()) {
   <app-no-data />
 }
-@if (loading) {
+@if (loading()) {
   <app-vertical-bar-chart-skeleton />
 }

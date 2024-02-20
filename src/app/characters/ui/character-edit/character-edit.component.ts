@@ -3,11 +3,11 @@ import {
   ChangeDetectionStrategy,
   Component,
   EventEmitter,
-  Input,
   OnDestroy,
   OnInit,
   Output,
   inject,
+  input,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -58,8 +58,8 @@ export class CharacterEditComponent implements OnInit, OnDestroy {
   private cfs = inject(CharacterFormService);
   private cjgfs = inject(CharacterJoinGuildFormService);
   private store = inject(Store);
-  @Input({ required: true }) character: Character | null = null;
-  @Input({ required: true }) searchResults!: Guild[] | null;
+  character = input.required<Character | null>();
+  searchResults = input.required<Guild[] | null>();
   @Output() searchQueryChange = new EventEmitter<string>();
   @Output() updateCharacter = new EventEmitter<{
     character: Character;
@@ -89,17 +89,17 @@ export class CharacterEditComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.characterForm.patchValue({
-      name: this.character?.name || '',
-      characterType: this.character?.characterType || '',
-      health: this.character?.health || null,
-      strength: this.character?.strength || null,
-      agility: this.character?.agility || null,
-      intelligence: this.character?.intelligence || null,
-      armor: this.character?.armor || null,
-      critChance: this.character?.critChance || null,
+      name: this.character()?.name || '',
+      characterType: this.character()?.characterType || '',
+      health: this.character()?.health || null,
+      strength: this.character()?.strength || null,
+      agility: this.character()?.agility || null,
+      intelligence: this.character()?.intelligence || null,
+      armor: this.character()?.armor || null,
+      critChance: this.character()?.critChance || null,
     });
     this.joinGuildForm.patchValue({
-      guild: this.character?.guild?.name || null,
+      guild: this.character()?.guild?.name || null,
     });
     this.cfs.initialName$.next(this.characterForm.get('name')?.value);
     this.cjgfs.initialName$.next(this.joinGuildForm.get('guild')?.value);

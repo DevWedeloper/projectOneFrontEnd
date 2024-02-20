@@ -1,6 +1,6 @@
-@if (!loading) {
-  <h1>{{ label }}</h1>
+@if (!loading()) {
+  <h1>{{ label() }}</h1>
 }
-@if (loading) {
+@if (loading()) {
   <app-heading-skeleton />
 }

@@ -9,8 +9,8 @@
     <div class="chart-container-item">
       <app-vertical-bar-chart
         [label]="'Health'"
-        [barChartLabels]="(topGuildsByHealth$ | async)?.names || null"
-        [barChartDataset]="(topGuildsByHealth$ | async)?.dataset || null"
+        [barChartLabels]="(topGuildsByHealth$ | async)?.names || undefined"
+        [barChartDataset]="(topGuildsByHealth$ | async)?.dataset || undefined"
         [loading]="loading$ | async"
       />
     </div>
@@ -18,8 +18,8 @@
     <div class="chart-container-item">
       <app-vertical-bar-chart
         [label]="'Strength'"
-        [barChartLabels]="(topGuildsByStrength$ | async)?.names || null"
-        [barChartDataset]="(topGuildsByStrength$ | async)?.dataset || null"
+        [barChartLabels]="(topGuildsByStrength$ | async)?.names || undefined"
+        [barChartDataset]="(topGuildsByStrength$ | async)?.dataset || undefined"
         [loading]="loading$ | async"
       />
     </div>
@@ -27,8 +27,8 @@
     <div class="chart-container-item">
       <app-vertical-bar-chart
         [label]="'Agility'"
-        [barChartLabels]="(topGuildsByAgility$ | async)?.names || null"
-        [barChartDataset]="(topGuildsByAgility$ | async)?.dataset || null"
+        [barChartLabels]="(topGuildsByAgility$ | async)?.names || undefined"
+        [barChartDataset]="(topGuildsByAgility$ | async)?.dataset || undefined"
         [loading]="loading$ | async"
       />
     </div>
@@ -36,9 +36,11 @@
     <div class="chart-container-item">
       <app-vertical-bar-chart
         [label]="'Intelligence'"
-        [barChartLabels]="(topGuildsByIntelligence$ | async)?.names || null"
+        [barChartLabels]="
+          (topGuildsByIntelligence$ | async)?.names || undefined
+        "
         [barChartDataset]="
-          (topGuildsByIntelligence$ | async)?.dataset || null
+          (topGuildsByIntelligence$ | async)?.dataset || undefined
         "
         [loading]="loading$ | async"
       />
@@ -47,8 +49,8 @@
     <div class="chart-container-item">
       <app-vertical-bar-chart
         [label]="'Armor'"
-        [barChartLabels]="(topGuildsByArmor$ | async)?.names || null"
-        [barChartDataset]="(topGuildsByArmor$ | async)?.dataset || null"
+        [barChartLabels]="(topGuildsByArmor$ | async)?.names || undefined"
+        [barChartDataset]="(topGuildsByArmor$ | async)?.dataset || undefined"
         [loading]="loading$ | async"
       />
     </div>
@@ -56,9 +58,9 @@
     <div class="chart-container-item">
       <app-vertical-bar-chart
         [label]="'Crit Chance'"
-        [barChartLabels]="(topGuildsByCritChance$ | async)?.names || null"
+        [barChartLabels]="(topGuildsByCritChance$ | async)?.names || undefined"
         [barChartDataset]="
-          (topGuildsByCritChance$ | async)?.dataset || null
+          (topGuildsByCritChance$ | async)?.dataset || undefined
         "
         [loading]="loading$ | async"
       />
@@ -78,10 +80,10 @@
       <app-vertical-bar-chart
         [label]="'Health'"
         [barChartLabels]="
-          (topGuildsByAverageHealthData$ | async)?.names || null
+          (topGuildsByAverageHealthData$ | async)?.names || undefined
         "
         [barChartDataset]="
-          (topGuildsByAverageHealthData$ | async)?.dataset || null
+          (topGuildsByAverageHealthData$ | async)?.dataset || undefined
         "
         [loading]="loading$ | async"
       />
@@ -91,10 +93,10 @@
       <app-vertical-bar-chart
         [label]="'Strength'"
         [barChartLabels]="
-          (topGuildsByAverageStrengthData$ | async)?.names || null
+          (topGuildsByAverageStrengthData$ | async)?.names || undefined
         "
         [barChartDataset]="
-          (topGuildsByAverageStrengthData$ | async)?.dataset || null
+          (topGuildsByAverageStrengthData$ | async)?.dataset || undefined
         "
         [loading]="loading$ | async"
       />
@@ -104,10 +106,10 @@
       <app-vertical-bar-chart
         [label]="'Agility'"
         [barChartLabels]="
-          (topGuildsByAverageAgilityData$ | async)?.names || null
+          (topGuildsByAverageAgilityData$ | async)?.names || undefined
         "
         [barChartDataset]="
-          (topGuildsByAverageAgilityData$ | async)?.dataset || null
+          (topGuildsByAverageAgilityData$ | async)?.dataset || undefined
         "
         [loading]="loading$ | async"
       />
@@ -117,10 +119,10 @@
       <app-vertical-bar-chart
         [label]="'Intelligence'"
         [barChartLabels]="
-          (topGuildsByAverageIntelligenceData$ | async)?.names || null
+          (topGuildsByAverageIntelligenceData$ | async)?.names || undefined
         "
         [barChartDataset]="
-          (topGuildsByAverageIntelligenceData$ | async)?.dataset || null
+          (topGuildsByAverageIntelligenceData$ | async)?.dataset || undefined
         "
         [loading]="loading$ | async"
       />
@@ -130,10 +132,10 @@
       <app-vertical-bar-chart
         [label]="'Armor'"
         [barChartLabels]="
-          (topGuildsByAverageArmorData$ | async)?.names || null
+          (topGuildsByAverageArmorData$ | async)?.names || undefined
         "
         [barChartDataset]="
-          (topGuildsByAverageArmorData$ | async)?.dataset || null
+          (topGuildsByAverageArmorData$ | async)?.dataset || undefined
         "
         [loading]="loading$ | async"
       />
@@ -143,10 +145,10 @@
       <app-vertical-bar-chart
         [label]="'Crit Chance'"
         [barChartLabels]="
-          (topGuildsByAverageCritChanceData$ | async)?.names || null
+          (topGuildsByAverageCritChanceData$ | async)?.names || undefined
         "
         [barChartDataset]="
-          (topGuildsByAverageCritChanceData$ | async)?.dataset || null
+          (topGuildsByAverageCritChanceData$ | async)?.dataset || undefined
         "
         [loading]="loading$ | async"
       />
@@ -156,19 +158,12 @@
 
 <div class="chart-group-container">
   <div class="chart-container-heading">
-    <app-heading
-      [label]="'Top Overall Guilds'"
-      [loading]="loading$ | async"
-    />
+    <app-heading [label]="'Top Overall Guilds'" [loading]="loading$ | async" />
   </div>
   <div class="chart-container-item">
     <app-horizontal-bar-chart
-      [barChartLabels]="
-        (topWellRoundedGuilds$ | async)?.names || null || null
-      "
-      [barChartDataset]="
-        (topWellRoundedGuilds$ | async)?.dataset || null || null
-      "
+      [barChartLabels]="(topWellRoundedGuilds$ | async)?.names || undefined"
+      [barChartDataset]="(topWellRoundedGuilds$ | async)?.dataset || undefined"
       [loading]="loading$ | async"
     />
   </div>

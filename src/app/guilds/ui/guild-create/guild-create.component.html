@@ -34,7 +34,7 @@
         />
         @if (toggleSearchContainer | async) {
           <app-search-items
-            [searchResults]="searchLeaderResults"
+            [searchResults]="searchLeaderResults()"
             (selectedItem)="guildForm.get('leader')?.setValue($event.name)"
             (closeComponent)="
               toggleSearchContainer.next(false);

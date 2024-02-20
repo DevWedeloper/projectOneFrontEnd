@@ -6,11 +6,11 @@ import {
   DestroyRef,
   ElementRef,
   EventEmitter,
-  Input,
   Output,
   Renderer2,
-  ViewChild,
   inject,
+  input,
+  viewChild,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
@@ -24,8 +24,15 @@ import { TruncatePipe } from 'src/app/shared/ui/pipes/truncate.pipe';
 import { setSelectOption } from 'src/app/shared/utils/set-select-option.utils';
 import { GuildPagination } from '../../interfaces/guild-pagination.interface';
 import { GuildSortParams } from '../../interfaces/guild-sort-params.interface';
-import { selectIsDeleting, selectSelectedGuild } from '../../state/guild-actions.reducers';
-import { selectInitialLoading, selectPageSize, selectSortParams } from '../../state/guild-table.reducers';
+import {
+  selectIsDeleting,
+  selectSelectedGuild,
+} from '../../state/guild-actions.reducers';
+import {
+  selectInitialLoading,
+  selectPageSize,
+  selectSortParams,
+} from '../../state/guild-table.reducers';
 import { GuildEditComponent } from '../guild-edit/guild-edit.component';
 
 @Component({
@@ -48,17 +55,17 @@ export class GuildTableComponent implements AfterViewInit {
   private renderer = inject(Renderer2);
   private destroyRef = inject(DestroyRef);
   private store = inject(Store);
-  @Input() guildData!: GuildPagination | null;
-  @Input() isCurrentUserAdmin!: boolean | null;
-  @Input() currentPage!: number | null;
-  @Input() pageSize!: number | null;
+  guildData = input.required<GuildPagination | null>();
+  isCurrentUserAdmin = input.required<boolean | null>();
+  currentPage = input.required<number>();
+  pageSize = input.required<number>();
   @Output() searchQueryChange = new EventEmitter<string>();
   @Output() pageSizeChange = new EventEmitter<number>();
   @Output() sortParamsChange = new EventEmitter<GuildSortParams>();
   @Output() changePage = new EventEmitter<number>();
   @Output() editGuild = new EventEmitter<Guild>();
   @Output() deleteGuild = new EventEmitter<Guild>();
-  @ViewChild('perPage', { static: false }) private pageSizeElement?: ElementRef;
+  private pageSizeElement = viewChild<ElementRef>('perPage');
   protected loading$ = this.store.select(selectInitialLoading);
   protected deleteLoading$ = this.store.select(selectIsDeleting);
   protected selectedGuild$ = this.store.select(selectSelectedGuild);
@@ -76,7 +83,7 @@ export class GuildTableComponent implements AfterViewInit {
               if (loadingValue === false) {
                 setSelectOption(
                   this.renderer,
-                  this.pageSizeElement?.nativeElement,
+                  this.pageSizeElement()?.nativeElement,
                   pageSizeValue.toString(),
                 );
               }

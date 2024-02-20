@@ -9,9 +9,9 @@
     <div class="chart-container-item">
       <app-horizontal-bar-chart
         [label]="'Health'"
-        [barChartLabels]="(topCharactersByHealth$ | async)?.names || null"
+        [barChartLabels]="(topCharactersByHealth$ | async)?.names || undefined"
         [barChartDataset]="
-          (topCharactersByHealth$ | async)?.dataset || null
+          (topCharactersByHealth$ | async)?.dataset || undefined
         "
         [loading]="loading$ | async"
       />
@@ -20,9 +20,9 @@
     <div class="chart-container-item">
       <app-horizontal-bar-chart
         [label]="'Strength'"
-        [barChartLabels]="(topCharactersByStrength$ | async)?.names || null"
+        [barChartLabels]="(topCharactersByStrength$ | async)?.names || undefined"
         [barChartDataset]="
-          (topCharactersByStrength$ | async)?.dataset || null
+          (topCharactersByStrength$ | async)?.dataset || undefined
         "
         [loading]="loading$ | async"
       />
@@ -31,9 +31,9 @@
     <div class="chart-container-item">
       <app-horizontal-bar-chart
         [label]="'Agility'"
-        [barChartLabels]="(topCharactersByAgility$ | async)?.names || null"
+        [barChartLabels]="(topCharactersByAgility$ | async)?.names || undefined"
         [barChartDataset]="
-          (topCharactersByAgility$ | async)?.dataset || null
+          (topCharactersByAgility$ | async)?.dataset || undefined
         "
         [loading]="loading$ | async"
       />
@@ -43,10 +43,10 @@
       <app-horizontal-bar-chart
         [label]="'Intelligence'"
         [barChartLabels]="
-          (topCharactersByIntelligence$ | async)?.names || null
+          (topCharactersByIntelligence$ | async)?.names || undefined
         "
         [barChartDataset]="
-          (topCharactersByIntelligence$ | async)?.dataset || null
+          (topCharactersByIntelligence$ | async)?.dataset || undefined
         "
         [loading]="loading$ | async"
       />
@@ -55,8 +55,8 @@
     <div class="chart-container-item">
       <app-horizontal-bar-chart
         [label]="'Armor'"
-        [barChartLabels]="(topCharactersByArmor$ | async)?.names || null"
-        [barChartDataset]="(topCharactersByArmor$ | async)?.dataset || null"
+        [barChartLabels]="(topCharactersByArmor$ | async)?.names || undefined"
+        [barChartDataset]="(topCharactersByArmor$ | async)?.dataset || undefined"
         [loading]="loading$ | async"
       />
     </div>
@@ -65,10 +65,10 @@
       <app-horizontal-bar-chart
         [label]="'Crit Chance'"
         [barChartLabels]="
-          (topCharactersByCritChance$ | async)?.names || null
+          (topCharactersByCritChance$ | async)?.names || undefined
         "
         [barChartDataset]="
-          (topCharactersByCritChance$ | async)?.dataset || null
+          (topCharactersByCritChance$ | async)?.dataset || undefined
         "
         [loading]="loading$ | async"
       />
@@ -107,10 +107,10 @@
   <div class="chart-container-item">
     <app-doughnut-chart
       [polarAreaChartLabels]="
-        (characterDistributionByType$ | async)?.ids || null
+        (characterDistributionByType$ | async)?.ids || undefined
       "
       [polarAreaChartDatasets]="
-        (characterDistributionByType$ | async)?.dataset || null
+        (characterDistributionByType$ | async)?.dataset || undefined
       "
       [loading]="loading$ | async"
     />

@@ -1,7 +1,7 @@
 <input
   #search
-  type="{{ type }}"
-  id="{{ id }}"
+  [type]="type()"
+  [id]="id()"
   [value]="value"
   (input)="updateValue(search.value)"
   [step]="step"
@@ -11,4 +11,4 @@
   autocomplete="off"
   required
 />
-<label for="{{ id }}">{{ label }}</label>
+<label [for]="id()">{{ label() }}</label>

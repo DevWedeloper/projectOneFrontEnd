@@ -1,18 +1,18 @@
-@if (!loading && polarAreaChartDatasets && polarAreaChartLabels) {
+@if (!loading() && polarAreaChartDatasets() && polarAreaChartLabels()) {
   <div [@smoothTransition] class="chart-container">
     <canvas
       baseChart
-      [datasets]="polarAreaChartDatasets"
-      [labels]="polarAreaChartLabels"
+      [datasets]="polarAreaChartDatasets()"
+      [labels]="polarAreaChartLabels()"
       [options]="polarAreaOptions"
       [type]="'polarArea'"
     >
     </canvas>
   </div>
 }
-@if (!loading && !polarAreaChartDatasets && !polarAreaChartLabels) {
+@if (!loading() && !polarAreaChartDatasets() && !polarAreaChartLabels()) {
   <app-no-data />
 }
-@if (loading) {
+@if (loading()) {
   <app-doughnut-chart-skeleton />
 }

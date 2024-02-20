@@ -10,8 +10,8 @@
   <app-guild-table
     [guildData]="guildData$ | async"
     [isCurrentUserAdmin]="authService.isCurrentUserAdmin$ | async"
-    [currentPage]="currentPage$ | async"
-    [pageSize]="pageSize$ | async"
+    [currentPage]="(currentPage$ | async) || 1"
+    [pageSize]="(pageSize$ | async) || 10"
     (searchQueryChange)="tableSearchQuery$.next($event)"
     (pageSizeChange)="setPageSize($event)"
     (sortParamsChange)="setSortParams($event)"

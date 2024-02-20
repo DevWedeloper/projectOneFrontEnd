@@ -1,4 +1,4 @@
-<app-table [data]="guildData?.guilds" [loading]="loading$ | async">
+<app-table [data]="guildData()?.guilds" [loading]="loading$ | async">
   <ng-template #searchTemplate>
     <div>
       <input
@@ -37,7 +37,7 @@
     <th (click)="toggleSort('totalMembers')">
       <span>Total Member{{ getSortArrow("totalMembers") }}</span>
     </th>
-    @if (isCurrentUserAdmin) {
+    @if (isCurrentUserAdmin()) {
       <th>Actions</th>
     }
   </ng-template>
@@ -46,7 +46,7 @@
     <td>{{ guild.name | truncate: 15 }}</td>
     <td>{{ guild.leader.name | truncate: 15 }}</td>
     <td>{{ guild.totalMembers }} / {{ guild.maxMembers }}</td>
-    @if (isCurrentUserAdmin) {
+    @if (isCurrentUserAdmin()) {
       <td class="btn-container">
         <button class="edit-btn" (click)="editGuild.emit(guild)">Edit</button>
         <button
@@ -71,9 +71,9 @@
 
   <ng-template #paginationTemplate>
     <app-pagination
-      [currentPage]="currentPage"
-      [pageSize]="pageSize"
-      [total]="guildData?.totalGuilds"
+      [currentPage]="currentPage()"
+      [pageSize]="pageSize()"
+      [total]="guildData()?.totalGuilds || 0"
       (changePage)="changePage.emit($event)"
     />
   </ng-template>

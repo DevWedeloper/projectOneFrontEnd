@@ -18,7 +18,7 @@
     />
     @if (toggleSearchContainer | async) {
       <app-search-items
-        [searchResults]="searchResults"
+        [searchResults]="searchResults()"
         (selectedItem)="joinGuildForm.get('guild')?.setValue($event.name)"
         (closeComponent)="
           toggleSearchContainer.next(false); searchQueryChange.emit('')
@@ -32,13 +32,13 @@
   <div class="btn-container">
     @if (
       joinGuildForm.valid &&
-      joinGuildForm.get("guild")?.value !== character?.guild?.name &&
+      joinGuildForm.get("guild")?.value !== character()?.guild?.name &&
       joinGuildForm.get("guild")?.value !== ""
     ) {
       <button
         appGreenButton
         (click)="
-          joinGuild.emit({ character: character!, guildName: joinGuildForm.value })
+          joinGuild.emit({ character: character()!, guildName: joinGuildForm.value })
         "
         [disabled]="joinGuildLoading$ | async"
       >
@@ -49,13 +49,13 @@
       </button>
     }
     @if (
-      character?.guild !== null &&
-      character?.guild?.name === joinGuildForm.get("guild")?.value &&
+      character()?.guild !== null &&
+      character()?.guild?.name === joinGuildForm.get("guild")?.value &&
       (joinGuildLoading$ | async) === false
     ) {
       <button
         appRedButton
-        (click)="leaveGuild.emit(character!)"
+        (click)="leaveGuild.emit(character()!)"
         [disabled]="leaveGuildLoading$ | async"
       >
         @if (leaveGuildLoading$ | async) {
@@ -73,7 +73,7 @@
     (click)="
       updateCharacter.emit({
         character: characterForm.value,
-        previousCharacterData: character!
+        previousCharacterData: character()!
       })
     "
   >

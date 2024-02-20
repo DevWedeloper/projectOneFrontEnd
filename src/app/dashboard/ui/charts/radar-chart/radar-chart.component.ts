@@ -3,10 +3,10 @@ import {
   ChangeDetectionStrategy,
   Component,
   EventEmitter,
-  Input,
   Output,
-  ViewChild,
   inject,
+  input,
+  viewChild,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ChartConfiguration } from 'chart.js';
@@ -36,16 +36,13 @@ import { RadarChartSkeletonComponent } from '../../skeletons/radar-chart-skeleto
 export class RadarChartComponent {
   private tsChartJS = inject(ThemeService);
   private ccs = inject(ChartColorService);
-  @Input({ required: true }) selectedCharacter!: WellRoundedCharacter | null;
-  @Input({ required: true }) topWellRoundedCharacters!:
-    | WellRoundedCharacter[]
-    | null;
-  @Input({ required: true }) radarChartLabels: string[] | undefined = [];
-  @Input({ required: true })
-  radarChartDatasets:
-    | ChartConfiguration<'radar'>['data']['datasets']
-    | undefined = [];
-  @Input({ required: true }) loading!: boolean | null;
+  selectedCharacter = input.required<WellRoundedCharacter | null>();
+  topWellRoundedCharacters = input.required<WellRoundedCharacter[] | null>();
+  radarChartLabels = input.required<string[] | undefined>();
+  radarChartDatasets = input.required<
+    ChartConfiguration<'radar'>['data']['datasets'] | undefined
+  >();
+  loading = input.required<boolean | null>();
   @Output() selectedCharacterChange = new EventEmitter<WellRoundedCharacter>();
   protected radarChartOptions: ChartConfiguration<'radar'>['options'] = {
     maintainAspectRatio: false,
@@ -70,7 +67,7 @@ export class RadarChartComponent {
       },
     },
   };
-  @ViewChild(BaseChartDirective) private chart: BaseChartDirective | undefined;
+  private chart = viewChild<BaseChartDirective | undefined>(BaseChartDirective);
   private resize$ = fromEvent(window, 'resize').pipe(
     debounceTime(300),
     distinctUntilChanged(),
@@ -87,7 +84,7 @@ export class RadarChartComponent {
           this.radarChartOptions.scales['r'].pointLabels.font = { size: 10 };
         }
       }
-      this.chart?.ngOnChanges({});
+      this.chart()?.ngOnChanges({});
     }),
   );
 

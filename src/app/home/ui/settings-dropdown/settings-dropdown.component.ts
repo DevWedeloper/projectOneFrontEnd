@@ -7,9 +7,8 @@ import {
   HostBinding,
   HostListener,
   OnDestroy,
-  QueryList,
-  ViewChildren,
   inject,
+  viewChildren,
 } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -54,7 +53,7 @@ export class SettingsDropdownComponent implements OnDestroy {
   private store = inject(Store);
   private router = inject(Router);
   @HostBinding('@fadeInOut') animateElement = true;
-  @ViewChildren('links') links!: QueryList<ElementRef>;
+  private links = viewChildren<ElementRef>('ElementRef');
   private skipInitialCheck = true;
 
   ngOnDestroy(): void {
@@ -68,7 +67,7 @@ export class SettingsDropdownComponent implements OnDestroy {
       return;
     }
     if (
-      !this.links.some((child) =>
+      !this.links().some((child) =>
         child.nativeElement.contains(event.target as Node),
       )
     ) {

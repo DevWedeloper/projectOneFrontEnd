@@ -12,8 +12,8 @@ import {
   ChangeDetectionStrategy,
   Component,
   HostBinding,
-  Input,
   inject,
+  input,
 } from '@angular/core';
 import { SnackbarConfig } from './snackbar-config.type';
 import { SnackbarService } from './snackbar.service';
@@ -51,12 +51,12 @@ import { SnackbarService } from './snackbar.service';
 })
 export class SnackbarComponent {
   protected snackbarService = inject(SnackbarService);
-  @Input({ required: true }) message!: string;
-  @Input() config?: SnackbarConfig;
+  message = input.required<string>();
+  config = input<SnackbarConfig>();
   @HostBinding('@hostAnimation') animate = true;
 
   @HostBinding('style.align-items') get justifyContent() {
-    switch (this.config?.verticalPosition) {
+    switch (this.config()?.verticalPosition) {
       case 'top':
         return 'flex-start';
       case 'bottom':
@@ -67,7 +67,7 @@ export class SnackbarComponent {
   }
 
   @HostBinding('style.justify-content') get alignItems() {
-    switch (this.config?.horizontalPosition) {
+    switch (this.config()?.horizontalPosition) {
       case 'center':
         return 'center';
       case 'left':
@@ -80,7 +80,7 @@ export class SnackbarComponent {
   }
 
   getBackgroundColor(): string {
-    switch (this.config?.messageType) {
+    switch (this.config()?.messageType) {
       case 'success':
         return 'mediumseagreen';
       case 'error':

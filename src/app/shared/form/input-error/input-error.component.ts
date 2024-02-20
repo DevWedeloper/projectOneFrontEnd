@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { ValidationErrors } from '@angular/forms';
 import { ErrorMessagePipe } from '../error-message.pipe';
 
@@ -12,5 +12,5 @@ import { ErrorMessagePipe } from '../error-message.pipe';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class InputErrorComponent {
-  @Input() errors: ValidationErrors | undefined | null = null;
+  errors = input<ValidationErrors | undefined | null>(null);
 }

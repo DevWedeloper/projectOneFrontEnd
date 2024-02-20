@@ -8,17 +8,17 @@ import {
 } from '@angular/animations';
 import { CommonModule } from '@angular/common';
 import {
-  AfterViewInit,
   ChangeDetectionStrategy,
   Component,
   ElementRef,
   HostBinding,
   HostListener,
-  Input,
   Renderer2,
   TemplateRef,
-  ViewChild,
+  effect,
   inject,
+  input,
+  viewChild,
 } from '@angular/core';
 import { ThemeService } from 'src/app/shared/data-access/theme.service';
 import { ModalService } from './modal.service';
@@ -32,9 +32,7 @@ import { ModalService } from './modal.service';
   imports: [CommonModule],
   animations: [
     trigger('hostAnimation', [
-      transition(':leave', [
-        query('@fadeInOut', animateChild()),
-      ]),
+      transition(':leave', [query('@fadeInOut', animateChild())]),
     ]),
     trigger('fadeInOut', [
       transition(':enter', [
@@ -48,16 +46,20 @@ import { ModalService } from './modal.service';
     ]),
   ],
 })
-export class ModalComponent implements AfterViewInit {
+export class ModalComponent {
   protected ms = inject(ModalService);
   protected ts = inject(ThemeService);
   private renderer = inject(Renderer2);
-  @Input() contentTemplate!: TemplateRef<HTMLElement>;
+  contentTemplate = input.required<TemplateRef<HTMLElement>>();
   @HostBinding('@hostAnimation') animate = true;
-  @ViewChild('modalElement') private modalElement!: ElementRef;
+  private modalElement = viewChild.required<ElementRef>('modalElement');
 
-  ngAfterViewInit(): void {
-    this.renderer.selectRootElement(this.modalElement.nativeElement).focus();
+  constructor() {
+    effect(() => {
+      this.renderer
+        .selectRootElement(this.modalElement().nativeElement)
+        .focus();
+    });
   }
 
   @HostListener('document:keydown.escape', ['$event']) onEscapeKeydown() {

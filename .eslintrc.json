@@ -27,6 +27,7 @@
             "style": "kebab-case"
           }
         ],
+        "@angular-eslint/no-host-metadata-property": "off",
         "quotes": ["error", "single"],
         "semi": ["error", "always"]
       }
