@@ -4,8 +4,8 @@ import {
   Component,
   OnDestroy,
   TemplateRef,
-  ViewChild,
   inject,
+  viewChild
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
@@ -67,7 +67,8 @@ export class GuildsComponent implements OnDestroy {
   protected searchNewLeaderResultsQuery$ = new BehaviorSubject<string>('');
   protected searchNewMemberResults$ = new BehaviorSubject<Character[]>([]);
   protected searchNewMemberResultsQuery$ = new BehaviorSubject<string>('');
-  @ViewChild('modalTemplate') private editComponent!: TemplateRef<HTMLElement>;
+  private editComponent =
+    viewChild.required<TemplateRef<HTMLElement>>('modalTemplate');
   protected guildData$ = this.store.select(selectGuildData);
   protected currentPage$ = this.store.select(selectCurrentPage);
   protected pageSize$ = this.store.select(selectPageSize);
@@ -96,7 +97,7 @@ export class GuildsComponent implements OnDestroy {
             this.store.dispatch(
               guildActionsActions.updateSelectedGuild({ selectedGuild }),
             );
-            this.ms.open(this.editComponent);
+            this.ms.open(this.editComponent());
           });
       }
     });

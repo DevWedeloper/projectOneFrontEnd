@@ -7,10 +7,9 @@ import {
   HostListener,
   OnDestroy,
   Output,
-  QueryList,
-  ViewChildren,
   inject,
   input,
+  viewChildren
 } from '@angular/core';
 import { Character } from '../../../interfaces/character.interface';
 import { Guild } from '../../../interfaces/guild.interface';
@@ -30,7 +29,7 @@ export class SearchItemsComponent<T extends Character | Guild>
   searchResults = input.required<T[] | null>();
   @Output() selectedItem = new EventEmitter<Character | Guild>();
   @Output() closeComponent = new EventEmitter<void>();
-  @ViewChildren('searchItems') searchItems!: QueryList<ElementRef>;
+  private searchItems = viewChildren<ElementRef>('searchItems');
   private currentFocusedIndex = -1;
 
   ngOnDestroy(): void {
@@ -86,7 +85,7 @@ export class SearchItemsComponent<T extends Character | Guild>
 
   focusItem(index: number) {
     if (this.searchResults()) {
-      const elementToFocus = this.searchItems.toArray()[index];
+      const elementToFocus = this.searchItems()[index];
       setTimeout(() => {
         elementToFocus.nativeElement.focus();
       });

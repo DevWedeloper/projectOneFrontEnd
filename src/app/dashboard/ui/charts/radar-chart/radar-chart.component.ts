@@ -4,9 +4,9 @@ import {
   Component,
   EventEmitter,
   Output,
-  ViewChild,
   inject,
   input,
+  viewChild,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ChartConfiguration } from 'chart.js';
@@ -67,7 +67,7 @@ export class RadarChartComponent {
       },
     },
   };
-  @ViewChild(BaseChartDirective) private chart: BaseChartDirective | undefined;
+  private chart = viewChild<BaseChartDirective | undefined>(BaseChartDirective);
   private resize$ = fromEvent(window, 'resize').pipe(
     debounceTime(300),
     distinctUntilChanged(),
@@ -84,7 +84,7 @@ export class RadarChartComponent {
           this.radarChartOptions.scales['r'].pointLabels.font = { size: 10 };
         }
       }
-      this.chart?.ngOnChanges({});
+      this.chart()?.ngOnChanges({});
     }),
   );
 

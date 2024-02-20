@@ -4,8 +4,8 @@ import {
   Component,
   OnDestroy,
   TemplateRef,
-  ViewChild,
   inject,
+  viewChild,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
@@ -61,8 +61,8 @@ export class CharactersComponent implements OnDestroy {
   protected tableSearchQuery$ = new Subject<string>();
   protected searchResults$ = new BehaviorSubject<Guild[]>([]);
   protected guildSearchQuery$ = new BehaviorSubject<string>('');
-  @ViewChild('modalTemplate')
-  private editComponent!: TemplateRef<HTMLElement>;
+  private editComponent =
+    viewChild.required<TemplateRef<HTMLElement>>('modalTemplate');
   protected characterData$ = this.store.select(selectCharacterData);
   protected currentPage$ = this.store.select(selectCurrentPage);
   protected pageSize$ = this.store.select(selectPageSize);
@@ -93,7 +93,7 @@ export class CharactersComponent implements OnDestroy {
                 selectedCharacter,
               }),
             );
-            this.ms.open(this.editComponent);
+            this.ms.open(this.editComponent());
           });
       }
     });

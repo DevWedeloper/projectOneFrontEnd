@@ -8,9 +8,9 @@ import {
   EventEmitter,
   Output,
   Renderer2,
-  ViewChild,
   inject,
   input,
+  viewChild,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
@@ -65,7 +65,7 @@ export class GuildTableComponent implements AfterViewInit {
   @Output() changePage = new EventEmitter<number>();
   @Output() editGuild = new EventEmitter<Guild>();
   @Output() deleteGuild = new EventEmitter<Guild>();
-  @ViewChild('perPage', { static: false }) private pageSizeElement?: ElementRef;
+  private pageSizeElement = viewChild<ElementRef>('perPage');
   protected loading$ = this.store.select(selectInitialLoading);
   protected deleteLoading$ = this.store.select(selectIsDeleting);
   protected selectedGuild$ = this.store.select(selectSelectedGuild);
@@ -83,7 +83,7 @@ export class GuildTableComponent implements AfterViewInit {
               if (loadingValue === false) {
                 setSelectOption(
                   this.renderer,
-                  this.pageSizeElement?.nativeElement,
+                  this.pageSizeElement()?.nativeElement,
                   pageSizeValue.toString(),
                 );
               }

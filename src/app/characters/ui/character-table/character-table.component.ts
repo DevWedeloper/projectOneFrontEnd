@@ -8,9 +8,9 @@ import {
   EventEmitter,
   Output,
   Renderer2,
-  ViewChild,
   inject,
-  input
+  input,
+  viewChild,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
@@ -24,7 +24,10 @@ import { TableComponent } from 'src/app/shared/ui/components/table/table.compone
 import { TruncatePipe } from 'src/app/shared/ui/pipes/truncate.pipe';
 import { setSelectOption } from 'src/app/shared/utils/set-select-option.utils';
 import { CharacterPagination } from '../../interfaces/character-pagination.interface';
-import { selectIsDeleting, selectSelectedCharacter } from '../../state/character-actions.reducers';
+import {
+  selectIsDeleting,
+  selectSelectedCharacter,
+} from '../../state/character-actions.reducers';
 import {
   selectInitialLoading,
   selectPageSize,
@@ -60,7 +63,7 @@ export class CharacterTableComponent implements AfterViewInit {
   @Output() changePage = new EventEmitter<number>();
   @Output() editCharacter = new EventEmitter<Character>();
   @Output() deleteCharacter = new EventEmitter<Character>();
-  @ViewChild('perPage', { static: false }) private pageSizeElement?: ElementRef;
+  private pageSizeElement = viewChild<ElementRef>('perPage');
   protected loading$ = this.store.select(selectInitialLoading);
   protected deleteLoading$ = this.store.select(selectIsDeleting);
   protected selectedCharacter$ = this.store.select(selectSelectedCharacter);
@@ -78,7 +81,7 @@ export class CharacterTableComponent implements AfterViewInit {
               if (loadingValue === false) {
                 setSelectOption(
                   this.renderer,
-                  this.pageSizeElement?.nativeElement,
+                  this.pageSizeElement()?.nativeElement,
                   pageSizeValue.toString(),
                 );
               }

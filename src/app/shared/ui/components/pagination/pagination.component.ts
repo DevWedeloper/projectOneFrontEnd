@@ -6,9 +6,9 @@ import {
   EventEmitter,
   OnChanges,
   Output,
-  ViewChild,
   booleanAttribute,
-  input
+  input,
+  viewChild,
 } from '@angular/core';
 import { FocusVisibleDirective } from '../../directives/focus-visible.directive';
 
@@ -28,7 +28,8 @@ export class PaginationComponent implements OnChanges {
     transform: booleanAttribute,
   });
   @Output() changePage = new EventEmitter<number>();
-  @ViewChild('searchInput') searchInput!: ElementRef<HTMLInputElement>;
+  private searchInput =
+    viewChild.required<ElementRef<HTMLInputElement>>('searchInput');
   protected pages: (number | '...')[] = [];
   private pagesCount = 1;
   private maxVisiblePages = 7;
@@ -232,7 +233,7 @@ export class PaginationComponent implements OnChanges {
         this.changePage.emit(index);
         break;
     }
-    this.searchInput.nativeElement.value = '';
+    this.searchInput().nativeElement.value = '';
   }
 
   private showAllPage(): boolean {
