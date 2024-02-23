@@ -53,9 +53,7 @@ body::-webkit-scrollbar-thumb:hover {
 }
 
 .custom-focus-visible:focus-visible {
-  box-shadow:
-    0 0 0 3px var(--primary-color),
-    0 0 0 4px var(--text-color);
+  outline: 2px solid var(--text-color);
 }
 
 .create-btn[type="submit"] {
