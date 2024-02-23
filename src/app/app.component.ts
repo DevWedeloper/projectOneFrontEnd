@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  afterNextRender,
+  inject,
+} from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { ThemeService } from './shared/data-access/theme.service';
 
@@ -14,6 +19,8 @@ export class AppComponent {
   private ts = inject(ThemeService);
 
   constructor() {
-    this.ts.checkPreferredTheme();
+    afterNextRender(() => {
+      this.ts.checkPreferredTheme();
+    });
   }
 }
