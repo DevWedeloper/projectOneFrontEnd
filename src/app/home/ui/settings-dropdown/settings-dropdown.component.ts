@@ -12,8 +12,8 @@ import {
 } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { authActions } from 'src/app/auth/state/auth.actions';
-import { ThemeService } from 'src/app/shared/data-access/theme.service';
+import { authActions } from '../../../auth/state/auth.actions';
+import { ThemeService } from '../../../shared/data-access/theme.service';
 import { HomeService } from '../../data-access/home.service';
 
 @Component({

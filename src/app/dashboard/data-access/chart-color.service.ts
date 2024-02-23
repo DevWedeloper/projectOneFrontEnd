@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { BehaviorSubject, combineLatest, map } from 'rxjs';
-import { ThemeService } from 'src/app/shared/data-access/theme.service';
+import { ThemeService } from '../../shared/data-access/theme.service';
 
 @Injectable({
   providedIn: 'root',

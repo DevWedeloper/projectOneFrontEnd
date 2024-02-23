@@ -1,14 +1,14 @@
 import { Injectable, inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, forkJoin, map, of, switchMap } from 'rxjs';
-import { CharacterApiService } from 'src/app/shared/data-access/character-api.service';
-import { CheckGuildRelationStatusServiceApi } from 'src/app/shared/data-access/check-guild-relation-status.service-api';
-import { Character } from 'src/app/shared/interfaces/character.interface';
+import { CharacterApiService } from '../../shared/data-access/character-api.service';
+import { CheckGuildRelationStatusServiceApi } from '../../shared/data-access/check-guild-relation-status.service-api';
+import { Character } from '../../shared/interfaces/character.interface';
 import {
   isLeaderOfAGuild,
   isMemberOfAGuild,
   isNotMemberOfAGuild,
-} from 'src/app/shared/utils/guild-membership-status.utils';
+} from '../../shared/utils/guild-membership-status.utils';
 import { CharacterTypeApiService } from '../data-access/character-type-api.service';
 import { IsGuildFullApiService } from '../data-access/is-guild-full-api.service';
 import { characterActionsActions } from './character-actions.action';

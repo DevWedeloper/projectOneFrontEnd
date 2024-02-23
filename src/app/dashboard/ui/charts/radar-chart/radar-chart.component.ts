@@ -12,10 +12,10 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ChartConfiguration } from 'chart.js';
 import { BaseChartDirective, NgChartsModule, ThemeService } from 'ng2-charts';
 import { debounceTime, distinctUntilChanged, fromEvent, tap } from 'rxjs';
-import { ChartColorService } from 'src/app/dashboard/data-access/chart-color.service';
-import { WellRoundedCharacter } from 'src/app/dashboard/interfaces/well-rounded-character.interface';
-import { NoDataComponent } from 'src/app/dashboard/ui/no-data/no-data.component';
 import { smoothTransitionAnimation } from '../../../../shared/ui/animations/smooth-transition.animations';
+import { ChartColorService } from '../../../data-access/chart-color.service';
+import { WellRoundedCharacter } from '../../../interfaces/well-rounded-character.interface';
+import { NoDataComponent } from '../../no-data/no-data.component';
 import { RadarChartSkeletonComponent } from '../../skeletons/radar-chart-skeleton/radar-chart-skeleton.component';
 
 @Component({

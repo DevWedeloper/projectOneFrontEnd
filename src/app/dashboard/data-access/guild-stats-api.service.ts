@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Guild } from 'src/app/shared/interfaces/guild.interface';
-import { environment } from 'src/environments/environment';
+import { environment } from '../../../environments/environment';
+import { Guild } from '../../shared/interfaces/guild.interface';
 import { AverageGuildStats } from '../interfaces/guild-average-attribute.interface';
 import { WellRoundedGuild } from '../interfaces/well-rounded-guild.interface';
 

@@ -1,10 +1,10 @@
-import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
-import { environment } from 'src/environments/environment';
+import { environment } from '../../../environments/environment.prod';
+import { CharacterPagination } from '../../characters/interfaces/character-pagination.interface';
+import { CharacterUpdateResponse } from '../../characters/interfaces/character-update-response.interface';
 import { Character } from '../interfaces/character.interface';
-import { CharacterPagination } from 'src/app/characters/interfaces/character-pagination.interface';
-import { CharacterUpdateResponse } from 'src/app/characters/interfaces/character-update-response.interface';
 
 @Injectable({
   providedIn: 'root',

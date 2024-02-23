@@ -3,9 +3,6 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Store } from '@ngrx/store';
 import { skip, take, tap } from 'rxjs';
-import { HorizontalBarChartComponent } from 'src/app/dashboard/ui/charts/horizontal-bar-chart/horizontal-bar-chart.component';
-import { RadarChartComponent } from 'src/app/dashboard/ui/charts/radar-chart/radar-chart.component';
-import { HorizontalBarChartSkeletonComponent } from 'src/app/dashboard/ui/skeletons/horizontal-bar-chart-skeleton/horizontal-bar-chart-skeleton.component';
 import { WellRoundedCharacter } from '../../interfaces/well-rounded-character.interface';
 import { characterStatsActions } from '../../state/character-stats.actions';
 import {
@@ -22,7 +19,10 @@ import {
 } from '../../state/character-stats.reducers';
 import { selectIsLoading } from '../../state/dashboard.reducers';
 import { DoughnutChartComponent } from '../../ui/charts/doughnut-chart/doughnut-chart.component';
+import { HorizontalBarChartComponent } from '../../ui/charts/horizontal-bar-chart/horizontal-bar-chart.component';
+import { RadarChartComponent } from '../../ui/charts/radar-chart/radar-chart.component';
 import { HeadingComponent } from '../../ui/heading/heading.component';
+import { HorizontalBarChartSkeletonComponent } from '../../ui/skeletons/horizontal-bar-chart-skeleton/horizontal-bar-chart-skeleton.component';
 
 @Component({
   selector: 'app-character-stats',

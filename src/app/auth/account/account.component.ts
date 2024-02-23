@@ -16,12 +16,12 @@ import {
 import { Router, RouterLink } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { filter, take } from 'rxjs';
-import { DynamicValidatorMessageDirective } from 'src/app/shared/form/dynamic-validator-message.directive';
-import { CountdownTimerComponent } from 'src/app/shared/ui/components/countdown-timer/countdown-timer.component';
-import { CustomInputComponent } from 'src/app/shared/ui/components/custom-input/custom-input.component';
-import { SnackbarService } from 'src/app/shared/ui/components/snackbar/snackbar.service';
-import { FocusVisibleDirective } from 'src/app/shared/ui/directives/focus-visible.directive';
-import { alphanumericUnderscore } from 'src/app/shared/validators/alphanumeric-underscore.validator';
+import { DynamicValidatorMessageDirective } from '../../shared/form/dynamic-validator-message.directive';
+import { CountdownTimerComponent } from '../../shared/ui/components/countdown-timer/countdown-timer.component';
+import { CustomInputComponent } from '../../shared/ui/components/custom-input/custom-input.component';
+import { SnackbarService } from '../../shared/ui/components/snackbar/snackbar.service';
+import { FocusVisibleDirective } from '../../shared/ui/directives/focus-visible.directive';
+import { alphanumericUnderscore } from '../../shared/validators/alphanumeric-underscore.validator';
 import { AuthApiService } from '../data-access/auth-api.service';
 import { accountSettingsActions } from '../state/account-settings.actions';
 import {

@@ -1,5 +1,5 @@
 import { createActionGroup, emptyProps, props } from '@ngrx/store';
-import { QueryParams } from 'src/app/shared/interfaces/query-params.interface';
+import { QueryParams } from '../../shared/interfaces/query-params.interface';
 import { GuildPagination } from '../interfaces/guild-pagination.interface';
 import { GuildSortParams } from '../interfaces/guild-sort-params.interface';
 

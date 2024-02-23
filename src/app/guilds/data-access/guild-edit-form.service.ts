@@ -15,9 +15,9 @@ import {
   of,
   switchMap,
 } from 'rxjs';
-import { CheckIfMemberApiService } from 'src/app/guilds/data-access/check-if-member-api.service';
-import { CheckUniquenessService } from 'src/app/shared/data-access/check-uniqueness-api.service';
-import { alphanumericUnderscore } from 'src/app/shared/validators/alphanumeric-underscore.validator';
+import { CheckUniquenessService } from '../../shared/data-access/check-uniqueness-api.service';
+import { alphanumericUnderscore } from '../../shared/validators/alphanumeric-underscore.validator';
+import { CheckIfMemberApiService } from './check-if-member-api.service';
 
 @Injectable({
   providedIn: 'root',

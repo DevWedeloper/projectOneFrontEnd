@@ -8,10 +8,10 @@ import {
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ChartConfiguration } from 'chart.js';
 import { NgChartsModule, ThemeService } from 'ng2-charts';
-import { ChartColorService } from 'src/app/dashboard/data-access/chart-color.service';
-import { NoDataComponent } from 'src/app/dashboard/ui/no-data/no-data.component';
-import { smoothTransitionAnimation } from 'src/app/shared/ui/animations/smooth-transition.animations';
-import { TruncatePipe } from 'src/app/shared/ui/pipes/truncate.pipe';
+import { smoothTransitionAnimation } from '../../../../shared/ui/animations/smooth-transition.animations';
+import { TruncatePipe } from '../../../../shared/ui/pipes/truncate.pipe';
+import { ChartColorService } from '../../../data-access/chart-color.service';
+import { NoDataComponent } from '../../no-data/no-data.component';
 import { VerticalBarChartSkeletonComponent } from '../../skeletons/vertical-bar-chart-skeleton/vertical-bar-chart-skeleton.component';
 
 @Component({

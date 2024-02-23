@@ -1,10 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { ChartConfiguration } from 'chart.js';
-import {
-  Observable,
-  map
-} from 'rxjs';
-import { Character } from 'src/app/shared/interfaces/character.interface';
+import { Observable, map } from 'rxjs';
+import { Character } from '../../shared/interfaces/character.interface';
 import { CharacterStatsApiService } from './character-stats-api.service';
 
 interface TopCharactersByAttributeOptions {
@@ -17,7 +14,7 @@ interface TopCharactersByAttributeOptions {
 })
 export class CharacterStatsService {
   private characterStatsApiService = inject(CharacterStatsApiService);
-  
+
   generateTopCharactersByAttribute({
     attribute,
     backgroundColor,

@@ -1,11 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Character } from 'src/app/shared/interfaces/character.interface';
-import { environment } from 'src/environments/environment';
-import { WellRoundedCharacter } from '../interfaces/well-rounded-character.interface';
+import { environment } from '../../../environments/environment';
+import { Character } from '../../shared/interfaces/character.interface';
 import { AverageCharacterStats } from '../interfaces/character-average-interface';
 import { CharacterDistributionByType } from '../interfaces/character-distribution.interface';
+import { WellRoundedCharacter } from '../interfaces/well-rounded-character.interface';
 
 @Injectable({
   providedIn: 'root',

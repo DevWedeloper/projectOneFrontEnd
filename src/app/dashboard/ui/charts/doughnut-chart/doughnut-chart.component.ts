@@ -8,9 +8,9 @@ import {
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ChartConfiguration } from 'chart.js';
 import { NgChartsModule, ThemeService } from 'ng2-charts';
-import { ChartColorService } from 'src/app/dashboard/data-access/chart-color.service';
-import { NoDataComponent } from 'src/app/dashboard/ui/no-data/no-data.component';
-import { smoothTransitionAnimation } from 'src/app/shared/ui/animations/smooth-transition.animations';
+import { smoothTransitionAnimation } from '../../../../shared/ui/animations/smooth-transition.animations';
+import { ChartColorService } from '../../../data-access/chart-color.service';
+import { NoDataComponent } from '../../no-data/no-data.component';
 import { DoughnutChartSkeletonComponent } from '../../skeletons/doughnut-chart-skeleton/doughnut-chart-skeleton.component';
 
 @Component({

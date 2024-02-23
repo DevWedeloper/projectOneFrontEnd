@@ -16,11 +16,11 @@ import {
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { filter, take } from 'rxjs';
-import { DynamicValidatorMessageDirective } from 'src/app/shared/form/dynamic-validator-message.directive';
-import { ValidatorMessageContainerDirective } from 'src/app/shared/form/validator-message-container.directive';
-import { SnackbarService } from 'src/app/shared/ui/components/snackbar/snackbar.service';
-import { SpinnerComponent } from 'src/app/shared/ui/components/spinner/spinner.component';
-import { FocusVisibleDirective } from 'src/app/shared/ui/directives/focus-visible.directive';
+import { DynamicValidatorMessageDirective } from '../../shared/form/dynamic-validator-message.directive';
+import { ValidatorMessageContainerDirective } from '../../shared/form/validator-message-container.directive';
+import { SnackbarService } from '../../shared/ui/components/snackbar/snackbar.service';
+import { SpinnerComponent } from '../../shared/ui/components/spinner/spinner.component';
+import { FocusVisibleDirective } from '../../shared/ui/directives/focus-visible.directive';
 import { passwordRecoveryActions } from '../state/password-recovery.actions';
 import {
   selectHasResetPasswordError,

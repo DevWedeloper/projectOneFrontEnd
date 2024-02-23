@@ -13,8 +13,8 @@ import {
   tap,
   withLatestFrom,
 } from 'rxjs';
-import { CharacterApiService } from 'src/app/shared/data-access/character-api.service';
-import { QueryParams } from 'src/app/shared/interfaces/query-params.interface';
+import { CharacterApiService } from '../../shared/data-access/character-api.service';
+import { QueryParams } from '../../shared/interfaces/query-params.interface';
 import { characterTableActions } from './character-table.actions';
 import {
   selectCurrentPage,

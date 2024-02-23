@@ -1,6 +1,6 @@
 import { createActionGroup, emptyProps, props } from '@ngrx/store';
-import { Character } from 'src/app/shared/interfaces/character.interface';
-import { Guild } from 'src/app/shared/interfaces/guild.interface';
+import { Character } from '../../shared/interfaces/character.interface';
+import { Guild } from '../../shared/interfaces/guild.interface';
 
 export const guildActionsActions = createActionGroup({
   source: 'Guild Actions',

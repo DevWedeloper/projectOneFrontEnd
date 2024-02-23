@@ -10,10 +10,10 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { filter } from 'rxjs';
-import { Character } from 'src/app/shared/interfaces/character.interface';
-import { DividerDropdownComponent } from 'src/app/shared/ui/components/divider-dropdown/divider-dropdown.component';
-import { SpinnerComponent } from 'src/app/shared/ui/components/spinner/spinner.component';
-import { CreateButtonDirective } from 'src/app/shared/ui/directives/button/create-button.directive';
+import { Character } from '../../../shared/interfaces/character.interface';
+import { DividerDropdownComponent } from '../../../shared/ui/components/divider-dropdown/divider-dropdown.component';
+import { SpinnerComponent } from '../../../shared/ui/components/spinner/spinner.component';
+import { CreateButtonDirective } from '../../../shared/ui/directives/button/create-button.directive';
 import { CharacterFormService } from '../../data-access/character-form.service';
 import {
   selectCreateSuccess,
