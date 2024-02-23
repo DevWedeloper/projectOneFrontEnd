@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
-import { environment } from '../../../environments/environment.prod';
+import { environment } from '../../../environments/environment';
 import { GuildPagination } from '../../guilds/interfaces/guild-pagination.interface';
 import { GuildUpdateResponse } from '../../guilds/interfaces/guild-update-response.interface';
 import { Character } from '../interfaces/character.interface';

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
-import { environment } from '../../../environments/environment.prod';
+import { environment } from '../../../environments/environment';
 import { CharacterPagination } from '../../characters/interfaces/character-pagination.interface';
 import { CharacterUpdateResponse } from '../../characters/interfaces/character-update-response.interface';
 import { Character } from '../interfaces/character.interface';
