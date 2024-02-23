@@ -12,19 +12,37 @@
   box-sizing: border-box;
 }
 
+$light-theme-colors: (
+  main-color: darken(#fea1a1, 15%),
+  primary-color: #fff,
+  secondary-color: #f2f2f2,
+  text-color: #000000,
+  text-color-reverse: #ffffff,
+);
+
+$dark-theme-colors: (
+  primary-color: #202124,
+  secondary-color: #171717,
+  text-color: #ffffff,
+  text-color-reverse: #000000,
+);
+
+@mixin apply-theme-colors($colors) {
+  @each $property, $value in $colors {
+    --#{$property}: #{$value};
+  }
+}
+
 :root {
-  --main-color: red;
-  --primary-color: #fff;
-  --secondary-color: #f2f2f2;
-  --text-color: #000000;
-  --text-color-reverse: #ffffff;
+  @include apply-theme-colors($light-theme-colors);
+}
+
+.light-theme {
+  @include apply-theme-colors($light-theme-colors);
 }
 
 .dark-theme {
-  --primary-color: #202124;
-  --secondary-color: #171717;
-  --text-color: #ffffff;
-  --text-color-reverse: #000000;
+  @include apply-theme-colors($dark-theme-colors);
 }
 
 html {
