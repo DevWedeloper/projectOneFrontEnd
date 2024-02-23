@@ -33,8 +33,6 @@ $dark-theme-colors: (
 }
 
 :root {
-  @include apply-theme-colors($light-theme-colors);
-  
   --main-color: red;
   --navbar-height: 48px;
   --sidebar-closed-width: 48px;
