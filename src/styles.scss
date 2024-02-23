@@ -1,10 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap");
 
-html {
-  scroll-behavior: smooth;
-}
-
 * {
   margin: 0;
   padding: 0;
@@ -27,6 +23,10 @@ html {
   --secondary-color: #171717;
   --text-color: #ffffff;
   --text-color-reverse: #000000;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
