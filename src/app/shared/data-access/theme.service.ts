@@ -1,4 +1,10 @@
-import { Injectable, Renderer2, RendererFactory2, inject } from '@angular/core';
+import {
+  Injectable,
+  Renderer2,
+  RendererFactory2,
+  afterNextRender,
+  inject,
+} from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
@@ -7,40 +13,34 @@ import { BehaviorSubject, Observable } from 'rxjs';
 export class ThemeService {
   private renderer: Renderer2;
   private rendererFactory = inject(RendererFactory2);
-  private darkThemeMediaQuery = window.matchMedia(
-    '(prefers-color-scheme: dark)',
-  );
-  darkMode$ = new BehaviorSubject<boolean>(this.darkThemeMediaQuery.matches);
+  private darkThemeMediaQuery!: MediaQueryList;
+  darkMode$ = new BehaviorSubject<boolean>(true);
   isDarkMode$: Observable<boolean> = this.darkMode$.asObservable();
   styles$ = new BehaviorSubject<CSSStyleDeclaration | null>(null);
 
   constructor() {
     this.renderer = this.rendererFactory.createRenderer(null, null);
+    afterNextRender(() => {
+      this.darkThemeMediaQuery = matchMedia('(prefers-color-scheme: dark)');
+    });
   }
 
   themeOnClick(): void {
     this.darkMode$.next(!this.darkMode$.value);
-    if (this.darkMode$.value) {
-      this.renderer.addClass(document.body, 'dark-theme');
-      localStorage.setItem('preferredTheme', 'dark');
-    } else {
-      this.renderer.removeClass(document.body, 'dark-theme');
-      localStorage.setItem('preferredTheme', 'light');
-    }
-    this.styles$.next(getComputedStyle(document.body));
+    const preferredTheme = this.darkMode$.value ? 'dark' : 'light';
+
+    this.renderer.removeClass(document.documentElement, 'dark-theme');
+    this.renderer.removeClass(document.documentElement, 'light-theme');
+    this.renderer.addClass(document.documentElement, `${preferredTheme}-theme`);
+
+    localStorage.setItem('preferredTheme', preferredTheme);
   }
 
   checkPreferredTheme(): void {
     const preferredTheme = localStorage.getItem('preferredTheme');
-    if (
+    const isDarkTheme =
       preferredTheme === 'dark' ||
-      (preferredTheme === null && this.darkThemeMediaQuery.matches)
-    ) {
-      this.darkMode$.next(true);
-      this.renderer.addClass(document.body, 'dark-theme');
-    } else {
-      this.darkMode$.next(false);
-      this.renderer.removeClass(document.body, 'dark-theme');
-    }
+      (preferredTheme === null && this.darkThemeMediaQuery.matches);
+    this.darkMode$.next(isDarkTheme);
   }
 }
