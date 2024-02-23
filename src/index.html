@@ -1,6 +1,19 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="dark-theme light-theme">
   <head>
+    <script>
+      var preferredTheme = localStorage.getItem("preferredTheme");
+      var isSystemThemeDark = matchMedia(
+        "(prefers-color-scheme: dark)",
+      ).matches;
+      const isDarkTheme =
+        preferredTheme === "dark" ||
+        (preferredTheme === null && isSystemThemeDark);
+      document.documentElement.className = "";
+      document.documentElement.classList.add(
+        isDarkTheme ? "dark-theme" : "light-theme",
+      );
+    </script>
     <meta charset="utf-8" />
     <title>ProjectOne</title>
     <base href="/" />
