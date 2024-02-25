@@ -5,7 +5,7 @@ import {
   OnDestroy,
   TemplateRef,
   inject,
-  viewChild
+  viewChild,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
@@ -21,7 +21,7 @@ import {
   switchMap,
   take,
 } from 'rxjs';
-import { AuthService } from 'src/app/auth/data-access/auth.service';
+import { AuthService } from '../auth/data-access/auth.service';
 import { CharacterApiService } from '../shared/data-access/character-api.service';
 import { GuildApiService } from '../shared/data-access/guild-api.service';
 import { Character } from '../shared/interfaces/character.interface';

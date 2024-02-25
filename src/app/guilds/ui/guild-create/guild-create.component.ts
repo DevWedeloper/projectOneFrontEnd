@@ -5,23 +5,19 @@ import {
   EventEmitter,
   Output,
   inject,
-  input
+  input,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import {
-  FormGroup,
-  FormsModule,
-  ReactiveFormsModule
-} from '@angular/forms';
+import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { BehaviorSubject, filter } from 'rxjs';
-import { DynamicValidatorMessageDirective } from 'src/app/shared/form/dynamic-validator-message.directive';
-import { Character } from 'src/app/shared/interfaces/character.interface';
-import { CustomInputComponent } from 'src/app/shared/ui/components/custom-input/custom-input.component';
-import { DividerDropdownComponent } from 'src/app/shared/ui/components/divider-dropdown/divider-dropdown.component';
-import { SearchItemsComponent } from 'src/app/shared/ui/components/search-items/search-items.component';
-import { SpinnerComponent } from 'src/app/shared/ui/components/spinner/spinner.component';
-import { CreateButtonDirective } from 'src/app/shared/ui/directives/button/create-button.directive';
+import { DynamicValidatorMessageDirective } from '../../../shared/form/dynamic-validator-message.directive';
+import { Character } from '../../../shared/interfaces/character.interface';
+import { CustomInputComponent } from '../../../shared/ui/components/custom-input/custom-input.component';
+import { DividerDropdownComponent } from '../../../shared/ui/components/divider-dropdown/divider-dropdown.component';
+import { SearchItemsComponent } from '../../../shared/ui/components/search-items/search-items.component';
+import { SpinnerComponent } from '../../../shared/ui/components/spinner/spinner.component';
+import { CreateButtonDirective } from '../../../shared/ui/directives/button/create-button.directive';
 import { GuildFormService } from '../../data-access/guild-form.service';
 import {
   selectCreateSuccess,

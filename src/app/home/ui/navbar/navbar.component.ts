@@ -5,7 +5,7 @@ import {
   HostListener,
   inject,
 } from '@angular/core';
-import { ThemeService } from 'src/app/shared/data-access/theme.service';
+import { ThemeService } from '../../../shared/data-access/theme.service';
 import { HomeService } from '../../data-access/home.service';
 import { SettingsDropdownComponent } from '../settings-dropdown/settings-dropdown.component';
 

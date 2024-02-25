@@ -12,13 +12,11 @@ export const AuthGuard = () => {
       if (isAuthenticated) {
         return true;
       } else {
-        router.navigate(['/login']);
-        return false;
+        return router.parseUrl('/login');
       }
     }),
     catchError(() => {
-      router.navigate(['/login']);
-      return of(false);
+      return of(router.parseUrl('/login'));
     }),
   );
 };

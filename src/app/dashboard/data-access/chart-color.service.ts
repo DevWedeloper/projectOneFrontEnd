@@ -1,13 +1,13 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, afterNextRender, inject } from '@angular/core';
 import { BehaviorSubject, combineLatest, map } from 'rxjs';
-import { ThemeService } from 'src/app/shared/data-access/theme.service';
+import { ThemeService } from '../../shared/data-access/theme.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ChartColorService {
   private ts = inject(ThemeService);
-  private style = getComputedStyle(document.body);
+  private style!: CSSStyleDeclaration;
   readonly secondaryColor$ = new BehaviorSubject<string>('');
   readonly textColor$ = new BehaviorSubject<string>('');
   readonly getStyle$ = combineLatest([this.ts.styles$]).pipe(
@@ -28,4 +28,10 @@ export class ChartColorService {
   readonly intelligenceColor = 'yellow';
   readonly armorColor = 'brown';
   readonly critChanceColor = 'orange';
+
+  constructor() {
+    afterNextRender(() => {
+      this.style = getComputedStyle(document.body);
+    });
+  }
 }

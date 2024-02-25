@@ -1,8 +1,8 @@
 import { Injectable, inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, map, of, switchMap } from 'rxjs';
-import { CheckGuildRelationStatusServiceApi } from 'src/app/shared/data-access/check-guild-relation-status.service-api';
-import { GuildApiService } from 'src/app/shared/data-access/guild-api.service';
+import { CheckGuildRelationStatusServiceApi } from '../../shared/data-access/check-guild-relation-status.service-api';
+import { GuildApiService } from '../../shared/data-access/guild-api.service';
 import { guildActionsActions } from './guild-actions.action';
 import { guildTableActions } from './guild-table.actions';
 

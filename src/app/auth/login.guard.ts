@@ -12,13 +12,11 @@ export const LoginGuard = () => {
       if (!isAuthenticated) {
         return true;
       } else {
-        router.navigate(['/']);
-        return false;
+        return router.parseUrl('/');
       }
     }),
     catchError(() => {
-      router.navigate(['/login']);
-      return of(false);
+      return of(router.parseUrl('/login'));
     })
   );
 };

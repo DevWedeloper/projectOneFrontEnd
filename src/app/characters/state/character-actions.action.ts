@@ -1,5 +1,5 @@
 import { createActionGroup, emptyProps, props } from '@ngrx/store';
-import { Character } from 'src/app/shared/interfaces/character.interface';
+import { Character } from '../../shared/interfaces/character.interface';
 import { CharacterType } from '../interfaces/character-type.interface';
 
 export const characterActionsActions = createActionGroup({

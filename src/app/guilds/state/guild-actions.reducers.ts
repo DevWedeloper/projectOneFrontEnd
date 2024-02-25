@@ -1,6 +1,6 @@
 import { createFeature, createReducer, createSelector, on } from '@ngrx/store';
-import { Character } from 'src/app/shared/interfaces/character.interface';
-import { Guild } from 'src/app/shared/interfaces/guild.interface';
+import { Character } from '../../shared/interfaces/character.interface';
+import { Guild } from '../../shared/interfaces/guild.interface';
 import { guildActionsActions } from './guild-actions.action';
 
 type Status = 'pending' | 'loading' | 'error' | 'success';

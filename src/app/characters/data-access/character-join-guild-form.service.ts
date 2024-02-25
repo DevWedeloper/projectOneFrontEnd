@@ -14,7 +14,7 @@ import {
   of,
   switchMap,
 } from 'rxjs';
-import { CheckUniquenessService } from 'src/app/shared/data-access/check-uniqueness-api.service';
+import { CheckUniquenessService } from '../../shared/data-access/check-uniqueness-api.service';
 
 @Injectable({
   providedIn: 'root',

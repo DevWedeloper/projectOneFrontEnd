@@ -16,12 +16,12 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { skip, switchMap, take, tap } from 'rxjs';
-import { Guild } from 'src/app/shared/interfaces/guild.interface';
-import { PaginationComponent } from 'src/app/shared/ui/components/pagination/pagination.component';
-import { SpinnerComponent } from 'src/app/shared/ui/components/spinner/spinner.component';
-import { TableComponent } from 'src/app/shared/ui/components/table/table.component';
-import { TruncatePipe } from 'src/app/shared/ui/pipes/truncate.pipe';
-import { setSelectOption } from 'src/app/shared/utils/set-select-option.utils';
+import { Guild } from '../../../shared/interfaces/guild.interface';
+import { PaginationComponent } from '../../../shared/ui/components/pagination/pagination.component';
+import { SpinnerComponent } from '../../../shared/ui/components/spinner/spinner.component';
+import { TableComponent } from '../../../shared/ui/components/table/table.component';
+import { TruncatePipe } from '../../../shared/ui/pipes/truncate.pipe';
+import { setSelectOption } from '../../../shared/utils/set-select-option.utils';
 import { GuildPagination } from '../../interfaces/guild-pagination.interface';
 import { GuildSortParams } from '../../interfaces/guild-sort-params.interface';
 import {

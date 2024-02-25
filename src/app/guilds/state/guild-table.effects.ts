@@ -13,8 +13,8 @@ import {
   tap,
   withLatestFrom,
 } from 'rxjs';
-import { GuildApiService } from 'src/app/shared/data-access/guild-api.service';
-import { QueryParams } from 'src/app/shared/interfaces/query-params.interface';
+import { GuildApiService } from '../../shared/data-access/guild-api.service';
+import { QueryParams } from '../../shared/interfaces/query-params.interface';
 import { guildTableActions } from './guild-table.actions';
 import {
   selectCurrentPage,

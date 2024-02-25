@@ -13,15 +13,15 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { BehaviorSubject, filter } from 'rxjs';
-import { DynamicValidatorMessageDirective } from 'src/app/shared/form/dynamic-validator-message.directive';
-import { Character } from 'src/app/shared/interfaces/character.interface';
-import { Guild } from 'src/app/shared/interfaces/guild.interface';
-import { CustomInputComponent } from 'src/app/shared/ui/components/custom-input/custom-input.component';
-import { ModalComponent } from 'src/app/shared/ui/components/modal/modal.component';
-import { SearchItemsComponent } from 'src/app/shared/ui/components/search-items/search-items.component';
-import { SpinnerComponent } from 'src/app/shared/ui/components/spinner/spinner.component';
-import { GreenButtonDirective } from 'src/app/shared/ui/directives/button/green-button.directive';
-import { RedButtonDirective } from 'src/app/shared/ui/directives/button/red-button.directive';
+import { DynamicValidatorMessageDirective } from '../../../shared/form/dynamic-validator-message.directive';
+import { Character } from '../../../shared/interfaces/character.interface';
+import { Guild } from '../../../shared/interfaces/guild.interface';
+import { CustomInputComponent } from '../../../shared/ui/components/custom-input/custom-input.component';
+import { ModalComponent } from '../../../shared/ui/components/modal/modal.component';
+import { SearchItemsComponent } from '../../../shared/ui/components/search-items/search-items.component';
+import { SpinnerComponent } from '../../../shared/ui/components/spinner/spinner.component';
+import { GreenButtonDirective } from '../../../shared/ui/directives/button/green-button.directive';
+import { RedButtonDirective } from '../../../shared/ui/directives/button/red-button.directive';
 import { GuildEditFormService } from '../../data-access/guild-edit-form.service';
 import {
   selectAddMemberSuccess,

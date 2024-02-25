@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { ChartConfiguration } from 'chart.js';
 import { Observable, combineLatest, map } from 'rxjs';
-import { Guild } from 'src/app/shared/interfaces/guild.interface';
+import { Guild } from '../../shared/interfaces/guild.interface';
 import { AverageCharacterStats } from '../interfaces/character-average-interface';
 import { CharacterStatsApiService } from './character-stats-api.service';
 import { GuildStatsApiService } from './guild-stats-api.service';

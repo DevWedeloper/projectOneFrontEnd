@@ -20,7 +20,7 @@ import {
   input,
   viewChild,
 } from '@angular/core';
-import { ThemeService } from 'src/app/shared/data-access/theme.service';
+import { ThemeService } from '../../../data-access/theme.service';
 import { ModalService } from './modal.service';
 
 @Component({

@@ -1,5 +1,5 @@
 import { createFeature, createReducer, createSelector, on } from '@ngrx/store';
-import { Character } from 'src/app/shared/interfaces/character.interface';
+import { Character } from '../../shared/interfaces/character.interface';
 import { CharacterType } from '../interfaces/character-type.interface';
 import { characterActionsActions } from './character-actions.action';
 

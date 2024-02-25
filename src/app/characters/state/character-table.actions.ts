@@ -1,5 +1,5 @@
 import { createActionGroup, emptyProps, props } from '@ngrx/store';
-import { QueryParams } from 'src/app/shared/interfaces/query-params.interface';
+import { QueryParams } from '../../shared/interfaces/query-params.interface';
 import { CharacterPagination } from '../interfaces/character-pagination.interface';
 import { CharacterSortParams } from '../interfaces/character-sort-params.interface';
 
