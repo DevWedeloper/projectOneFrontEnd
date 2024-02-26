@@ -8,15 +8,9 @@ export const AuthGuard = () => {
   const router = inject(Router);
 
   return authService.isAuthenticated().pipe(
-    map((isAuthenticated) => {
-      if (isAuthenticated) {
-        return true;
-      } else {
-        return router.parseUrl('/login');
-      }
-    }),
-    catchError(() => {
-      return of(router.parseUrl('/login'));
-    }),
+    map((isAuthenticated) =>
+      isAuthenticated ? true : router.parseUrl('/login'),
+    ),
+    catchError(() => of(router.parseUrl('/login'))),
   );
 };
