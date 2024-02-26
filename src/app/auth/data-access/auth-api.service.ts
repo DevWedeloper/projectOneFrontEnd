@@ -37,8 +37,8 @@ export class AuthApiService {
     );
   }
 
-  isLoggedIn(): Observable<void> {
-    return this.http.get<void>(`${this.url}/isLoggedIn`, {
+  isLoggedIn(): Observable<{ message: string }> {
+    return this.http.get<{ message: string }>(`${this.url}/isLoggedIn`, {
       withCredentials: true,
     });
   }
