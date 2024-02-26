@@ -24,7 +24,7 @@ export class AuthService {
   isAuthenticated(): Observable<boolean> {
     return this.authApiService.isLoggedIn().pipe(
       map((data) => {
-        if (data.message === 'Logged in') {
+        if (data.message === 'Logged in.') {
           return true;
         } else {
           return false;
