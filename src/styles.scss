@@ -17,6 +17,7 @@ $light-theme-colors: (
   secondary-color: #f2f2f2,
   text-color: #000000,
   text-color-reverse: #ffffff,
+  anchor-link-color:#0000ff,
 );
 
 $dark-theme-colors: (
@@ -24,6 +25,7 @@ $dark-theme-colors: (
   secondary-color: #171717,
   text-color: #ffffff,
   text-color-reverse: #000000,
+  anchor-link-color:#a3a3ff,
 );
 
 @mixin apply-theme-colors($colors) {
