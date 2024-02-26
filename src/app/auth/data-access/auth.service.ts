@@ -23,7 +23,13 @@ export class AuthService {
 
   isAuthenticated(): Observable<boolean> {
     return this.authApiService.isLoggedIn().pipe(
-      map(() => true),
+      map((data) => {
+        if (data.message === 'Logged in') {
+          return true;
+        } else {
+          return false;
+        }
+      }),
       catchError(() =>
         this.authApiService.refreshToken().pipe(
           map(() => true),
@@ -35,7 +41,7 @@ export class AuthService {
 
   initializeGoogleOAuth(text: 'signup_with' | 'signin_with'): void {
     if (typeof window === 'undefined') return;
-    
+
     const redirectUri = encodeURIComponent(window.location.origin);
     google.accounts.id.initialize({
       client_id: this.clientId,
