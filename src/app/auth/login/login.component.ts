@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
-  OnInit,
+  afterNextRender,
   inject,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -43,7 +43,7 @@ import { selectHasLoginError, selectIsLoggingIn } from '../state/auth.reducers';
   styleUrls: ['./login.component.scss', '../ui/auth-shared.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
   private fb = inject(FormBuilder);
   private authService = inject(AuthService);
   protected loginForm!: FormGroup;
@@ -69,10 +69,9 @@ export class LoginComponent implements OnInit {
           this.loginForm.get('password')?.setErrors({ invalidPassword: true });
         }
       });
-  }
-
-  ngOnInit(): void {
-    this.authService.initializeGoogleOAuth('signin_with');
+    afterNextRender(() => {
+      this.authService.initializeGoogleOAuth('signin_with');
+    });
   }
 
   onSubmit(): void {
