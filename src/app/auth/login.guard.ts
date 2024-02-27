@@ -8,15 +8,7 @@ export const LoginGuard = () => {
   const router = inject(Router);
 
   return authService.isAuthenticated().pipe(
-    map((isAuthenticated) => {
-      if (!isAuthenticated) {
-        return true;
-      } else {
-        return router.parseUrl('/');
-      }
-    }),
-    catchError(() => {
-      return of(router.parseUrl('/login'));
-    })
+    map((isAuthenticated) => (!isAuthenticated ? true : router.parseUrl('/'))),
+    catchError(() => of(router.parseUrl('/login'))),
   );
 };

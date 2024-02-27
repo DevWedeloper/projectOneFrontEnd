@@ -11,9 +11,6 @@ export const ResetPasswordGuard = (next: ActivatedRouteSnapshot) => {
 
   return userApiService.isResetPasswordTokenExisting(token).pipe(
     map(() => true),
-    catchError(() => {
-      router.navigate(['/forgot-password']);
-      return of(false);
-    }),
+    catchError(() => of(router.parseUrl('/forgot-password'))),
   );
 };
