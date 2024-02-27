@@ -34,6 +34,7 @@ export class ThemeService {
     this.renderer.addClass(document.documentElement, `${preferredTheme}-theme`);
 
     localStorage.setItem('preferredTheme', preferredTheme);
+    this.styles$.next(getComputedStyle(document.body));
   }
 
   checkPreferredTheme(): void {
