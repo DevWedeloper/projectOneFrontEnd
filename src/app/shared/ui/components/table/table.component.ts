@@ -3,8 +3,6 @@ import {
   ChangeDetectionStrategy,
   Component,
   ContentChild,
-  EventEmitter,
-  Output,
   TemplateRef,
   input
 } from '@angular/core';
@@ -23,7 +21,6 @@ import { TableSkeletonComponent } from '../skeleton/table-skeleton/table-skeleto
 export class TableComponent<T extends Character | Guild> {
   loading = input.required<boolean | null>();
   data = input.required<T[] | undefined>();
-  @Output() tableLoaded = new EventEmitter<boolean>();
   @ContentChild('searchTemplate') search: TemplateRef<HTMLElement> | undefined;
   @ContentChild('pageSizeTemplate') protected pageSize:
     | TemplateRef<HTMLElement>
