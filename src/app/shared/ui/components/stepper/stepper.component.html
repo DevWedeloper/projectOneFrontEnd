@@ -3,7 +3,7 @@
     @for (step of stepper(); track $index) {
       <ng-container>
         @if ($index === stepperService.index$.value) {
-          <ng-container [ngTemplateOutlet]="step"></ng-container>
+          <ng-container [ngTemplateOutlet]="step" />
         }
       </ng-container>
     }
