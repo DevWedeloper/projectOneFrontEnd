@@ -25,8 +25,7 @@ export class TableComponent<T extends object> {
     contentChild.required<TemplateRef<HTMLElement>>('pageSizeTemplate');
   protected headers =
     contentChild.required<TemplateRef<HTMLElement>>('headersTemplate');
-  protected rows =
-    contentChild.required<TemplateRef<object>>('rowsTemplate');
+  protected rows = contentChild.required<TemplateRef<object>>('rowsTemplate');
   protected pagination =
     contentChild.required<TemplateRef<HTMLElement>>('paginationTemplate');
 }

@@ -14,10 +14,7 @@
         @for (row of data(); track $index) {
           <tr>
             <ng-container
-              *ngTemplateOutlet="
-                rows();
-                context: { $implicit: row }
-              "
+              *ngTemplateOutlet="rows(); context: { $implicit: row }"
             />
           </tr>
         }
