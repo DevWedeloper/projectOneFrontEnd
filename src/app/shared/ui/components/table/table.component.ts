@@ -6,8 +6,6 @@ import {
   contentChild,
   input,
 } from '@angular/core';
-import { Character } from '../../../interfaces/character.interface';
-import { Guild } from '../../../interfaces/guild.interface';
 import { TableSkeletonComponent } from '../skeleton/table-skeleton/table-skeleton.component';
 
 @Component({
@@ -18,7 +16,7 @@ import { TableSkeletonComponent } from '../skeleton/table-skeleton/table-skeleto
   styleUrls: ['./table.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TableComponent<T extends Character | Guild> {
+export class TableComponent<T extends object> {
   loading = input.required<boolean | null>();
   data = input.required<T[] | undefined>();
   protected search =
