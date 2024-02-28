@@ -7,12 +7,11 @@ import {
 } from '@angular/animations';
 import { CommonModule } from '@angular/common';
 import {
-  AfterViewInit,
   ChangeDetectionStrategy,
   Component,
-  ContentChildren,
-  QueryList,
   TemplateRef,
+  contentChildren,
+  effect,
   inject,
 } from '@angular/core';
 import { StepperService } from './stepper.service';
@@ -38,14 +37,14 @@ import { StepperService } from './stepper.service';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class StepperComponent implements AfterViewInit {
+export class StepperComponent {
   protected stepperService = inject(StepperService);
+  protected stepper =
+    contentChildren<TemplateRef<HTMLElement>>('stepperTemplate');
 
-  @ContentChildren('stepperTemplate') stepper!: QueryList<
-    TemplateRef<HTMLElement>
-  >;
-
-  ngAfterViewInit(): void {
-    this.stepperService.stepperLength$.next(this.stepper.length);
+  constructor() {
+    effect(() => {
+      this.stepperService.stepperLength$.next(this.stepper().length);
+    });
   }
 }
