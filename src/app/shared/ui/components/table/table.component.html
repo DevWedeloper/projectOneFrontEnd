@@ -1,23 +1,20 @@
 @if (!loading()) {
   <div class="options">
-    <ng-container *ngTemplateOutlet="pageSize!" />
-    <ng-container *ngTemplateOutlet="search!" />
+    <ng-container *ngTemplateOutlet="pageSize()" />
+    <ng-container *ngTemplateOutlet="search()" />
   </div>
   <div class="table-container">
     <table class="table">
       <thead>
         <tr>
-          <ng-container *ngTemplateOutlet="headers || defaultHeaderTemplate" />
+          <ng-container *ngTemplateOutlet="headers()" />
         </tr>
       </thead>
       <tbody>
         @for (row of data(); track $index) {
           <tr>
             <ng-container
-              *ngTemplateOutlet="
-                rows || defaultRowTemplate;
-                context: { $implicit: row }
-              "
+              *ngTemplateOutlet="rows(); context: { $implicit: row }"
             />
           </tr>
         }
@@ -25,21 +22,9 @@
     </table>
   </div>
   <div class="pagination">
-    <ng-container *ngTemplateOutlet="pagination!" />
+    <ng-container *ngTemplateOutlet="pagination()" />
   </div>
 }
-
-<ng-template #defaultHeaderTemplate let-data>
-  @for (header of data[0] | keyvalue; track $index) {
-    <th>{{ header.key }}</th>
-  }
-</ng-template>
-
-<ng-template #defaultRowTemplate let-row>
-  @for (row of row | keyvalue; track $index) {
-    <td>{{ row.value }}</td>
-  }
-</ng-template>
 
 @if (loading()) {
   <app-table-skeleton />

@@ -41,6 +41,7 @@ export class AuthService {
 
   initializeGoogleOAuth(text: 'signup_with' | 'signin_with'): void {
     if (typeof window === 'undefined') return;
+    if (typeof google === 'undefined') return;
 
     const redirectUri = encodeURIComponent(window.location.origin);
     google.accounts.id.initialize({
