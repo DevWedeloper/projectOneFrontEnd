@@ -2,9 +2,9 @@ import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
-  ContentChild,
   TemplateRef,
-  input
+  contentChild,
+  input,
 } from '@angular/core';
 import { Character } from '../../../interfaces/character.interface';
 import { Guild } from '../../../interfaces/guild.interface';
@@ -21,17 +21,14 @@ import { TableSkeletonComponent } from '../skeleton/table-skeleton/table-skeleto
 export class TableComponent<T extends Character | Guild> {
   loading = input.required<boolean | null>();
   data = input.required<T[] | undefined>();
-  @ContentChild('searchTemplate') search: TemplateRef<HTMLElement> | undefined;
-  @ContentChild('pageSizeTemplate') protected pageSize:
-    | TemplateRef<HTMLElement>
-    | undefined;
-  @ContentChild('headersTemplate') protected headers:
-    | TemplateRef<HTMLElement>
-    | undefined;
-  @ContentChild('rowsTemplate') protected rows:
-    | TemplateRef<HTMLElement>
-    | undefined;
-  @ContentChild('paginationTemplate') protected pagination:
-    | TemplateRef<HTMLElement>
-    | undefined;
+  protected search =
+    contentChild.required<TemplateRef<HTMLElement>>('searchTemplate');
+  protected pageSize =
+    contentChild.required<TemplateRef<HTMLElement>>('pageSizeTemplate');
+  protected headers =
+    contentChild.required<TemplateRef<HTMLElement>>('headersTemplate');
+  protected rows =
+    contentChild.required<TemplateRef<object>>('rowsTemplate');
+  protected pagination =
+    contentChild.required<TemplateRef<HTMLElement>>('paginationTemplate');
 }

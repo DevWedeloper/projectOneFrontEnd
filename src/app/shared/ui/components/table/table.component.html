@@ -1,13 +1,13 @@
 @if (!loading()) {
   <div class="options">
-    <ng-container *ngTemplateOutlet="pageSize!" />
-    <ng-container *ngTemplateOutlet="search!" />
+    <ng-container *ngTemplateOutlet="pageSize()" />
+    <ng-container *ngTemplateOutlet="search()" />
   </div>
   <div class="table-container">
     <table class="table">
       <thead>
         <tr>
-          <ng-container *ngTemplateOutlet="headers || defaultHeaderTemplate" />
+          <ng-container *ngTemplateOutlet="headers() || defaultHeaderTemplate" />
         </tr>
       </thead>
       <tbody>
@@ -15,7 +15,7 @@
           <tr>
             <ng-container
               *ngTemplateOutlet="
-                rows || defaultRowTemplate;
+                rows() || defaultRowTemplate;
                 context: { $implicit: row }
               "
             />
@@ -25,7 +25,7 @@
     </table>
   </div>
   <div class="pagination">
-    <ng-container *ngTemplateOutlet="pagination!" />
+    <ng-container *ngTemplateOutlet="pagination()" />
   </div>
 }
 
