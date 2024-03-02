@@ -97,7 +97,7 @@ export class PaginationComponent {
     return pagesArray;
   });
 
-  handlePageClick(item: PageItem): void {
+  protected handlePageClick(item: PageItem): void {
     if (typeof item === 'number') {
       this.changePage.emit(item);
     } else {
@@ -105,7 +105,7 @@ export class PaginationComponent {
     }
   }
 
-  isPageActive(item: PageItem): boolean {
+  protected isPageActive(item: PageItem): boolean {
     if (typeof item === 'number') {
       return this.currentPage() === item;
     } else {
@@ -113,7 +113,7 @@ export class PaginationComponent {
     }
   }
 
-  displayItem(item: PageItem): string {
+  protected displayItem(item: PageItem): string {
     if (typeof item === 'number') {
       return item.toString();
     } else {
