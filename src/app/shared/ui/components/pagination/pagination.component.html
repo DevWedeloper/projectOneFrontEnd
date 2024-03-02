@@ -1,16 +1,16 @@
 <ul class="pagination">
-  @for (item of pages; track index; let index = $index) {
+  @for (item of pages(); track index; let index = $index) {
     <li
       appFocusVisible
       [ngClass]="{
         'page-item': true,
-        active: item !== '...' && currentPage() === item
+        active: isPageActive(item)
       }"
-      (click)="handlePageClick(item, index)"
-      (keyup.enter)="handlePageClick(item, index)"
+      (click)="handlePageClick(item)"
+      (keyup.enter)="handlePageClick(item)"
       tabindex="0"
     >
-      <span class="page-link">{{ item !== "..." ? item : "..." }}</span>
+      <span class="page-link">{{ displayItem(item) }}</span>
     </li>
   }
   @if (showGoToPage()) {

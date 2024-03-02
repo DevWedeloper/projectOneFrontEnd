@@ -4,13 +4,15 @@ import {
   Component,
   ElementRef,
   EventEmitter,
-  OnChanges,
   Output,
   booleanAttribute,
+  computed,
   input,
   viewChild,
 } from '@angular/core';
 import { FocusVisibleDirective } from '../../directives/focus-visible.directive';
+
+type PageItem = number | { symbol: string; index: number };
 
 @Component({
   selector: 'app-pagination',
@@ -20,7 +22,7 @@ import { FocusVisibleDirective } from '../../directives/focus-visible.directive'
   standalone: true,
   imports: [CommonModule, FocusVisibleDirective],
 })
-export class PaginationComponent implements OnChanges {
+export class PaginationComponent {
   currentPage = input.required<number>();
   pageSize = input.required<number>();
   total = input.required<number>();
@@ -30,190 +32,92 @@ export class PaginationComponent implements OnChanges {
   @Output() changePage = new EventEmitter<number>();
   private searchInput =
     viewChild.required<ElementRef<HTMLInputElement>>('searchInput');
-  protected pages: (number | '...')[] = [];
-  private pagesCount = 1;
-  private maxVisiblePages = 7;
 
-  ngOnChanges(): void {
-    this.updatePagesCountAndGeneratePages();
-  }
+  private totalPages = computed(() => {
+    return Math.ceil(this.total() / this.pageSize());
+  });
 
-  private updatePagesCountAndGeneratePages(): void {
-    this.pagesCount = Math.ceil((this.total() || 1) / (this.pageSize() || 1));
-    this.generatePages();
-  }
+  // TODO: Add documentation how this works
+  protected pages = computed<PageItem[]>(() => {
+    const page = this.currentPage();
+    const totalPages = this.totalPages();
+    const pagesArray: PageItem[] = [];
+    let beforePage = page - 1;
+    let afterPage = page + 1;
+    const symbol = '...';
 
-  private generatePages(): void {
-    if (this.showAllPage()) {
-      this.pages = this.range(1, this.pagesCount);
-    } else {
-      if (this.currentPage()) {
-        switch (true) {
-          case this.currentPage() < 3:
-            this.pages = [...this.range(1, 3), '...', this.pagesCount];
-            break;
-          case this.currentPage() === 3:
-            this.pages = [...this.range(1, 4), '...', this.pagesCount];
-            break;
-          case this.currentPage() > this.pagesCount - 2:
-            this.pages = [
-              1,
-              '...',
-              ...this.range(this.pagesCount - 2, this.pagesCount),
-            ];
-            break;
-          case this.currentPage() === this.pagesCount - 2:
-            this.pages = [
-              1,
-              '...',
-              ...this.range(this.pagesCount - 3, this.pagesCount),
-            ];
-            break;
-          default:
-            this.pages = [
-              1,
-              '...',
-              this.currentPage() - 1,
-              this.currentPage(),
-              this.currentPage() + 1,
-              '...',
-              this.pagesCount,
-            ];
-        }
+    if (totalPages <= 7) {
+      return Array.from({ length: totalPages }, (_, i) => i + 1);
+    }
+
+    if (page > 2) {
+      pagesArray.push(1);
+      if (page > 3) {
+        pagesArray.push({
+          symbol,
+          index: page - 3,
+        });
       }
     }
-  }
 
-  protected handlePageClick(item: number | '...', index: number): void {
+    if (page === totalPages) {
+      beforePage = beforePage - 2;
+    } else if (page === totalPages - 1) {
+      beforePage = beforePage - 1;
+    }
+
+    if (page === 1) {
+      afterPage = afterPage + 2;
+    } else if (page === 2) {
+      afterPage = afterPage + 1;
+    }
+
+    for (let plength = beforePage; plength <= afterPage; plength++) {
+      if (plength > totalPages) {
+        continue;
+      }
+
+      if (plength === 0) {
+        plength = plength + 1;
+      }
+
+      pagesArray.push(plength);
+    }
+
+    if (page < totalPages - 1) {
+      if (page < totalPages - 2) {
+        pagesArray.push({
+          symbol,
+          index: page + 3,
+        });
+      }
+      pagesArray.push(totalPages);
+    }
+
+    return pagesArray;
+  });
+
+  handlePageClick(item: PageItem): void {
     if (typeof item === 'number') {
-      this.handlePageClickForNumbers(item);
+      this.changePage.emit(item);
     } else {
-      this.handlePageClickForEllipsis(item, index);
+      this.changePage.emit(item.index);
     }
   }
 
-  private handlePageClickForNumbers(item: number): void {
-    if (!this.showAllPage()) {
-      switch (item) {
-        case 3:
-          this.pages = [...this.range(1, item + 1), '...', this.pagesCount];
-          break;
-        case this.pagesCount - 2:
-          this.pages = [
-            1,
-            '...',
-            ...this.range(item - 1, item + 1),
-            this.pagesCount,
-          ];
-          break;
-        case 4:
-        case this.pagesCount - 3:
-          this.pages = [
-            1,
-            '...',
-            ...this.range(item - 1, item + 1),
-            '...',
-            this.pagesCount,
-          ];
-          break;
-        case 1:
-        case 2:
-          this.pages = [...this.range(1, 3), '...', this.pagesCount];
-          break;
-        case this.pagesCount:
-        case this.pagesCount - 1:
-          this.pages = [
-            1,
-            '...',
-            ...this.range(this.pagesCount - 2, this.pagesCount),
-          ];
-          break;
-        default:
-          if (item >= 5 && item < this.pagesCount - 3) {
-            this.pages = [
-              1,
-              '...',
-              ...this.range(item - 1, item + 1),
-              '...',
-              this.pagesCount,
-            ];
-          }
-      }
+  isPageActive(item: PageItem): boolean {
+    if (typeof item === 'number') {
+      return this.currentPage() === item;
+    } else {
+      return false;
     }
-    this.changePage.emit(item);
   }
 
-  private handlePageClickForEllipsis(item: '...', index: number): void {
-    if (!this.showAllPage() && this.currentPage()) {
-      if (index === 3 || index === 4) {
-        this.pages = [
-          1,
-          '...',
-          ...this.range(this.currentPage() + 2, this.currentPage() + 4),
-          '...',
-          this.pagesCount,
-        ];
-        this.emitPageNumber(3);
-      } else if (index === 1 && this.pages[5] !== item) {
-        this.pages = [
-          1,
-          '...',
-          ...this.range(this.currentPage() - 4, this.currentPage() - 2),
-          '...',
-          this.pagesCount,
-        ];
-        this.emitPageNumber(3);
-      } else if (this.pages[1] && this.pages[5] === item) {
-        if (index === 1 && this.currentPage() > 6) {
-          this.pages = [
-            1,
-            '...',
-            ...this.range(this.currentPage() - 4, this.currentPage() - 2),
-            '...',
-            this.pagesCount,
-          ];
-          this.emitPageNumber(3);
-        } else if (index === 1 && this.currentPage() === 4) {
-          this.pages = [...this.range(1, 3), '...', this.pagesCount];
-          this.emitPageNumber(0);
-        } else if (index === 1 && this.currentPage() === 5) {
-          this.pages = [...this.range(1, 4), '...', this.pagesCount];
-          this.emitPageNumber(1);
-        } else if (index === 1 && this.currentPage() === 6) {
-          this.pages = [...this.range(1, 4), '...', this.pagesCount];
-          this.emitPageNumber(2);
-        } else if (index === 5 && this.currentPage() < this.pagesCount - 5) {
-          this.pages = [
-            1,
-            '...',
-            ...this.range(this.currentPage() + 2, this.currentPage() + 4),
-            '...',
-            this.pagesCount,
-          ];
-          this.emitPageNumber(3);
-        } else if (index === 5 && this.currentPage() === this.pagesCount - 5) {
-          this.pages = [
-            1,
-            '...',
-            ...this.range(this.pagesCount - 3, this.pagesCount),
-          ];
-          this.emitPageNumber(3);
-        } else if (index === 5 && this.currentPage() === this.pagesCount - 4) {
-          this.pages = [
-            1,
-            '...',
-            ...this.range(this.pagesCount - 3, this.pagesCount),
-          ];
-          this.emitPageNumber(4);
-        } else if (index === 5 && this.currentPage() === this.pagesCount - 3) {
-          this.pages = [
-            1,
-            '...',
-            ...this.range(this.pagesCount - 2, this.pagesCount),
-          ];
-          this.emitPageNumber(4);
-        }
-      }
+  displayItem(item: PageItem): string {
+    if (typeof item === 'number') {
+      return item.toString();
+    } else {
+      return item.symbol;
     }
   }
 
@@ -226,28 +130,13 @@ export class PaginationComponent implements OnChanges {
       case index <= 0:
         this.changePage.emit(1);
         break;
-      case index > this.pagesCount:
-        this.changePage.emit(this.pagesCount);
+      case index > this.totalPages():
+        this.changePage.emit(this.totalPages());
         break;
       default:
         this.changePage.emit(index);
         break;
     }
     this.searchInput().nativeElement.value = '';
-  }
-
-  private showAllPage(): boolean {
-    return this.pagesCount <= this.maxVisiblePages;
-  }
-
-  private emitPageNumber(index: number): void {
-    const pageNumber = this.pages[index];
-    if (typeof pageNumber === 'number') {
-      this.changePage.emit(pageNumber);
-    }
-  }
-
-  private range(start: number, end: number): number[] {
-    return [...Array(end - start + 1)].map((_, index) => start + index);
   }
 }
