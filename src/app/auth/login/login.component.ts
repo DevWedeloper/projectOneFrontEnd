@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
-  afterNextRender,
+  effect,
   inject,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -16,6 +16,7 @@ import {
 import { RouterLink } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { filter } from 'rxjs';
+import { WindowLoadService } from '../../shared/data-access/window-load.service';
 import { DynamicValidatorMessageDirective } from '../../shared/form/dynamic-validator-message.directive';
 import { ValidatorMessageContainerDirective } from '../../shared/form/validator-message-container.directive';
 import { DividerComponent } from '../../shared/ui/components/divider/divider.component';
@@ -46,6 +47,7 @@ import { selectHasLoginError, selectIsLoggingIn } from '../state/auth.reducers';
 export class LoginComponent {
   private fb = inject(FormBuilder);
   private authService = inject(AuthService);
+  private wls = inject(WindowLoadService);
   protected loginForm!: FormGroup;
   private store = inject(Store);
   private errors$ = this.store.select(selectHasLoginError);
@@ -69,8 +71,10 @@ export class LoginComponent {
           this.loginForm.get('password')?.setErrors({ invalidPassword: true });
         }
       });
-    afterNextRender(() => {
-      this.authService.initializeGoogleOAuth('signin_with');
+    effect(() => {
+      if (this.wls.windowLoad()) {
+        this.authService.initializeGoogleOAuth('signin_with');
+      }
     });
   }
 
