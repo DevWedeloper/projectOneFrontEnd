@@ -51,6 +51,7 @@ import {
   guildTableFeatureKey,
   guildTableReducer,
 } from './guilds/state/guild-table.reducers';
+import { WildcardComponent } from './wildcard/wildcard.component';
 
 const mainTitle = 'ProjectOne';
 
@@ -169,7 +170,6 @@ export const routes: Route[] = [
   },
   {
     path: '**',
-    loadComponent: () =>
-      import('./wildcard/wildcard.component').then((m) => m.WildcardComponent),
+    component: WildcardComponent,
   },
 ];
