@@ -1,8 +1,11 @@
-import { CommonModule } from '@angular/common';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  inject,
+  signal,
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-wildcard',
@@ -10,15 +13,13 @@ import { BehaviorSubject } from 'rxjs';
   styleUrls: ['./wildcard.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
 })
 export class WildcardComponent {
-  private route = inject(ActivatedRoute);
-  protected url = new BehaviorSubject<string>('');
-
-  constructor() {
-    this.route.url.pipe(takeUntilDestroyed()).subscribe((segments) => {
-      this.url.next(segments.map((segment) => segment.path).join('/'));
-    });
-  }
+  private route = signal<ActivatedRoute>(inject(ActivatedRoute));
+  protected url = computed(() => {
+    return this.route()
+      .snapshot.url.map((segment) => segment.path)
+      .join('/');
+  });
 }
