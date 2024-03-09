@@ -11,8 +11,6 @@ import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
-  HostBinding,
-  HostListener,
   Renderer2,
   TemplateRef,
   effect,
@@ -45,13 +43,16 @@ import { ModalService } from './modal.service';
       ]),
     ]),
   ],
+  host: {
+    '[@hostAnimation]': 'true',
+    '(document:keydown.escape)': 'onEscapeKeydown()',
+  },
 })
 export class ModalComponent {
   protected ms = inject(ModalService);
   protected ts = inject(ThemeService);
   private renderer = inject(Renderer2);
   contentTemplate = input.required<TemplateRef<HTMLElement>>();
-  @HostBinding('@hostAnimation') animate = true;
   private modalElement = viewChild.required<ElementRef>('modalElement');
 
   constructor() {
@@ -62,7 +63,7 @@ export class ModalComponent {
     });
   }
 
-  @HostListener('document:keydown.escape', ['$event']) onEscapeKeydown() {
+  protected onEscapeKeydown(): void {
     this.ms.close();
   }
 }

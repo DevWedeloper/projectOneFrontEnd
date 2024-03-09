@@ -2,8 +2,6 @@ import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
-  HostBinding,
-  HostListener,
   OnInit,
   booleanAttribute,
   input,
@@ -17,6 +15,12 @@ import { BehaviorSubject } from 'rxjs';
   templateUrl: './countdown-timer.component.html',
   styleUrl: './countdown-timer.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {
+    '[class.disabled]': 'countdownActive',
+    '[attr.tabindex]': 'countdownActive ? -1 : 0',
+    '(click)': 'onTrigger()',
+    '(keydown.Enter)': 'onTrigger()',
+  },
 })
 export class CountdownTimerComponent implements OnInit {
   label = input.required<string>();
@@ -25,10 +29,7 @@ export class CountdownTimerComponent implements OnInit {
     transform: booleanAttribute,
   });
 
-  @HostBinding('class.disabled') countdownActive: boolean = false;
-  @HostBinding('tabindex') get tabIndex(): number {
-    return this.countdownActive ? -1 : 0;
-  }
+  countdownActive: boolean = false;
   countdown$ = new BehaviorSubject<number>(0);
 
   ngOnInit(): void {
@@ -38,20 +39,18 @@ export class CountdownTimerComponent implements OnInit {
     }
   }
 
-  @HostListener('click')
-  @HostListener('keydown.Enter', ['$event'])
-  onTrigger(): void {
+  protected onTrigger(): void {
     this.startCountdown();
   }
 
-  startCountdown(): void {
+  private startCountdown(): void {
     if (!this.countdownActive) {
       this.countdownActive = true;
       this.updateCountdown();
     }
   }
 
-  updateCountdown(): void {
+  private updateCountdown(): void {
     if (this.countdown$.value > 0) {
       setTimeout(() => {
         this.countdown$.next(this.countdown$.value - 1);

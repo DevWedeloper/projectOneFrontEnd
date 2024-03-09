@@ -4,8 +4,6 @@ import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
-  HostBinding,
-  HostListener,
   OnDestroy,
   inject,
   viewChildren,
@@ -46,13 +44,16 @@ import { HomeService } from '../../data-access/home.service';
       ]),
     ]),
   ],
+  host: {
+    '[@fadeInOut]': 'true',
+    '(document:focusin)': 'onDocumentFocusIn($event)',
+  },
 })
 export class SettingsDropdownComponent implements OnDestroy {
   protected ts = inject(ThemeService);
   private hs = inject(HomeService);
   private store = inject(Store);
   private router = inject(Router);
-  @HostBinding('@fadeInOut') animateElement = true;
   private links = viewChildren<ElementRef>('ElementRef');
   private skipInitialCheck = true;
 
@@ -60,8 +61,7 @@ export class SettingsDropdownComponent implements OnDestroy {
     this.hs.isSettingsDropdownOpen$.next(false);
   }
 
-  @HostListener('document:focusin', ['$event'])
-  onDocumentFocusIn(event: Event) {
+  protected onDocumentFocusIn(event: Event) {
     if (this.skipInitialCheck) {
       this.skipInitialCheck = false;
       return;
@@ -75,11 +75,11 @@ export class SettingsDropdownComponent implements OnDestroy {
     }
   }
 
-  navigateToAccount() {
+  protected navigateToAccount() {
     this.router.navigate(['/account']);
   }
 
-  onLogout(): void {
+  protected onLogout(): void {
     if (!confirm('Are you sure you want to logout?')) {
       return;
     }
