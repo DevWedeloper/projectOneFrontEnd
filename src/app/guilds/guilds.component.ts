@@ -179,15 +179,15 @@ export class GuildsComponent implements OnDestroy {
     this.store.dispatch(guildTableActions.resetStateOnDestroy());
   }
 
-  setCurrentPage(page: number): void {
+  protected setCurrentPage(page: number): void {
     this.store.dispatch(guildTableActions.setCurrentPage({ page }));
   }
 
-  setPageSize(pageSize: number): void {
+  protected setPageSize(pageSize: number): void {
     this.store.dispatch(guildTableActions.setPageSize({ pageSize }));
   }
 
-  setSortParams(sortParams: GuildSortParams): void {
+  protected setSortParams(sortParams: GuildSortParams): void {
     this.store.dispatch(
       guildTableActions.setSortParams({
         sortParams,
@@ -195,41 +195,41 @@ export class GuildsComponent implements OnDestroy {
     );
   }
 
-  setSearchQuery(searchQuery: string): void {
+  protected setSearchQuery(searchQuery: string): void {
     this.store.dispatch(guildTableActions.setSearchQuery({ searchQuery }));
   }
 
-  setName(name: string | undefined): void {
+  protected setName(name: string | undefined): void {
     this.store.dispatch(guildTableActions.setNameFilter({ name }));
   }
 
-  createGuild(name: string, leader: string): void {
+  protected createGuild(name: string, leader: string): void {
     this.store.dispatch(guildActionsActions.createGuild({ name, leader }));
   }
 
-  updateName(guildId: string, name: string): void {
+  protected updateName(guildId: string, name: string): void {
     this.store.dispatch(guildActionsActions.updateGuildName({ guildId, name }));
   }
 
-  updateLeader(guildId: string, leaderId: string): void {
+  protected updateLeader(guildId: string, leaderId: string): void {
     this.store.dispatch(
       guildActionsActions.updateGuildLeader({ guildId, leaderId }),
     );
   }
 
-  addMember(guild: Guild, member: string): void {
+  protected addMember(guild: Guild, member: string): void {
     this.store.dispatch(guildActionsActions.addMember({ guild, member }));
   }
 
-  removeMember(guildId: string, member: Character): void {
+  protected removeMember(guildId: string, member: Character): void {
     this.store.dispatch(guildActionsActions.removeMember({ guildId, member }));
   }
 
-  deleteGuild(guild: Guild): void {
+  protected deleteGuild(guild: Guild): void {
     this.store.dispatch(guildActionsActions.deleteGuild({ guild }));
   }
 
-  updateSelectedGuild(selectedGuild: Guild | null): void {
+  protected updateSelectedGuild(selectedGuild: Guild | null): void {
     this.store.dispatch(
       guildActionsActions.updateSelectedGuild({ selectedGuild }),
     );
