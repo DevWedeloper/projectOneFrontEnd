@@ -1,27 +1,28 @@
-# ProjectOne
+# Project One
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.1.6.
+A game statistic simulator with a dashboard and complex CRUD, also comes with Authentication/Authorization.
 
-## Development server
+## Features
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+- **Dashboard Page**: Provides an overview of game statistics and important metrics.
+  - Real-time updates on player and guild data.
 
-## Code scaffolding
+- **Characters Page**: Allows management of characters.
+  - Create, update, and delete characters with ease.
+  - View detailed information about each characters stats.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- **Guilds Page**: Facilitates management of guilds.
+  - Create, update, and delete guilds with ease.
+  - Manage guild membership and roles within the guild.
 
-## Build
+- **Authentication/Authorization**: Secure user authentication and authorization system.
+  - User registration and login functionality.
+  - Role-based access control to restrict access to certain features based on user permissions.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## Back-end Integration
 
-## Running unit tests
+To understand the backend interactions, business logic, and detailed rules regarding character and guild management, please visit the [Project One Backend repository](https://github.com/DevWedeloper/projectOneBackEnd).
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## User Authentication and Access Control
 
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+For more information about the identity provider used for authentication and authorization in this project, please visit the [Identity Provider repository](https://github.com/DevWedeloper/auth).
