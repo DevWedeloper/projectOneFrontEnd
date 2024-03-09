@@ -4,12 +4,11 @@ import {
   Component,
   ElementRef,
   EventEmitter,
-  HostListener,
   OnDestroy,
   Output,
   inject,
   input,
-  viewChildren
+  viewChildren,
 } from '@angular/core';
 import { Character } from '../../../interfaces/character.interface';
 import { Guild } from '../../../interfaces/guild.interface';
@@ -21,6 +20,14 @@ import { Guild } from '../../../interfaces/guild.interface';
   templateUrl: './search-items.component.html',
   styleUrls: ['./search-items.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {
+    '(document:click)': 'onClick($event)',
+    '(document:keydown.ArrowUp)': 'onArrowUp()',
+    '(document:keydown.ArrowDown)': 'onArrowDown()',
+    '(document:keydown.Tab)': 'onKeydown()',
+    '(document:keydown.Enter)': 'onKeydown()',
+    '(document:keydown.Shift.Tab)': 'onKeydown()',
+  },
 })
 export class SearchItemsComponent<T extends Character | Guild>
   implements OnDestroy
@@ -36,21 +43,19 @@ export class SearchItemsComponent<T extends Character | Guild>
     this.closeComponent.emit();
   }
 
-  selectItem(result: Character | Guild) {
+  protected selectItem(result: Character | Guild): void {
     this.selectedItem.emit(result);
     this.closeComponent.emit();
   }
 
-  @HostListener('document:click', ['$event'])
-  onClick(event: MouseEvent) {
+  protected onClick(event: MouseEvent): void {
     const clickedInside = this.elementRef.nativeElement.contains(event.target);
     if (!clickedInside) {
       this.closeComponent.emit();
     }
   }
 
-  @HostListener('document:keydown.ArrowUp', ['$event'])
-  onArrowUp() {
+  protected onArrowUp(): void {
     if (this.currentFocusedIndex > 0) {
       this.currentFocusedIndex--;
       this.focusItem(this.currentFocusedIndex);
@@ -59,8 +64,7 @@ export class SearchItemsComponent<T extends Character | Guild>
     }
   }
 
-  @HostListener('document:keydown.ArrowDown', ['$event'])
-  onArrowDown() {
+  protected onArrowDown(): void {
     if (
       this.searchResults &&
       this.currentFocusedIndex < this.searchResults.length - 1
@@ -75,15 +79,12 @@ export class SearchItemsComponent<T extends Character | Guild>
     }
   }
 
-  @HostListener('document:keydown.Tab', ['$event'])
-  @HostListener('document:keydown.Enter', ['$event'])
-  @HostListener('document:keydown.Shift.Tab', ['$event'])
-  onKeydown() {
+  protected onKeydown(): void {
     this.closeComponent.emit();
     this.currentFocusedIndex = -1;
   }
 
-  focusItem(index: number) {
+  private focusItem(index: number): void {
     if (this.searchResults()) {
       const elementToFocus = this.searchItems()[index];
       setTimeout(() => {

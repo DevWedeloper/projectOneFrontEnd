@@ -1,14 +1,17 @@
-import { Directive, HostListener, inject } from '@angular/core';
+import { Directive, inject } from '@angular/core';
 import { StepperService } from '../stepper.service';
 
 @Directive({
   selector: '[appStepperNext]',
   standalone: true,
+  host: {
+    '(click)': 'onClick()',
+  },
 })
 export class StepperNextDirective {
   private stepperService = inject(StepperService);
 
-  @HostListener('click') onClick(): void {
+  protected onClick(): void {
     this.stepperService.next();
   }
 }
@@ -16,11 +19,14 @@ export class StepperNextDirective {
 @Directive({
   selector: '[appStepperPrevious]',
   standalone: true,
+  host: {
+    '(click)': 'onClick()',
+  },
 })
 export class StepperPreviousDirective {
   private stepperService = inject(StepperService);
 
-  @HostListener('click') onClick(): void {
+  protected onClick(): void {
     this.stepperService.previous();
   }
 }
