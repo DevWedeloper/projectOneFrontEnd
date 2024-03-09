@@ -70,7 +70,7 @@ export class GuildCreateComponent {
       });
   }
 
-  resetForm(): void {
+  protected resetForm(): void {
     this.guildForm.reset();
   }
 }
