@@ -134,15 +134,15 @@ export class CharactersComponent implements OnDestroy {
     this.store.dispatch(characterTableActions.resetStateOnDestroy());
   }
 
-  setCurrentPage(page: number): void {
+  protected setCurrentPage(page: number): void {
     this.store.dispatch(characterTableActions.setCurrentPage({ page }));
   }
 
-  setPageSize(pageSize: number): void {
+  protected setPageSize(pageSize: number): void {
     this.store.dispatch(characterTableActions.setPageSize({ pageSize }));
   }
 
-  setSortParams(sortParams: CharacterSortParams): void {
+  protected setSortParams(sortParams: CharacterSortParams): void {
     this.store.dispatch(
       characterTableActions.setSortParams({
         sortParams,
@@ -150,19 +150,19 @@ export class CharactersComponent implements OnDestroy {
     );
   }
 
-  setSearchQuery(searchQuery: string): void {
+  protected setSearchQuery(searchQuery: string): void {
     this.store.dispatch(characterTableActions.setSearchQuery({ searchQuery }));
   }
 
-  setName(name: string | undefined): void {
+  protected setName(name: string | undefined): void {
     this.store.dispatch(characterTableActions.setNameFilter({ name }));
   }
 
-  createCharacter(character: Character): void {
+  protected createCharacter(character: Character): void {
     this.store.dispatch(characterActionsActions.createCharacter({ character }));
   }
 
-  updateCharacter(
+  protected updateCharacter(
     character: Character,
     previousCharacterData: Character,
   ): void {
@@ -174,21 +174,21 @@ export class CharactersComponent implements OnDestroy {
     );
   }
 
-  joinGuild(character: Character, guildName: string): void {
+  protected joinGuild(character: Character, guildName: string): void {
     this.store.dispatch(
       characterActionsActions.joinGuild({ character, guildName }),
     );
   }
 
-  leaveGuild(character: Character): void {
+  protected leaveGuild(character: Character): void {
     this.store.dispatch(characterActionsActions.leaveGuild({ character }));
   }
 
-  deleteCharacter(character: Character): void {
+  protected deleteCharacter(character: Character): void {
     this.store.dispatch(characterActionsActions.deleteCharacter({ character }));
   }
 
-  updateSelectedCharacter(selectedCharacter: Character | null): void {
+  protected updateSelectedCharacter(selectedCharacter: Character | null): void {
     this.store.dispatch(
       characterActionsActions.updateSelectedCharacter({ selectedCharacter }),
     );
