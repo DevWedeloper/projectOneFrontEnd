@@ -5,11 +5,10 @@ import {
   Component,
   DestroyRef,
   ElementRef,
-  EventEmitter,
-  Output,
   Renderer2,
   inject,
   input,
+  output,
   viewChild,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -57,12 +56,12 @@ export class CharacterTableComponent implements AfterViewInit {
   isCurrentUserAdmin = input.required<boolean | null>();
   currentPage = input.required<number | null>();
   pageSize = input.required<number | null>();
-  @Output() searchQueryChange = new EventEmitter<string>();
-  @Output() pageSizeChange = new EventEmitter<number>();
-  @Output() sortParamsChange = new EventEmitter<CharacterSortParams>();
-  @Output() changePage = new EventEmitter<number>();
-  @Output() editCharacter = new EventEmitter<Character>();
-  @Output() deleteCharacter = new EventEmitter<Character>();
+  searchQueryChange = output<string>();
+  pageSizeChange = output<number>();
+  sortParamsChange = output<CharacterSortParams>();
+  changePage = output<number>();
+  editCharacter = output<Character>();
+  deleteCharacter = output<Character>();
   private pageSizeElement = viewChild<ElementRef>('perPage');
   protected loading$ = this.store.select(selectInitialLoading);
   protected deleteLoading$ = this.store.select(selectIsDeleting);

@@ -3,11 +3,10 @@ import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
-  EventEmitter,
   OnDestroy,
-  Output,
   inject,
   input,
+  output,
   viewChildren,
 } from '@angular/core';
 import { Character } from '../../../interfaces/character.interface';
@@ -34,8 +33,8 @@ export class SearchItemsComponent<T extends Character | Guild>
 {
   private elementRef = inject(ElementRef);
   searchResults = input.required<T[] | null>();
-  @Output() selectedItem = new EventEmitter<Character | Guild>();
-  @Output() closeComponent = new EventEmitter<void>();
+  selectedItem = output<Character | Guild>();
+  closeComponent = output<void>();
   private searchItems = viewChildren<ElementRef>('searchItems');
   private currentFocusedIndex = -1;
 

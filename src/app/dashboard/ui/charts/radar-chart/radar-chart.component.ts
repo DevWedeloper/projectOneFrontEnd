@@ -2,10 +2,9 @@ import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
-  EventEmitter,
-  Output,
   inject,
   input,
+  output,
   viewChild,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -43,7 +42,7 @@ export class RadarChartComponent {
     ChartConfiguration<'radar'>['data']['datasets'] | undefined
   >();
   loading = input.required<boolean | null>();
-  @Output() selectedCharacterChange = new EventEmitter<WellRoundedCharacter>();
+  selectedCharacterChange = output<WellRoundedCharacter>();
   protected radarChartOptions: ChartConfiguration<'radar'>['options'] = {
     maintainAspectRatio: false,
     scales: {

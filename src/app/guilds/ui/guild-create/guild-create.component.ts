@@ -2,10 +2,9 @@ import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
-  EventEmitter,
-  Output,
   inject,
   input,
+  output,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -47,11 +46,11 @@ export class GuildCreateComponent {
   private gfs = inject(GuildFormService);
   private store = inject(Store);
   searchLeaderResults = input.required<Character[] | null>();
-  @Output() createGuild = new EventEmitter<{
+  createGuild = output<{
     name: string;
     leader: string;
   }>();
-  @Output() searchLeaderResultsQueryChange = new EventEmitter<string>();
+  searchLeaderResultsQueryChange = output<string>();
   protected guildForm!: FormGroup;
   protected toggleSearchContainer = new BehaviorSubject<boolean>(false);
   protected loading$ = this.store.select(selectInitialLoading);

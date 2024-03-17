@@ -2,12 +2,11 @@ import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
-  EventEmitter,
   OnDestroy,
   OnInit,
-  Output,
   inject,
   input,
+  output,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -57,25 +56,25 @@ export class GuildEditComponent implements OnInit, OnDestroy {
   guild = input.required<Guild | null>();
   searchNewLeaderResults = input.required<Character[] | null>();
   searchNewMemberResults = input.required<Character[] | null>();
-  @Output() searchNewLeaderResultsQueryChange = new EventEmitter<string>();
-  @Output() searchNewMemberResultsQueryChange = new EventEmitter<string>();
-  @Output() updateGuildName = new EventEmitter<{
+  searchNewLeaderResultsQueryChange = output<string>();
+  searchNewMemberResultsQueryChange = output<string>();
+  updateGuildName = output<{
     guildId: string;
     name: string;
   }>();
-  @Output() updateGuildLeader = new EventEmitter<{
+  updateGuildLeader = output<{
     guildId: string;
     leaderId: string;
   }>();
-  @Output() addMember = new EventEmitter<{
+  addMember = output<{
     guild: Guild;
     member: string;
   }>();
-  @Output() removeMember = new EventEmitter<{
+  removeMember = output<{
     guildId: string;
     member: Character;
   }>();
-  @Output() closeEdit = new EventEmitter<void>();
+  closeEdit = output<void>();
   protected updateGuildNameForm!: FormGroup;
   protected updateGuildLeaderForm!: FormGroup;
   protected addMemberForm!: FormGroup;
