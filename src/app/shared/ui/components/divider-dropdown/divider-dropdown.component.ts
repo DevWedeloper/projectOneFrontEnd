@@ -2,9 +2,8 @@ import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
-  EventEmitter,
-  Output,
-  input
+  input,
+  output,
 } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { formDropdownAnimation } from '../../animations/form-dropdown-transition.animations';
@@ -19,7 +18,7 @@ import { DividerDropdownSkeletonComponent } from '../skeleton/divider-dropdown-s
     CommonModule,
     FocusVisibleDirective,
     DividerDropdownSkeletonComponent,
-    DividerComponent
+    DividerComponent,
   ],
   templateUrl: './divider-dropdown.component.html',
   styleUrls: ['./divider-dropdown.component.scss'],
@@ -29,7 +28,7 @@ import { DividerDropdownSkeletonComponent } from '../skeleton/divider-dropdown-s
 export class DividerDropdownComponent {
   label = input.required<string>();
   loading = input.required<boolean | null>();
-  @Output() dividerToggled = new EventEmitter<void>();
+  dividerToggled = output<void>();
   protected showContent = new BehaviorSubject<boolean>(false);
 
   toggleDivider(): void {

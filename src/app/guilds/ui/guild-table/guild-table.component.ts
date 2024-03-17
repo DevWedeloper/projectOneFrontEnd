@@ -5,11 +5,10 @@ import {
   Component,
   DestroyRef,
   ElementRef,
-  EventEmitter,
-  Output,
   Renderer2,
   inject,
   input,
+  output,
   viewChild,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -59,12 +58,12 @@ export class GuildTableComponent implements AfterViewInit {
   isCurrentUserAdmin = input.required<boolean | null>();
   currentPage = input.required<number>();
   pageSize = input.required<number>();
-  @Output() searchQueryChange = new EventEmitter<string>();
-  @Output() pageSizeChange = new EventEmitter<number>();
-  @Output() sortParamsChange = new EventEmitter<GuildSortParams>();
-  @Output() changePage = new EventEmitter<number>();
-  @Output() editGuild = new EventEmitter<Guild>();
-  @Output() deleteGuild = new EventEmitter<Guild>();
+  searchQueryChange = output<string>();
+  pageSizeChange = output<number>();
+  sortParamsChange = output<GuildSortParams>();
+  changePage = output<number>();
+  editGuild = output<Guild>();
+  deleteGuild = output<Guild>();
   private pageSizeElement = viewChild<ElementRef>('perPage');
   protected loading$ = this.store.select(selectInitialLoading);
   protected deleteLoading$ = this.store.select(selectIsDeleting);

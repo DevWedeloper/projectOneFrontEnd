@@ -3,11 +3,10 @@ import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
-  EventEmitter,
-  Output,
   booleanAttribute,
   computed,
   input,
+  output,
   viewChild,
 } from '@angular/core';
 import { FocusVisibleDirective } from '../../directives/focus-visible.directive';
@@ -29,7 +28,7 @@ export class PaginationComponent {
   showGoToPage = input(false, {
     transform: booleanAttribute,
   });
-  @Output() changePage = new EventEmitter<number>();
+  changePage = output<number>();
   private searchInput =
     viewChild.required<ElementRef<HTMLInputElement>>('searchInput');
 

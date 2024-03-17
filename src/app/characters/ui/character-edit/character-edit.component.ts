@@ -2,12 +2,11 @@ import { CommonModule, NgTemplateOutlet } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
-  EventEmitter,
   OnDestroy,
   OnInit,
-  Output,
   inject,
   input,
+  output,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -60,17 +59,17 @@ export class CharacterEditComponent implements OnInit, OnDestroy {
   private store = inject(Store);
   character = input.required<Character | null>();
   searchResults = input.required<Guild[] | null>();
-  @Output() searchQueryChange = new EventEmitter<string>();
-  @Output() updateCharacter = new EventEmitter<{
+  searchQueryChange = output<string>();
+  updateCharacter = output<{
     character: Character;
     previousCharacterData: Character;
   }>();
-  @Output() joinGuild = new EventEmitter<{
+  joinGuild = output<{
     character: Character;
     guildName: string;
   }>();
-  @Output() leaveGuild = new EventEmitter<Character>();
-  @Output() closeModal = new EventEmitter<void>();
+  leaveGuild = output<Character>();
+  closeModal = output<void>();
   protected characterForm!: FormGroup;
   protected joinGuildForm!: FormGroup;
   protected toggleSearchContainer = new BehaviorSubject<boolean>(false);

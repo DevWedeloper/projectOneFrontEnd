@@ -2,9 +2,8 @@ import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
-  EventEmitter,
-  Output,
   inject,
+  output,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormGroup } from '@angular/forms';
@@ -40,7 +39,7 @@ import { CharacterFormComponent } from '../character-form/character-form.compone
 export class CharacterCreateComponent {
   private cfs = inject(CharacterFormService);
   private store = inject(Store);
-  @Output() createCharacter = new EventEmitter<Character>();
+  createCharacter = output<Character>();
   protected characterForm!: FormGroup;
   protected loading$ = this.store.select(selectInitialLoading);
   protected createLoading$ = this.store.select(selectIsCreating);
