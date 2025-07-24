@@ -6,8 +6,7 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test",
-    "serve:ssr:projectOne": "node dist/project-one/server/server.mjs"
+    "test": "ng test"
   },
   "private": true,
   "dependencies": {
@@ -19,14 +18,11 @@
     "@angular/forms": "^17.3.0",
     "@angular/platform-browser": "^17.3.0",
     "@angular/platform-browser-dynamic": "^17.3.0",
-    "@angular/platform-server": "^17.3.0",
     "@angular/router": "^17.3.0",
-    "@angular/ssr": "^17.3.0",
     "@ngrx/effects": "^17.1.1",
     "@ngrx/store": "^17.1.1",
     "@ngrx/store-devtools": "^17.1.1",
     "chart.js": "^4.4.0",
-    "express": "^4.18.2",
     "ng2-charts": "^5.0.3",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
